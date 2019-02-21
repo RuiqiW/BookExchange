@@ -1,0 +1,107 @@
+#topBar {
+    float: right;
+    position: relative;
+    top: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#signIn {
+    display: inline-block;
+}
+
+.topBarImage {
+    height: 50px;
+    display: inline-block;
+}
+
+.topBarImageContainer {
+    display: inline-block;
+    border-radius: 50%;
+    height: 50px;
+}
+
+.topBarImageContainer:hover{
+    background-color: lightskyblue;
+}
+
+.topBarText {
+    font-weight: bold;
+    display: inline-block;
+    right: 20px;
+}
+
+#myCart {
+    display: inline-block;
+}
+
+#BigLogo {
+    alignment: center;
+    text-align: center;
+    position: relative;
+    top: 200px;
+}
+
+#indexLogo {
+    height: 100px;
+    position: relative;
+    left: 50px;
+}
+
+#searchBox {
+    height: 44px;
+    width: 580px;
+    outline: none;
+    box-shadow: 0px 2px 2px 2px grey;
+}
+
+#searchButton {
+    height: 30px;
+    width: 300px;
+    margin-left: 30px;
+    margin-top: 20px;
+    position: relative;
+    right: 20px;
+
+    background-color: lightgrey;
+}
+
+#searchButtonText {
+    font-size: 150%;
+    color: grey;
+}
+
+#searchButton:hover {
+    background-color: white;
+}
+
+#introduction {
+    float: bottom;
+    position: relative;
+    top: 300px;
+    text-align: center;
+}
+
+.introImage {
+    height: 100px;
+    padding: 10px;
+    display: inline-block;
+}
+
+.introBlock {
+    display: inline-block;
+}
+
+#promptText {
+    font-size: 150%;
+    position: relative;
+    top: 280px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+
