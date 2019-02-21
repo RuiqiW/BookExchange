@@ -89,6 +89,7 @@ a {
     height: 100px;
     padding: 10px;
     display: inline-block;
+    position: relative;
 }
 
 .introBlock {
@@ -100,6 +101,20 @@ a {
     position: relative;
     top: 280px;
     text-align: center;
+    font-weight: bold;
+}
+
+.dropDown {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.introBlock:hover .dropDown {
+    display: block;
     font-weight: bold;
 }
 
