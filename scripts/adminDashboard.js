@@ -13,11 +13,45 @@ const navClose = document.querySelector('#navClose');
 const chatShow = document.querySelector("#chatShow");
 const main = document.querySelector("#main");
 const editPost = document.querySelector("#editPost");
+const transactionTable = document.querySelector("#transactionTable");
 
 navExpansion.addEventListener('click', openSideNav);
 navClose.addEventListener('click', closeSideNav);
 chatShow.addEventListener('click', showChatRoom);
 editPost.addEventListener('click', changeEditMode);
+
+
+const approveButtons = document.querySelectorAll(".approve");
+const denyButtons = document.querySelectorAll(".deny");
+Array.from(approveButtons).forEach(function(element) {
+    element.addEventListener('click', checkTransaction);
+});
+Array.from(denyButtons).forEach(function(element) {
+    element.addEventListener('click', checkTransaction);
+});
+
+
+function checkTransaction(e){
+    e.preventDefault();
+
+    if(e.target.classList.contains('approve')){
+        if(window.confirm("Do you want to approve this transaction?")){
+            deleteTransactionEntry(e);
+            window.alert("You have approved this transaction.");
+        }
+    }else if(e.target.classList.contains('deny')){
+        if(window.confirm("Do you want to deny this transaction?")){
+            deleteTransactionEntry(e);
+            window.alert("You have denied this transaction.");
+        }
+    }
+}
+
+function deleteTransactionEntry(e){
+    const row = e.target.parentElement.parentElement.parentElement;
+    const tableBody = transactionTable.lastElementChild;
+    tableBody.removeChild(row);
+}
 
 function changeEditMode(e){
     e.preventDefault();
