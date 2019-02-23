@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Browse Items</title>
     <link href="items.css" type="text/css" rel="stylesheet">
+    <!--Lightbox CSS-->
+    <link href="lightbox/css/lightbox.css" rel="stylesheet">
+    <!--jquery for lightbox-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <div id="topBar">
@@ -60,7 +64,9 @@
                     CAD 29.99
                 </div>
                 <div class="pictureContainer">
-                    <img class="itemPicture" src="images/items/sampleBook1.jpg" alt="picture">
+                    <a href="images/items/sampleBook1.jpg" data-lightbox="sampleBook1">
+                        <img class="itemPicture" src="images/items/sampleBook1.jpg" alt="picture">
+                    </a>
                 </div>
                 <hr>
                 <button class="addToCart">Add to Cart</button>
@@ -74,5 +80,7 @@
 
 
     </div>
+    <!--Script for lightbox-->
+    <script src="lightbox/js/lightbox.js"></script>
 </body>
 </html>

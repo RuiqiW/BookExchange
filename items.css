@@ -178,6 +178,10 @@ body {
     margin-top: 10px;
 }
 
+.itemPicture:hover {
+    cursor: url("images/magnifyingGlass.cur"), pointer;
+}
+
 #endOfResults{
     text-align: center;
     padding: 5px;
