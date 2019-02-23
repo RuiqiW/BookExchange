@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Browse Items</title>
-    <link href="items.css" type="text/css" rel="stylesheet">
+    <link href="../styles/items.css" type="text/css" rel="stylesheet">
     <!--Lightbox CSS-->
-    <link href="lightbox/css/lightbox.css" rel="stylesheet">
+    <link href="../lightbox/css/lightbox.css" rel="stylesheet">
     <!--jquery for lightbox-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <div id="topBar">
-        <img id="topBarLogo" src="images/logo.png" alt="logo">
+        <img id="topBarLogo" src="../images/logo.png" alt="logo">
 
         <form id="searchForm">
             <input id="searchBox" type="text" placeholder="Search here...">
@@ -23,6 +23,7 @@
         <!--This is used to hold the user icon after login-->
         <div id="userInfo">
             <button id="logIn">
+                <a href="./login.html"> </a>
                 <span id="logInButtonText">Log In</span>
             </button>
         </div>
@@ -33,7 +34,7 @@
         </div>
         <div id="posts">
             <div class="post">
-                <img class="profilePhoto" src="images/items/seller1.jpg" alt="sellerPhoto">
+                <img class="profilePhoto" src="../images/items/seller1.jpg" alt="sellerPhoto">
                 <span class="userName"> Donald Trump </span>
                 <br>
                 <span class="category"> Category: Books </span>
@@ -51,7 +52,7 @@
                 <button class="buyItem"> Buy this item</button>
             </div>
             <div class="post">
-                <img class="profilePhoto" src="images/items/seller2.jpeg" alt="sellerPhoto">
+                <img class="profilePhoto" src="../images/items/seller2.jpeg" alt="sellerPhoto">
                 <span class="userName"> Mike Penth </span>
                 <br>
                 <span class="category"> Category: Books </span>
@@ -64,8 +65,8 @@
                     CAD 29.99
                 </div>
                 <div class="pictureContainer">
-                    <a href="images/items/sampleBook1.jpg" data-lightbox="sampleBook1">
-                        <img class="itemPicture" src="images/items/sampleBook1.jpg" alt="picture">
+                    <a href="../images/items/sampleBook1.jpg" data-lightbox="sampleBook1">
+                        <img class="itemPicture" src="../images/items/sampleBook1.jpg" alt="picture">
                     </a>
                 </div>
                 <hr>
@@ -81,6 +82,6 @@
 
     </div>
     <!--Script for lightbox-->
-    <script src="lightbox/js/lightbox.js"></script>
+    <script src="../lightbox/js/lightbox.js"></script>
 </body>
 </html>
