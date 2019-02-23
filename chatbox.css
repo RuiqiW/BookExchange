@@ -1,0 +1,27 @@
+#chat{
+    min-height: 100px;
+}
+
+#messageBox{
+    display:block;
+    width: 200px;
+    max-height: 70px;
+    font-size: 14px;
+    resize: none;
+    overflow: hidden;
+}
+
+.chatBubble {
+    margin: 5px;
+    display: inline-block;
+    min-width: 60px;
+    max-width: 150px;
+    background-color: lightblue;
+    border-radius: 20px;
+}
+
+.chatText{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: left;
+}

@@ -1,0 +1,129 @@
+body{
+    background-color: whitesmoke;
+}
+#sideNav {
+    height: 100%;
+    width: 0;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 40px;
+    background-color: #212F3C;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+
+.logoContainer {
+    height: 60px;
+    width: 60px;
+    margin: 20px;
+}
+
+.logoIcon {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+#sideNav li{
+    list-style: none;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#sideNav a {
+    text-decoration: none;
+    color: grey;
+    font-size: 20px;
+}
+
+#sideNav a:hover {
+    color: snow;
+}
+
+#navClose {
+    position: absolute;
+    top: 30px;
+    right: 25px;
+    display: block;
+}
+
+
+#chatRoom{
+    position: fixed;
+    bottom: 30px;
+    right: 80px;
+    background-color: white;
+    height: 300px;
+    width: 250px;
+    z-index: 1;
+    display: none;
+}
+
+
+#chatHide {
+    display: block;
+}
+
+#chatHide a{
+    text-decoration: none;
+    display: inline;
+    margin-left: 230px;
+}
+
+#chatbox{
+    height: 200px;
+    width: 250px;
+}
+
+#chatShow:hover{
+    cursor: pointer;
+}
+
+#main {
+    transition: margin-left 0.5s;
+}
+
+
+#topNavBar{
+    background-color: white;
+    height: 70px;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
+
+#navExpansion{
+    font-size:30px;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    margin-left: 20px;
+    margin-top: 15px;
+}
+
+#topNavBar ul{
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+#topNavBar li{
+    list-style: none;
+    display: inline-block;
+}
+.topBarImage {
+    height: 30px;
+    display: inline-block;
+}
+
+.topBarImageContainer {
+    display: inline-block;
+    float:right;
+    margin-right: 40px;
+    margin-top: 10px;
+    border-radius: 50%;
+    height: 50px;
+}
