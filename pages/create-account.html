@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--Flavicon-->
+  <link rel="shortcut icon" href="#" type="image/x-icon">
+
+  <!--Bulma-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+
+  <!--My CSS-->
+  <link rel="stylesheet" type="text/css" href="../styles/create-account.css">
+
+  <!--Title-->
+  <title>Create Account</title>
+
+</head>
+<body>
+
+<div id="createAccount">
+  <div class="createAccountCard">
+
+    <div class="card-title">
+      <h1 class="is-size-4">Create Account</h1>
+    </div>
+
+    <div class="content">
+      <form method="POST" action="#">
+
+        <div class="level">
+          <div class="level-left">
+            <input class="fillOut" type="text" name="name" title="First name" placeholder="First name" required autofocus>
+          </div>
+          <div class="level-right">
+            <input class="fillOut" type="text" name="name" title="Last name" placeholder="Last name" required autofocus>
+          </div>
+        </div>
+
+        <div class="level">
+          <input class="fillOut" type="text" name="name" title="Username" placeholder="Username" required autofocus>
+        </div>
+
+        <div class="level">
+          <input class="fillOut" type="email" name="email" title="Email" placeholder="Email" required autofocus>
+        </div>
+
+        <div class="level">
+          <div class="level-left">
+            <input class="fillOut" type="password" name="password" title="Password" placeholder="Password" required>
+          </div>
+          <div class="level-right">
+            <input class="fillOut" type="password" name="password" title="Confirm" placeholder="Confirm" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
