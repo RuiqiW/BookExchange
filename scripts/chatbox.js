@@ -28,10 +28,10 @@ function sendMessage(e){
 
 function addMessage(msg){
     const newMessage = document.createElement('p');
-    newMessage.className = "chatText";
+    newMessage.className = "chatOutText";
     newMessage.innerText = msg;
     const bubble = document.createElement('div');
-    bubble.className = "chatBubble";
+    bubble.className = "chatOutBubble";
     bubble.appendChild(newMessage);
     const messageContainer = document.createElement('div');
     messageContainer.appendChild(bubble);

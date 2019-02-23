@@ -11,7 +11,7 @@
     overflow: hidden;
 }
 
-.chatBubble {
+.chatInBubble {
     margin: 5px;
     display: inline-block;
     min-width: 60px;
@@ -20,8 +20,26 @@
     border-radius: 20px;
 }
 
-.chatText{
+.chatInText{
     padding-left: 10px;
     padding-right: 10px;
     text-align: left;
+}
+
+
+.chatOutBubble {
+    display: inline-block;
+    margin: 5px;
+    min-width: 60px;
+    max-width: 150px;
+    float: right;
+    clear: both;
+    background-color: lightyellow;
+    border-radius: 20px;
+}
+
+.chatOutText{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: right;
 }

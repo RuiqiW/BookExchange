@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>adminDashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="../styles/adminDashboard.css" type="text/css" rel="stylesheet">
+    <!--icon library-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div id="chatRoom">
+    <div id="chatHide">
+        <a href="#">&times;</a>
+    </div>
+
+    <iframe src="chatbox.html" id="chatbox"></iframe>
+</div>
+
+
+<div id="sideNav">
+
+    <a href="#" id="navClose">&times;</a>
+
+    <div class="logo">
+        <div class="logoContainer">
+
+            <!--TODO: use logo here-->
+            <img src="../images/admin/uoft.jpg" class="logoIcon" alt="">
+        </div>
+    </div>
+
+    <ul class="navbar-side">
+
+        <li><a href="#dashboard"><i class="fa fa-fw fa-home"></i>Dashboard</a></li>
+        <li><a href="#postList"><i class="fa fa-fw fa-tags"></i>Posts</a></li>
+        <li><a href="#userList"><i class="fa fa-fw fa-user"></i>Users</a></li>
+        <li><a href="#transactionList"><i class="fa fa-fw fa-money"></i>Transactions</a></li>
+    </ul>
+
+</div>
+
+<div id="main">
+    <div id="topNavBar">
+        <span id="navExpansion">&#9776;</span>
+
+        <ul>
+            <li>
+
+                <!--TODO: drop-down list to select message to display-->
+                <div id="chatShow" class="topBarImageContainer">
+                    <img class="topBarImage" src="../images/admin/chat.png" alt="chatPlaceholder">
+                </div>
+            </li>
+            <li>
+                <a href="../index.html">
+                    <div class="topBarImageContainer">
+                        <img class="topBarImage" src="../images/admin/logout.png" alt="logOutPlaceholder">
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="dashboard" class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="infoBox">
+                <div class="infoTitleContainer">
+                    <span class="infoTitle">Messages</span>
+                </div>
+                <div class="dataContainer">
+                    <span id="msgData" class="data">42</span>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="infoBox">
+                <div class="infoTitleContainer">
+                    <span class="infoTitle">Transactions</span>
+                </div>
+                <div class="dataContainer">
+                    <span id="transactionData" class="data">20</span>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="infoBox">
+                <div class="infoTitleContainer">
+                    <span class="infoTitle">Posts</span>
+                </div>
+                <div class="dataContainer">
+                    <span id="postData" class="data">200</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="infoBox">
+                <div class="infoTitleContainer">
+                    <span class="infoTitle">Users</span>
+                </div>
+                <div class="dataContainer">
+                    <span id="userData" class="data">50</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="postList">
+        <div class="infoTitleContainer">
+            <span class="infoTitle">Post</span>
+            <a id="editPost" href="#">edit</a>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-4">
+                <div class="post">
+                    <img src="../images/admin/textbook1.jpg" alt="textbook1" class="textbookImg">
+                    <span class="price">$50</span>
+                    <span class="seller">user_001</span>
+
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <div class="post">
+                    <img src="../images/admin/textbook2.jpg" alt="textbook1" class="textbookImg">
+                    <span class="price">$50</span>
+                    <span class="seller">user_001</span>
+
+                </div>
+
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <div class="post">
+                    <img src="../images/admin/textbook3.jpg" alt="textbook1" class="textbookImg">
+                    <span class="price">$50</span>
+                    <span class="seller">user_001</span>
+
+                </div>
+
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <div class="post">
+                    <img src="../images/admin/textbook4.jpg" alt="textbook1" class="textbookImg">
+                    <span class="price">$50</span>
+                    <span class="seller">user_001</span>
+
+                </div>
+
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <div class="post">
+                    <img src="../images/admin/textbook5.jpg" alt="textbook1" class="textbookImg">
+                    <span class="price">$50</span>
+                    <span class="seller">user_001</span>
+
+                </div>
+
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <div class="viewAllItem">
+                    <a href="items.html">
+                        <div id="viewAllContainer">
+                            <img src="../images/admin/next.png" alt="View All" class="viewIcon">
+                        </div>
+                        View All
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div id="userList"></div>-->
+    <div id="transactionList">
+        <div class="infoTitleContainer">
+            <span class="infoTitle">Transactions</span>
+        </div>
+
+        <table id="transactionTable" class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Book</th>
+                <th>Buyer</th>
+                <th>Seller</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>0136</td>
+                <td>Web Programming</td>
+                <td>user_001</td>
+                <td>user_002</td>
+                <td>$45</td>
+                <td>Feb 25, 2019</td>
+                <td><a href="#" class="approve"><i class="fa fa-fw fa-check"></i></a>
+                    <a href="#" class="deny"><i class="fa fa-fw fa-close"></i></a></td>
+            </tr>
+            <tr>
+                <td>0137</td>
+                <td>Linear Algebra</td>
+                <td>user_003</td>
+                <td>user_002</td>
+                <td>$24</td>
+                <td>Feb 25, 2019</td>
+                <td><a href="#" class="approve"><i class="fa fa-fw fa-check"></i></a>
+                    <a href="#" class="deny"><i class="fa fa-fw fa-close"></i></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<script type="text/javascript" src="../scripts/adminDashboard.js"></script>
+</body>
+</html>
