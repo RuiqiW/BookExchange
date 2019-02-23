@@ -20,15 +20,35 @@ navClose.addEventListener('click', closeSideNav);
 chatShow.addEventListener('click', showChatRoom);
 editPost.addEventListener('click', changeEditMode);
 
-
+const deleteItems = document.querySelectorAll('.deleteItem');
 const approveButtons = document.querySelectorAll(".approve");
 const denyButtons = document.querySelectorAll(".deny");
+
 Array.from(approveButtons).forEach(function(element) {
     element.addEventListener('click', checkTransaction);
 });
 Array.from(denyButtons).forEach(function(element) {
     element.addEventListener('click', checkTransaction);
 });
+
+Array.from(deleteItems).forEach(function(element) {
+    element.addEventListener('click', deleteItem);
+});
+
+function deleteItem(e){
+    e.preventDefault();
+
+    if(window.confirm("Do you want to delete this post?")){
+        removePost(e);
+        window.alert("You have deleted this post.");
+    }
+}
+
+function removePost(e){
+    const post = e.target.parentElement.parentElement;
+    const entry = post.parentElement;
+    entry.removeChild(post);
+}
 
 
 function checkTransaction(e){
@@ -59,9 +79,15 @@ function changeEditMode(e){
     if(postEdited === 0){
         postEdited = 1;
         editPost.innerText = "save";
+        for(let i=0; i<deleteItems.length; i++){
+            deleteItems[i].style.display = "inline-block";
+        }
     }else{
         postEdited = 0;
         editPost.innerText = "edit";
+        for(let i=0; i<deleteItems.length; i++){
+            deleteItems[i].style.display = "none";
+        }
     }
 }
 document.addEventListener('DOMContentLoaded', function() {
