@@ -179,7 +179,7 @@ body {
 }
 
 .itemPicture:hover {
-    cursor: url("images/magnifyingGlass.cur"), pointer;
+    cursor: url("../images/magnifyingGlass.cur"), pointer;
 }
 
 #endOfResults{
