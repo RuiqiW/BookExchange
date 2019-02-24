@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
   <!--My CSS-->
-  <!--<link rel="stylesheet" type="text/css" href="./login.css">-->
+  <!--<link rel="stylesheet" type="text/css" href="../styles/post-ad.css">-->
 
   <!--Title-->
   <title>Create Post</title>
@@ -23,7 +23,7 @@
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="../index.html">
-        <img src="../images/logo.png" width="112" height="28">
+        <img src="../images/logo.png" width="" height="228">
       </a>
 
       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -60,79 +60,85 @@
     <p class="has-text-black">Ad details</p>
     <hr>
 
-    <form method="POST" action="#">
-      <div class="field is-horizontal">
+    <div class="columns is-centered">
+      <div class="column is-8">
 
-        <div class="field-label is-normal">
-          <label class="label">Ad Title:</label>
-        </div>
+        <form method="POST" action="#">
+          <div class="field is-horizontal">
 
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <input class="input" type="text" placeholder="Title">
+            <div class="field-label is-normal">
+              <label class="label">Ad Title:</label>
             </div>
-            <p class="help">Descriptive titles are more helpful!</p>
+
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <input class="input" type="text" placeholder="Title">
+                </div>
+                <p class="help">Descriptive titles are more helpful!</p>
+              </div>
+            </div>
+
           </div>
-        </div>
 
-      </div>
-
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Category:</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <div class="select">
-                <select>
-                  <option>Textbook</option>
-                  <option>Furniture</option>
-                  <option>School Accessories</option>
-                </select>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Category:</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <div class="select">
+                    <select>
+                      <option>Textbook</option>
+                      <option>Furniture</option>
+                      <option>School Accessories</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Condition:</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <div class="select">
-                <select>
-                  <option>New</option>
-                  <option>Used - Like New</option>
-                  <option>Used - Very Good</option>
-                  <option>Used - Good</option>
-                  <option>Used - Acceptable</option>
-                </select>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Condition:</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <div class="select">
+                    <select>
+                      <option>New</option>
+                      <option>Used - Like New</option>
+                      <option>Used - Very Good</option>
+                      <option>Used - Good</option>
+                      <option>Used - Acceptable</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Description:</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <textarea class="textarea" placeholder="">
-              </textarea>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Description:</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <textarea class="textarea" placeholder="">
+                  </textarea>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-    </form>
+        </form>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -146,7 +152,7 @@
     <hr>
 
     <div class="columns">
-      <div class="column is-half is-centered">
+      <div class="column is-one-quarter is-offset-2">
         <article class="message is-link">
           <div class="message-body">
             <p>Add photos to attract interest to your ad. Including pictures with different angles will help sell your item.</p>
@@ -157,7 +163,7 @@
 
     <div class="columns is-centered">
 
-      <div class="column">
+      <div class="column is-2">
         <div class="field">
           <div class="file is-link is-centered has-name is-boxed">
             <label class="file-label">
@@ -178,7 +184,7 @@
         </div>
       </div>
 
-      <div class="column">
+      <div class="column is-2">
         <div class="field">
           <div class="file is-link is-centered has-name is-boxed">
             <label class="file-label">
@@ -199,7 +205,7 @@
         </div>
       </div>
 
-      <div class="column">
+      <div class="column is-2">
         <div class="field">
           <div class="file is-link is-centered has-name is-boxed">
             <label class="file-label">
@@ -220,7 +226,7 @@
         </div>
       </div>
 
-      <div class="column">
+      <div class="column is-2">
         <div class="field">
           <div class="file is-link is-centered has-name is-boxed">
             <label class="file-label">
@@ -256,55 +262,61 @@
     <p class="has-text-black">Price</p>
     <hr>
 
-    <form method="POST" action="#">
-      <div class="field is-horizontal">
+    <div class="columns is-centered">
+      <div class="column is-6">
 
-        <div class="field-label is-normal">
-          <label class="label">Price:</label>
-        </div>
 
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <div>
-                <label class="radio">
-                  <span>
-                    <div class="field has-addons has-addons-centered">
-                      <p class="control">
-                        <span class="select">
-                          <select>
-                            <option>$</option>
-                          </select>
-                        </span>
-                      </p>
-                      <input class="input" type="text" placeholder="10.00">
-                    </div>
-                  </span>
-                </label>
-              </div>
-              <div>
-                <label class="radio">
-                  <input class="radio is-link is-large" type="radio" name="price">
-                  Free
-                </label>
-              </div>
-              <div>
-                <label class="radio">
-                  <input class="radio is-link is-large" type="radio" name="price">
-                  Please Contact
-                </label>
-              </div>
-              <div>
-                <label class="radio">
-                  <input class="radio is-link is-large" type="radio" name="price">
-                  Swap/Trade
-                </label>
+        <form method="POST" action="#">
+          <div class="field is-horizontal">
+
+            <div class="field-label is-normal">
+              <label class="label">Price:</label>
+            </div>
+
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <div>
+                    <label class="radio">
+                      <span>
+                        <div class="field has-addons has-addons-centered">
+                          <p class="control">
+                            <span class="select">
+                              <select>
+                                <option>$</option>
+                              </select>
+                            </span>
+                          </p>
+                          <input class="input" type="text" placeholder="10.00">
+                        </div>
+                      </span>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="radio">
+                      <input class="radio is-link is-large" type="radio" name="price">
+                      Free
+                    </label>
+                  </div>
+                  <div>
+                    <label class="radio">
+                      <input class="radio is-link is-large" type="radio" name="price">
+                      Please Contact
+                    </label>
+                  </div>
+                  <div>
+                    <label class="radio">
+                      <input class="radio is-link is-large" type="radio" name="price">
+                      Swap/Trade
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </section>
 
@@ -318,8 +330,6 @@
         <a class="button is-large is-link is-focused">Post Your Ad</a>
       </div>
     </div>
-
-
   </div>
 </section>
 
