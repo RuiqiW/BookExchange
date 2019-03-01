@@ -8,40 +8,75 @@
 </head>
 
 <body>
-  <div class="content">
-    <div id="profile">
-      <div id="profilePic">
-        <img src="../images/profilePic.jpg" alt=""/>
-        <div class="profilePicChange">
-          <br>
-          Change Profile Picture
-          <input type="file" class="profilePicEdit" name="file"/>
-        </div>
-      </div>
 
-      <div id="editProfile">
-        <h3>Firstname Lastname</h3>
-        <div class="boxed">
-          <h4>
-            Here is my bio description. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Vivamus faucibus quam ante,
-            quis pulvinar lectus rutrum non. Nam nec porttitor quam.
-            Vivamus nec dui commodo arcu placerat ornare. Aenean feugiat mauris in nibh semper semper.
-            Sed faucibus dolor non orci sollicitudin, at vehicula mauris maximus. Donec at purus odio.
-            Nullam tristique dui tellus, quis placerat arcu accumsan at. Donec consequat justo eros,
-            sed rhoncus ante molestie in. Ut libero tellus, ultrices eu facilisis ut, viverra non eros.
-            Mauris rhoncus blandit semper. Curabitur eu iaculis ligula. Maecenas in aliquet nibh.
-            Mauris non malesuada tortor. Praesent id viverra nulla. Vivamus commodo euismod ultrices.
-          </h4>
-        </div>
-      </div>
+<div id="chatRoom">
+  <div id="chatHide">
+    <a href="#">&times;</a>
+  </div>
 
-      <div id=profileInfo>
-        <p>User Id: <span>userid</span></p>
-        <p>Phone Number: <span>123 456 7890	</span></p>
-        <p>Payment Method: <span>handle the transaction by myself</span></p>
-        <input type="submit" class="profileEdit" name="editButton" value="Edit Profile"/>
+  <iframe src="chatbox.html" id="chatbox"></iframe>
+</div>
+
+<div id="topNavBar">
+  <span id="navExpansion">&#9776;</span>
+
+  <ul>
+    <li>
+      <!--TODO: drop-down list to select message to display-->
+      <div id="chatShow" class="topBarImageContainer">
+        <img class="topBarImage" src="../images/admin/chat.png" alt="chatPlaceholder">
+      </div>
+    </li>
+    <li>
+      <a href="../index.html">
+        <div class="topBarImageContainer">
+          <img class="topBarImage" src="../images/admin/logout.png" alt="logOutPlaceholder">
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="content">
+  <div id="profile">
+    <div id="profilePic">
+      <img class="profile-pic" src="../images/profilePic.jpg" alt=""/>
+      <br>
+      <br>
+      Change Profile Picture
+      <input type="file" class="file-upload" name="file" accept="image/*"/>
+    </div>
+
+    <div id="editProfile">
+      <h3>Firstname Lastname</h3>
+    </div>
+
+    <div id=profileInfo>
+      <textarea rows="10" cols="50" readonly="readonly">
+        Here is my bio description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus quam ante, quis pulvinar lectus rutrum non. Nam nec porttitor quam.
+        Vivamus nec dui commodo arcu placerat ornare. Aenean feugiat mauris in nibh semper semper.
+        Sed faucibus dolor non orci sollicitudin, at vehicula mauris maximus. Donec at purus odio.
+        Nullam tristique dui tellus, quis placerat arcu accumsan at. Donec consequat justo eros,
+        sed rhoncus ante molestie in. Ut libero tellus, ultrices eu facilisis ut, viverra non eros.
+      </textarea>
+      <p>User Id: <span>userid</span></p>
+      <p>Phone Number: <span>123 456 7890	</span></p>
+      <input type="submit" class="profileEdit" name="editButton" value="Edit Profile"/>
+
+      <div class="payment">
+        <div class="custom-select" style="width:200px;">
+          <p>Payment Method</p>
+          <select>
+            <option value="0">Select Payment Method</option>
+            <option value="1">Handle Transaction by Credit Card</option>
+            <option value="2">Handle Transaction by Myself</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
+
+</div>
+
+<script type="text/javascript" src="../scripts/userProfile.js"></script>
 </body>
