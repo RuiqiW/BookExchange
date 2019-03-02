@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!--Flavicon-->
@@ -12,6 +12,9 @@
 
   <!--My CSS-->
   <link rel="stylesheet" type="text/css" href="../styles/login.css">
+
+  <!--Javascript-->
+  <script defer src="../scripts/login.js" type="module"></script>
 
   <!--Title-->
   <title>Sign In</title>
@@ -27,9 +30,11 @@
     </div>
 
     <div class="content">
-      <form method="POST" action="#">
 
-        <input id="email" type="email" name="email" title="email" placeholder="Email" required autofocus>
+      <!--Must change method="GET" to "POST" when we have a database-->
+      <form id="signIn" method="GET" action="#">
+
+        <input id="email" type="text" name="username" title="Username" placeholder="Username" required autofocus>
         <input id="password" type="password" name="password" title="password" placeholder="Password" required>
 
         <div class="level options">
