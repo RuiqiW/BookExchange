@@ -1,14 +1,57 @@
-#chat{
-    min-height: 100px;
+#chatRoom{
+    position: fixed;
+    bottom: 30px;
+    right: 80px;
+    background-color: white;
+    height: 300px;
+    width: 250px;
+    z-index: 1;
+    display: none;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#chatHide {
+    display: block;
+}
+
+#chatHide a{
+    text-decoration: none;
+    display: inline;
+    margin-left: 230px;
+}
+
+#chatShow:hover{
+    cursor: pointer;
 }
 
 #messageBox{
-    display:block;
-    width: 200px;
-    max-height: 70px;
+    display: inline-block;
+    margin-left:5px;
+    width: 210px;
+    max-height: 90px;
     font-size: 14px;
     resize: none;
-    overflow: hidden;
+}
+
+#sendButton{
+    background-color: white;
+    border: none;
+    float: right;
+    margin-right: 5px;
+
+}
+
+.blue{
+    color: #44aaee;
+}
+
+#chat{
+    height: 200px;
+    width: 250px;
+    margin: 5px;
+    overflow: auto;
 }
 
 .chatInBubble {
@@ -42,4 +85,62 @@
     padding-left: 10px;
     padding-right: 10px;
     text-align: right;
+}
+
+
+/************* drop down list chat ***************/
+
+.dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 300px;
+    right: 15px;
+    z-index: 1;
+}
+
+.dropdownContent a {
+    color: black;
+    padding: 12px;
+    display: block;
+}
+
+.dropdownContent a:hover {
+    text-decoration: none;
+    background-color: whitesmoke;
+    display: block;
+}
+
+.dropdown:hover{
+    cursor: pointer;
+}
+.dropdown:hover .dropdownContent {
+    display: block;
+}
+
+.profileIconContainer {
+    height: 50px;
+    width: 50px;
+    margin: 5px;
+    float: left;
+}
+
+.profileIcon {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    float: left;
+}
+
+.profileContent{
+    margin-top: 10px;
+}
+
+.profile {
+    border-bottom: 1px solid silver;
+    overflow: auto;
+}
+
+.grey {
+    color: grey;
 }

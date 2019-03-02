@@ -4,15 +4,15 @@ const messageBox = document.querySelector("#messageBox");
 const sendButton = document.querySelector("#sendButton");
 const chat = document.querySelector('#chat');
 
-messageBox.addEventListener('keydown', resize);
+// messageBox.addEventListener('keydown', resize);
 sendButton.addEventListener('click', sendMessage);
 
-function resize(){
-    const e = this;
-        e.style.padding = '0 px';
-        e.style.height = 'auto';
-        e.style.height = e.scrollHeight + 'px';
-}
+// function resize(){
+//     const e = this;
+//         e.style.padding = '0 px';
+//         e.style.height = 'auto';
+//         e.style.height = e.scrollHeight + 'px';
+// }
 
 function sendMessage(e){
     e.preventDefault();
@@ -22,7 +22,6 @@ function sendMessage(e){
         if(message.length > 0 && message.length < 200){
             addMessage(message);
         }
-        // messageBox.value = "";
     }
 }
 

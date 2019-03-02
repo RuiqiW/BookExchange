@@ -6,6 +6,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="../styles/adminDashboard.css" type="text/css" rel="stylesheet">
+    <link href="../styles/chatbox.css" type="text/css" rel="stylesheet">
     <!--icon library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -15,8 +16,21 @@
     <div id="chatHide">
         <a href="#">&times;</a>
     </div>
+    <div id="chat">
+        <!--A sample bubble-->
+        <div class="chatInBubble">
+            <p class="chatInText">Hello</p>
+        </div>
 
-    <iframe src="chatbox.html" id="chatbox"></iframe>
+    </div>
+
+    <div id="message">
+        <form>
+            <textarea id="messageBox"  placeholder="Message..." ></textarea>
+            <button id="sendButton" class="submit"><i class="fa fa-send blue submit"></i></button>
+        </form>
+    </div>
+
 </div>
 
 
@@ -27,7 +41,6 @@
     <div class="logo">
         <div class="logoContainer">
 
-            <!--TODO: use logo here-->
             <img src="../images/admin/uoft.jpg" class="logoIcon" alt="">
         </div>
     </div>
@@ -49,8 +62,18 @@
         <ul>
             <li>
                 <!--TODO: drop-down list to select message to display-->
-                <div id="chatShow" class="topBarImageContainer">
+                <div id="chatShow" class="topBarImageContainer dropdown">
                     <img class="topBarImage" src="../images/admin/chat.png" alt="chatPlaceholder">
+                    <div class="dropdownContent">
+                        <div class="profile">
+                            <div class="profileIconContainer">
+                                <img src="../images/profilePic.jpg" alt="ProfilePic" class="profileIcon">
+                            </div>
+                            <div class = "profileContent">
+                                <strong>User1</strong><br><span class="grey">Hello</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </li>
             <li>

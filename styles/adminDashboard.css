@@ -53,41 +53,6 @@ body{
     display: block;
 }
 
-
-/**************** Chat Box **************/
-#chatRoom{
-    position: fixed;
-    bottom: 30px;
-    right: 80px;
-    background-color: white;
-    height: 300px;
-    width: 250px;
-    z-index: 1;
-    display: none;
-}
-
-
-#chatHide {
-    display: block;
-}
-
-#chatHide a{
-    text-decoration: none;
-    display: inline;
-    margin-left: 230px;
-}
-
-#chatbox{
-    height: 200px;
-    width: 250px;
-}
-
-#chatShow:hover{
-    cursor: pointer;
-}
-
-
-
 #main {
     transition: margin-left 0.5s;
 }
