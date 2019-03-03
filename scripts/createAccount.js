@@ -2,7 +2,7 @@ import User, { users } from '../classes/User.js';
 
 
 /**
- * DOM elements
+ * This module handles creating a new account for a user.
  */
 const createAccountForm = document.querySelector('#createAccountForm');
 createAccountForm.addEventListener('submit', handleCreateAccount);
