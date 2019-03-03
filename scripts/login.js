@@ -1,4 +1,5 @@
-import { users } from '../classes/User.js';
+import { users } from '../classes/data.js';
+
 
 /**
  * DOM elements

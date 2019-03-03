@@ -1,4 +1,5 @@
-import { User, users } from '../classes/User.js';
+import { User } from '../classes/User.js';
+import { users } from '../classes/data.js';
 
 
 /**
