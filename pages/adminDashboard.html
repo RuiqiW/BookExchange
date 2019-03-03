@@ -179,19 +179,9 @@
 
             <!--Search User-->
             <form id="userSearch">
-                <input type="text" placeholder="Search...">
-                <button><i class="fa fa-search"></i></button>
+                <input id="userKeyword" type="text" placeholder="Search...">
+                <button id="userSearchButton"><i class="fa fa-search"></i></button>
             </form>
-
-            <!--&lt;!&ndash;Display Mode&ndash;&gt;-->
-            <!--<div id="view-filter">-->
-            <!--<button id="list-view" class="viewButton active">-->
-            <!--<i class="fa fa-list-ul"></i> List View-->
-            <!--</button>-->
-            <!--<button id="grid-view" class="viewButton">-->
-            <!--<i class="fa fa-th"></i> Grid View-->
-            <!--</button>-->
-            <!--</div>-->
         </div>
 
         <div id="userTable">
@@ -209,7 +199,7 @@
 
                 <div class="userAction">
                     <button class="viewUserDetail" id="sampleViewUser">View Detail</button>
-                    <button class="deleteUser">Delete</button>
+                    <button class="deleteUser" disabled>Delete</button>
                 </div>
             </div>
 
