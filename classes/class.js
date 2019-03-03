@@ -28,13 +28,12 @@ class Transaction{
         this.post = post;
         this.buyer = buyer;
         this.amount = amount;
-        this.date = date.getTime();
+        this.date = date.toDateString();
         this.status = 0;    // 0 for uncompleted, 1 for completed
         transactionId ++;
         post.isSold = 1;
         post.transaction = this;
         buyer.purchase.push(post);
-
     }
 }
 
