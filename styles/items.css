@@ -257,9 +257,10 @@ body {
 }
 
 #topBarIcons {
+    float: right;
     position: relative;
-    left: 1450px;
-    top: -40px;
+    top: 15px;
+    right: 10px;
 }
 .removeFromCart {
     margin-bottom: 5px;
