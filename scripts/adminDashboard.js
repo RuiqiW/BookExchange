@@ -1,109 +1,8 @@
 import { users } from '../classes/User.js';
+import { posts } from '../classes/class.js';
+import { transactions } from '../classes/class.js';
 
-// data: will be implemented by database later
-// let userId = 0;
-let postId = 0;
-let transactionId = 0;
-let date = new Date();
-
-// class User {
-//     constructor(firstName, lastName, userName, email, password) {
-//         this.firstName = firstName;
-//         this.lastName = lastName;
-//         this.userName = userName;
-//         this.email = email;
-//         this.password = password;
-//     }
-// }
-//
-// class UserProfile {
-//     constructor(user) {
-//         this.userId = userId;
-//         this.user = user;
-//         this.avatar = ""; // src of avatar
-//         this.bio = "";
-//         this.phone = "1234567890";
-//         this.sell = []; // selling items
-//         this.purchase = []; // purchased items
-//         this.shortlist = []; // Add to Cart items
-//         userId++;
-//     }
-// }
-
-class Post {
-    constructor(title, seller) {
-        this.postId = postId;
-        this.title = title;
-        this.seller = seller;
-        this.image = "";
-        this.category = "Textbook";
-        this.condition = "New";
-        this.description = "";
-        this.price = "$10";
-        postId++;
-        this.isSold = 0;
-        //Should bind with the corresponding transaction if there is one
-        this.transaction = null;
-        seller.sell.push(this);
-    }
-}
-
-class Transaction {
-    constructor(post, buyer, amount) {
-        this.id = transactionId;
-        this.post = post;
-        this.buyer = buyer;
-        this.amount = amount;
-        this.date = date.toDateString();
-        this.status = 0;    // 0 for uncompleted, 1 for completed
-        transactionId++;
-        post.isSold = 1;
-        post.transaction = this;
-        buyer.purchase.push(post);
-
-    }
-}
-
-// // User Profiles
-// const users = [];
-// const defaultUser = new User("user", "user", "user", "user@example.com", "user");
-// users.push(new UserProfile(defaultUser));
-// const user1 = new User("user1", "user1", "user1", "user1@example.com", "user1");
-// users.push(new UserProfile(user1));
-
-// Posts
-const posts = [];
-const post1 = new Post("Calculus", users[0]);
-post1.image = "../images/admin/textbook1.jpg";
-posts.push(post1);
-
-const post2 = new Post("Algorithms", users[1]);
-post2.image = "../images/admin/textbook2.jpg";
-posts.push(post2);
-
-const post3 = new Post("Chez Nous", users[1]);
-post3.image = "../images/admin/textbook3.jpg";
-posts.push(post3);
-
-const post4 = new Post("Microeconomics", users[0]);
-post4.image = "../images/admin/textbook4.jpg";
-posts.push(post4);
-
-const post5 = new Post("Statistics", users[0]);
-post5.image = "../images/admin/textbook5.jpg";
-posts.push(post5);
-
-const post6 = new Post("Web Programming", users[0]);
-posts.push(post6);
-
-const post7 = new Post("Linear Algebra", users[1]);
-posts.push(post7);
-
-const transactions = [];
-transactions.push(new Transaction(post6, users[0], "$45"));
-transactions.push(new Transaction(post7, users[1], "$24"));
-const messages = [];
-
+const messages=[];
 
 let postEdited = 0;
 
@@ -115,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loadTransactionNum();
     loadMessageNum();
     loadTransaction();
+    loadPost(0);
 
 });
 
@@ -141,6 +41,25 @@ function loadTransaction(){
             createTransactionEntry(transactions[i]);
         }
     }
+}
+
+function loadPost(){
+    let j = 5;
+    for(let i = 0; i < posts.length; i++){
+        if(j > 0){
+           if(posts[i].isSold === 0){
+               createPost(posts[i]);
+           }
+            j--;
+        }else{
+            break;
+        }
+    }
+
+    const deleteItems = document.querySelectorAll('.deleteItem');
+    Array.from(deleteItems).forEach(function (element) {
+        element.addEventListener('click', deleteItem);
+    });
 }
 
 
@@ -186,45 +105,93 @@ function hideChatRoom(e) {
 const editPost = document.querySelector("#editPost");
 editPost.addEventListener('click', changeEditMode);
 
-const deleteItems = document.querySelectorAll('.deleteItem');
-
-Array.from(deleteItems).forEach(function (element) {
-    element.addEventListener('click', deleteItem);
-});
-
 function changeEditMode(e) {
     e.preventDefault();
 
     if (postEdited === 0) {
         postEdited = 1;
         editPost.innerText = "save";
+        const deleteItems = document.querySelectorAll('.deleteItem');
         for (let i = 0; i < deleteItems.length; i++) {
             deleteItems[i].style.display = "inline-block";
         }
     } else {
         postEdited = 0;
         editPost.innerText = "edit";
+        loadPostNum();
+        const deleteItems = document.querySelectorAll('.deleteItem');
         for (let i = 0; i < deleteItems.length; i++) {
             deleteItems[i].style.display = "none";
         }
     }
 }
 
-
 function deleteItem(e) {
     e.preventDefault();
 
     if (window.confirm("Do you want to delete this post?")) {
+        // delete post from posts array
+        const post = e.target.parentElement.parentElement;
+        const postNum = post.lastElementChild.previousSibling;
+        const postId = parseInt(postNum.innerText);
+
+        for(let i = 0; i < posts.length; i++){
+            if(posts[i].postId === postId){
+                posts.splice(i, 1);
+                break;
+            }
+        }
         removePost(e);
         window.alert("You have deleted this post.");
     }
 }
 
 function removePost(e) {
-    const post = e.target.parentElement.parentElement;
+    const post = e.target.parentElement.parentElement.parentElement;
     const entry = post.parentElement;
     entry.removeChild(post);
 }
+
+function createPost(post){
+
+    const close = document.createElement("span");
+    close.className = "deleteItem";
+    const icon = document.createElement('i');
+    icon.classList.add("fa");
+    icon.classList.add("fa-fw");
+    icon.classList.add("fa-close");
+    close.appendChild(icon);
+
+    const img = document.createElement('img');
+    img.src = post.image;
+    img.alt = "textbook";
+    img.className = "textbookImg";
+
+    const id = document.createElement("span");
+    id.className = "postId";
+    id.innerText = post.postId;
+
+    const seller = document.createElement("span");
+    seller.className = "seller";
+    seller.innerText = post.seller.user.username;
+
+    const postContainer = document.createElement('div');
+    postContainer.className = "post";
+    postContainer.appendChild(close);
+    postContainer.appendChild(img);
+    postContainer.appendChild(id);
+    postContainer.appendChild(seller);
+
+    const container = document.createElement('div');
+    container.classList.add("col-lg-2");
+    container.classList.add("col-md-4");
+    container.appendChild(postContainer);
+
+    const viewAll = document.querySelector("#viewAll");
+    viewAll.before(container);
+}
+
+
 
 
 /***************** Transaction Management *****************/
@@ -293,11 +260,11 @@ function createTransactionEntry(transaction){
     row.appendChild(title);
 
     const buyer = document.createElement('td');
-    buyer.innerText = transaction.buyer.user.userName;
+    buyer.innerText = transaction.buyer.user.username;
     row.appendChild(buyer);
 
     const seller = document.createElement('td');
-    seller.innerText = transaction.post.seller.user.userName;
+    seller.innerText = transaction.post.seller.user.username;
     row.appendChild(seller);
 
     const amount = document.createElement('td');

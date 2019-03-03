@@ -122,7 +122,6 @@ users.push(new UserProfile(new User('admin', 'admin', 'admin', 'admin@example.co
 
 for (let i = 2; i < 51; i++) {
   users.push(new UserProfile(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`)));
-  users.push(new UserProfile(new User(`admin${i}`, `admin${i}`, `admin${i}`, `admin${i}@example.com`, `admin${i}`)));
 }
 
 users.push(new UserProfile(new User('Donald', 'Trump', 'America', 'dtrump@president.com', 'user')));
