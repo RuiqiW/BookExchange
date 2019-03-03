@@ -10,7 +10,7 @@ export class Post{
 
     constructor(title, seller){
         this._postId = postId;
-        this._image = "";
+        this._image = [];
         this._category = "Textbook";
         this._condition = "New";
         this._description = "";
@@ -43,9 +43,6 @@ export class Post{
         return this._image;
     }
 
-    set image(value) {
-        this._image = value;
-    }
 
     get category() {
         return this._category;
