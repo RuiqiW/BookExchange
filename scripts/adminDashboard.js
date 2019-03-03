@@ -5,6 +5,7 @@ import { transactions } from '../classes/Transaction.js';
 const messages=[];
 
 let postEdited = 0;
+let shownUserNum = 0;
 
 
 // load data on DOM loaded, will use database query instead in Phase 2
@@ -14,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
     loadTransactionNum();
     loadMessageNum();
     loadTransaction();
-    loadPost(0);
+    loadPost();
+    loadUserList(0);
 
 });
 
@@ -63,6 +65,15 @@ function loadPost(){
 }
 
 
+function loadUserList(){
+    const length = Math.min(users.length - shownUserNum, 3);
+    for(let i = 0; i < length; i++){
+        createUserList(users[i + shownUserNum]);
+    }
+    shownUserNum += length;
+}
+
+
 
 /********** navigation bar and chat box expansion and close ***********/
 
@@ -77,12 +88,14 @@ const chatHide = document.querySelector("#chatHide");
 chatHide.addEventListener('click', hideChatRoom);
 chatShow.addEventListener('click', showChatRoom);
 
-function openSideNav() {
+function openSideNav(e) {
+    e.preventDefault();
     document.querySelector("#sideNav").style.width = "250px";
     main.style.marginLeft = "250px";
 }
 
-function closeSideNav() {
+function closeSideNav(e) {
+    e.preventDefault();
     document.querySelector("#sideNav").style.width = "0";
     main.style.marginLeft = "0";
 }
@@ -98,6 +111,9 @@ function hideChatRoom(e) {
     const chatRoom = document.querySelector('#chatRoom');
     chatRoom.style.display = "none";
 }
+
+
+
 
 
 /***************** Post Management *****************/
@@ -162,10 +178,8 @@ function createPost(post){
     icon.classList.add("fa-close");
     close.appendChild(icon);
 
-
-    //TODO: PLEASE FIX HERE TO ALLOW MULTIPLE PICTURE
     const img = document.createElement('img');
-    img.src = post.image[0];
+    img.src = post.image;
     img.alt = "textbook";
     img.className = "textbookImg";
 
@@ -194,6 +208,99 @@ function createPost(post){
 }
 
 
+
+
+/******************** User Management ********************/
+
+const userTable = document.querySelector("#userTable");
+const sampleViewUser = document.querySelector("#sampleViewUser");
+const showLessButton = document.querySelector("#showLessUser");
+const showMoreButton = document.querySelector('#showMoreUser');
+
+sampleViewUser.addEventListener('click', viewUserDetail);
+showLessButton.addEventListener('click', showLess);
+showMoreButton.addEventListener('click', showMore);
+
+
+function viewUserDetail(e){
+    e.preventDefault();
+
+    window.open("../pages/userProfile.html");
+}
+
+
+function showLess(e){
+    e.preventDefault();
+
+    const userEntries = document.querySelectorAll('.userEntry');
+    const num = shownUserNum;
+    for(let i = 1; i <= num; i++){
+        try {
+            userTable.removeChild(userEntries[i]);
+            shownUserNum--;
+        }catch(error){}
+    }
+}
+
+
+function showMore(e){
+    e.preventDefault();
+
+    loadUserList();
+}
+
+
+
+function createUserList(user){
+
+    const userEntry = document.createElement("div");
+    userEntry.className = "userEntry";
+
+    const userContainer = document.createElement('div');
+    userContainer.className = "user";
+    userEntry.appendChild(userContainer);
+
+    // User Picture
+    const userPicContainer = document.createElement('div');
+    userPicContainer.className = "userPicContainer";
+    userContainer.appendChild(userPicContainer);
+
+    const userPic = document.createElement('img');
+    userPic.src = user.avatar;
+    userPic.className = "userPic";
+    userPic.alt = "userPic";
+    userPicContainer.appendChild(userPic);
+
+    // User Description
+    const userContent = document.createElement('div');
+    userContent.className = "userContent";
+    userContainer.appendChild(userContent);
+
+    const username = document.createElement('strong');
+    username.innerText = user.user.username;
+    userContent.appendChild(username);
+
+    const bio = document.createElement('p');
+    bio.innerText = user.bio;
+    userContent.appendChild(bio);
+
+
+    const userAction = document.createElement('div');
+    userAction.className = "userAction";
+    userEntry.appendChild(userAction);
+
+    const viewUser = document.createElement('button');
+    viewUser.className = "viewUserDetail";
+    viewUser.innerText = "View Detail";
+    userAction.appendChild(viewUser);
+
+    const deleteUser = document.createElement("button");
+    deleteUser.className = "deleteUser";
+    deleteUser.innerText = "Delete";
+    userAction.appendChild(deleteUser);
+
+    userTable.appendChild(userEntry);
+}
 
 
 /***************** Transaction Management *****************/

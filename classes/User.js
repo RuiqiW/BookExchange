@@ -60,7 +60,7 @@ export class UserProfile{
   constructor(user){
     this._userId = userId;
     this._user = user;
-    this._avatar = "";                  // src of avatar
+    this._avatar = "../images/profilePic.jpg";                  // src of avatar
     this._bio = "";
     this._phone = "1234567890";
     this._sell = [];                    // selling items
