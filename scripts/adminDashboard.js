@@ -1,6 +1,6 @@
 import { users } from '../classes/User.js';
-import { posts } from '../classes/class.js';
-import { transactions } from '../classes/class.js';
+import { posts } from '../classes/Post.js';
+import { transactions } from '../classes/Transaction.js';
 
 const messages=[];
 
@@ -47,7 +47,7 @@ function loadPost(){
     let j = 5;
     for(let i = 0; i < posts.length; i++){
         if(j > 0){
-           if(posts[i].isSold === 0){
+           if(posts[i].isSold === false){
                createPost(posts[i]);
            }
             j--;
@@ -173,7 +173,7 @@ function createPost(post){
 
     const seller = document.createElement("span");
     seller.className = "seller";
-    seller.innerText = post.seller.user.username;
+    seller.innerText = `seller: ${post.seller.user.username}`;
 
     const postContainer = document.createElement('div');
     postContainer.className = "post";

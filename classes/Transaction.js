@@ -1,5 +1,5 @@
-import {users} from "./User";
-
+import {users} from "./User.js";
+import {posts} from "./Post.js";
 
 
 let transactionId = 0;
@@ -55,8 +55,8 @@ export class Transaction{
 
 
 const transactions =[];
-transactions.push(new Transaction(post6, users[2], "$45"));
-transactions.push(new Transaction(post7, users[0], "$24"));
+transactions.push(new Transaction(posts[5], users[2], "$45"));
+transactions.push(new Transaction(posts[6], users[0], "$24"));
 
 
 
