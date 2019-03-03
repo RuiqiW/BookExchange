@@ -65,7 +65,7 @@ function handlePostAd(e) {
 
   // Create the new Post
   // TODO: How to get the seller?
-  const post = new Post(title, "SELLER??", price, category, condition, description);
+  const post = new Post(title, "SELLER??", price, category, condition, description, images);
   posts.push(post);
 
 

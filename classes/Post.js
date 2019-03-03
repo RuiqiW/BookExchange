@@ -4,12 +4,12 @@
 
 let postId = 0;
 export class Post {
-  constructor(title, seller, price, category, condition, description) {
+  constructor(title, seller, price, category, condition, description, images) {
     this._postId = postId++;
     this._title = title;
     this._seller = seller;
     seller.sell.push(this);
-    this._image = [];
+    this._images = images === [] ? [] : images;
     this._category = category;
     this._condition = condition;
     this._description = description;
@@ -34,8 +34,8 @@ export class Post {
   }
 
 
-  get image() {
-    return this._image;
+  get images() {
+    return this._images;
   }
 
   get category() {
