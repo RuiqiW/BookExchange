@@ -22,7 +22,7 @@ function handleLogin(e) {
   }
 
   // Success. Bring the user to their profile page
-  // This works, but how do we direct a user to their unique page???
+  // TODO: This works, but how do we direct a user to their unique page???
   document.location = '../pages/userProfile.html';
 
 }
