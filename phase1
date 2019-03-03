@@ -1,0 +1,71 @@
+Credentials:
+
+Standard user: username user, password: user
+Admin user: username: admin, password: admin
+
+
+
+Functionality:
+
+index page:
+       1. Search
+          when click on "Search on UofTExchange", the result will show all the items posted,
+          if there is no input in the "Search item" input box, or show items related to the
+          input otherwise.
+
+          Please type in "textbook" to show a sample search result
+
+       2. Log In
+          The page will jump to login page
+
+       3. My cart
+          If user did not log in, the page will jump to login page.
+          Otherwise, the page will jump to the user's shopping cart.
+
+
+login page:
+       1. Log in
+          Please use the credentials as in "Credential" section above to log in.
+       2. Sign up
+          When click "submit", a message will pop up showing whether a new account has been
+          created successfully. There will also be a link that redirects the page to index page.
+
+          Note： the newly created user will not be saved in this phase.
+          In Phase2, we will implement this functionality by saving user information in the database
+          when "submit" is clicked on, and look up this user information when log in.
+
+
+items page:
+       1. Sorting items (View by price/type/post date)
+
+       2. Add to Cart
+
+       3. Contact the Seller
+
+       4. Buy this Item
+
+
+
+
+user profile page:
+       1. Edit profile
+          user will be able to edit their profile picture, bio, phone number.
+
+          Please select (to do: fill in the name of the picture) under images to show the
+          effect of changing profile picture. In Phase 2, the picture uploaded will be stored
+          in database.
+
+        2. Manage Shopping Cart
+
+
+
+admin dashboard page:
+
+
+
+
+
+
+
+
+
