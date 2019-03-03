@@ -1,12 +1,10 @@
-"use strict";
+import { users } from '../classes/User.js';
 
 // data: will be implemented by database later
 // let userId = 0;
 let postId = 0;
 let transactionId = 0;
 let date = new Date();
-
-import {users} from "../classes/User.js";
 
 // class User {
 //     constructor(firstName, lastName, userName, email, password) {
