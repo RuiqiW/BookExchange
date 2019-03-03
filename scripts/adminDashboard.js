@@ -162,8 +162,10 @@ function createPost(post){
     icon.classList.add("fa-close");
     close.appendChild(icon);
 
+
+    //TODO: PLEASE FIX HERE TO ALLOW MULTIPLE PICTURE
     const img = document.createElement('img');
-    img.src = post.image;
+    img.src = post.image[0];
     img.alt = "textbook";
     img.className = "textbookImg";
 
