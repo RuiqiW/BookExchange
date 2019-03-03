@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse Items</title>
+    <link href="../styles/shoppingCart.css" type="text/css" rel="stylesheet">
+    <!--Lightbox CSS-->
+    <link href="../lightbox/css/lightbox.css" rel="stylesheet">
+    <!--jquery for lightbox-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="topBar">
+    <img id="topBarLogo" src="../images/logo.png" alt="logo">
+
+    <form id="searchForm">
+        <input id="searchBox" type="text" placeholder="Search here...">
+        <button id="searchButton" type="submit">
+            <span id="searchButtonText">Search</span>
+        </button>
+    </form>
+
+    <!--This is used to hold the user icon after login-->
+    <div id="userInfo">
+        <button id="logIn">
+            <a href="./login.html"> </a>
+            <span id="logInButtonText">Log In</span>
+        </button>
+    </div>
+</div>
+<div id="resultPage">
+    <div id="searchResult">
+        Here is your shopping cart.........
+    </div>
+    <div id="posts">
+        <div class="post">
+            <img class="profilePhoto" src="../images/items/seller1.jpg" alt="sellerPhoto">
+            <span class="userName"> Donald Trump </span>
+            <br>
+            <span class="category"> Category: Books </span>
+            <span class="condition"> Condition: New </span>
+            <div class="description">
+                I want to sell a textbook for MAT224. Please contact me if you want
+                more information!
+            </div>
+            <div class="price">
+                CAD 19.99
+            </div>
+            <hr>
+            <button class="removeFromCart">Remove from Cart</button>
+            <button class="contactSeller">Contact the Seller</button>
+            <button class="buyItem"> Buy this item</button>
+        </div>
+        <div class="post">
+            <img class="profilePhoto" src="../images/items/seller2.jpeg" alt="sellerPhoto">
+            <span class="userName"> Mike Penth </span>
+            <br>
+            <span class="category"> Category: Books </span>
+            <span class="condition"> Condition: New </span>
+            <div class="description">
+                I want to sell a textbook for MAT223. Please contact me if you want
+                more information!
+            </div>
+            <div class="price">
+                CAD 29.99
+            </div>
+            <div class="pictureContainer">
+                <a href="../images/items/sampleBook1.jpg" data-lightbox="sampleBook1">
+                    <img class="itemPicture" src="../images/items/sampleBook1.jpg" alt="picture">
+                </a>
+            </div>
+            <hr>
+            <button class="removeFromCart">Remove from Cart</button>
+            <button class="contactSeller">Contact the Seller</button>
+            <button class="buyItem"> Buy this item</button>
+        </div>
+        <div id="endOfResults">
+            End of results
+        </div>
+    </div>
+
+
+</div>
+<!--Script for lightbox-->
+<script src="../lightbox/js/lightbox.js"></script>
+<script type="text/javascript" src="../scripts/shoppingCart.js"></script>
+</body>
+</html>

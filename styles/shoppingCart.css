@@ -96,9 +96,9 @@ body {
     max-width: 800px;
     min-width: 500px;
     background-color: white;
-    margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
+
 }
 
 #result{
@@ -149,7 +149,7 @@ body {
     font-weight: bold;
 }
 
-.addToCart {
+.removeFromCart {
     margin-bottom: 5px;
     margin-left: 10px;
     background-color: dodgerblue;
@@ -192,4 +192,11 @@ body {
     background-color: white;
     border-radius: 10px;
 
+}
+
+#emptyInformation {
+    font-weight: bold;
+    font-size: 200%;
+    background-color: #e6ecf0;
+    margin-top: 10px;
 }
