@@ -3,6 +3,7 @@ import { posts } from '../classes/data.js';
 import { transactions } from '../classes/data.js';
 
 const messages=[];
+messages.push("Hello");
 
 let postEdited = 0;
 let shownUserNum = 0;
@@ -68,7 +69,8 @@ function loadPost(){
 function loadUserList(){
     const length = Math.min(users.length - shownUserNum, 3);
     for(let i = 0; i < length; i++){
-        createUserList(users[i + shownUserNum]);
+        const userEntry = createUserList(users[i + shownUserNum]);
+        userTable.appendChild(userEntry);
     }
     shownUserNum += length;
 }
@@ -212,14 +214,19 @@ function createPost(post){
 
 /******************** User Management ********************/
 
+const userList = document.querySelector("#userList");
 const userTable = document.querySelector("#userTable");
+const listEnd = document.querySelector("#userListEnd");
 const sampleViewUser = document.querySelector("#sampleViewUser");
+
 const showLessButton = document.querySelector("#showLessUser");
 const showMoreButton = document.querySelector('#showMoreUser');
+const userSearchButton = document.querySelector('#userSearchButton');
 
 sampleViewUser.addEventListener('click', viewUserDetail);
 showLessButton.addEventListener('click', showLess);
 showMoreButton.addEventListener('click', showMore);
+userSearchButton.addEventListener('click', searchUser);
 
 
 function viewUserDetail(e){
@@ -229,6 +236,7 @@ function viewUserDetail(e){
 }
 
 
+// show more user
 function showLess(e){
     e.preventDefault();
 
@@ -243,6 +251,7 @@ function showLess(e){
 }
 
 
+// show less user
 function showMore(e){
     e.preventDefault();
 
@@ -250,7 +259,79 @@ function showMore(e){
 }
 
 
+function searchUser(e){
+    e.preventDefault();
 
+    const keyword = document.querySelector('#userKeyword').value;
+    if(keyword !== ""){
+        for(let i=0; i < users.length; i++){
+            if(keyword === users[i].user.username){
+                showResult(users[i]);
+                return;
+            }
+        }
+        showNoResult();
+
+    }else{
+        userTable.style.display = "block";
+        listEnd.style.display = "block";
+
+        // hide search result table
+        const userTable1 = document.querySelector('#userTable1');
+        if(userTable1!== null){
+            userTable1.style.display = "none";
+        }
+    }
+}
+
+
+function showResult(user){
+
+    const resultTableOld = document.querySelector("#userTable1");
+    if(resultTableOld !== null){
+        userList.removeChild(resultTableOld);
+    }
+
+    const userTable1 = document.createElement('div');
+    userTable1.id = "userTable1";
+
+    const userEntry = createUserList(user);
+
+    userTable1.appendChild(userEntry);
+    listEnd.before(userTable1);
+
+    userTable.style.display = "none";
+    listEnd.style.display = "none";
+
+}
+
+
+// helper function for show search user, deals with the situation when
+// no result has been found
+function showNoResult(){
+
+    const resultTableOld = document.querySelector("#userTable1");
+    if(resultTableOld !== null){
+       userList.removeChild(resultTableOld);
+    }
+
+    const userTable1 = document.createElement('div');
+    userTable1.id = "userTable1";
+
+    const noResultEntry = document.createElement('div');
+    noResultEntry.className = "userEntry";
+    noResultEntry.innerText = "No Result Found";
+
+    userTable1.appendChild(noResultEntry);
+    listEnd.before(userTable1);
+
+    userTable.style.display = "none";
+    listEnd.style.display = "none";
+}
+
+
+
+// Create an entry for user table
 function createUserList(user){
 
     const userEntry = document.createElement("div");
@@ -299,11 +380,14 @@ function createUserList(user){
     deleteUser.innerText = "Delete";
     userAction.appendChild(deleteUser);
 
-    userTable.appendChild(userEntry);
+    return userEntry;
 }
 
 
+
+
 /***************** Transaction Management *****************/
+
 
 const approveButtons = document.querySelectorAll(".approve");
 const denyButtons = document.querySelectorAll(".deny");
@@ -415,6 +499,7 @@ function createTransactionEntry(transaction){
 
 
 /*********************** Chat Box ************************/
+
 const chat = document.querySelector('#chat');
 const sendButton = document.querySelector("#sendButton");
 sendButton.addEventListener('click', sendMessage);
@@ -431,6 +516,8 @@ function sendMessage(e) {
     chat.scrollTop = chat.scrollHeight;
 }
 
+
+// helper function for sendMessage, add message to chat window
 function addMessage(msg) {
     const newMessage = document.createElement('p');
     newMessage.className = "chatOutText";
