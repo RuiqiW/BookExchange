@@ -44,3 +44,17 @@ function saveImageChange(e) {
 function saveImageRevert(e) {
     e.target.setAttribute("src", "images/index/piggy-bank.svg");
 }
+
+// ------------------------ End of functions change on hover --------
+function updateShoppingCart(newNumber) {
+    const shoppingCartNumber = document.querySelector("#cartNumber");
+    shoppingCartNumber.innerText = newNumber;
+}
+
+function init() {
+    //Server call to request item in the shopping cart
+    const cartNumber = 3;
+    updateShoppingCart(cartNumber);
+}
+
+init();
