@@ -40,7 +40,7 @@ function onSortingOptChange() {
             }
         });
     }
-    generateSearchResult(posts);
+    generateSearchResult(posts, users[0]);
 }
 
 function init() {
