@@ -38,6 +38,9 @@ class Post{
         this.description = "";
         this.price = "$10";
         postId ++;
+        this.isSold=0;
+        //Should bind with the corresponding transaction if there is one
+        this.transaction=null;
     }
 }
 
