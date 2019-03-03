@@ -200,3 +200,15 @@ body {
     background-color: #e6ecf0;
     margin-top: 10px;
 }
+
+.loginProfilePhoto {
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    position: relative;
+    top: 10px;
+    right: 20px;
+    border-style: solid;
+    border-color: grey;
+
+}

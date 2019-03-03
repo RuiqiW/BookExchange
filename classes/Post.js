@@ -1,6 +1,3 @@
-import { users } from "./User.js";
-
-
 /**
  * This module contains a Post class for user's when they post an ad.
  */
@@ -12,7 +9,7 @@ export class Post {
     this._title = title;
     this._seller = seller;
     seller.sell.push(this);
-    this._image = "";
+    this._image = [];
     this._category = category;
     this._condition = condition;
     this._description = description;
@@ -39,10 +36,6 @@ export class Post {
 
   get image() {
     return this._image;
-  }
-
-  set image(value) {
-    this._image = value;
   }
 
   get category() {
@@ -93,38 +86,3 @@ export class Post {
     this._transaction = value;
   }
 }
-
-
-// Constant Posts for phase 1
-const posts =[];
-const post1 = new Post("Calculus", users[0]);
-post1.image = "../images/admin/textbook1.jpg";
-posts.push(post1);
-
-const post2 = new Post("Algorithms", users[2]);
-post2.image = "../images/admin/textbook2.jpg";
-posts.push(post2);
-
-const post3 = new Post("Chez Nous", users[2]);
-post3.image = "../images/admin/textbook3.jpg";
-posts.push(post3);
-
-const post4 = new Post("Microeconomics", users[0]);
-post4.image = "../images/admin/textbook4.jpg";
-posts.push(post4);
-
-const post5 = new Post("Statistics", users[0]);
-post5.image = "../images/admin/textbook5.jpg";
-posts.push(post5);
-
-const post6 = new Post("Web Programming", users[0]);
-posts.push(post6);
-
-const post7 = new Post("Linear Algebra", users[2]);
-posts.push(post7);
-
-
-
-
-
-export{ posts };

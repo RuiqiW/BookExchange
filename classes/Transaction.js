@@ -1,7 +1,3 @@
-import {users} from "./User.js";
-import {posts} from "./Post.js";
-
-
 let transactionId = 0;
 let date = new Date();
 
@@ -52,14 +48,3 @@ export class Transaction{
   }
 }
 
-
-
-const transactions =[];
-transactions.push(new Transaction(posts[5], users[2], "$45"));
-transactions.push(new Transaction(posts[6], users[0], "$24"));
-
-
-
-
-
-export{ transactions };

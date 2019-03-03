@@ -100,29 +100,10 @@ export class UserProfile{
   get shortlist() {
     return this._shortlist;
   }
+
+  set avatar(newAvatar) {
+    this._avatar = newAvatar;
+  }
 }
 
 
-/**
- * Create some static Users for the purpose of phase 1
- */
-const users = [];
-
-// Add some users as specified for phase 1
-users.push(new UserProfile(new User('user', 'user', 'user', 'user@example.com', 'user')));
-users.push(new UserProfile(new User('admin', 'admin', 'admin', 'admin@example.com', 'admin')));
-
-for (let i = 2; i < 51; i++) {
-  users.push(new UserProfile(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`)));
-}
-
-users.push(new UserProfile(new User('Donald', 'Trump', 'America', 'dtrump@president.com', 'user')));
-users.push(new UserProfile(new User('Kim', 'Jong-un', 'NorthKorea', 'kimJongUn@president.com', 'user')));
-users.push(new UserProfile(new User('Justin', 'Trudeau', 'Canada', 'trudeau@president.com', 'user')));
-users.push(new UserProfile(new User('Xi', 'Jinping', 'China', 'jinping@president.com', 'user')));
-users.push(new UserProfile(new User('George', 'Washington', 'America1', 'gwashinton@president.com', 'user')));
-
-
-
-
-export { users };
