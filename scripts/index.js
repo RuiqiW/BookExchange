@@ -57,4 +57,14 @@ function init() {
     updateShoppingCart(cartNumber);
 }
 
+const searchButton = document.querySelector("#searchButton");
+searchButton.addEventListener("click", search);
+
+function search(e){
+    e.preventDefault();
+    const keyword = document.querySelector("#searchBox").value;
+    //Serer call to retrieve data......
+    //jump to result page....
+    document.location = "pages/items.html";
+}
 init();
