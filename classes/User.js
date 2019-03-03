@@ -1,7 +1,6 @@
 /**
  * This module contains a User class with some inheritable methods
  */
-let userId = 0;
 export class User {
   constructor(firstName, lastName, username, email, password) {
     // --- Private attributes ---
@@ -10,7 +9,6 @@ export class User {
     this._username = username;
     this._email = email;
     this._password = password;        // we can fix this in phase 2
-    this._bio = '';
   }
 
   // --- Public Methods ---
@@ -54,26 +52,20 @@ export class User {
     this._password = newPassword;
   }
 
-  get bio() {
-    return this._bio;
-  }
-
-  set bio(newBio) {
-    this._bio = newBio;
-  }
-
 }
 
+
+let userId = 0;
 export class UserProfile{
   constructor(user){
     this._userId = userId;
     this._user = user;
-    this._avatar = ""; // src of avatar
+    this._avatar = "";                  // src of avatar
     this._bio = "";
     this._phone = "1234567890";
-    this._sell = []; // selling items
-    this._purchase = []; // purchased items
-    this._shortlist = []; // Add to Cart items
+    this._sell = [];                    // selling items
+    this._purchase = [];                // purchased items
+    this._shortlist = [];               // Add to Cart items
     userId++;
   }
 
@@ -122,7 +114,6 @@ users.push(new UserProfile(new User('admin', 'admin', 'admin', 'admin@example.co
 
 for (let i = 2; i < 51; i++) {
   users.push(new UserProfile(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`)));
-  users.push(new UserProfile(new User(`admin${i}`, `admin${i}`, `admin${i}`, `admin${i}@example.com`, `admin${i}`)));
 }
 
 users.push(new UserProfile(new User('Donald', 'Trump', 'America', 'dtrump@president.com', 'user')));

@@ -1,4 +1,4 @@
-import User, { users } from '../classes/User.js';
+import { User, users } from '../classes/User.js';
 
 
 /**
@@ -12,7 +12,6 @@ createAccountForm.addEventListener('submit', handleCreateAccount);
 function handleCreateAccount(e) {
   e.preventDefault();
 
-  console.log(e);
 
   // Collect the entered fields
   const firstName = document.querySelector('#firstName').value;
@@ -55,6 +54,6 @@ function handleCreateAccount(e) {
   // We would send to database here
   users.push(user);
 
-  // Redirect the page to their profile
+  // Redirect the page to login
   document.location = '../pages/login.html';
 }

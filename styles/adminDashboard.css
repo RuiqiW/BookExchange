@@ -194,6 +194,10 @@ body{
     cursor: pointer;
 }
 
+.seller, .postId{
+    margin-left: 10px;
+}
+
 /**************** Transaction listing ****************/
 
 #transactionList{
