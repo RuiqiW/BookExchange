@@ -1,6 +1,6 @@
-import { users } from '../classes/User.js';
-import { posts } from '../classes/Post.js';
-import { transactions } from '../classes/Transaction.js';
+import { users } from '../classes/data.js';
+import { posts } from '../classes/data.js';
+import { transactions } from '../classes/data.js';
 
 const messages=[];
 
@@ -179,7 +179,7 @@ function createPost(post){
     close.appendChild(icon);
 
     const img = document.createElement('img');
-    img.src = post.image;
+    img.src = post.images[0];
     img.alt = "textbook";
     img.className = "textbookImg";
 
