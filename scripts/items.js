@@ -44,9 +44,10 @@ function onSortingOptChange() {
 }
 
 function init() {
-    // Server call to request the search results to display
+    // Server call to request the search results to display and the current user
     //Here we use the hard-coded in the data.js as an demonstration
     //By default sorting by posting date from new to old
+    const user = users[0];
     posts.sort(function(a,b) {
         if (a.postingDate <= b.postingDate) {
             return 1;
@@ -54,10 +55,11 @@ function init() {
             return -1;
         }
     });
-    generateSearchResult(posts);
+    generateSearchResult(posts, user);
 
     //Server call to request item in the shopping cart
-    const cartNumber = 3;
+    //Here just use user0;
+    const cartNumber = user.shortlist.length;
     updateShoppingCart(cartNumber);
 }
 
@@ -69,14 +71,15 @@ function updateShoppingCart(newNumber) {
 /**
  * Generate the posts onto the page.
  * @param posts the posts should appear on this page
+ * @user current user
  */
-function generateSearchResult(posts) {
+function generateSearchResult(posts, user) {
     //clear the posts currently displayed on screen
     while (document.querySelector("#posts").lastElementChild) {
         document.querySelector("#posts").removeChild(document.querySelector("#posts").lastElementChild)
     }
     for (let i = 0; i<posts.length; i++) {
-        document.querySelector("#posts").appendChild(generatePost(posts[i]));
+        document.querySelector("#posts").appendChild(generatePost(posts[i], user));
     }
     const endOfResults = document.createElement("div");
     endOfResults.id = "endOfResults";
@@ -88,8 +91,9 @@ function generateSearchResult(posts) {
 /**
  * Generate the div of this post.
  * @param post the post that wanted to be displayed
+ * @user the current user, this is used to check whether item is already in the cart.
  */
-function generatePost(post) {
+function generatePost(post, user) {
 
     const postDiv = document.createElement("div");
     postDiv.className = "post";
@@ -106,6 +110,14 @@ function generatePost(post) {
     postDiv.appendChild(sellerProfilePhoto);
     postDiv.appendChild(sellerNameSpan);
     postDiv.appendChild(document.createElement("br"));
+
+    const postIdSpan = document.createElement("span");
+    postIdSpan.className = "postId";
+    const postIdNumber = document.createElement("span");
+    postIdNumber.className = "postIdNumber";
+    postIdNumber.appendChild(document.createTextNode(post.postId));
+    postIdSpan.appendChild(postIdNumber);
+    postDiv.appendChild(postIdSpan);
 
     const categorySpan = document.createElement("span");
     categorySpan.className = "category";
@@ -150,9 +162,17 @@ function generatePost(post) {
 
     postDiv.appendChild(document.createElement("hr"));
 
-    const removeButton = document.createElement("button");
-    removeButton.className="addToCart";
-    removeButton.appendChild(document.createTextNode("Add to Cart"));
+    if (!user.shortlist.includes(post)) {
+        const removeButton = document.createElement("button");
+        removeButton.className = "addToCart";
+        removeButton.appendChild(document.createTextNode("Add to Cart"));
+        postDiv.appendChild(removeButton);
+    } else {
+        const addButton = document.createElement("button");
+        addButton.className = "removeFromCart";
+        addButton.appendChild(document.createTextNode("remove From Cart"));
+        postDiv.appendChild(addButton);
+    }
 
     const contactSeller = document.createElement("button");
     contactSeller.className="contactSeller";
@@ -162,7 +182,7 @@ function generatePost(post) {
     buyItem.className="buyItem";
     buyItem.appendChild(document.createTextNode("Buy this item"));
 
-    postDiv.appendChild(removeButton);
+
     postDiv.appendChild(contactSeller);
     postDiv.appendChild(buyItem);
 
@@ -171,5 +191,44 @@ function generatePost(post) {
 
 
 }
-
 init();
+const addToCartButtons = document.querySelectorAll(".addToCart");
+for (let i = 0; i<addToCartButtons.length; i++) {
+    addToCartButtons[i].addEventListener("click", addToCart);
+}
+
+function addToCart(e) {
+    //Server call to update the shopping cart of the user
+    // Here just user0
+    const user = users[0];
+    const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
+    user.shortlist.push(posts.filter(function(x) {
+        return x.postId === postId;
+    })[0]);
+    updateShoppingCart(user.shortlist.length);
+    //Change the button to remove the item from shopping cart.
+    e.target.className = "removeFromCart";
+    e.target.innerHTML = "";
+    e.target.appendChild(document.createTextNode("Remove From Cart"));
+    e.target.removeEventListener("click", addToCart);
+    e.target.addEventListener("click", removeFromCart);
+}
+
+function removeFromCart(e) {
+    //Server call to update the shopping cart of user
+    // Here just use user0
+    const user = users[0];
+    const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
+    user.shortlist.splice(user.shortlist.indexOf(posts.filter(function(x) {
+        return x.postId === postId;
+    })[0]), 1);
+
+    e.target.className = "addToCart";
+    e.target.innerHTML = "";
+    e.target.appendChild(document.createTextNode("Add to Cart"));
+    e.target.removeEventListener("click", removeFromCart);
+    e.target.addEventListener("click", addToCart);
+
+    updateShoppingCart(user.shortlist.length);
+}
+

@@ -261,3 +261,18 @@ body {
     left: 1450px;
     top: -40px;
 }
+.removeFromCart {
+    margin-bottom: 5px;
+    margin-left: 10px;
+    background-color: yellow;
+    font-weight: bold;
+    color: black;
+}
+
+.postId  {
+    margin-top: 0;
+    margin-left: 10px;
+    font-size: 70%;
+    color: grey;
+
+}
