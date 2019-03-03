@@ -21,12 +21,30 @@
             </button>
         </form>
 
+        <div id="topBarIcons">
         <!--This is used to hold the user icon after login-->
-        <div id="userInfo">
-            <button id="logIn">
-                <a href="./login.html"> </a>
-                <span id="logInButtonText">Log In</span>
-            </button>
+            <div id="signIn">
+                <a href="../pages/login.html">
+                    <div class="topBarImageContainer">
+                        <img class="topBarImage" src="../images/index/user.svg" alt="userPlaceholder">
+                    </div>
+                    <br>
+                    <span class="topBarText">Log in</span>
+                </a>
+            </div>
+
+            <div id="myCart">
+                <a href="./shoppingCart.html">
+                    <div class="topBarImageContainer">
+                        <img class="topBarImage" src="../images/index/cart.svg" alt="cartLogo">
+                    </div>
+                    <div id="shoppingCartNumber">
+                        <span id="cartNumber">0</span>
+                    </div>
+                    <br>
+                    <span class="topBarText">My cart</span>
+                </a>
+            </div>
         </div>
     </div>
     <div id="resultPage">

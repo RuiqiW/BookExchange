@@ -55,6 +55,15 @@ function init() {
         }
     });
     generateSearchResult(posts);
+
+    //Server call to request item in the shopping cart
+    const cartNumber = 3;
+    updateShoppingCart(cartNumber);
+}
+
+function updateShoppingCart(newNumber) {
+    const shoppingCartNumber = document.querySelector("#cartNumber");
+    shoppingCartNumber.innerText = newNumber;
 }
 
 /**
