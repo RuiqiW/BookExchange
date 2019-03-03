@@ -9,7 +9,7 @@ class Post{
         this.postId = postId;
         this.title = title;
         this.seller = seller;
-        this.image = "";
+        this.image = [];
         this.category = "Textbook";
         this.condition = "New";
         this.description = "";
@@ -40,23 +40,23 @@ class Transaction{
 // Posts
 const posts =[];
 const post1 = new Post("Calculus", users[0]);
-post1.image = "../images/admin/textbook1.jpg";
+post1.image.push("../images/admin/textbook1.jpg");
 posts.push(post1);
 
 const post2 = new Post("Algorithms", users[1]);
-post2.image = "../images/admin/textbook2.jpg";
+post2.image.push("../images/admin/textbook2.jpg");
 posts.push(post2);
 
 const post3 = new Post("Chez Nous", users[1]);
-post3.image = "../images/admin/textbook3.jpg";
+post3.image.push("../images/admin/textbook3.jpg");
 posts.push(post3);
 
 const post4 = new Post("Microeconomics", users[0]);
-post4.image = "../images/admin/textbook4.jpg";
+post4.image.push("../images/admin/textbook4.jpg");
 posts.push(post4);
 
 const post5 = new Post("Statistics", users[0]);
-post5.image = "../images/admin/textbook5.jpg";
+post5.image.push("../images/admin/textbook5.jpg");
 posts.push(post5);
 
 const post6 = new Post("Web Programming", users[0]);
