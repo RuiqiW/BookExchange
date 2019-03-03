@@ -13,6 +13,9 @@
   <!--My CSS-->
   <link rel="stylesheet" type="text/css" href="../styles/create-account.css">
 
+  <!--Javascript-->
+  <script defer src="../scripts/createAccount.js" type="module"></script>
+
   <!--Title-->
   <title>Create Account</title>
 
@@ -27,31 +30,32 @@
     </div>
 
     <div class="content">
-      <form method="POST" action="#">
+
+      <form id="createAccountForm" method="POST" action="#">
 
         <div class="level">
           <div class="level-left">
-            <input class="fillOut" type="text" name="name" title="First name" placeholder="First name" required autofocus>
+            <input id="firstName" class="fillOut" type="text" name="name" title="First name" placeholder="First name" required autofocus>
           </div>
           <div class="level-right">
-            <input class="fillOut" type="text" name="name" title="Last name" placeholder="Last name" required autofocus>
+            <input id="lastName" class="fillOut" type="text" name="name" title="Last name" placeholder="Last name" required autofocus>
           </div>
         </div>
 
         <div class="level">
-          <input class="fillOut" type="text" name="name" title="Username" placeholder="Username" required autofocus>
+          <input id="username" class="fillOut" type="text" name="name" title="Username" placeholder="Username" required autofocus>
         </div>
 
         <div class="level">
-          <input class="fillOut" type="email" name="email" title="Email" placeholder="Email" required autofocus>
+          <input id="email" class="fillOut" type="email" name="email" title="Email" placeholder="Email" required autofocus>
         </div>
 
         <div class="level">
           <div class="level-left">
-            <input class="fillOut" type="password" name="password" title="Password" placeholder="Password" required>
+            <input id="password" class="fillOut" type="password" name="password" title="Password" placeholder="Password" required>
           </div>
           <div class="level-right">
-            <input class="fillOut" type="password" name="password" title="Confirm" placeholder="Confirm" required>
+            <input id="confirm" class="fillOut" type="password" name="password" title="Confirm" placeholder="Confirm" required>
           </div>
         </div>
 
