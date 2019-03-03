@@ -8,6 +8,7 @@
     <link href="../lightbox/css/lightbox.css" rel="stylesheet">
     <!--jquery for lightbox-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 <body>
     <div id="topBar">
@@ -32,6 +33,12 @@
         <div id="searchResult">
             Following is the search result for <span id="result">textbook</span>......
         </div>
+        <select id="sortingOption">
+            <option value="timeNewToOld">Sorting by Posting time(New to Old)</option>
+            <option value="timeOldToNew">Sorting by Posting time(Old to New)</option>
+            <option value="priceHighToLow">Sorting by price(High to Low)</option>
+            <option value="priceLowToHigh">Sorting by price(Low to High)</option>
+        </select>
         <div id="posts">
             <div class="post">
                 <img class="profilePhoto" src="../images/items/seller1.jpg" alt="sellerPhoto">
@@ -83,5 +90,6 @@
     </div>
     <!--Script for lightbox-->
     <script src="../lightbox/js/lightbox.js"></script>
+    <script src="../scripts/items.js" type="module"></script>
 </body>
 </html>

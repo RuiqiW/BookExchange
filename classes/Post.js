@@ -14,6 +14,7 @@ export class Post {
     this._condition = condition;
     this._description = description;
     this._price = price;
+    this._postingDate = new Date();
     this._isSold = false;
     //Should bind with the corresponding transaction if there is one
     this._transaction = null;
@@ -84,5 +85,13 @@ export class Post {
 
   set transaction(value) {
     this._transaction = value;
+  }
+
+  get postingDate() {
+    return this._postingDate;
+  }
+
+  set postingDate(newDate) {
+    this._postingDate = newDate;
   }
 }

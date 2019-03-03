@@ -212,3 +212,11 @@ body {
     border-color: grey;
 
 }
+
+.timespan {
+    margin-top: 0;
+    margin-left: 10px;
+    font-size: 70%;
+    color: grey;
+
+}

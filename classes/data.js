@@ -27,30 +27,37 @@ export {users};
 
 const posts =[];
 const post1 = new Post("Calculus", users[3], 10, "book", "new", "This is a calculus text book I want to sell");
-post1.image.push("../images/admin/textbook1.jpg");
+post1.images.push("../images/admin/textbook1.jpg");
+post1.postingDate=new Date("2019-01-01T12:30");
 posts.push(post1);
 
 const post2 = new Post("Algorithms", users[2], 99, "book", "new", "This is the required textbook for CSC263" );
-post2.image.push("../images/admin/textbook2.jpg");
-post2.image.push("../images/intro_to_algo.jpeg");
+post2.images.push("../images/admin/textbook2.jpg");
+post2.images.push("../images/intro_to_algo.jpeg");
+post2.postingDate=new Date("2019-01-02T12:30");
 posts.push(post2);
 
 const post3 = new Post("Chez Nous", users[2], 89, "book"," new", "This is the required textbook for FRC100");
-post3.image.push("../images/admin/textbook3.jpg");
+post3.images.push("../images/admin/textbook3.jpg");
+post3.postingDate=new Date("2019-01-02T12:30");
 posts.push(post3);
 
 const post4 = new Post("Microeconomics", users[0], 99.99, "book", "70%-new", "This is the required textbook for ECO101");
-post4.image.push("../images/admin/textbook4.jpg");
+post4.images.push("../images/admin/textbook4.jpg");
+post4.postingDate=new Date("2019-01-03T12:30");
 posts.push(post4);
 
 const post5 = new Post("Statistics", users[0], 89.99, "book", "80%-new", "Textbook for STA257");
-post5.image.push("../images/admin/textbook5.jpg");
+post5.images.push("../images/admin/textbook5.jpg");
+post5.postingDate=new Date("2019-01-04T12:30");
 posts.push(post5);
 
 const post6 = new Post("Web Programming", users[0], 10.99, "book", "new", "Textbook for CSC309");
+post6.postingDate=new Date("2019-01-05T12:30");
 posts.push(post6);
 
 const post7 = new Post("Linear Algebra", users[2], 10.88, "book", "new", "Textbook for CSC223/224");
+post7.postingDate=new Date("2019-01-06T12:30");
 posts.push(post7);
 
 export{ posts };

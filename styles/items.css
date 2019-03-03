@@ -129,7 +129,15 @@ body {
     color: grey;
 }
 
-.condition {
+.condition  {
+    margin-top: 0;
+    margin-left: 10px;
+    font-size: 70%;
+    color: grey;
+
+}
+
+.timespan {
     margin-top: 0;
     margin-left: 10px;
     font-size: 70%;
@@ -191,5 +199,11 @@ body {
     border: 1px solid grey;
     background-color: white;
     border-radius: 10px;
+
+}
+
+#sortingOption {
+    position: relative;
+    left: 10px;
 
 }

@@ -82,6 +82,11 @@ function init() {
             conditionSpan.appendChild(document.createTextNode("Condition: " + basket[i].condition));
             postDiv.appendChild(conditionSpan);
 
+            const timeSpan = document.createElement("span");
+            timeSpan.className = "timespan";
+            timeSpan.appendChild(document.createTextNode("Posting Time: " + basket[i].postingDate));
+            postDiv.appendChild(timeSpan);
+
             const descriptionDiv = document.createElement("div");
             descriptionDiv.className="description";
             descriptionDiv.appendChild(document.createTextNode(basket[i].description));
@@ -92,16 +97,16 @@ function init() {
             priceDiv.appendChild(document.createTextNode("CAD "+basket[i].price));
             postDiv.appendChild(priceDiv);
 
-            if (basket[i].image.length > 0) {
+            if (basket[i].images.length > 0) {
                 const pictureContainer = document.createElement("div");
                 const lightboxAttr = `pictureSet${i}`;
-                for (let k=0;k<basket[i].image.length;k++) {
+                for (let k=0;k<basket[i].images.length;k++) {
                     const a = document.createElement("a");
-                    a.setAttribute("href", basket[i].image[k]);
+                    a.setAttribute("href", basket[i].images[k]);
                     a.setAttribute("data-lightbox",lightboxAttr);
                     const image = document.createElement("img");
                     image.className = "itemPicture";
-                    image.setAttribute("src", basket[i].image[k]);
+                    image.setAttribute("src", basket[i].images[k]);
                     a.appendChild(image);
                     pictureContainer.appendChild(a);
                 }
