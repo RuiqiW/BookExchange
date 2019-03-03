@@ -42,9 +42,9 @@ class Post{
 }
 
 class Transaction{
-    constructor(item, buyer, amount){
+    constructor(post, buyer, amount){
         this.id = transactionId;
-        this.item = item;
+        this.post = post;
         this.buyer = buyer;
         this.amount = amount;
         this.date = date.getTime();
