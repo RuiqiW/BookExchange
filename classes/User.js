@@ -1,7 +1,8 @@
 /**
  * This module contains a User class with some inheritable methods
  */
-export default class User {
+let userId = 0;
+export class User {
   constructor(firstName, lastName, username, email, password) {
     // --- Private attributes ---
     this._firstName = firstName;
@@ -63,6 +64,52 @@ export default class User {
 
 }
 
+export class UserProfile{
+  constructor(user){
+    this._userId = userId;
+    this._user = user;
+    this._avatar = ""; // src of avatar
+    this._bio = "";
+    this._phone = "1234567890";
+    this._sell = []; // selling items
+    this._purchase = []; // purchased items
+    this._shortlist = []; // Add to Cart items
+    userId++;
+  }
+
+  get userId() {
+    return this._userId;
+  }
+
+  get user() {
+    return this._user;
+  }
+
+  get avatar() {
+    return this._avatar;
+  }
+
+  get bio() {
+    return this._bio;
+  }
+
+  get phone() {
+    return this._phone;
+  }
+
+  get sell() {
+    return this._sell;
+  }
+
+  get purchase() {
+    return this._purchase;
+  }
+
+  get shortlist() {
+    return this._shortlist;
+  }
+}
+
 
 /**
  * Create some static Users for the purpose of phase 1
@@ -70,19 +117,19 @@ export default class User {
 const users = [];
 
 // Add some users as specified for phase 1
-users.push(new User('user', 'user', 'user', 'user@example.com', 'user'));
-users.push(new User('admin', 'admin', 'admin', 'admin@example.com', 'admin'));
+users.push(new UserProfile(new User('user', 'user', 'user', 'user@example.com', 'user')));
+users.push(new UserProfile(new User('admin', 'admin', 'admin', 'admin@example.com', 'admin')));
 
 for (let i = 2; i < 51; i++) {
-  users.push(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`));
-  users.push(new User(`admin${i}`, `admin${i}`, `admin${i}`, `admin${i}@example.com`, `admin${i}`));
+  users.push(new UserProfile(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`)));
+  users.push(new UserProfile(new User(`admin${i}`, `admin${i}`, `admin${i}`, `admin${i}@example.com`, `admin${i}`)));
 }
 
-users.push(new User('Donald', 'Trump', 'America', 'dtrump@president.com', 'user'));
-users.push(new User('Kim', 'Jong-un', 'NorthKorea', 'kimJongUn@president.com', 'user'));
-users.push(new User('Justin', 'Trudeau', 'Canada', 'trudeau@president.com', 'user'));
-users.push(new User('Xi', 'Jinping', 'China', 'jinping@president.com', 'user'));
-users.push(new User('George', 'Washington', 'America1', 'gwashinton@president.com', 'user'));
+users.push(new UserProfile(new User('Donald', 'Trump', 'America', 'dtrump@president.com', 'user')));
+users.push(new UserProfile(new User('Kim', 'Jong-un', 'NorthKorea', 'kimJongUn@president.com', 'user')));
+users.push(new UserProfile(new User('Justin', 'Trudeau', 'Canada', 'trudeau@president.com', 'user')));
+users.push(new UserProfile(new User('Xi', 'Jinping', 'China', 'jinping@president.com', 'user')));
+users.push(new UserProfile(new User('George', 'Washington', 'America1', 'gwashinton@president.com', 'user')));
 
 
 

@@ -1,31 +1,8 @@
-let userId = 0;
 let postId = 0;
 let transactionId = 0;
 let date = new Date();
 
-class User{
-    constructor(firstName, lastName, userName, email, password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-    }
-}
-
-class UserProfile{
-    constructor(user){
-        this.userId = userId;
-        this.user = user;
-        this.avatar = ""; // src of avatar
-        this.bio = "";
-        this.phone = "1234567890";
-        this.sell = []; // selling items
-        this.purchase = []; // purchased items
-        this.shortlist = []; // Add to Cart items
-        userId++;
-    }
-}
+import {users} from "./User";
 
 class Post{
     constructor(title, seller){
@@ -60,13 +37,6 @@ class Transaction{
 
     }
 }
-
-// User Profiles
-const users = [];
-const defaultUser = new User("user", "user", "user", "user@example.com", "user");
-users.push(new UserProfile(defaultUser));
-const user1 = new User("user1", "user1", "user1", "user1@example.com", "user1");
-users.push(new UserProfile(user1));
 
 // Posts
 const posts =[];
