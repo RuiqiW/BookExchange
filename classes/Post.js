@@ -4,12 +4,12 @@
 
 let postId = 0;
 export class Post {
-  constructor(title, seller, price, category, condition, description, images) {
+  constructor(title, seller, price, category, condition, description, images=[]) {
     this._postId = postId++;
     this._title = title;
     this._seller = seller;
     seller.sell.push(this);
-    this._images = images === [] ? [] : images;
+    this._images = images;              // default value is empty list
     this._category = category;
     this._condition = condition;
     this._description = description;
