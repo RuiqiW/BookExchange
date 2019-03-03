@@ -1,4 +1,4 @@
-import { users } from "./User";
+import { users } from "./User.js";
 
 
 /**
@@ -7,20 +7,19 @@ import { users } from "./User";
 
 let postId = 0;
 export class Post {
-  constructor(title, seller){
-    this._postId = postId;
-    this._image = "";
-    this._category = "Textbook";
-    this._condition = "New";
-    this._description = "";
-    this._price = "$10";
-    postId ++;
-    this._isSold = false;
-    //Should bind with the corresponding transaction if there is one
-    this._transaction = null;
+  constructor(title, seller, price, category, condition, description) {
+    this._postId = postId++;
     this._title = title;
     this._seller = seller;
     seller.sell.push(this);
+    this._image = "";
+    this._category = category;
+    this._condition = condition;
+    this._description = description;
+    this._price = price;
+    this._isSold = false;
+    //Should bind with the corresponding transaction if there is one
+    this._transaction = null;
   }
 
   get title() {

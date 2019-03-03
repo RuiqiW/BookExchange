@@ -6,7 +6,7 @@ let transactionId = 0;
 let date = new Date();
 
 export class Transaction{
-  constructor(post, buyer, amount){
+  constructor(post, buyer, amount) {
     this._id = transactionId;
     this._date = date.toDateString();
     this._status = 0;    // 0 for uncompleted, 1 for completed

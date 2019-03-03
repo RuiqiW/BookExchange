@@ -14,6 +14,9 @@
   <!--My CSS-->
   <!--<link rel="stylesheet" type="text/css" href="../styles/post-ad.css">-->
 
+  <!--Javascript-->
+  <script defer src="../scripts/postAd.js" type="module"></script>
+
   <!--Title-->
   <title>Create Post</title>
 
@@ -63,7 +66,7 @@
     <div class="columns is-centered">
       <div class="column is-8">
 
-        <form method="POST" action="#">
+        <form id="adDetails" method="POST" action="#">
           <div class="field is-horizontal">
 
             <div class="field-label is-normal">
@@ -73,7 +76,7 @@
             <div class="field-body">
               <div class="field">
                 <div class="control">
-                  <input class="input" type="text" placeholder="Title">
+                  <input id="adTitle" class="input" type="text" placeholder="Title" required>
                 </div>
                 <p class="help">Descriptive titles are more helpful!</p>
               </div>
@@ -89,11 +92,13 @@
               <div class="field">
                 <div class="control">
                   <div class="select">
-                    <select>
-                      <option>Textbook</option>
-                      <option>Furniture</option>
-                      <option>School Accessories</option>
-                    </select>
+                    <label>
+                      <select id="selCategory">
+                        <option>Textbook</option>
+                        <option>Furniture</option>
+                        <option>School Accessories</option>
+                      </select>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -108,13 +113,15 @@
               <div class="field">
                 <div class="control">
                   <div class="select">
-                    <select>
-                      <option>New</option>
-                      <option>Used - Like New</option>
-                      <option>Used - Very Good</option>
-                      <option>Used - Good</option>
-                      <option>Used - Acceptable</option>
-                    </select>
+                    <label>
+                      <select id="selCondition">
+                        <option>New</option>
+                        <option>Used - Like New</option>
+                        <option>Used - Very Good</option>
+                        <option>Used - Good</option>
+                        <option>Used - Acceptable</option>
+                      </select>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -128,7 +135,7 @@
             <div class="field-body">
               <div class="field">
                 <div class="control">
-                  <textarea class="textarea" placeholder="">
+                  <textarea id="description" class="textarea" placeholder="" required>
                   </textarea>
                 </div>
               </div>
@@ -287,28 +294,30 @@
                               </select>
                             </span>
                           </p>
-                          <input class="input" type="text" placeholder="10.00">
+                          <input id="priceInput" class="input" type="text" placeholder="10.00">
                         </div>
                       </span>
                     </label>
                   </div>
-                  <div>
-                    <label class="radio">
-                      <input class="radio is-link is-large" type="radio" name="price">
-                      Free
-                    </label>
-                  </div>
-                  <div>
-                    <label class="radio">
-                      <input class="radio is-link is-large" type="radio" name="price">
-                      Please Contact
-                    </label>
-                  </div>
-                  <div>
-                    <label class="radio">
-                      <input class="radio is-link is-large" type="radio" name="price">
-                      Swap/Trade
-                    </label>
+                  <div id="priceRadio">
+                    <div>
+                      <label class="radio">
+                        <input class="radio is-link is-large" type="radio" name="price">
+                        Free
+                      </label>
+                    </div>
+                    <div>
+                      <label class="radio">
+                        <input class="radio is-link is-large" type="radio" name="price">
+                        Please Contact
+                      </label>
+                    </div>
+                    <div>
+                      <label class="radio">
+                        <input class="radio is-link is-large" type="radio" name="price">
+                        Swap/Trade
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -327,7 +336,7 @@
   <div class="container">
     <div class="columns">
       <div class="column is-3 is-offset-9">
-        <a class="button is-large is-link is-focused">Post Your Ad</a>
+        <a id="postAdButton" class="button is-large is-link is-focused">Post Your Ad</a>
       </div>
     </div>
   </div>
