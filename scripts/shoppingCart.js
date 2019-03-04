@@ -1,6 +1,8 @@
 import {users} from "../classes/data.js";
 
+init();
 const removeButtons = document.querySelectorAll(".removeFromCart");
+console.log(removeButtons);
 for (let i = 0; i<removeButtons.length;i++) {
     removeButtons[i].addEventListener("click", removeCartItem);
 }
@@ -140,4 +142,3 @@ function init() {
     }
 }
 
-init();
