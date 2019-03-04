@@ -1,4 +1,3 @@
-import {users} from "../classes/data.js";
 
 /*********************** Navigation Button ************************/
 
@@ -51,23 +50,29 @@ function addMessage(msg) {
     chat.appendChild(messageContainer);
 }
 
-/*********************** Edit Profile ************************/
+/*********************** Edit Profile Picture ************************/
 
 const content = document.querySelector('#content');
 const profile = document.querySelector('#profile');
-const profileInfo = document.querySelector('#profileInfo');
-profileInfo.addEventListener('submit', editProfileInfo);
+const profilePic = document.querySelector('#profilePic');
+profilePic.addEventListener('file', editProfilePic);
 
-// Edits the text fields
-function editProfileInfo(e) {
+// Reads the input profile picture URL
+function editProfilePic(e) {
     e.preventDefault();
 
-    console.log("hi");
+    const edit = e.target.parentElement;
+    const img = edit.getElementsByTagName('img')[0];
+    img.src = e.target.resule;
 
-    if (e.target.classList.contains('Edit Profile')) {
-        const edit = e.target.parentElement;
-        const text = edit.getElementsByTagName('textarea')[0];
-        text.removeAttribute('readonly');
+    if (e.files && e.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('.profile-pic').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
     }
 }
 
@@ -140,6 +145,8 @@ function closeAllSelect(elmnt) {
     }
   }
 }
-/*if the user clicks anywhere outside the select box,
-then close all select boxes:*/
+
+// Close all select boxes if the user clickes outside of the box
 document.addEventListener("click", closeAllSelect);
+
+/*********************** Display User Objects Profile Info ************************/
