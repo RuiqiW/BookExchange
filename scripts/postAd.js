@@ -8,6 +8,13 @@ import { users, posts } from '../classes/data.js';
 const postAdButton = document.querySelector('#postAdButton');
 postAdButton.addEventListener('click', handlePostAd);
 
+const uploads = document.querySelectorAll('.file-input');
+uploads[0].addEventListener('change', (e) => updateFileName(e, 0));
+uploads[1].addEventListener('change', event => updateFileName(event, 1));
+uploads[2].addEventListener('change', e => updateFileName(e, 2));
+uploads[3].addEventListener('change', e => updateFileName(e, 3));
+
+
 
 function handlePostAd(e) {
   e.preventDefault();
@@ -25,6 +32,7 @@ function handlePostAd(e) {
 
   const priceInput = document.querySelector('#priceInput').value;
   const priceRadio = document.querySelectorAll('.radio');
+
 
 
 
@@ -59,12 +67,12 @@ function handlePostAd(e) {
   let price = isNaN(priceNum) ? priceStr : priceNum;    // isNaN -> is not a number
 
 
-  // TODO: grab the uploaded photos
+  // TODO: grab the uploaded photos.
   let images = [];
 
 
   // Create the new Post
-  // TODO: How to get the seller?
+  // TODO: How to get the seller that is making the new Post?
   const post = new Post(title, "SELLER??", price, category, condition, description, images);
   posts.push(post);
 
@@ -72,4 +80,16 @@ function handlePostAd(e) {
   // Redirect back to their profile page
   document.location = '../pages/userProfile.html';
 
+}
+
+
+/**
+ * Updates the file name when a user adds a photo.
+ */
+function updateFileName(event, index) {
+  event.preventDefault();
+
+
+  const fileNames = document.querySelectorAll('.file-name');
+  fileNames[index].textContent = event.target.files[0].name;
 }
