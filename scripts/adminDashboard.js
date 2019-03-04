@@ -2,6 +2,8 @@ import { users } from '../classes/data.js';
 import { posts } from '../classes/data.js';
 import { transactions } from '../classes/data.js';
 
+
+// load list of messages received, need server call in Phase2
 const messages=[];
 messages.push("Hello");
 
@@ -69,7 +71,7 @@ function loadPost(){
 function loadUserList(){
     const length = Math.min(users.length - shownUserNum, 3);
     for(let i = 0; i < length; i++){
-        const userEntry = createUserList(users[i + shownUserNum]);
+        const userEntry = createUserEntry(users[i + shownUserNum]);
         userTable.appendChild(userEntry);
     }
     shownUserNum += length;
@@ -78,6 +80,7 @@ function loadUserList(){
 
 
 /********** navigation bar and chat box expansion and close ***********/
+
 
 const main = document.querySelector("#main");
 const navExpansion = document.querySelector("#navExpansion");
@@ -117,7 +120,6 @@ function hideChatRoom(e) {
 
 
 
-
 /***************** Post Management *****************/
 
 const editPost = document.querySelector("#editPost");
@@ -148,27 +150,33 @@ function deleteItem(e) {
     e.preventDefault();
 
     if (window.confirm("Do you want to delete this post?")) {
-        // delete post from posts array
+
+        // get postId
         const post = e.target.parentElement.parentElement;
         const postNum = post.lastElementChild.previousSibling;
         const postId = parseInt(postNum.innerText);
 
+        // delete post from posts array, will need server in Phase 2
         for(let i = 0; i < posts.length; i++){
             if(posts[i].postId === postId){
                 posts.splice(i, 1);
                 break;
             }
         }
+
+        // remove post in DOM
         removePost(e);
         window.alert("You have deleted this post.");
     }
 }
+
 
 function removePost(e) {
     const post = e.target.parentElement.parentElement.parentElement;
     const entry = post.parentElement;
     entry.removeChild(post);
 }
+
 
 function createPost(post){
 
@@ -229,6 +237,8 @@ showMoreButton.addEventListener('click', showMore);
 userSearchButton.addEventListener('click', searchUser);
 
 
+// view the user profile of the sample user
+// will require server call to find the url of the personal profile page in Phase 2
 function viewUserDetail(e){
     e.preventDefault();
 
@@ -236,7 +246,7 @@ function viewUserDetail(e){
 }
 
 
-// show more user
+// show less user, remove userEntry in DOM
 function showLess(e){
     e.preventDefault();
 
@@ -251,7 +261,7 @@ function showLess(e){
 }
 
 
-// show less user
+// show more user
 function showMore(e){
     e.preventDefault();
 
@@ -264,6 +274,8 @@ function searchUser(e){
 
     const keyword = document.querySelector('#userKeyword').value;
     if(keyword !== ""){
+
+        // code below need server call to find the user matching the keyword
         for(let i=0; i < users.length; i++){
             if(keyword === users[i].user.username){
                 showResult(users[i]);
@@ -295,7 +307,7 @@ function showResult(user){
     const userTable1 = document.createElement('div');
     userTable1.id = "userTable1";
 
-    const userEntry = createUserList(user);
+    const userEntry = createUserEntry(user);
 
     userTable1.appendChild(userEntry);
     listEnd.before(userTable1);
@@ -330,9 +342,40 @@ function showNoResult(){
 }
 
 
+function deleteUserEntry(e) {
+    e.preventDefault();
+
+    if (window.confirm("Do you want to delete this user?")) {
+
+        // get userId
+        const user = e.target.parentElement.parentElement;
+        const usernameContainer = user.firstElementChild.lastElementChild.firstElementChild;
+        const username = usernameContainer.innerText;
+        // delete user from users array, will need server in Phase 2
+        for(let i = 0; i < users.length; i++){
+            if(users[i].user.username === username){
+                users.splice(i, 1);
+                break;
+            }
+        }
+
+        // remove post in DOM
+        removeUser(e);
+        loadUserNum();
+        window.alert("You have deleted this user.");
+    }
+}
+
+
+function removeUser(e) {
+    const user = e.target.parentElement.parentElement;
+    const table = user.parentElement;
+    table.removeChild(user);
+}
+
 
 // Create an entry for user table
-function createUserList(user){
+function createUserEntry(user){
 
     const userEntry = document.createElement("div");
     userEntry.className = "userEntry";
@@ -378,6 +421,7 @@ function createUserList(user){
     const deleteUser = document.createElement("button");
     deleteUser.className = "deleteUser";
     deleteUser.innerText = "Delete";
+    deleteUser.addEventListener('click', deleteUserEntry);
     userAction.appendChild(deleteUser);
 
     return userEntry;
