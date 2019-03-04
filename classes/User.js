@@ -51,15 +51,16 @@ export class User {
   set password(newPassword) {
     this._password = newPassword;
   }
-
 }
 
 
 let userId = 0;
+let picture = "../images/profilePic.jpg";
 export class UserProfile{
   constructor(user){
     this._userId = userId;
     this._user = user;
+    this._picture = picture;
     this._avatar = "../images/profilePic.jpg";                  // src of default avatar
     this._bio = "";
     this._phone = "1234567890";
@@ -75,6 +76,10 @@ export class UserProfile{
 
   get user() {
     return this._user;
+  }
+  
+  get picture() {
+    return this._picture;
   }
 
   get avatar() {

@@ -1,5 +1,5 @@
 /**************** Center the Page **************/
-.content {
+#content {
   max-width: 500px;
   margin: auto;
 }
@@ -43,15 +43,6 @@
   opacity: 0;
   right: 0;
   top: 0;
-}
-
-#editProfile h5{
-  color: #333;
-  text-align: center;
-}
-
-#editProfile h6{
-  color: #0062cc;
 }
 
 /**************** Other Profile Information **************/

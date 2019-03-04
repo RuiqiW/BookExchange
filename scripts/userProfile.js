@@ -1,3 +1,4 @@
+import { users } from '../classes/data.js';
 
 /*********************** Navigation Button ************************/
 
@@ -53,8 +54,9 @@ function addMessage(msg) {
 /*********************** Edit Profile Picture ************************/
 
 const content = document.querySelector('#content');
-const profile = document.querySelector('#profile');
-const profilePic = document.querySelector('#profilePic');
+const profile = content.querySelector('#profile');
+const profilePic = profile.querySelector('#profilePic');
+
 profilePic.addEventListener('file', editProfilePic);
 
 // Reads the input profile picture URL
@@ -63,7 +65,7 @@ function editProfilePic(e) {
 
     const edit = e.target.parentElement;
     const img = edit.getElementsByTagName('img')[0];
-    img.src = e.target.resule;
+    img.src = e.target.result;
 
     if (e.files && e.files[0]) {
         const reader = new FileReader();
@@ -150,3 +152,42 @@ function closeAllSelect(elmnt) {
 document.addEventListener("click", closeAllSelect);
 
 /*********************** Display User Objects Profile Info ************************/
+const userInfo = profile.querySelector('#profileInfo');
+
+// Load a user profile
+function loadUserProfile(user){
+    const currPic = profilePic.getElementsByTagName('img')[0];
+    currPic.src = user.picture;
+
+    const currName = profile.getElementsByTagName('h3')[0];
+    currName.innerText = document.createTextNode(user.firstName + ' ' + user.lastName);
+
+    const currDescrip = userInfo.getElementsByTagName('textarea')[0];
+    currDescrip.innerText = document.createTextNode(user.bio);
+
+    // create the DOM elements in the user profile info
+    const id = document.createElement('span');
+    id.appendChild(document.createTextNode(user.username));
+
+    const phone = document.createElement('span');
+    phone.appendChild(document.createTextNode(user.phone));
+
+    const email = document.createElement('span');
+    email.appendChild(document.createTextNode(user.email));
+
+    // modify the DOM elements in the user profile info
+    const currId = userInfo.getElementsByTagName('div')[1];
+    const spanId = currId.getElementsByTagName('p')[0];
+    spanId.removeChild(spanId.getElementsByTagName('span')[0]);
+    spanId.appendChild(id);
+
+    const currPhone = userInfo.getElementsByTagName('div')[1];
+    const spanPhone = currPhone.getElementsByTagName('p')[0];
+    spanPhone.removeChild(spanPhone.getElementsByTagName('span')[0]);
+    spanPhone.appendChild(phone);
+
+    const currEmail = userInfo.getElementsByTagName('div')[2];
+    const spanEmail = currEmail.getElementsByTagName('p')[0];
+    spanEmail.removeChild(spanEmail.getElementsByTagName('span')[0]);
+    spanEmail.appendChild(email);
+}
