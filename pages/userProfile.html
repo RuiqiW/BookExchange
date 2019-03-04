@@ -5,77 +5,126 @@
   <meta charset="utf-8">
   <title>User Profile</title>
   <link rel="stylesheet" type="text/css" href="../styles/userProfile.css">
+  <link href="../styles/chatbox.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
 
-<div id="chatRoom">
-  <div id="chatHide">
-    <a href="#">&times;</a>
-  </div>
+  <!--Chat Box-->
+  <div id="chatRoom">
 
-  <iframe src="chatbox.html" id="chatbox"></iframe>
-</div>
-
-<div id="topNavBar">
-  <span id="navExpansion">&#9776;</span>
-
-  <ul>
-    <li>
-      <!--TODO: drop-down list to select message to display-->
-      <div id="chatShow" class="topBarImageContainer">
-        <img class="topBarImage" src="../images/admin/chat.png" alt="chatPlaceholder">
-      </div>
-    </li>
-    <li>
-      <a href="../index.html">
-        <div class="topBarImageContainer">
-          <img class="topBarImage" src="../images/admin/logout.png" alt="logOutPlaceholder">
-        </div>
-      </a>
-    </li>
-  </ul>
-</div>
-
-<div class="content">
-  <div id="profile">
-    <div id="profilePic">
-      <img class="profile-pic" src="../images/profilePic.jpg" alt=""/>
-      <br>
-      <br>
-      Change Profile Picture
-      <input type="file" class="file-upload" name="file" accept="image/*"/>
+    <!--close button-->
+    <div id="chatHide">
+      <a href="#">&times;</a>
     </div>
 
-    <div id="editProfile">
-      <h3>Firstname Lastname</h3>
+    <!--messages-->
+    <div id="chat">
+      <!--A sample bubble-->
+      <div class="chatInBubble">
+        <p class="chatInText">Hello</p>
+      </div>
     </div>
 
-    <div id=profileInfo>
-      <textarea rows="10" cols="50" readonly="readonly">
-        Here is my bio description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus quam ante, quis pulvinar lectus rutrum non. Nam nec porttitor quam.
-        Vivamus nec dui commodo arcu placerat ornare. Aenean feugiat mauris in nibh semper semper.
-        Sed faucibus dolor non orci sollicitudin, at vehicula mauris maximus. Donec at purus odio.
-        Nullam tristique dui tellus, quis placerat arcu accumsan at. Donec consequat justo eros, sed rhoncus ante molestie in. Ut libero tellus, ultrices eu facilisis ut, viverra non eros.
-      </textarea>
-      <p>User Id: <span>userid</span></p>
-      <p>Phone Number: <span>123 456 7890	</span></p>
-      <input type="submit" class="profileEdit" name="editButton" value="Edit Profile"/>
-
-      <div class="payment">
-        <div class="custom-select" style="width:200px;">
-          <p>Payment Method</p>
-          <select>
-            <option value="0">Select Payment Method</option>
-            <option value="1">Handle Transaction by Credit Card</option>
-            <option value="2">Handle Transaction by Myself</option>
-          </select>
-        </div>
-      </div>
+    <!--write new message-->
+    <div id="message">
+      <form>
+        <textarea id="messageBox" placeholder="Message..."></textarea>
+        <button id="sendButton" class="submit"><i class="fa fa-send blue submit"></i></button>
+      </form>
     </div>
   </div>
 
-</div>
+  <!--Top Bar -->
+  <div id="topNavBar">
+    <span id="navExpansion">&#9776;</span>
+    <ul>
+      <!--Chat Button-->
+      <li>
+        <div id="chatShow" class="topBarImageContainer dropdown">
+          <img class="topBarImage" src="../images/admin/chat.png" alt="chatPlaceholder">
 
-<script type="text/javascript" src="../scripts/userProfile.js"></script>
+          <!--Dropdown List of Messages-->
+          <div class="dropdownContent">
+            <div class="profile">
+              <div class="profileIconContainer">
+                <img src="../images/profilePic.jpg" alt="ProfilePic" class="profileIcon">
+              </div>
+              <div class="profileContent">
+                <strong>User</strong><br><span class="grey">Hello</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!--Log Out Button-->
+      <li>
+        <a href="../index.html">
+          <div class="topBarImageContainer">
+            <img class="topBarImage" src="../images/admin/logout.png" alt="logOutPlaceholder">
+          </div>
+        </a>
+      </li>
+
+      <!--Shopping Cart Button-->
+      <li>
+        <a href="./shoppingCart.html">
+          <div class="topBarImageContainer">
+            <img class="topBarImage" src="../images/index/cart.svg" alt="cartLogo">
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <div id="profile">
+      <div id="profilePic">
+        <img class="profile-pic" src="../images/profilePic.jpg" alt=""/>
+        <br>
+        <br>
+        Change Profile Picture
+        <input type="file" class="file-upload" name="file" accept="image/*"/>
+      </div>
+
+      <div id="editProfile">
+        <h3>Firstname Lastname</h3>
+      </div>
+
+      <div id=profileInfo>
+        <textarea rows="10" cols="50">
+          Here is my bio description.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus quam ante, quis pulvinar lectus rutrum non. Nam nec porttitor quam.
+          Vivamus nec dui commodo arcu placerat ornare. Aenean feugiat mauris in nibh semper semper.
+          Sed faucibus dolor non orci sollicitudin, at vehicula mauris maximus. Donec at purus odio.
+        </textarea>
+        <div id="userid">
+          <p>User Id: <span>userid</span></p>
+        </div>
+        <div id="phone">
+          <p>
+            Phone Number: <span>(123) 456-7890</span>
+            <img class="topBarImage" src="../images/edit.png" alt="editLogo">
+          </p>
+        </div>
+        <strong>Payment Method: </strong>
+        <div id="payment">
+          <div class="custom-select" style="width:200px;">
+            <select>
+              <option value="0">Select Payment Method</option>
+              <option value="1">Handle Transaction by Credit Card</option>
+              <option value="2">Handle Transaction by Myself</option>
+            </select>
+          </div>
+        </div>
+        <br>
+        <br>
+        <a href="items.html">Posts I've Made</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="../scripts/userProfile.js"></script>
 </body>

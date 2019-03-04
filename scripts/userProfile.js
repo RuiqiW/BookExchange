@@ -1,18 +1,78 @@
-"use strict";
+import {users} from "../classes/data.js";
 
-// data: will be implemented by database later
+/*********************** Navigation Button ************************/
 
 const chatShow = document.querySelector("#chatShow");
-
+const chatHide = document.querySelector("#chatHide");
+chatHide.addEventListener('click', hideChatRoom);
 chatShow.addEventListener('click', showChatRoom);
 
-function showChatRoom(e){
+function showChatRoom(e) {
     e.preventDefault();
     const chatRoom = document.querySelector('#chatRoom');
     chatRoom.style.display = "block";
 }
 
-/*look for any elements with the class "custom-select":*/
+function hideChatRoom(e) {
+    e.preventDefault();
+    const chatRoom = document.querySelector('#chatRoom');
+    chatRoom.style.display = "none";
+}
+
+/*********************** Chat Box ************************/
+
+const chat = document.querySelector('#chat');
+const sendButton = document.querySelector("#sendButton");
+sendButton.addEventListener('click', sendMessage);
+
+function sendMessage(e) {
+    e.preventDefault();
+
+    if (e.target.classList.contains("submit")) {
+        const message = document.querySelector("#messageBox").value;
+        if (message.length > 0 && message.length < 200) {
+            addMessage(message);
+        }
+    }
+    chat.scrollTop = chat.scrollHeight;
+}
+
+
+// helper function for sendMessage, add message to chat window
+function addMessage(msg) {
+    const newMessage = document.createElement('p');
+    newMessage.className = "chatOutText";
+    newMessage.innerText = msg;
+    const bubble = document.createElement('div');
+    bubble.className = "chatOutBubble";
+    bubble.appendChild(newMessage);
+    const messageContainer = document.createElement('div');
+    messageContainer.appendChild(bubble);
+    chat.appendChild(messageContainer);
+}
+
+/*********************** Edit Profile ************************/
+
+const content = document.querySelector('#content');
+const profile = document.querySelector('#profile');
+const profileInfo = document.querySelector('#profileInfo');
+profileInfo.addEventListener('submit', editProfileInfo);
+
+// Edits the text fields
+function editProfileInfo(e) {
+    e.preventDefault();
+
+    console.log("hi");
+
+    if (e.target.classList.contains('Edit Profile')) {
+        const edit = e.target.parentElement;
+        const text = edit.getElementsByTagName('textarea')[0];
+        text.removeAttribute('readonly');
+    }
+}
+
+/*********************** Drop down select ************************/
+
 const x = document.getElementsByClassName("custom-select");
 for (let i = 0; i < x.length; i++) {
   const selElmnt = x[i].getElementsByTagName("select")[0];
@@ -83,20 +143,3 @@ function closeAllSelect(elmnt) {
 /*if the user clicks anywhere outside the select box,
 then close all select boxes:*/
 document.addEventListener("click", closeAllSelect);
-
-/* Edit Profile */
-const editProfile = document.querySelector('#profileInfo');
-editProfile.addEventListener('submit', editProfileInfo);
-
-// Edits the text fields
-function editProfileInfo(e) {
-    e.preventDefault();
-
-    console.log("hi");
-
-    if (e.target.classList.contains('Edit Profile')) {
-        const edit = e.target.parentElement;
-        const text = edit.getElementsByTagName('textarea')[0];
-        text.removeAttribute('readonly');
-    }
-}
