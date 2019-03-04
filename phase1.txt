@@ -59,11 +59,42 @@ user profile page:
 
 
 
-        3. Chat with Others
+        3. Chat with Others (functionality for both user and admin)
+            When click on the the "chat" icon on the top-right side of the page.
+            A dropdown list of messages will show up and when click on the messages,
+            a chatbox will show up at the bottom-right.
 
+            User can send messages using the chatbox to other users.
+
+            Note: In phase 2, we will use database to store messages and load previous messages
+                  to chat window.
 
 
 admin dashboard page:
+        1. Side Navigation Bar:
+            The side navigation bar will be open when click on the 'hamburger' icon,
+            and be closed when click on the 'close' icon in the side navigation bar.
+
+            The main part the page will jump to the corresponding section when click on
+            the tags "Dashboard", "Users", "Posts" and "Transactions"
+
+        2. Chat with Others:
+            See item 3 in user profile page
+
+        3. Manage Posts:
+           When click on 'edit', the post section will change to edit mode, and the admin will
+           be able to delete a post by clicking on the "close" icon.
+
+        4. Manage Users:
+            When click on "show more / show less", more or less users will be displayed.
+            Admin will be able to delete a user when click on the corresponding delete button,
+            or view a user's profile in detail when click on "View Detail".
+
+        5. Manage Transactions:
+            The transactions which have not been processed by the admin yet will show up in
+            this section.
+            When click on the green check icon, the admin will approve the transaction and
+            when click on the red cross icon, the admin will deny the transaction.
 
 
 
