@@ -206,6 +206,7 @@ function loadUserProfile(currUser){
     name.appendChild(document.createTextNode(currUser.user.firstName + ' ' + currUser.user.lastName));
 
     const id = document.createElement('span');
+    id.id = "userId";
     id.appendChild(document.createTextNode(currUser.user.username));
 
     const phone = document.createElement('span');
@@ -238,3 +239,18 @@ function loadUserProfile(currUser){
 }
 
 loadUserProfile(users[0]);
+
+const postIMade = document.querySelector("#postIMade");
+postIMade.addEventListener("click", jumpToPostIMade);
+
+
+function jumpToPostIMade(e) {
+    const userId = document.querySelector("#userId").innerHTML.trim();
+    console.log(userId);
+    //Make a server call and to find all the post this user have made,
+    //Which should be stored in the field "user.sell", use the generatePost function
+    // in item.js to generate all the result in the items page.
+    //Here just jump to items page directly.
+    document.location = "./items.html";
+
+}

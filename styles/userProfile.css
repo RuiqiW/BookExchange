@@ -230,3 +230,11 @@
   width: 200px;
 
 }
+
+#postIMade {
+  background: transparent;
+  border-style: none;
+  outline: none;
+  text-decoration: underline;
+  color: mediumpurple;
+}

@@ -63,7 +63,7 @@ function onSortingOptChange() {
 
 function init() {
     // Server call to request the search results to display and the current user
-    //Here we use the hard-coded in the data.js as an demonstration
+    // Here we use the hard-coded posts in the class.js as an demonstration
     //By default sorting by posting date from new to old
     const user = users[0];
     posts.sort(function(a,b) {
