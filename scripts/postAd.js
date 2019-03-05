@@ -79,7 +79,7 @@ function handlePostAd(e) {
 
   // Create the new Post
   // TODO: How to get the seller that is making the new Post? Not necessary for phase 1
-  // const post = new Post(title, "SELLER??", price, category, condition, description, images);
+  // const post = new Post(title, "SELLER??", price, category, condition, description, images, false);
   // posts.push(post);
 
 

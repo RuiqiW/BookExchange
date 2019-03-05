@@ -252,9 +252,6 @@ function addToCart(e) {
 }
 
 function removeFromCart(e) {
-    //Server call to update the shopping cart of user
-    // Here just use user0
-    const user = users[0];
     const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
     user.shortlist.splice(user.shortlist.indexOf(posts.filter(function(x) {
         return x.postId === postId;
@@ -277,6 +274,30 @@ function makePost(e) {
     //If not logged in, should jump to login page
     //Here simply jump to make post page
     document.location = "./post-ad.html";
+}
+
+const buyItemButtons = document.querySelectorAll(".buyItem");
+for (let i = 0; i < buyItemButtons.length;i++) {
+    buyItemButtons[i].addEventListener("click", buyItem);
+}
+function buyItem(e) {
+    //Server call to update the shopping cart of user
+    // Here just use user0
+    const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
+    //Should make a server call to fetch the post, here just use the hardcoded posts array
+    const post = posts.filter(x => x.postId === postId);
+    if (!post.byCreditCard) {
+        alert("The seller want you to pay him/her directly, please contact the seller!");
+    } else {
+        const creditCardNumber = prompt("Please enter your credit card number");
+        if (creditCardNumber !== null) {
+            alert("Your order has been submitted to verify");
+        }
+        //Make a server call to submit the creditcardNumber and the postId!
+    }
+
+
+
 }
 
 /*********************** Chat Box ************************/
