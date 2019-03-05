@@ -2,11 +2,14 @@
 <html lang="en-US">
 <head>
   <meta charset="UTF-8">
+
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
   <link href="../styles/payment.css" rel="stylesheet" type="text/css">
-  <!--     <script src="scripts/main.js"></script> -->
+
   <title>Payment</title>
 </head>
+
 <body>
 <h1>Payment Method</h1>
 <picture>
@@ -14,7 +17,7 @@
   <img src="../images/logo.png" alt="UofT Exchange">
 </picture>
 
-<form action="#" method="post">
+<form id="paymentForm" action="#" method="POST">
   <p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
 
   <section>
@@ -24,21 +27,21 @@
         <span>First Name: </span>
         <strong><abbr title="required">*</abbr></strong>
       </label>
-      <input type="text" id="firstName" name="firstName">
+      <input type="text" id="firstName" name="firstName" required>
     </p>
     <p>
       <label for="lastName">
         <span>Last name: </span>
         <strong><abbr title="required">*</abbr></strong>
       </label>
-      <input type="text" id="lastName" name="lastName">
+      <input type="text" id="lastName" name="lastName" required>
     </p>
     <p>
       <label for="mail">
         <span>E-mail: </span>
         <strong><abbr title="required">*</abbr></strong>
       </label>
-      <input type="email" id="mail" name="useremail">
+      <input type="email" id="mail" name="useremail" required>
     </p>
   </section>
 
@@ -59,28 +62,33 @@
         <span>Card number:</span>
         <strong><abbr title="required">*</abbr></strong>
       </label>
-      <input type="number" id="number" name="cardnumber">
+      <input type="number" id="number" name="cardnumber" required>
     </p>
     <p>
       <label for="cvv">
         <span>CVV:</span>
         <strong><abbr title="required">*</abbr></strong>
       </label>
-      <input type="number" id="cvv" name="cvv">
+      <input type="number" id="cvv" name="cvv" required>
     </p>
     <p>
       <label for="date">
         <span>Expiration date:</span>
         <strong><abbr title="required">*</abbr></strong>
       </label>
-      <input type="date" id="date" name="expiration">
+      <input type="date" id="date" name="expiration" required>
     </p>
   </section>
   <section>
     <p>
-      <button class="button -flower center" type="submit">Pay Now</button>
+      <button id="payButton" class="button -flower center" type="submit">Pay Now</button>
     </p>
   </section>
 </form>
+
+
+<!--Javascript-->
+<script src="../scripts/payment.js" type="text/javascript"></script>
+<script src="../scripts/classes.js" type="text/javascript"></script>
 </body>
 </html>
