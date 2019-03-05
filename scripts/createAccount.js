@@ -50,7 +50,7 @@ function handleCreateAccount(e) {
   }
 
   // Create the new User
-  const user = new User(firstName, lastName, username, email, password);
+  const user = new User(firstName, lastName, username, email, password, false);
 
   // We would send to database here
   users.push(user);

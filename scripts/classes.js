@@ -36,13 +36,14 @@ class Post {
 }
 
 class User {
-  constructor(firstName, lastName, username, email, password) {
+  constructor(firstName, lastName, username, email, password, isAdmin) {
     // --- Private attributes ---
     this.firstName = firstName;
     this.lastName = lastName;
     this.username = username;
     this.email = email;
-    this.password = password;        // we can fix this in phase 2
+    this.password = password;  // we can fix this in phase 2
+    this.isAdmin = isAdmin;
   }
 }
 
@@ -71,18 +72,18 @@ class UserProfile{
 
 // ------------------------------- Add some users as specified for phase 1 --------------------------------------------------
 const users = [];
-users.push(new UserProfile(new User('user', 'user', 'user', 'user@example.com', 'user')));
-users.push(new UserProfile(new User('admin', 'admin', 'admin', 'admin@example.com', 'admin')));
+users.push(new UserProfile(new User('user', 'user', 'user', 'user@example.com', 'user', false)));
+users.push(new UserProfile(new User('admin', 'admin', 'admin', 'admin@example.com', 'admin', true)));
 
 for (let i = 2; i < 51; i++) {
-  users.push(new UserProfile(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`)));
+  users.push(new UserProfile(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`, false)));
 }
 
-users.push(new UserProfile(new User('Donald', 'Trump', 'America', 'dtrump@president.com', 'user')));
-users.push(new UserProfile(new User('Kim', 'Jong-un', 'NorthKorea', 'kimJongUn@president.com', 'user')));
-users.push(new UserProfile(new User('Justin', 'Trudeau', 'Canada', 'trudeau@president.com', 'user')));
-users.push(new UserProfile(new User('Xi', 'Jinping', 'China', 'jinping@president.com', 'user')));
-users.push(new UserProfile(new User('George', 'Washington', 'America1', 'gwashinton@president.com', 'user')));
+users.push(new UserProfile(new User('Donald', 'Trump', 'America', 'dtrump@president.com', 'user', false)));
+users.push(new UserProfile(new User('Kim', 'Jong-un', 'NorthKorea', 'kimJongUn@president.com', 'user', false)));
+users.push(new UserProfile(new User('Justin', 'Trudeau', 'Canada', 'trudeau@president.com', 'user',false)));
+users.push(new UserProfile(new User('Xi', 'Jinping', 'China', 'jinping@president.com', 'user',false)));
+users.push(new UserProfile(new User('George', 'Washington', 'America1', 'gwashinton@president.com', 'user',false)));
 
 //--------------------------------------Constant post for Phase1-------------------------------------------
 
