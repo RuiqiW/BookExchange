@@ -55,12 +55,10 @@ export class User {
 
 
 let userId = 0;
-let picture = "../images/profilePic2.jpg";
 export class UserProfile{
   constructor(user){
     this._userId = userId;
     this._user = user;
-    this._picture = picture;
     this._avatar = "../images/profilePic.jpg";                  // src of default avatar
     this._bio = "This is my bio.";
     this._phone = "0123456789";
@@ -78,10 +76,6 @@ export class UserProfile{
     return this._user;
   }
   
-  get picture() {
-    return this._picture;
-  }
-
   get avatar() {
     return this._avatar;
   }

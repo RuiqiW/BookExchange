@@ -194,7 +194,7 @@ document.addEventListener("click", closeAllSelect);
 function loadUserProfile(currUser){
     // change the src of the profile picture
     const currPic = profilePic.getElementsByTagName('img')[0];
-    currPic.src = currUser.picture;
+    currPic.src = currUser.avatar;
 
     // display the bio of the user
     const currDescrip = userInfo.getElementsByTagName('textarea')[0];
@@ -236,4 +236,4 @@ function loadUserProfile(currUser){
     spanEmail.removeChild(spanElement2);
 }
 
-loadUserProfile(users[0]);
+loadUserProfile(users[1]);

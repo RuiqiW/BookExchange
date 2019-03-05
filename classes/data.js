@@ -72,6 +72,6 @@ export{ transactions };
 users[0].shortlist.push(post1);
 users[0].shortlist.push(post2);
 users[0].avatar = "../images/person.jpg";
-users[1].avatar = "../images/items/seller2.png";
+users[1].avatar = "../images/profilePic2.png";
 users[2].avatar = "../images/items/seller2.jpeg";
 users[3].avatar = "../images/items/seller1.jpg";
