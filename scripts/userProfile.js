@@ -80,8 +80,10 @@ function editProfile(e) {
 // Modify info in the text boxes
 function addInfoTextBox(infoElement) {
     // Modify info
-    const infoTextBox = document.createElement('input');
+    const infoTextBox = document.createElement('textarea');
     infoTextBox.type = 'text';
+    infoTextBox.style.width="450px"
+    infoTextBox.style.minHeight="100px"
 
     infoTextBox.value = infoElement.innerText;
 
