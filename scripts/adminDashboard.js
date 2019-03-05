@@ -1,14 +1,14 @@
-import { users } from '../classes/data.js';
-import { posts } from '../classes/data.js';
-import { transactions } from '../classes/data.js';
-
+// import { users } from '../classes/data.js';
+// import { posts } from '../classes/data.js';
+// import { transactions } from '../classes/data.js';
+//
 
 // load list of messages received, need server call in Phase2
 const messages=[];
 messages.push("Hello");
 
 let postEdited = 0;
-let shownUserNum = 0;
+let shownUserNum = 2;
 
 
 // load data on DOM loaded, will use database query instead in Phase 2
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loadMessageNum();
     loadTransaction();
     loadPost();
-    loadUserList(0);
+    loadUserList();
 
 });
 

@@ -6,108 +6,157 @@
     <link href="../styles/items.css" type="text/css" rel="stylesheet">
     <!--Lightbox CSS-->
     <link href="../lightbox/css/lightbox.css" rel="stylesheet">
+    <link href="../styles/chatbox.css" type="text/css" rel="stylesheet">
     <!--jquery for lightbox-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--icon library-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
-    <div id="topBar">
-        <img id="topBarLogo" src="../images/logo.png" alt="logo">
 
-        <form id="searchForm">
-            <input id="searchBox" type="text" placeholder="Search here...">
-            <button id="searchButton" type="submit">
-                <span id="searchButtonText">Search</span>
-            </button>
+<!--Chat Box-->
+<div id="chatRoom">
+
+    <!--close button-->
+    <div id="chatHide">
+        <a href="#">&times;</a>
+    </div>
+
+    <!--messages-->
+    <div id="chat">
+        <!--A sample bubble-->
+        <div class="chatInBubble">
+            <p class="chatInText">Hello</p>
+        </div>
+    </div>
+
+    <!--write new message-->
+    <div id="message">
+        <form>
+            <textarea id="messageBox" placeholder="Message..."></textarea>
+            <button id="sendButton" class="submit"><i class="fa fa-send blue submit"></i></button>
         </form>
+    </div>
+</div>
 
-        <div id="topBarIcons">
+<div id="topBar">
+    <a href="../index.html">
+        <img id="topBarLogo" src="../images/logo.png" alt="logo">
+    </a>
+    <form id="searchForm">
+        <input id="searchBox" type="text" placeholder="Search here...">
+        <button id="searchButton" type="submit">
+            <span id="searchButtonText">Search</span>
+        </button>
+    </form>
+
+    <div id="topBarIcons">
         <!--This is used to hold the user icon after login-->
-            <div id="signIn">
-                <a href="../pages/login.html">
-                    <div class="topBarImageContainer">
-                        <img class="topBarImage" src="../images/index/user.svg" alt="userPlaceholder">
-                    </div>
-                    <br>
-                    <span class="topBarText">Log in</span>
-                </a>
-            </div>
+        <div id="chatShow" class="topBarImageContainer dropdown">
+            <img class="topBarImage" src="../images/admin/chat.png" alt="chatPlaceholder">
 
-            <div id="myCart">
-                <a href="./shoppingCart.html">
-                    <div class="topBarImageContainer">
-                        <img class="topBarImage" src="../images/index/cart.svg" alt="cartLogo">
+            <!--Dropdown List of Messages-->
+            <div class="dropdownContent">
+                <div class="profile">
+                    <div class="profileIconContainer">
+                        <img src="../images/person.jpg" alt="ProfilePic" class="profileIcon">
                     </div>
-                    <div id="shoppingCartNumber">
-                        <span id="cartNumber">0</span>
+                    <div class="profileContent">
+                        <strong>user1</strong><br><span class="grey">Hello</span>
                     </div>
-                    <br>
-                    <span class="topBarText">My cart</span>
-                </a>
+                </div>
             </div>
+        </div>
+
+        <button id="makePostButton">Make My Post</button>
+        <div id="signIn">
+            <a href="../pages/login.html">
+                <div class="topBarImageContainer">
+                    <img class="topBarImage" src="../images/index/user.svg" alt="userPlaceholder">
+                </div>
+                <br>
+                <span class="topBarText">Log in</span>
+            </a>
+        </div>
+
+        <div id="myCart">
+            <a href="./shoppingCart.html">
+                <div class="topBarImageContainer">
+                    <img class="topBarImage" src="../images/index/cart.svg" alt="cartLogo">
+                </div>
+                <div id="shoppingCartNumber">
+                    <span id="cartNumber">0</span>
+                </div>
+                <br>
+                <span class="topBarText">My cart</span>
+            </a>
         </div>
     </div>
-    <div id="resultPage">
-        <div id="searchResult">
-            Following is the search result for <span id="result">textbook</span>......
+</div>
+
+<div id="resultPage">
+    <div id="searchResult">
+        Following is the search result for <span id="result">textbook</span>......
+    </div>
+    <select id="sortingOption">
+        <option value="timeNewToOld">Sorting by Posting time(New to Old)</option>
+        <option value="timeOldToNew">Sorting by Posting time(Old to New)</option>
+        <option value="priceHighToLow">Sorting by price(High to Low)</option>
+        <option value="priceLowToHigh">Sorting by price(Low to High)</option>
+    </select>
+    <div id="posts">
+        <div class="post">
+            <img class="profilePhoto" src="../images/items/seller1.jpg" alt="sellerPhoto">
+            <span class="userName"> Donald Trump </span>
+            <br>
+            <span class="category"> Category: Books </span>
+            <span class="condition"> Condition: New </span>
+            <div class="description">
+                I want to sell a textbook for MAT224. Please contact me if you want
+                more information!
+            </div>
+            <div class="price">
+                CAD 19.99
+            </div>
+            <hr>
+            <button class="addToCart">Add to Cart</button>
+            <button class="contactSeller">Contact the Seller</button>
+            <button class="buyItem"> Buy this item</button>
         </div>
-        <select id="sortingOption">
-            <option value="timeNewToOld">Sorting by Posting time(New to Old)</option>
-            <option value="timeOldToNew">Sorting by Posting time(Old to New)</option>
-            <option value="priceHighToLow">Sorting by price(High to Low)</option>
-            <option value="priceLowToHigh">Sorting by price(Low to High)</option>
-        </select>
-        <div id="posts">
-            <div class="post">
-                <img class="profilePhoto" src="../images/items/seller1.jpg" alt="sellerPhoto">
-                <span class="userName"> Donald Trump </span>
-                <br>
-                <span class="category"> Category: Books </span>
-                <span class="condition"> Condition: New </span>
-                <div class="description">
-                    I want to sell a textbook for MAT224. Please contact me if you want
-                    more information!
-                </div>
-                <div class="price">
-                    CAD 19.99
-                </div>
-                <hr>
-                <button class="addToCart">Add to Cart</button>
-                <button class="contactSeller">Contact the Seller</button>
-                <button class="buyItem"> Buy this item</button>
+        <div class="post">
+            <img class="profilePhoto" src="../images/items/seller2.jpeg" alt="sellerPhoto">
+            <span class="userName"> Mike Penth </span>
+            <br>
+            <span class="category"> Category: Books </span>
+            <span class="condition"> Condition: New </span>
+            <div class="description">
+                I want to sell a textbook for MAT223. Please contact me if you want
+                more information!
             </div>
-            <div class="post">
-                <img class="profilePhoto" src="../images/items/seller2.jpeg" alt="sellerPhoto">
-                <span class="userName"> Mike Penth </span>
-                <br>
-                <span class="category"> Category: Books </span>
-                <span class="condition"> Condition: New </span>
-                <div class="description">
-                    I want to sell a textbook for MAT223. Please contact me if you want
-                    more information!
-                </div>
-                <div class="price">
-                    CAD 29.99
-                </div>
-                <div class="pictureContainer">
-                    <a href="../images/items/sampleBook1.jpg" data-lightbox="sampleBook1">
-                        <img class="itemPicture" src="../images/items/sampleBook1.jpg" alt="picture">
-                    </a>
-                </div>
-                <hr>
-                <button class="addToCart">Add to Cart</button>
-                <button class="contactSeller">Contact the Seller</button>
-                <button class="buyItem"> Buy this item</button>
+            <div class="price">
+                CAD 29.99
             </div>
-            <div id="endOfResults">
+            <div class="pictureContainer">
+                <a href="../images/items/sampleBook1.jpg" data-lightbox="sampleBook1">
+                    <img class="itemPicture" src="../images/items/sampleBook1.jpg" alt="picture">
+                </a>
+            </div>
+            <hr>
+            <button class="addToCart">Add to Cart</button>
+            <button class="contactSeller">Contact the Seller</button>
+            <button class="buyItem"> Buy this item</button>
+        </div>
+        <div id="endOfResults">
             End of results
-            </div>
         </div>
-
-
     </div>
-    <!--Script for lightbox-->
-    <script src="../lightbox/js/lightbox.js"></script>
-    <script src="../scripts/items.js" type="module"></script>
+
+
+</div>
+<!--Script for lightbox-->
+<script src="../lightbox/js/lightbox.js"></script>
+<script src="../scripts/classes.js" type="text/javascript"></script>
+<script src="../scripts/items.js" type="text/javascript"></script>
 </body>
 </html>

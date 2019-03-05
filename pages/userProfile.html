@@ -4,11 +4,15 @@
 <head>
   <meta charset="utf-8">
   <title>User Profile</title>
-  <link rel="stylesheet" type="text/css" href="../styles/userProfile.css">
   <link href="../styles/chatbox.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../styles/userProfile.css">
+  <!--icon library-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
+
+
 
   <!--Chat Box-->
   <div id="chatRoom">
@@ -37,7 +41,19 @@
 
   <!--Top Bar -->
   <div id="topNavBar">
+    <a href="../index.html">
+      <img id="logo" src="../images/logo.png" alt="logo">
+    </a>
     <ul>
+      <!--Shopping Cart Button-->
+      <li>
+        <a href="./shoppingCart.html">
+          <div class="topBarImageContainer">
+            <img class="topBarImage" src="../images/index/cart.svg" alt="cartLogo">
+          </div>
+        </a>
+      </li>
+
       <!--Chat Button-->
       <li>
         <div id="chatShow" class="topBarImageContainer dropdown">
@@ -47,10 +63,10 @@
           <div class="dropdownContent">
             <div class="profile">
               <div class="profileIconContainer">
-                <img src="../images/profilePic.jpg" alt="ProfilePic" class="profileIcon">
+                <img src="../images/person.jpg" alt="ProfilePic" class="profileIcon">
               </div>
               <div class="profileContent">
-                <strong>User</strong><br><span class="grey">Hello</span>
+                <strong>user1</strong><br><span class="grey">Hello</span>
               </div>
             </div>
           </div>
@@ -62,15 +78,6 @@
         <a href="../index.html">
           <div class="topBarImageContainer">
             <img class="topBarImage" src="../images/admin/logout.png" alt="logOutPlaceholder">
-          </div>
-        </a>
-      </li>
-
-      <!--Shopping Cart Button-->
-      <li>
-        <a href="./shoppingCart.html">
-          <div class="topBarImageContainer">
-            <img class="topBarImage" src="../images/index/cart.svg" alt="cartLogo">
           </div>
         </a>
       </li>
@@ -129,6 +136,7 @@
 
   </div>
 
-  <script type="module" src="../scripts/userProfile.js"></script>
+  <script type="text/javascript" src="../scripts/classes.js"></script>
+  <script type="text/javascript" src="../scripts/userProfile.js"></script>
 </body>
 </html>

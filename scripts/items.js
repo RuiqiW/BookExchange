@@ -1,9 +1,27 @@
-import {posts} from "../classes/data.js";
-import {users} from "../classes/data.js";
 let num_posts = 0;
 
 const sortingOpt = document.querySelector("#sortingOption");
 sortingOpt.addEventListener("change", onSortingOptChange);
+
+
+// Show / Hide chatbox
+const chatShow = document.querySelector("#chatShow");
+const chatHide = document.querySelector("#chatHide");
+chatHide.addEventListener('click', hideChatRoom);
+chatShow.addEventListener('click', showChatRoom);
+
+function showChatRoom(e) {
+    e.preventDefault();
+    const chatRoom = document.querySelector('#chatRoom');
+    chatRoom.style.display = "block";
+}
+
+function hideChatRoom(e) {
+    e.preventDefault();
+    const chatRoom = document.querySelector('#chatRoom');
+    chatRoom.style.display = "none";
+}
+
 
 function onSortingOptChange() {
     const newOption = sortingOpt.value;
@@ -61,6 +79,20 @@ function init() {
     //Here just use user0;
     const cartNumber = user.shortlist.length;
     updateShoppingCart(cartNumber);
+    const signInDiv = document.querySelector("#signIn");
+    signInDiv.removeChild(signInDiv.lastElementChild);
+
+    const a = document.createElement("a");
+    a.setAttribute("href", "../pages/userProfile.html");
+    const imageContainer = document.createElement("div");
+    imageContainer.className = "topBarImageContainer";
+    const image = document.createElement("img");
+    image.className = "profileImage";
+    image.setAttribute("src", "../images/person.jpg");
+    imageContainer.appendChild(image);
+    a.appendChild(imageContainer);
+    imageContainer.appendChild(image);
+    signInDiv.appendChild(a);
 }
 
 function updateShoppingCart(newNumber) {
@@ -89,7 +121,7 @@ function generateSearchResult(posts, user) {
 }
 
 /**
- * Generate the div of this post.
+ * Generate the div of this post for the user. Buy item will replaced by "delete this post" if the user is an Admin
  * @param post the post that wanted to be displayed
  * @user the current user, this is used to check whether item is already in the cart.
  */
@@ -176,16 +208,21 @@ function generatePost(post, user) {
 
     const contactSeller = document.createElement("button");
     contactSeller.className="contactSeller";
-    contactSeller.appendChild(document.createTextNode("Contact the seller"));
+    contactSeller.appendChild(document.createTextNode("Contact Seller"));
 
-    const buyItem = document.createElement("button");
-    buyItem.className="buyItem";
-    buyItem.appendChild(document.createTextNode("Buy this item"));
-
+    if (user.user.isAdmin) {
+        const deletePost = document.createElement("button");
+        deletePost.className="deletePost";
+        deletePost.appendChild(document.createTextNode("Delete this post"));
+        postDiv.appendChild(deletePost);
+    } else {
+        const buyItem = document.createElement("button");
+        buyItem.className="buyItem";
+        buyItem.appendChild(document.createTextNode("Buy this item"));
+        postDiv.appendChild(buyItem);
+    }
 
     postDiv.appendChild(contactSeller);
-    postDiv.appendChild(buyItem);
-
     return postDiv;
 
 
@@ -215,9 +252,6 @@ function addToCart(e) {
 }
 
 function removeFromCart(e) {
-    //Server call to update the shopping cart of user
-    // Here just use user0
-    const user = users[0];
     const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
     user.shortlist.splice(user.shortlist.indexOf(posts.filter(function(x) {
         return x.postId === postId;
@@ -231,4 +265,71 @@ function removeFromCart(e) {
 
     updateShoppingCart(user.shortlist.length);
 }
+
+const makePostButton = document.querySelector("#makePostButton");
+makePostButton.addEventListener("click", makePost);
+
+function makePost(e) {
+    //Here should be some code check whether user is logged in
+    //If not logged in, should jump to login page
+    //Here simply jump to make post page
+    document.location = "./post-ad.html";
+}
+
+const buyItemButtons = document.querySelectorAll(".buyItem");
+for (let i = 0; i < buyItemButtons.length;i++) {
+    buyItemButtons[i].addEventListener("click", buyItem);
+}
+function buyItem(e) {
+    //Server call to update the shopping cart of user
+    // Here just use user0
+    const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
+    //Should make a server call to fetch the post, here just use the hardcoded posts array
+    const post = posts.filter(x => x.postId === postId);
+    if (!post.byCreditCard) {
+        alert("The seller want you to pay him/her directly, please contact the seller!");
+    } else {
+        const creditCardNumber = prompt("Please enter your credit card number");
+        if (creditCardNumber !== null) {
+            alert("Your order has been submitted to verify");
+        }
+        //Make a server call to submit the creditcardNumber and the postId!
+    }
+
+
+
+}
+
+/*********************** Chat Box ************************/
+
+const chat = document.querySelector('#chat');
+const sendButton = document.querySelector("#sendButton");
+sendButton.addEventListener('click', sendMessage);
+
+function sendMessage(e) {
+    e.preventDefault();
+
+    if (e.target.classList.contains("submit")) {
+        const message = document.querySelector("#messageBox").value;
+        if (message.length > 0 && message.length < 200) {
+            addMessage(message);
+        }
+    }
+    chat.scrollTop = chat.scrollHeight;
+}
+
+
+// helper function for sendMessage, add message to chat window
+function addMessage(msg) {
+    const newMessage = document.createElement('p');
+    newMessage.className = "chatOutText";
+    newMessage.innerText = msg;
+    const bubble = document.createElement('div');
+    bubble.className = "chatOutBubble";
+    bubble.appendChild(newMessage);
+    const messageContainer = document.createElement('div');
+    messageContainer.appendChild(bubble);
+    chat.appendChild(messageContainer);
+}
+
 

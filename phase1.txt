@@ -27,12 +27,16 @@ login page:
        1. Log in
           Please use the credentials as in "Credential" section above to log in.
        2. Sign up
-          When click "submit", a message will pop up showing whether a new account has been
-          created successfully. There will also be a link that redirects the page to index page.
-
           Note： the newly created user will not be saved in this phase.
           In Phase2, we will implement this functionality by saving user information in the database
           when "submit" is clicked on, and look up this user information when log in.
+
+
+
+Create account page:
+        1. Enter account information that will be used to add a new user to the database.
+
+        2. As noted above, this functionality will be implemented in phase 2.
 
 
 items page:
@@ -55,11 +59,11 @@ user profile page:
           effect of changing profile picture. In Phase 2, the picture uploaded will be stored
           in database.
 
-        2. Manage Shopping Cart
+       2. Manage Shopping Cart
 
 
 
-        3. Chat with Others (functionality for both user and admin)
+       3. Chat with Others (functionality for both user and admin)
             When click on the the "chat" icon on the top-right side of the page.
             A dropdown list of messages will show up and when click on the messages,
             a chatbox will show up at the bottom-right.
@@ -98,6 +102,25 @@ admin dashboard page:
 
 
 
+Post-ad page:
+        1. There are three section that the user must complete in order to post a new ad of the
+           item they want to sell. Note: this page was designed using a css framework.
+
+        2. Each section must be filled out, otherwise an alert message will warn the user to
+           complete each field.
+
+        3. If a price is entered AND a radio button is selected, it will prioritize the entered
+           monetary amount.
+
+        4. Upon successfully posting a new ad, the site will redirect the user back to their
+           profile page. In phase 2, when there we have a database, it will redirect the user
+           to the search page containing their new post.
+
+
+
+Payment method page:
+        1. Standard payment method form page. User will enter all fields and click "Pay now" to
+           complete payment.
 
 
 

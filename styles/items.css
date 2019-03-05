@@ -50,8 +50,8 @@ body {
     margin-top: 20px;
     position: relative;
     left: 400px;
-    top: -8px;
-
+    top: -4px;
+    border-radius: 10px;
     padding: 0;
 
 
@@ -163,12 +163,19 @@ body {
     background-color: dodgerblue;
     font-weight: bold;
     color: white;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+
 }
 
 .contactSeller {
     margin-left: 40px;
     margin-right: 40px;
     font-weight: bold;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
     color: white;
     background-color: dodgerblue;
 }
@@ -177,6 +184,10 @@ body {
     font-weight: bold;
     color: white;
     background-color: dodgerblue;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+    margin-left: 20px;
 }
 
 #searchResult {
@@ -268,6 +279,9 @@ body {
     background-color: yellow;
     font-weight: bold;
     color: black;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
 }
 
 .postId  {
@@ -276,4 +290,40 @@ body {
     font-size: 70%;
     color: grey;
 
+}
+
+#makePostButton {
+    height: 30px;
+    position: relative;
+    bottom: 20px;
+    right: 10px;
+    font-size: 120%;
+    background-color: #44aaee;
+    color: white;
+    border-radius: 10px;
+
+}
+
+.deletePost {
+    margin-bottom: 5px;
+    margin-left: 10px;
+    background-color: red;
+    font-weight: bold;
+    color: white;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+
+}
+
+#chatShow {
+    position:relative;
+    right: 20px;
+    bottom: 10px;
+}
+.profileImage {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border-style: solid;
 }
