@@ -50,12 +50,10 @@ class User {
 
 
 let userId = 0;
-let picture = "../images/profilePic.jpg";
 class UserProfile{
   constructor(user){
     this.userId = userId;
     this.user = user;
-    this.picture = picture;
     this.avatar = "../images/profilePic.jpg";                  // src of default avatar
     this.bio = "This is my bio.";
     this.phone = "0123456789";
@@ -133,7 +131,7 @@ transactions.push(new Transaction(posts[6], users[0], "$24"));
 users[0].shortlist.push(post1);
 users[0].shortlist.push(post2);
 users[0].avatar = "../images/profilePic.jpg";
-users[1].avatar = "../images/items/seller2.png";
+users[1].avatar = "../images/profilePic2.png";
 users[2].avatar = "../images/person.jpg";
 users[3].avatar = "../images/items/seller2.jpeg";
 users[4].avatar = "../images/items/seller1.jpg";

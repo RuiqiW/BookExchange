@@ -5,12 +5,14 @@ const chatHide = document.querySelector("#chatHide");
 chatHide.addEventListener('click', hideChatRoom);
 chatShow.addEventListener('click', showChatRoom);
 
+// show the chatroom
 function showChatRoom(e) {
     e.preventDefault();
     const chatRoom = document.querySelector('#chatRoom');
     chatRoom.style.display = "block";
 }
 
+// hide the chatroom
 function hideChatRoom(e) {
     e.preventDefault();
     const chatRoom = document.querySelector('#chatRoom');
@@ -23,6 +25,7 @@ const chat = document.querySelector('#chat');
 const sendButton = document.querySelector("#sendButton");
 sendButton.addEventListener('click', sendMessage);
 
+// sends messages
 function sendMessage(e) {
     e.preventDefault();
 
@@ -49,17 +52,16 @@ function addMessage(msg) {
     chat.appendChild(messageContainer);
 }
 
-/*********************** Edit Profile Picture ************************/
+/*********************** Edit Profile Info By Clicking the Edit Buttons ************************/
 
 const profile = document.querySelector('#profile');
 const profilePic = document.querySelector('#profilePic');
 const userInfo = document.querySelector('#profileInfo');
 
 userInfo.addEventListener('click', editProfile);
-
 profilePic.addEventListener('file', editProfilePic);
 
-// Reads the input profile picture URL
+// Modify the info
 function editProfile(e) {
     e.preventDefault();
 
@@ -75,7 +77,7 @@ function editProfile(e) {
     }
 }
 
-// Modify Title and Rating in booktable
+// Modify info in the text boxes
 function addInfoTextBox(infoElement) {
     // Modify info
     const infoTextBox = document.createElement('input');
@@ -87,6 +89,7 @@ function addInfoTextBox(infoElement) {
     infoElement.parentElement.removeChild(infoElement);
 }
 
+// Remove the text boxes
 function removeInfoTextBox(infoElement) {
     const newElement = document.createElement('span');
     newElement.innerText = infoElement.value;
@@ -95,6 +98,7 @@ function removeInfoTextBox(infoElement) {
 }
 
 // Reads the input profile picture URL
+// To be finished with back end in phase 2
 function editProfilePic(e) {
     e.preventDefault();
 
@@ -115,6 +119,7 @@ function editProfilePic(e) {
 
 /*********************** Drop down select ************************/
 
+// the select drop down box with 2 payment options
 const x = document.getElementsByClassName("custom-select");
 for (let i = 0; i < x.length; i++) {
   const selElmnt = x[i].getElementsByTagName("select")[0];
@@ -160,6 +165,7 @@ for (let i = 0; i < x.length; i++) {
     });
 }
 
+// closes the select box
 function closeAllSelect(elmnt) {
   /*a function that will close all select boxes in the document,
   except the current select box:*/
@@ -183,7 +189,7 @@ function closeAllSelect(elmnt) {
 // Close all select boxes if the user clickes outside of the box
 document.addEventListener("click", closeAllSelect);
 
-/*********************** Display User Objects Profile Info ************************/
+/*********************** Display an User Object's Profile Info from an Array of Users ************************/
 
 // Load a user profile by creating new DOM elements from a user profile to replace the default DOM elements
 function loadUserProfile(currUser){
