@@ -4,8 +4,10 @@
 <head>
   <meta charset="utf-8">
   <title>User Profile</title>
-  <link rel="stylesheet" type="text/css" href="../styles/userProfile.css">
   <link href="../styles/chatbox.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../styles/userProfile.css">
+  <!--icon library-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -38,6 +40,15 @@
   <!--Top Bar -->
   <div id="topNavBar">
     <ul>
+      <!--Shopping Cart Button-->
+      <li>
+        <a href="./shoppingCart.html">
+          <div class="topBarImageContainer">
+            <img class="topBarImage" src="../images/index/cart.svg" alt="cartLogo">
+          </div>
+        </a>
+      </li>
+
       <!--Chat Button-->
       <li>
         <div id="chatShow" class="topBarImageContainer dropdown">
@@ -62,15 +73,6 @@
         <a href="../index.html">
           <div class="topBarImageContainer">
             <img class="topBarImage" src="../images/admin/logout.png" alt="logOutPlaceholder">
-          </div>
-        </a>
-      </li>
-
-      <!--Shopping Cart Button-->
-      <li>
-        <a href="./shoppingCart.html">
-          <div class="topBarImageContainer">
-            <img class="topBarImage" src="../images/index/cart.svg" alt="cartLogo">
           </div>
         </a>
       </li>
