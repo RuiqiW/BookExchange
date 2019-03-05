@@ -67,12 +67,16 @@ function handlePostAd(e) {
   let price = isNaN(priceNum) ? priceStr : priceNum;    // isNaN -> is not a number
 
 
-  // TODO: grab the uploaded photos.
   let images = [];
+  for (let i = 0; i < uploads.length; i++) {
+    if (uploads[i].files[0] !== null && uploads[i].files[0] !== undefined) {
+      images.push(uploads[i].files[0]);
+    }
+  }
 
 
   // Create the new Post
-  // TODO: How to get the seller that is making the new Post?
+  // TODO: How to get the seller that is making the new Post? Not necessary for phase 1
   const post = new Post(title, "SELLER??", price, category, condition, description, images);
   posts.push(post);
 
