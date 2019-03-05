@@ -238,3 +238,7 @@
   text-decoration: underline;
   color: mediumpurple;
 }
+
+.fill{
+  width: 100%;
+}

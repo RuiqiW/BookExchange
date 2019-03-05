@@ -135,3 +135,4 @@ users[1].avatar = "../images/profilePic2.jpg";
 users[2].avatar = "../images/person.jpg";
 users[3].avatar = "../images/items/seller2.jpeg";
 users[4].avatar = "../images/items/seller1.jpg";
+users[0].bio = "Here is my bio description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus quam ante, quis pulvinar lectus rutrum non. Nam nec porttitor quam. Vivamus nec dui commodo arcu placerat ornare. Aenean feugiat mauris in nibh semper semper. Sed faucibus dolor non orci sollicitudin, at vehicula mauris maximus. "

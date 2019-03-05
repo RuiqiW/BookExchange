@@ -82,7 +82,9 @@ function addInfoTextBox(infoElement) {
     // Modify info
     const infoTextBox = document.createElement('input');
     infoTextBox.type = 'text';
-
+    if(infoElement.parentElement.className === "boxed") {
+        infoTextBox.className = "fill";
+    }
     infoTextBox.value = infoElement.innerText;
 
     infoElement.before(infoTextBox);
