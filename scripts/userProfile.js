@@ -239,7 +239,7 @@ function loadUserProfile(currUser){
     spanEmail.removeChild(spanElement2);
 }
 
-loadUserProfile(users[1]);
+loadUserProfile(users[0]);
 
 const postIMade = document.querySelector("#postIMade");
 postIMade.addEventListener("click", jumpToPostIMade);
