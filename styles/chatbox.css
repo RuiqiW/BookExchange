@@ -12,14 +12,25 @@
     overflow: hidden;
 }
 
-#chatHide {
+#chatTitle{
     display: block;
+    background-color: lightsteelblue;
+}
+
+#chatName {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#chatHide{
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
 }
 
 #chatHide a{
     text-decoration: none;
     display: inline;
-    margin-left: 230px;
 }
 
 #chatShow:hover{
@@ -59,7 +70,7 @@
     display: inline-block;
     min-width: 60px;
     max-width: 150px;
-    background-color: lightblue;
+    background-color: skyblue;
     border-radius: 20px;
 }
 
