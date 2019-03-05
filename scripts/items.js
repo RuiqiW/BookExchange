@@ -87,7 +87,7 @@ function generateSearchResult(posts, user) {
 }
 
 /**
- * Generate the div of this post.
+ * Generate the div of this post for the user. Buy item will replaced by "delete this post" if the user is an Admin
  * @param post the post that wanted to be displayed
  * @user the current user, this is used to check whether item is already in the cart.
  */
@@ -176,14 +176,19 @@ function generatePost(post, user) {
     contactSeller.className="contactSeller";
     contactSeller.appendChild(document.createTextNode("Contact Seller"));
 
-    const buyItem = document.createElement("button");
-    buyItem.className="buyItem";
-    buyItem.appendChild(document.createTextNode("Buy this item"));
-
+    if (user.user.isAdmin) {
+        const deletePost = document.createElement("button");
+        deletePost.className="deletePost";
+        deletePost.appendChild(document.createTextNode("Delete this post"));
+        postDiv.appendChild(deletePost);
+    } else {
+        const buyItem = document.createElement("button");
+        buyItem.className="buyItem";
+        buyItem.appendChild(document.createTextNode("Buy this item"));
+        postDiv.appendChild(buyItem);
+    }
 
     postDiv.appendChild(contactSeller);
-    postDiv.appendChild(buyItem);
-
     return postDiv;
 
 
