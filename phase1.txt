@@ -13,7 +13,9 @@ index page:
           if there is no input in the "Search item" input box, or show items related to the
           input otherwise.
 
-          Please type in "textbook" to show a sample search result
+          The search function will requires a server call to pull related result from database.
+          As a result, in phase1, after clicking the search button, it will generate the page
+          with hardcoded posts array in class.js as a demonstration.
 
        2. Log In
           The page will jump to login page
@@ -93,6 +95,10 @@ admin dashboard page:
             When click on "show more / show less", more or less users will be displayed.
             Admin will be able to delete a user when click on the corresponding delete button,
             or view a user's profile in detail when click on "View Detail".
+
+            The search bar is already function and can correctly remove user from the page.
+            But actual delete user will require the assistant of server, which will be
+            implemented in phase2.
 
         5. Manage Transactions:
             The transactions which have not been processed by the admin yet will show up in

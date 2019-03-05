@@ -1,8 +1,3 @@
-// import { users } from '../classes/data.js';
-// import { posts } from '../classes/data.js';
-// import { transactions } from '../classes/data.js';
-//
-
 // load list of messages received, need server call in Phase2
 const messages=[];
 messages.push("Hello");

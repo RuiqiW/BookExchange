@@ -87,37 +87,37 @@ users.push(new UserProfile(new User('George', 'Washington', 'America1', 'gwashin
 //--------------------------------------Constant post for Phase1-------------------------------------------
 
 const posts =[];
-const post1 = new Post("Calculus", users[3], 10, "book", "new", "This is a calculus text book I want to sell", [],false);
+const post1 = new Post("Calculus", users[3], 10, "book", "new", "This is a calculus text book I want to sell", [],true);
 post1.images.push("../images/admin/textbook1.jpg");
 post1.postingDate=new Date("2019-01-01T12:30");
 posts.push(post1);
 
-const post2 = new Post("Algorithms", users[2], 99, "book", "new", "This is the required textbook for CSC263" ,[], false);
+const post2 = new Post("Algorithms", users[2], 99, "book", "new", "This is the required textbook for CSC263" ,[], true);
 post2.images.push("../images/admin/textbook2.jpg");
 post2.images.push("../images/intro_to_algo.jpeg");
 post2.postingDate=new Date("2019-01-02T12:30");
 posts.push(post2);
 
-const post3 = new Post("Chez Nous", users[2], 89, "book"," new", "This is the required textbook for FRC100",[], false);
+const post3 = new Post("Chez Nous", users[2], 89, "book"," new", "This is the required textbook for FRC100",[], true);
 post3.images.push("../images/admin/textbook3.jpg");
 post3.postingDate=new Date("2019-01-02T12:30");
 posts.push(post3);
 
-const post4 = new Post("Microeconomics", users[0], 99.99, "book", "70%-new", "This is the required textbook for ECO101",[], false);
+const post4 = new Post("Microeconomics", users[0], 99.99, "book", "70%-new", "This is the required textbook for ECO101",[], true);
 post4.images.push("../images/admin/textbook4.jpg");
 post4.postingDate=new Date("2019-01-03T12:30");
 posts.push(post4);
 
-const post5 = new Post("Statistics", users[0], 89.99, "book", "80%-new", "Textbook for STA257",[], false);
+const post5 = new Post("Statistics", users[0], 89.99, "book", "80%-new", "Textbook for STA257",[], true);
 post5.images.push("../images/admin/textbook5.jpg");
 post5.postingDate=new Date("2019-01-04T12:30");
 posts.push(post5);
 
-const post6 = new Post("Web Programming", users[0], 10.99, "book", "new", "Textbook for CSC309",[], false);
+const post6 = new Post("Web Programming", users[0], 10.99, "book", "new", "Textbook for CSC309",[], true);
 post6.postingDate=new Date("2019-01-05T12:30");
 posts.push(post6);
 
-const post7 = new Post("Linear Algebra", users[2], 10.88, "book", "new", "Textbook for CSC223/224",[], false);
+const post7 = new Post("Linear Algebra", users[2], 10.88, "book", "new", "Textbook for CSC223/224",[], true);
 post7.postingDate=new Date("2019-01-06T12:30");
 posts.push(post7);
 
