@@ -8,7 +8,7 @@ const messages=[];
 messages.push("Hello");
 
 let postEdited = 0;
-let shownUserNum = 0;
+let shownUserNum = 2;
 
 
 // load data on DOM loaded, will use database query instead in Phase 2
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loadMessageNum();
     loadTransaction();
     loadPost();
-    loadUserList(0);
+    loadUserList();
 
 });
 

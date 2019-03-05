@@ -76,7 +76,7 @@ const users = [];
 users.push(new UserProfile(new User('user', 'user', 'user', 'user@example.com', 'user', false)));
 users.push(new UserProfile(new User('admin', 'admin', 'admin', 'admin@example.com', 'admin', true)));
 
-for (let i = 2; i < 51; i++) {
+for (let i = 1; i < 51; i++) {
   users.push(new UserProfile(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`, false)));
 }
 
@@ -132,7 +132,8 @@ transactions.push(new Transaction(posts[6], users[0], "$24"));
 
 users[0].shortlist.push(post1);
 users[0].shortlist.push(post2);
-users[0].avatar = "../images/person.jpg";
+users[0].avatar = "../images/profilePic.jpg";
 users[1].avatar = "../images/items/seller2.png";
-users[2].avatar = "../images/items/seller2.jpeg";
-users[3].avatar = "../images/items/seller1.jpg";
+users[2].avatar = "../images/person.jpg";
+users[3].avatar = "../images/items/seller2.jpeg";
+users[4].avatar = "../images/items/seller1.jpg";
