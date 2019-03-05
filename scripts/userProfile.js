@@ -214,9 +214,9 @@ function loadUserProfile(currUser){
     email.appendChild(document.createTextNode(currUser.user.email));
 
     // modify the DOM elements in the user profile info for name, username, phone number and email
-    const currName = userInfo.getElementsByTagName('h3')[0];
-    currName.before(name);
-    userInfo.removeChild(currName);
+    const currName = profile.getElementsByTagName('h3')[0];
+    userInfo.before(name);
+    profile.removeChild(currName);
 
     const currId = userInfo.getElementsByTagName('div')[0];
     const spanId = currId.getElementsByTagName('p')[0];
