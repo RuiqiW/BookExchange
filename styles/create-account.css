@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 90vh;
   background: #F7F7F7;
 }
 #createAccount .createAccountCard {
@@ -109,4 +109,8 @@ select:focus,
 textarea:focus,
 button:focus {
   outline: none;
+}
+
+.navbar {
+  background: #F7F7F7;
 }
