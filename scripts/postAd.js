@@ -1,7 +1,12 @@
 /**
  * This module handles posting a new ad for a user.
+ * Note: Don't remove 'unused variables'. They are
+ * only unused because we need to implement creating
+ * the new Post in phase 2.
  */
 
+
+// DOM event listeners
 const postAdButton = document.querySelector('#postAdButton');
 postAdButton.addEventListener('click', handlePostAd);
 
@@ -74,8 +79,8 @@ function handlePostAd(e) {
 
   // Create the new Post
   // TODO: How to get the seller that is making the new Post? Not necessary for phase 1
-  const post = new Post(title, "SELLER??", price, category, condition, description, images);
-  posts.push(post);
+  // const post = new Post(title, "SELLER??", price, category, condition, description, images);
+  // posts.push(post);
 
 
   // Redirect back to their profile page
