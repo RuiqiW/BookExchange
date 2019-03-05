@@ -252,6 +252,8 @@ function addToCart(e) {
 }
 
 function removeFromCart(e) {
+    //Server call to get user. Here just user0;
+    const user = users[0];
     const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
     user.shortlist.splice(user.shortlist.indexOf(posts.filter(function(x) {
         return x.postId === postId;
