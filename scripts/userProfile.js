@@ -1,4 +1,4 @@
-import { users } from '../classes/data.js';
+
 
 /*********************** Navigation Button ************************/
 
@@ -53,11 +53,48 @@ function addMessage(msg) {
 
 /*********************** Edit Profile Picture ************************/
 
-const content = document.querySelector('#content');
-const profile = content.querySelector('#profile');
-const profilePic = profile.querySelector('#profilePic');
+const profile = document.querySelector('#profile');
+const profilePic = document.querySelector('#profilePic');
+const userInfo = document.querySelector('#profileInfo');
+
+userInfo.addEventListener('click', editProfile);
 
 profilePic.addEventListener('file', editProfilePic);
+
+// Reads the input profile picture URL
+function editProfile(e) {
+    e.preventDefault();
+
+    if (e.target.classList.contains('edit')) {
+        addInfoTextBox(e.target.parentElement.firstElementChild)
+        e.target.classList.add('save');
+        e.target.classList.remove('edit');
+    }
+    else if (e.target.classList.contains('save')) {
+        removeInfoTextBox(e.target.parentElement.firstElementChild)
+        e.target.classList.add('edit');
+        e.target.classList.remove('save');
+    }
+}
+
+// Modify Title and Rating in booktable
+function addInfoTextBox(infoElement) {
+    // Modify info
+    const infoTextBox = document.createElement('input')
+    infoTextBox.type = 'text'
+
+    infoTextBox.value = infoElement.innerText
+
+    infoElement.before(infoTextBox)
+    infoElement.parentElement.removeChild(infoElement)
+}
+
+function removeInfoTextBox(infoElement) {
+    const newElement = document.createElement('span');
+    newElement.innerText = infoElement.value;
+    infoElement.parentElement.firstElementChild.before(newElement);
+    infoElement.parentElement.removeChild(infoElement);
+}
 
 // Reads the input profile picture URL
 function editProfilePic(e) {
@@ -152,7 +189,6 @@ function closeAllSelect(elmnt) {
 document.addEventListener("click", closeAllSelect);
 
 /*********************** Display User Objects Profile Info ************************/
-const userInfo = profile.querySelector('#profileInfo');
 
 // Load a user profile
 function loadUserProfile(user){
