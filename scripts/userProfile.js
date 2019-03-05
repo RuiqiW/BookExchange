@@ -190,18 +190,23 @@ document.addEventListener("click", closeAllSelect);
 
 /*********************** Display User Objects Profile Info ************************/
 
-// Load a user profile
+// Load a user profile by creating new DOM elements from a user profile to replace the default DOM elements
 function loadUserProfile(currUser){
+    // change the src of the profile picture
     const currPic = profilePic.getElementsByTagName('img')[0];
     currPic.src = currUser.picture;
 
+    // display the name of the user
     const currName = profile.getElementsByTagName('h3')[0];
+    currName.removeChild(currName.firstElementChild);
     currName.appendChild(document.createTextNode(currUser.user.firstName + ' ' + currUser.user.lastName));
 
+    // display the bio of the user
     const currDescrip = userInfo.getElementsByTagName('textarea')[0];
-    currDescrip.innerText = document.createTextNode(currUser.bio);
+    currDescrip.removeChild(currDescrip.firstElementChild);
+    currDescrip.appendChild(document.createTextNode(currUser.bio));
 
-    // create the DOM elements in the user profile info
+    // create the DOM elements in the user profile info for username, phone number and email
     const id = document.createElement('span');
     id.appendChild(document.createTextNode(currUser.user.username));
 
@@ -211,7 +216,7 @@ function loadUserProfile(currUser){
     const email = document.createElement('span');
     email.appendChild(document.createTextNode(currUser.user.email));
 
-    // modify the DOM elements in the user profile info
+    // modify the DOM elements in the user profile info for username, phone number and email
     const currId = userInfo.getElementsByTagName('div')[0];
     const spanId = currId.getElementsByTagName('p')[0];
     spanId.removeChild(spanId.getElementsByTagName('span')[0]);
