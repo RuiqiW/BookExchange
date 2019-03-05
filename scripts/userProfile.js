@@ -196,10 +196,6 @@ function loadUserProfile(currUser){
     const currPic = profilePic.getElementsByTagName('img')[0];
     currPic.src = currUser.picture;
 
-    // display the name of the user
-    const currName = profile.getElementsByTagName('h3')[0];
-    currName.removeChild(currName.firstElementChild);
-
     // display the bio of the user
     const currDescrip = userInfo.getElementsByTagName('textarea')[0];
     currDescrip.removeChild(currDescrip.firstElementChild);
