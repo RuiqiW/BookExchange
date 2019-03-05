@@ -64,16 +64,26 @@ profilePic.addEventListener('file', editProfilePic);
 // Modify the info
 function editProfile(e) {
     e.preventDefault();
-
-    if (e.target.classList.contains('edit')) {
-        addInfoTextBox(e.target.parentElement.firstElementChild);
-        e.target.classList.add('save');
-        e.target.classList.remove('edit');
-    }
-    else if (e.target.classList.contains('save')) {
-        removeInfoTextBox(e.target.parentElement.firstElementChild);
-        e.target.classList.add('edit');
-        e.target.classList.remove('save');
+    if (!e.target.classList.contains("textArea")) {
+        if (e.target.classList.contains('fa-edit')) {
+            addInfoTextBox(e.target.parentElement.firstElementChild);
+            e.target.classList.add('fa-save');
+            e.target.classList.remove('fa-edit');
+        } else if (e.target.classList.contains('fa-save')) {
+            removeInfoTextBox(e.target.parentElement.firstElementChild);
+            e.target.classList.add('fa-edit');
+            e.target.classList.remove('fa-save');
+        }
+    } else {
+        if (e.target.classList.contains('fa-edit')) {
+            addInfoTextArea(e.target.parentElement.firstElementChild);
+            e.target.classList.add('fa-save');
+            e.target.classList.remove('fa-edit');
+        } else if (e.target.classList.contains('fa-save')) {
+            removeInfoTextArea(e.target.parentElement.firstElementChild);
+            e.target.classList.add('fa-edit');
+            e.target.classList.remove('fa-save');
+        }
     }
 }
 
@@ -91,8 +101,31 @@ function addInfoTextBox(infoElement) {
     infoElement.parentElement.removeChild(infoElement);
 }
 
+// Modify info in the text boxes
+function addInfoTextArea(infoElement) {
+    // Modify info
+    const infoTextBox = document.createElement('textArea');
+    infoTextBox.setAttribute("rows", "5");
+    infoTextBox.setAttribute("cols", "40");
+    if(infoElement.parentElement.className === "boxed") {
+        infoTextBox.className = "fill";
+    }
+    infoTextBox.value = infoElement.innerText;
+
+    infoElement.before(infoTextBox);
+    infoElement.parentElement.removeChild(infoElement);
+}
+
 // Remove the text boxes
 function removeInfoTextBox(infoElement) {
+    const newElement = document.createElement('span');
+    newElement.innerText = infoElement.value;
+    infoElement.parentElement.firstElementChild.before(newElement);
+    infoElement.parentElement.removeChild(infoElement);
+}
+
+// Remove the text boxes
+function removeInfoTextArea(infoElement) {
     const newElement = document.createElement('span');
     newElement.innerText = infoElement.value;
     infoElement.parentElement.firstElementChild.before(newElement);
