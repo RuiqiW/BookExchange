@@ -55,7 +55,7 @@ export class User {
 
 
 let userId = 0;
-let picture = "../images/profilePic.jpg";
+let picture = "../images/profilePic2.jpg";
 export class UserProfile{
   constructor(user){
     this._userId = userId;
