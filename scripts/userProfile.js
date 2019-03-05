@@ -118,22 +118,20 @@ function editProfilePic(e) {
 const x = document.getElementsByClassName("custom-select");
 for (let i = 0; i < x.length; i++) {
   const selElmnt = x[i].getElementsByTagName("select")[0];
-  /*for each element, create a new DIV that will act as the selected item:*/
+  // for each element, create a div DIV that will act as the selected item
   const a = document.createElement("div");
   a.setAttribute("class", "select-selected");
   a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
   x[i].appendChild(a);
-  /*for each element, create a new DIV that will contain the option list:*/
+  // for each element, create a new div that will contain the option list
   const b = document.createElement("div");
   b.setAttribute("class", "select-items select-hide");
   for (let j = 1; j < selElmnt.length; j++) {
-    /*for each option in the original select element,
-    create a new div that will act as an option item:*/
+    // for each option in the original select element, create a new div that will act as an option item
     const c = document.createElement("div");
     c.innerHTML = selElmnt.options[j].innerHTML;
     c.addEventListener("click", function(e) {
-        /*when an item is clicked, update the original select box,
-        and the selected item:*/
+        // when an item is clicked, update the original select box and the selected item
         const s = this.parentNode.parentNode.getElementsByTagName("select")[0];
         const h = this.parentNode.previousSibling;
         for (let l = 0; l < s.length; l++) {
@@ -154,8 +152,7 @@ for (let i = 0; i < x.length; i++) {
   }
   x[i].appendChild(b);
   a.addEventListener("click", function(e) {
-      /*when the select box is clicked, close any other select boxes,
-      and open/close the current select box:*/
+      // when the select box is clicked, close any other select boxes and open/close the current select box
       e.stopPropagation();
       closeAllSelect(this);
       this.nextSibling.classList.toggle("select-hide");
