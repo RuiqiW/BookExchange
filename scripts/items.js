@@ -79,6 +79,20 @@ function init() {
     //Here just use user0;
     const cartNumber = user.shortlist.length;
     updateShoppingCart(cartNumber);
+    const signInDiv = document.querySelector("#signIn");
+    signInDiv.removeChild(signInDiv.lastElementChild);
+
+    const a = document.createElement("a");
+    a.setAttribute("href", "../pages/userProfile.html");
+    const imageContainer = document.createElement("div");
+    imageContainer.className = "topBarImageContainer";
+    const image = document.createElement("img");
+    image.className = "profileImage";
+    image.setAttribute("src", "../images/person.jpg");
+    imageContainer.appendChild(image);
+    a.appendChild(imageContainer);
+    imageContainer.appendChild(image);
+    signInDiv.appendChild(a);
 }
 
 function updateShoppingCart(newNumber) {
@@ -255,6 +269,15 @@ function removeFromCart(e) {
     updateShoppingCart(user.shortlist.length);
 }
 
+const makePostButton = document.querySelector("#makePostButton");
+makePostButton.addEventListener("click", makePost);
+
+function makePost(e) {
+    //Here should be some code check whether user is logged in
+    //If not logged in, should jump to login page
+    //Here simply jump to make post page
+    document.location = "./post-ad.html";
+}
 
 /*********************** Chat Box ************************/
 

@@ -315,3 +315,15 @@ body {
     border-radius: 5px;
 
 }
+
+#chatShow {
+    position:relative;
+    right: 20px;
+    bottom: 10px;
+}
+.profileImage {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border-style: solid;
+}
