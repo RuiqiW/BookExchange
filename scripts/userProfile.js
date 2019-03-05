@@ -199,10 +199,6 @@ function loadUserProfile(currUser){
     const currPic = profilePic.getElementsByTagName('img')[0];
     currPic.src = currUser.avatar;
 
-    // display the bio of the user
-    const currDescrip = userInfo.getElementsByTagName('textarea')[0];
-    currDescrip.innerText = currUser.bio;
-
     // create the DOM elements in the user profile info for name, username, phone number and email
     const name = document.createElement('h3');
     name.appendChild(document.createTextNode(currUser.user.firstName + ' ' + currUser.user.lastName));
@@ -222,18 +218,23 @@ function loadUserProfile(currUser){
     userInfo.before(name);
     profile.removeChild(currName);
 
-    const currId = userInfo.getElementsByTagName('div')[0];
+    // display the bio of the user
+    const currBio = userInfo.getElementsByTagName('div')[0];
+    const spanBio = currBio.getElementsByTagName('span')[0];
+    spanBio.innerText = currUser.bio;
+
+    const currId = userInfo.getElementsByTagName('div')[1];
     const spanId = currId.getElementsByTagName('p')[0];
     spanId.removeChild(spanId.getElementsByTagName('span')[0]);
     spanId.appendChild(id);
 
-    const currPhone = userInfo.getElementsByTagName('div')[1];
+    const currPhone = userInfo.getElementsByTagName('div')[2];
     const spanPhone = currPhone.getElementsByTagName('p')[0];
     const spanElement = spanPhone.getElementsByTagName('span')[0];
     spanElement.before(phone);
     spanPhone.removeChild(spanElement);
 
-    const currEmail = userInfo.getElementsByTagName('div')[2];
+    const currEmail = userInfo.getElementsByTagName('div')[3];
     const spanEmail = currEmail.getElementsByTagName('p')[0];
     const spanElement2 = spanEmail.getElementsByTagName('span')[0];
     spanElement2.before(email);
