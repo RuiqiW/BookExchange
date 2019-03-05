@@ -191,41 +191,43 @@ document.addEventListener("click", closeAllSelect);
 /*********************** Display User Objects Profile Info ************************/
 
 // Load a user profile
-function loadUserProfile(user){
+function loadUserProfile(currUser){
     const currPic = profilePic.getElementsByTagName('img')[0];
-    currPic.src = user.picture;
+    currPic.src = currUser.picture;
 
     const currName = profile.getElementsByTagName('h3')[0];
-    currName.innerText = document.createTextNode(user.firstName + ' ' + user.lastName);
+    currName.appendChild(document.createTextNode(currUser.user.firstName + ' ' + currUser.user.lastName));
 
     const currDescrip = userInfo.getElementsByTagName('textarea')[0];
-    currDescrip.innerText = document.createTextNode(user.bio);
+    currDescrip.innerText = document.createTextNode(currUser.bio);
 
     // create the DOM elements in the user profile info
     const id = document.createElement('span');
-    id.appendChild(document.createTextNode(user.username));
+    id.appendChild(document.createTextNode(currUser.user.username));
 
     const phone = document.createElement('span');
-    phone.appendChild(document.createTextNode(user.phone));
+    phone.appendChild(document.createTextNode(currUser.phone));
 
     const email = document.createElement('span');
-    email.appendChild(document.createTextNode(user.email));
+    email.appendChild(document.createTextNode(currUser.user.email));
 
     // modify the DOM elements in the user profile info
-    const currId = userInfo.getElementsByTagName('div')[1];
+    const currId = userInfo.getElementsByTagName('div')[0];
     const spanId = currId.getElementsByTagName('p')[0];
     spanId.removeChild(spanId.getElementsByTagName('span')[0]);
     spanId.appendChild(id);
 
     const currPhone = userInfo.getElementsByTagName('div')[1];
     const spanPhone = currPhone.getElementsByTagName('p')[0];
-    spanPhone.removeChild(spanPhone.getElementsByTagName('span')[0]);
-    spanPhone.appendChild(phone);
+    const spanElement = spanPhone.getElementsByTagName('span')[0];
+    spanElement.before(phone);
+    spanPhone.removeChild(spanElement);
 
     const currEmail = userInfo.getElementsByTagName('div')[2];
     const spanEmail = currEmail.getElementsByTagName('p')[0];
-    spanEmail.removeChild(spanEmail.getElementsByTagName('span')[0]);
-    spanEmail.appendChild(email);
+    const spanElement2 = spanEmail.getElementsByTagName('span')[0];
+    spanElement2.before(email);
+    spanEmail.removeChild(spanElement2);
 }
 
 loadUserProfile(users[0]);

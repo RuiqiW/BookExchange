@@ -63,7 +63,7 @@ export class UserProfile{
     this._picture = picture;
     this._avatar = "../images/profilePic.jpg";                  // src of default avatar
     this._bio = "";
-    this._phone = "1234567890";
+    this._phone = "0123456789";
     this._sell = [];                    // selling items
     this._purchase = [];                // purchased items
     this._shortlist = [];               // Add to Cart items
