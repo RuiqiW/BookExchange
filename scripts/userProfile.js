@@ -1,4 +1,4 @@
-
+import { users } from '../classes/data.js';
 
 /*********************** Navigation Button ************************/
 
@@ -227,3 +227,5 @@ function loadUserProfile(user){
     spanEmail.removeChild(spanEmail.getElementsByTagName('span')[0]);
     spanEmail.appendChild(email);
 }
+
+loadUserProfile(users[0]);
