@@ -36,7 +36,7 @@ class Post {
 }
 
 class User {
-  constructor(firstName, lastName, username, email, password, isAdmin) {
+  constructor(firstName, lastName, username, email, password, isAdmin=false) {
     // --- Private attributes ---
     this.firstName = firstName;
     this.lastName = lastName;
