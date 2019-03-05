@@ -64,16 +64,15 @@ profilePic.addEventListener('file', editProfilePic);
 // Modify the info
 function editProfile(e) {
     e.preventDefault();
-
-    if (e.target.classList.contains('edit')) {
+    if (e.target.classList.contains('fa-edit')) {
         addInfoTextBox(e.target.parentElement.firstElementChild);
-        e.target.classList.add('save');
-        e.target.classList.remove('edit');
+        e.target.classList.add('fa-save');
+        e.target.classList.remove('fa-edit');
     }
-    else if (e.target.classList.contains('save')) {
+    else if (e.target.classList.contains('fa-save')) {
         removeInfoTextBox(e.target.parentElement.firstElementChild);
-        e.target.classList.add('edit');
-        e.target.classList.remove('save');
+        e.target.classList.add('fa-edit');
+        e.target.classList.remove('fa-save');
     }
 }
 
