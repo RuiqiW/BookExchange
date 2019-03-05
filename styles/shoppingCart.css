@@ -155,6 +155,9 @@ body {
     background-color: dodgerblue;
     font-weight: bold;
     color: white;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
 }
 
 .contactSeller {
@@ -163,12 +166,18 @@ body {
     font-weight: bold;
     color: white;
     background-color: dodgerblue;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
 }
 
 .buyItem {
     font-weight: bold;
     color: white;
     background-color: dodgerblue;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
 }
 
 #searchResult {
