@@ -198,8 +198,7 @@ function loadUserProfile(currUser){
 
     // display the bio of the user
     const currDescrip = userInfo.getElementsByTagName('textarea')[0];
-    currDescrip.removeChild(currDescrip.firstElementChild);
-    currDescrip.appendChild(document.createTextNode(currUser.bio));
+    currDescrip.innerText = currUser.bio;
 
     // create the DOM elements in the user profile info for name, username, phone number and email
     const name = document.createElement('h3');
