@@ -5,6 +5,8 @@
  * the new Post in phase 2.
  */
 
+
+// DOM event listeners
 const postAdButton = document.querySelector('#postAdButton');
 postAdButton.addEventListener('click', handlePostAd);
 
