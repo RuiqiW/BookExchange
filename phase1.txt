@@ -27,9 +27,6 @@ login page:
        1. Log in
           Please use the credentials as in "Credential" section above to log in.
        2. Sign up
-          When click "submit", a message will pop up showing whether a new account has been
-          created successfully. There will also be a link that redirects the page to index page.
-
           Note： the newly created user will not be saved in this phase.
           In Phase2, we will implement this functionality by saving user information in the database
           when "submit" is clicked on, and look up this user information when log in.
