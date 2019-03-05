@@ -285,15 +285,14 @@ function buyItem(e) {
     // Here just use user0
     const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
     //Should make a server call to fetch the post, here just use the hardcoded posts array
-    const post = posts.filter(x => x.postId === postId);
+    const post = posts.filter(x => x.postId === postId)[0];
+    console.log(post);
     if (!post.byCreditCard) {
         alert("The seller want you to pay him/her directly, please contact the seller!");
     } else {
-        const creditCardNumber = prompt("Please enter your credit card number");
-        if (creditCardNumber !== null) {
-            alert("Your order has been submitted to verify");
-        }
-        //Make a server call to submit the creditcardNumber and the postId!
+        // jump to the credit card page
+        document.location = "./payment.html";
+        //Make a server call to submit the credit card Number and the postId!
     }
 
 
