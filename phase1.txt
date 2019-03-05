@@ -28,6 +28,8 @@ index page:
 login page:
        1. Log in
           Please use the credentials as in "Credential" section above to log in.
+          Log in using Admin credential will jump to the admin dashboard. Log in using
+          normal user credential will jump to the profile page.
        2. Sign up
           Note： the newly created user will not be saved in this phase.
           In Phase2, we will implement this functionality by saving user information in the database
