@@ -88,7 +88,7 @@ function init() {
     imageContainer.className = "topBarImageContainer";
     const image = document.createElement("img");
     image.className = "profileImage";
-    image.setAttribute("src", "../images/person.jpg");
+    image.setAttribute("src", "../images/profilePic.jpg");
     imageContainer.appendChild(image);
     a.appendChild(imageContainer);
     imageContainer.appendChild(image);

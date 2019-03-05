@@ -33,11 +33,14 @@ function init() {
     //Update the profile photo on top right corner
     const userInfoDiv = document.querySelector("#userInfo");
     userInfoDiv.removeChild(userInfoDiv.lastElementChild);
+    const a = document.createElement("a");
+    a.setAttribute("href", "./userProfile.html");
     const image = document.createElement("img");
     image.setAttribute("src", user.avatar);
     image.setAttribute("alt", "user profile photo");
     image.className = "loginProfilePhoto";
-    userInfoDiv.appendChild(image);
+    a.appendChild(image);
+    userInfoDiv.appendChild(a);
 
 
     const basket = user.shortlist;
