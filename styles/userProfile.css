@@ -239,6 +239,12 @@
   color: mediumpurple;
 }
 
+.myPosts {
+  font-weight: bold;
+  pointer: cursor;
+  font-size: 14px;
+}
+
 .fill{
   width: 100%;
 }
