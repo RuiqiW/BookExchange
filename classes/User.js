@@ -62,7 +62,7 @@ export class UserProfile{
     this._user = user;
     this._picture = picture;
     this._avatar = "../images/profilePic.jpg";                  // src of default avatar
-    this._bio = "";
+    this._bio = "This is my bio.";
     this._phone = "1234567890";
     this._sell = [];                    // selling items
     this._purchase = [];                // purchased items
