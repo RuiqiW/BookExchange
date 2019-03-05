@@ -1,5 +1,3 @@
-import {users} from "../classes/data.js";
-
 init();
 const removeButtons = document.querySelectorAll(".removeFromCart");
 console.log(removeButtons);

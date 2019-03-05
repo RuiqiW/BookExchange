@@ -1,18 +1,81 @@
-import {User, UserProfile} from "./User.js";
-import {Post} from "./Post.js";
-import {Transaction} from "./Transaction.js";
+let transactionId = 0;
+let date = new Date();
+
+class Transaction{
+  constructor(post, buyer, amount) {
+    this.id = transactionId;
+    this.date = date.toDateString();
+    this.status = 0;    // 0 for uncompleted, 1 for completed
+    transactionId ++;
+    post.isSold = 1;
+    post.transaction = this;
+    buyer.purchase.push(post);
+    this.post = post;
+    this.buyer = buyer;
+    this.amount = amount;
+  }
+}
+
+let postId = 0;
+class Post {
+  constructor(title, seller, price, category, condition, description, images=[]) {
+    this.postId = postId++;
+    this.title = title;
+    this.seller = seller;
+    seller.sell.push(this);
+    this.images = images;              // default value is empty list
+    this.category = category;
+    this.condition = condition;
+    this.description = description;
+    this.price = price;
+    this.postingDate = new Date();
+    this.isSold = false;
+    //Should bind with the corresponding transaction if there is one
+    this.transaction = null;
+  }
+}
+
+class User {
+  constructor(firstName, lastName, username, email, password) {
+    // --- Private attributes ---
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.username = username;
+    this.email = email;
+    this.password = password;        // we can fix this in phase 2
+  }
+}
+
+
+let userId = 0;
+let picture = "../images/profilePic.jpg";
+class UserProfile{
+  constructor(user){
+    this.userId = userId;
+    this.user = user;
+    this.picture = picture;
+    this.avatar = "../images/profilePic.jpg";                  // src of default avatar
+    this.bio = "This is my bio.";
+    this.phone = "0123456789";
+    this.sell = [];                    // selling items
+    this.purchase = [];                // purchased items
+    this.shortlist = [];               // Add to Cart items
+    userId++;
+  }
+
+}
 
 /**
  * Create some static Users for the purpose of phase 1
  */
-const users = [];
 
 // ------------------------------- Add some users as specified for phase 1 --------------------------------------------------
+const users = [];
 users.push(new UserProfile(new User('user', 'user', 'user', 'user@example.com', 'user')));
 users.push(new UserProfile(new User('admin', 'admin', 'admin', 'admin@example.com', 'admin')));
 
 for (let i = 2; i < 51; i++) {
-    users.push(new UserProfile(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`)));
+  users.push(new UserProfile(new User(`user${i}`, `user${i}`, `user${i}`, `user${i}@example.com`, `user${i}`)));
 }
 
 users.push(new UserProfile(new User('Donald', 'Trump', 'America', 'dtrump@president.com', 'user')));
@@ -20,8 +83,6 @@ users.push(new UserProfile(new User('Kim', 'Jong-un', 'NorthKorea', 'kimJongUn@p
 users.push(new UserProfile(new User('Justin', 'Trudeau', 'Canada', 'trudeau@president.com', 'user')));
 users.push(new UserProfile(new User('Xi', 'Jinping', 'China', 'jinping@president.com', 'user')));
 users.push(new UserProfile(new User('George', 'Washington', 'America1', 'gwashinton@president.com', 'user')));
-
-export {users};
 
 //--------------------------------------Constant post for Phase1-------------------------------------------
 
@@ -60,13 +121,11 @@ const post7 = new Post("Linear Algebra", users[2], 10.88, "book", "new", "Textbo
 post7.postingDate=new Date("2019-01-06T12:30");
 posts.push(post7);
 
-export{ posts };
 //--------------------------------------Constant Transactions for Phase1-------------------------------------------
 const transactions =[];
 transactions.push(new Transaction(posts[5], users[2], "$45"));
 transactions.push(new Transaction(posts[6], users[0], "$24"));
 
-export{ transactions };
 //--------------------------------------Put some items in the shopping cart------------------------------------------
 
 users[0].shortlist.push(post1);

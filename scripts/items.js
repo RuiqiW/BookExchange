@@ -1,5 +1,3 @@
-import {posts} from "../classes/data.js";
-import {users} from "../classes/data.js";
 let num_posts = 0;
 
 const sortingOpt = document.querySelector("#sortingOption");

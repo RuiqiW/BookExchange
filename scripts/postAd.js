@@ -1,6 +1,3 @@
-import { Post } from '../classes/Post.js';
-import { users, posts } from '../classes/data.js';
-
 /**
  * This module handles posting a new ad for a user.
  */

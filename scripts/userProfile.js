@@ -1,5 +1,3 @@
-import { users } from '../classes/data.js';
-
 /*********************** Navigation Button ************************/
 
 const chatShow = document.querySelector("#chatShow");
@@ -66,12 +64,12 @@ function editProfile(e) {
     e.preventDefault();
 
     if (e.target.classList.contains('edit')) {
-        addInfoTextBox(e.target.parentElement.firstElementChild)
+        addInfoTextBox(e.target.parentElement.firstElementChild);
         e.target.classList.add('save');
         e.target.classList.remove('edit');
     }
     else if (e.target.classList.contains('save')) {
-        removeInfoTextBox(e.target.parentElement.firstElementChild)
+        removeInfoTextBox(e.target.parentElement.firstElementChild);
         e.target.classList.add('edit');
         e.target.classList.remove('save');
     }
@@ -80,13 +78,13 @@ function editProfile(e) {
 // Modify Title and Rating in booktable
 function addInfoTextBox(infoElement) {
     // Modify info
-    const infoTextBox = document.createElement('input')
-    infoTextBox.type = 'text'
+    const infoTextBox = document.createElement('input');
+    infoTextBox.type = 'text';
 
-    infoTextBox.value = infoElement.innerText
+    infoTextBox.value = infoElement.innerText;
 
-    infoElement.before(infoTextBox)
-    infoElement.parentElement.removeChild(infoElement)
+    infoElement.before(infoTextBox);
+    infoElement.parentElement.removeChild(infoElement);
 }
 
 function removeInfoTextBox(infoElement) {
@@ -109,7 +107,7 @@ function editProfilePic(e) {
 
         reader.onload = function (e) {
             $('.profile-pic').attr('src', e.target.result);
-        }
+        };
 
         reader.readAsDataURL(input.files[0]);
     }
@@ -139,7 +137,7 @@ for (let i = 0; i < x.length; i++) {
         const s = this.parentNode.parentNode.getElementsByTagName("select")[0];
         const h = this.parentNode.previousSibling;
         for (let l = 0; l < s.length; l++) {
-          if (s.options[l].innerHTML == this.innerHTML) {
+          if (s.options[l].innerHTML === this.innerHTML) {
             s.selectedIndex = l;
             h.innerHTML = this.innerHTML;
             const y = this.parentNode.getElementsByClassName("same-as-selected");
@@ -172,7 +170,7 @@ function closeAllSelect(elmnt) {
   const x = document.getElementsByClassName("select-items");
   const y = document.getElementsByClassName("select-selected");
   for (let i = 0; i < y.length; i++) {
-    if (elmnt == y[i]) {
+    if (elmnt === y[i]) {
       arrNo.push(i)
     } else {
       y[i].classList.remove("select-arrow-active");
