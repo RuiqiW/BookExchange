@@ -276,9 +276,11 @@ function loadUserProfile(currUser){
 
 loadUserProfile(users[0]);
 
+/*********************** Jump to the Posts I Made ************************/
+
+// Jump to the posts page
 const postIMade = document.querySelector("#postIMade");
 postIMade.addEventListener("click", jumpToPostIMade);
-
 
 function jumpToPostIMade(e) {
     const userId = document.querySelector("#userId").innerHTML.trim();
@@ -287,6 +289,5 @@ function jumpToPostIMade(e) {
     //Which should be stored in the field "user.sell", use the generatePost function
     // in item.js to generate all the result in the items page.
     //Here just jump to items page directly.
-    document.location = "./items.html";
-
+    document.location = "../pages/items.html";
 }

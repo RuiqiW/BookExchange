@@ -30,6 +30,7 @@ login page:
           Please use the credentials as in "Credential" section above to log in.
           Log in using Admin credential will jump to the admin dashboard. Log in using
           normal user credential will jump to the profile page.
+
        2. Sign up
           Note： the newly created user will not be saved in this phase.
           In Phase2, we will implement this functionality by saving user information in the database
@@ -48,7 +49,12 @@ items page:
 
        2. Add to Cart
 
-       3. Contact the Seller
+       3. Contact the Seller - Since the implementation of the chatting system requires a server and more 
+	  back end support, for phase 1, our message box is hard coded. Therefore, we used hard code to make the 
+	  "Contact Seller" button work in the post of "user1 user1". The first "Contact Seller" button works and 
+	  shows as a sample of what the user should see when they click "Contact Seller" buttons in Phase 2. 
+		
+	  Note: We will have all the "Contact Seller" buttons work well when the chatting system works in Phase 2.
 
        4. Buy this Item
 
@@ -56,26 +62,41 @@ items page:
 
 
 user profile page:
-       1. Edit profile
-          user will be able to edit their profile picture, bio, phone number.
+       1. Edit profile information
+          (1)User will be able to edit their profile picture, bio, phone number, email address and payment method.
 
-          Please select (to do: fill in the name of the picture) under images to show the
-          effect of changing profile picture. In Phase 2, the picture uploaded will be stored
-          in database.
+          (2)User will select "Choose File" under the profile picture and then select a picture on his or her computer.
+	  For Phase 1, it works up until the point that the file selected is correctly showing its name on the page.  
+
+	  (3)User will click on the "pencil" icons to make edits to bio, phone number and email address. After the user is
+	  done with the edits, the user will click on the "save" icons to save the changes made.
+	
+	  (4)User will click on the payment method drop down box and select their preferred payment method. Here is only for the
+	  profile information, we don't ask to fill in credit card information. That will be handled when the user actually purchase
+	  a book online from the posting page.
+	  
+	  Note: To show the effect of changing profile picture, we decided to use PHP or jQuery in Phase 2 to store the input 
+	  	files and implement the full functionality then. In Phase 2, the picture uploaded will be stored
+          	in database.
 
        2. Manage Shopping Cart
-
+	  
 
 
        3. Chat with Others (functionality for both user and admin)
-            When click on the the "chat" icon on the top-right side of the page.
-            A dropdown list of messages will show up and when click on the messages,
-            a chatbox will show up at the bottom-right.
+          When click on the the "chat" icon on the top-right side of the page.
+          A dropdown list of messages will show up and when click on the messages,
+          a chatbox will show up at the bottom-right.
 
-            User can send messages using the chatbox to other users.
+          User can send messages using the chatbox to other users.
 
-            Note: In phase 2, we will use database to store messages and load previous messages
-                  to chat window.
+          Note: In phase 2, we will use database to store messages and load previous messages
+                to chat window.
+
+       4. Posts I've Made
+	
+	
+       5. Log Out
 
 
 admin dashboard page:
@@ -123,6 +144,9 @@ Post-ad page:
         4. Upon successfully posting a new ad, the site will redirect the user back to their
            profile page. In phase 2, when there we have a database, it will redirect the user
            to the search page containing their new post.
+	
+	5. There is a back button to the right of the top navigation bar. The user can go back to the
+	   list of postings page should he or she decided not to make a post.
 
 
 
