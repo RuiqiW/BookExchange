@@ -343,3 +343,12 @@ contactButton[0].addEventListener("click", contactTheSeller);
 function contactTheSeller(e) {
     showChatRoom(e);
 }
+
+const searchButton = document.querySelector("#searchButton");
+searchButton.addEventListener("click", searching);
+
+function searching(e) {
+    e.preventDefault();
+    //Server call to request search result, here just jump to the item.html;
+    document.location = "../pages/items.html";
+}

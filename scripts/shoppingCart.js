@@ -1,6 +1,5 @@
 init();
 const removeButtons = document.querySelectorAll(".removeFromCart");
-console.log(removeButtons);
 for (let i = 0; i<removeButtons.length;i++) {
     removeButtons[i].addEventListener("click", removeCartItem);
 }
@@ -44,7 +43,6 @@ function init() {
 
 
     const basket = user.shortlist;
-    console.log(basket);
     //Remove items hard-coded in the html file
     const posts = document.querySelector("#posts");
     while (posts.lastElementChild) {
@@ -141,5 +139,14 @@ function init() {
         endOfResults.appendChild(document.createTextNode("End of Results"));
         document.querySelector("#posts").appendChild(endOfResults);
     }
+}
+
+const searchButton = document.querySelector("#searchButton");
+searchButton.addEventListener("click", searching);
+
+function searching(e) {
+    e.preventDefault();
+    //Server call to request search result, here just jump to the item.html;
+    document.location = "../pages/items.html";
 }
 
