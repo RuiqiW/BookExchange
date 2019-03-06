@@ -99,3 +99,14 @@ function updateFileName(event, index) {
   const fileNames = document.querySelectorAll('.file-name');
   fileNames[index].textContent = event.target.files[0].name;
 }
+
+/**
+ * Jump back to the posts page.
+ */
+const backToPostButton = document.querySelector("#backToPostButton");
+backToPostButton.addEventListener("click", backToPost);
+
+function backToPost(e) {
+  // Jump back to the posts page
+  document.location = "../pages/items.html";
+}
