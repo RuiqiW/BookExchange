@@ -276,7 +276,10 @@ body {
     display: inline-block;
     margin: 10px;
     position: relative;
-    bottom: 10px;
+    bottom: 20px;
+
+
+
 }
 
 #topBarIcons {
