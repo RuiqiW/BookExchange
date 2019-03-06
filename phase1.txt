@@ -31,9 +31,9 @@ login page:
           normal user credential will jump to the profile page.
 
        2. Sign up
-          Note： the newly created user will not be saved in this phase.
-          In Phase2, we will implement this functionality by saving user information in the database
-          when "submit" is clicked on, and look up this user information when log in.
+          Note：The newly created user will not be saved in this phase.
+          	In Phase 2, we will implement this functionality by saving user information in the database
+          	when "submit" is clicked on, and look up this user information when log in.
 
 
 
@@ -43,27 +43,47 @@ Create account page:
         2. As noted above, this functionality will be implemented in phase 2.
 
 
+shopping cart page:
+	1.
+
+
 items page:
-       1. Sorting items (View by price/type/post date)
+	1. Sorting items (View by price/type/post date)
 
-       2. Add to Cart
-	  When the user clicks "Add to Cart" in a certain posting, that item will be added to "My cart" and the user can
-	  see the number of items in "My cart" has incremented by 1. The "Add to Cart" button will also change to a highlighted 
-	  "Remove from Cart" button. If the user choose to "Remove from Cart" of an item, the shopping cart will also remove
-	  the item and the user can see the number of items in "My cart" has decremented by 1.
+	2. Add to Cart
+	   When the user clicks "Add to Cart" in a certain posting, that item will be added to "My cart" and the user can
+	   see the number of items in "My cart" has incremented by 1. The "Add to Cart" button will also change to a highlighted 
+	   "Remove from Cart" button. If the user choose to "Remove from Cart" of an item, the shopping cart will also remove
+	   the item and the user can see the number of items in "My cart" has decremented by 1.
 
-       3. Contact the Seller
-          Since the implementation of the chatting system requires a server and more back end support, 
-	  for phase 1, our message box is hard coded. Therefore, we hard coded to make the first
-	  "Contact Seller" button work in the post of "user1 user1". When the user clicks "Contact Seller",
-	  the user should enter a chat box with the corresponding seller. The first "Contact Seller" button works and 
-	  shows as an example of what the user should see when they click any "Contact Seller" buttons in Phase 2. 
+	3. Contact the Seller
+           Since the implementation of the chatting system requires a server and more back end support, 
+	   for phase 1, our message box is hard coded. Therefore, we hard coded to make the first
+	   "Contact Seller" button work in the post of "user1 user1". When the user clicks "Contact Seller",
+	   the user should enter a chat box with the corresponding seller. The first "Contact Seller" button works and 
+	   shows as an example of what the user should see when they click any "Contact Seller" buttons in Phase 2. 
 		
-	  Note: We will have all the "Contact Seller" buttons work well when the chatting system works in Phase 2.
+	   Note: We will have all the "Contact Seller" buttons work well when the chatting system works in Phase 2.
 
-       4. Buy this Item
+	4. Buy this Item
+	   User clicks on "Buy this item" in a certain posting, the user will jump to the payment page to fill out payment information.
 
+	5. Chat with Others
+           When click on the the "chat" icon on the top-right side of the page.
+           A dropdown list of messages will show up and when click on the messages,
+           a chatbox will show up at the bottom-right.
 
+           User can send messages using the chatbox to other users.
+
+           Note: In Phase 2, we will use database to store messages and load previous messages
+                 to chat window.
+
+	6. Make My Post
+
+	7. My User Profile
+
+	8. Manage Shopping Cart
+	   See #2 description under user profile page section.
 
 
 user profile page:
@@ -78,7 +98,7 @@ user profile page:
 	
 	  (4)User will click on the payment method drop down box and select their preferred payment method. Here is only for the
 	  profile information, we don't ask to fill in credit card information. That will be handled when the user actually purchase
-	  a book online from the posting page.
+	  a book online from the postings page (items.html).
 	  
 	  Note: To show the effect of changing profile picture, we decided to use PHP or jQuery in Phase 2 to store the input 
 	  	files and implement the full functionality then. In Phase 2, the picture uploaded will be stored
@@ -95,14 +115,19 @@ user profile page:
 
           User can send messages using the chatbox to other users.
 
-          Note: In phase 2, we will use database to store messages and load previous messages
+          Note: In Phase 2, we will use database to store messages and load previous messages
                 to chat window.
 
        4. Posts I've Made
+	  This button jumps to the list of posts I've made in the postings page (items.html). For Phase 1 now, it jumps to all the
+	  posts made by all users because we don't have the "search" functionality implemented yet. "Search" will be implemented with
+	  a back end database search in Phase 2.
 	
+	  Note: In Phase 2, after we implemented the "search" functionality on our postings page (items.html), this link will refer to 		  	the page of items.html filtered by searching with the username of the current user.
 	
        5. Log Out
-
+	  The user logs out and we return the user to the main index page.
+	  
 
 admin dashboard page:
         1. Side Navigation Bar:
@@ -113,20 +138,28 @@ admin dashboard page:
             the tags "Dashboard", "Users", "Posts" and "Transactions"
 
         2. Chat with Others:
-            See item 3 in user profile page
+           When click on the the "chat" icon on the top-right side of the page.
+           A dropdown list of messages will show up and when click on the messages,
+           a chatbox will show up at the bottom-right.
+ 
+           User can send messages using the chatbox to other users.
+
+           Note: In Phase 2, we will use database to store messages and load previous messages
+                 to chat window.
 
         3. Manage Posts:
            When click on 'edit', the post section will change to edit mode, and the admin will
            be able to delete a post by clicking on the "close" icon.
 
         4. Manage Users:
-            When click on "show more / show less", more or less users will be displayed.
-            Admin will be able to delete a user when click on the corresponding delete button,
-            or view a user's profile in detail when click on "View Detail".
+           When click on "show more / show less", more or less users will be displayed.
+           Admin will be able to delete a user when click on the corresponding delete button,
+           or view a user's profile in detail when click on "View Detail".
 
-            The search bar is already function and can correctly remove user from the page.
-            But actual delete user will require the assistant of server, which will be
-            implemented in phase2.
+           The search bar is already function and can correctly remove user from the page.
+           
+	   Note: The actual delete user will require the assistant of server, which will be
+           	 implemented in Phase 2.
 
         5. Manage Transactions:
             The transactions which have not been processed by the admin yet will show up in
@@ -134,6 +167,8 @@ admin dashboard page:
             When click on the green check icon, the admin will approve the transaction and
             when click on the red cross icon, the admin will deny the transaction.
 
+	6. Log Out
+	   The user logs out and we return the user to the main index page.
 
 
 Post-ad page:
@@ -155,7 +190,7 @@ Post-ad page:
 
 
 
-Payment method page:
+Payment page:
         1. Standard payment method form page. User will enter all fields and click "Pay now" to
            complete payment.
 
