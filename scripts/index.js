@@ -53,7 +53,7 @@ function updateShoppingCart(newNumber) {
 
 function init() {
     //Server call to request item in the shopping cart
-    const cartNumber = 3;
+    const cartNumber = 2;
     updateShoppingCart(cartNumber);
 }
 

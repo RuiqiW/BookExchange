@@ -24,7 +24,6 @@ function handleLogin(e) {
 
   // Success. Bring the user to their profile page
   // This will be changed in phase 2
-  // TODO: This works, but how do we direct a user to their unique page???
   if (user.user.isAdmin) {
     document.location = '../pages/adminDashboard.html';
   } else {
