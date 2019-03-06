@@ -23,21 +23,24 @@ index page:
 
 
 login page:
+       This page is shown when the user clicks "Log in" on the index page.
        1. Log In
           Please use the credentials as in "Credential" section above to log in.
           Log in using Admin credential will jump to the admin dashboard. Log in using
           normal user credential will jump to the profile page.
 
        2. Sign Up
+	  User jumps to create account page.
           Note：The newly created user will not be saved in this phase.
           	In Phase 2, we will implement this functionality by saving user information in the database
           	when "submit" is clicked on, and look up this user information when log in.
 
 
 Create account page:
+	This page is shown when the user clicks "Sign up" on the login page.
         1. Enter account information that will be used to add a new user to the database.
 
-        2. As noted above, this functionality will be implemented in phase 2.
+        2. As noted in #2 of login page, this full functionality will be implemented in phase 2.
 
 
 shopping cart page:
