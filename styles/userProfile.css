@@ -73,7 +73,7 @@
   border: 1px solid black ;
 }
 
-/**************** Chat Box from adminDashboard **************/
+/**************** Chat Box**************/
 #chatRoom{
   position: fixed;
   bottom: 30px;
@@ -105,7 +105,7 @@
   cursor: pointer;
 }
 
-/************* Top Nav Bar from adminDashboard *************/
+/************* Top Nav Bar*************/
 #topNavBar {
   z-index: 1;
   background-color: white;

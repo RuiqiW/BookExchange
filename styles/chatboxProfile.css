@@ -110,9 +110,9 @@
 .dropdownContent {
     display: none;
     position: absolute;
-    background-color: white;
-    min-width: 200px;
-    right: 0;
+    right: 200px;
+    background-color: #e6ecf0;
+    min-width: 170px;
     z-index: 1;
 }
 
