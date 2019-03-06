@@ -114,8 +114,9 @@ items page:
 	6. Make My Post
 	   User jumps to post-ad page.
 
-	***7. My User Profile (to the right of top navigation bar, the circle filled with a profile picture)
-	   User jumps to user profile page.
+	7. My User Profile (to the right of top navigation bar, the circle filled with a profile picture)
+	   User jumps to user profile page. For phase1, we just jump to the profile page of user "user".
+	   This will jump to the currently logged in user in phase2.
 
 	8. Manage Shopping Cart
 	   User jumps to the shopping cart page to manage his or her cart.
