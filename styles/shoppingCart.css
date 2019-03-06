@@ -268,3 +268,11 @@ body {
     height: 20px;
     width: 20px;
 }
+
+.postId  {
+    margin-top: 0;
+    margin-left: 10px;
+    font-size: 70%;
+    color: grey;
+
+}
