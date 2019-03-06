@@ -1,7 +1,8 @@
-Login Credentials: (1) Standard user: username user, password: user
+Credentials: (1) Standard user: username user, password: user
 		 - A standard user has access to all of the pages, except the admin dashboard page.
 	     (2) Admin user: username: admin, password: admin
 		 - For admin user, you will enter admin dashboard page directly after "Log in" on index page.
+
 
 Functionality:
 
@@ -53,9 +54,9 @@ shopping cart page:
 
 	3. Contact the Seller
            Since the implementation of the chatting system requires a server and more back end support, 
-	   for phase 1, our message box is hard coded. Therefore, we hard coded to make the first
+	   for phase 1, our message box is hard coded. Therefore, we hard coded to make the second
 	   "Contact Seller" button work in the post of "user1 user1". When the user clicks "Contact Seller",
-	   the user should enter a chat box with the corresponding seller. The first "Contact Seller" button works and 
+	   the user should enter a chat box with the corresponding seller. The second "Contact Seller" button works and 
 	   shows as an example of what the user should see when they click any "Contact Seller" buttons in Phase 2. 
 		
 	   Note: We will have all the "Contact Seller" buttons work well when the chatting system works in Phase 2.
