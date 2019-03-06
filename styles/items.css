@@ -222,6 +222,8 @@ body {
 #signIn {
     display: inline-block;
     margin-right: 10px;
+    position: relative;
+    bottom: 10px;
 }
 .topBarImage {
     height: 30px;
@@ -247,6 +249,9 @@ body {
 
 #myCart {
     display: inline-block;
+    margin: 10px;
+    position: relative;
+    bottom: 10px;
 }
 
 #shoppingCartNumber {
@@ -295,8 +300,8 @@ body {
 #makePostButton {
     height: 30px;
     position: relative;
-    bottom: 20px;
-    right: 10px;
+    bottom: 30px;
+    right: 30px;
     font-size: 120%;
     background-color: #44aaee;
     color: white;
@@ -319,7 +324,7 @@ body {
 #chatShow {
     position:relative;
     right: 20px;
-    bottom: 10px;
+    bottom: 20px;
 }
 .profileImage {
     height: 50px;
