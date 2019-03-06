@@ -122,11 +122,11 @@ function init() {
 
             const buyItem = document.createElement("button");
             buyItem.className="buyItem";
-            buyItem.appendChild(document.createTextNode("Buy this item"));
+            buyItem.appendChild(document.createTextNode("Buy this Item"));
 
             const contactSeller = document.createElement("button");
             contactSeller.className="contactSeller";
-            contactSeller.appendChild(document.createTextNode("Contact the seller"));
+            contactSeller.appendChild(document.createTextNode("Contact the Seller"));
 
             postDiv.appendChild(removeButton);
             postDiv.appendChild(buyItem);

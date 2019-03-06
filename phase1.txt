@@ -44,15 +44,42 @@ Create account page:
 
 
 shopping cart page:
-	1. 
+	This page is the collection of postings that the user selected "Add to Cart" in the items page.
+	1. Remove from Cart
+	   When the user clicks "Remove from Cart" in a certain item in the cart, that item will be removed from the cart.
 
+	3. Contact the Seller
+           Since the implementation of the chatting system requires a server and more back end support, 
+	   for phase 1, our message box is hard coded. Therefore, we hard coded to make the first
+	   "Contact Seller" button work in the post of "user1 user1". When the user clicks "Contact Seller",
+	   the user should enter a chat box with the corresponding seller. The first "Contact Seller" button works and 
+	   shows as an example of what the user should see when they click any "Contact Seller" buttons in Phase 2. 
+		
+	   Note: We will have all the "Contact Seller" buttons work well when the chatting system works in Phase 2.
+
+	4. Buy this Item
+	   User clicks on "Buy this item" in a certain posting, the user will jump to the payment page to fill out payment information.
+	
+	1. Chat with Others (functionality for both user and admin)
+           When click on the the "chat" icon on the top-right side of the page.
+           A dropdown list of messages will show up and when click on the messages,
+           a chatbox will show up at the bottom-right.
+
+           User can send messages using the chatbox to other users.
+
+           Note: In Phase 2, we will use database to store messages and load previous messages
+                 to chat window.
+
+	3. My User Profile (to the right of top navigation bar, the circle filled with a profile picture)
+	   User jumps to user profile page.
+	
 
 items page:
 	1. Sorting items (View by price/type/post date)
 	   User can select how to view the postings among sorting by (1)Posting time(New to Old), (2)Posting time(Old to New), 
 	   (3)price(High to Low) and (4)price(Low to High). 
 
-	2. Add to Cart
+	2. Add to Cart/Remove from Cart
 	   When the user clicks "Add to Cart" in a certain posting, that item will be added to "My cart" and the user can
 	   see the number of items in "My cart" has incremented by 1. The "Add to Cart" button will also change to a highlighted 
 	   "Remove from Cart" button. If the user choose to "Remove from Cart" of an item, the shopping cart will also remove
@@ -70,7 +97,7 @@ items page:
 	4. Buy this Item
 	   User clicks on "Buy this item" in a certain posting, the user will jump to the payment page to fill out payment information.
 
-	5. Chat with Others
+	5. Chat with Others (functionality for both user and admin)
            When click on the the "chat" icon on the top-right side of the page.
            A dropdown list of messages will show up and when click on the messages,
            a chatbox will show up at the bottom-right.
@@ -136,6 +163,7 @@ user profile page:
 	  
 
 admin dashboard page:
+	This page is what the admin sees when the admin logs in from the index page.
 	1. Side Navigation Bar:
             The side navigation bar will be open when click on the 'hamburger' icon,
             and be closed when click on the 'close' icon in the side navigation bar.
@@ -143,7 +171,7 @@ admin dashboard page:
             The main part the page will jump to the corresponding section when click on
             the tags "Dashboard", "Users", "Posts" and "Transactions"
 
-        2. Chat with Others:
+        2. Chat with Others (functionality for both user and admin)
            When click on the the "chat" icon on the top-right side of the page.
            A dropdown list of messages will show up and when click on the messages,
            a chatbox will show up at the bottom-right.
@@ -178,6 +206,7 @@ admin dashboard page:
 
 
 Post-ad page:
+	This page shows when user clicks "Make My Post" in the postings page (items.html). 
         1. There are three section that the user must complete in order to post a new ad of the
            item they want to sell. Note: this page was designed using a css framework.
 
@@ -197,7 +226,8 @@ Post-ad page:
 
 
 Payment page:
-        1. Standard payment method form page:
+	This page shows when user clicks "Buy this Item"
+        1. Standard payment method form page
 	   User will enter all personal information and credit card information fields. After that, the user clicks
 	   "Pay now" to complete the online purchase.
 
