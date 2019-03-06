@@ -1,6 +1,7 @@
-Credentials: (1) Standard user: username user, password: user
+Login Credentials: (1) Standard user: username user, password: user
+		 - A standard user has access to all of the pages, except the admin dashboard page.
 	     (2) Admin user: username: admin, password: admin
-
+		 - For admin user, you will enter admin dashboard page directly after "Log in" on index page.
 
 Functionality:
 
