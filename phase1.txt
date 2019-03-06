@@ -44,11 +44,13 @@ Create account page:
 
 
 shopping cart page:
-	1.
+	1. 
 
 
 items page:
 	1. Sorting items (View by price/type/post date)
+	   User can select how to view the postings among sorting by (1)Posting time(New to Old), (2)Posting time(Old to New), 
+	   (3)price(High to Low) and (4)price(Low to High). 
 
 	2. Add to Cart
 	   When the user clicks "Add to Cart" in a certain posting, that item will be added to "My cart" and the user can
@@ -79,58 +81,62 @@ items page:
                  to chat window.
 
 	6. Make My Post
+	   User jumps to post-ad page.
 
-	7. My User Profile
+	7. My User Profile (to the right of top navigation bar, the circle filled with a profile picture)
+	   User jumps to user profile page.
 
 	8. Manage Shopping Cart
-	   See #2 description under user profile page section.
+	   User jumps to the shopping cart page to manage his or her cart.
+
+	9. Log Out
+	   The user logs out and we return the user to the main index page.
 
 
 user profile page:
-       1. Edit profile information
-          (1)User will be able to edit their profile picture, bio, phone number, email address and payment method.
+	1. Edit profile information
+           (1)User will be able to edit their profile picture, bio, phone number, email address and payment method.
 
-          (2)User will select "Choose File" under the profile picture and then select a picture on his or her computer.
-	  For Phase 1, it works up until the point that the file selected is correctly showing its name on the page.  
+           (2)User will select "Choose File" under the profile picture and then select a picture on his or her computer.
+	   For Phase 1, it works up until the point that the file selected is correctly showing its name on the page.  
 
-	  (3)User will click on the "pencil" icons to make edits to bio, phone number and email address. After the user is
-	  done with the edits, the user will click on the "save" icons to save the changes made.
+	   (3)User will click on the "pencil" icons to make edits to bio, phone number and email address. After the user is
+	   done with the edits, the user will click on the "save" icons to save the changes made.
 	
-	  (4)User will click on the payment method drop down box and select their preferred payment method. Here is only for the
-	  profile information, we don't ask to fill in credit card information. That will be handled when the user actually purchase
-	  a book online from the postings page (items.html).
+	   (4)User will click on the payment method drop down box and select their preferred payment method. Here is only for the
+	   profile information, we don't ask to fill in credit card information. The actual transaction will be handled when 
+	   the user purchases a book from the postings page (items.html).
 	  
-	  Note: To show the effect of changing profile picture, we decided to use PHP or jQuery in Phase 2 to store the input 
-	  	files and implement the full functionality then. In Phase 2, the picture uploaded will be stored
-          	in database.
+	   Note: To show the effect of changing profile picture, we decided to use PHP or jQuery in Phase 2 to store the input 
+	    	 files and implement the full functionality then. In Phase 2, the picture uploaded will be stored
+           	 in database.
 
-       2. Manage Shopping Cart
-	  
+	2. Manage Shopping Cart
+	   User jumps to the shopping cart page to manage his or her cart.
 
+	3. Chat with Others (functionality for both user and admin)
+           When click on the the "chat" icon on the top-right side of the page.
+           A dropdown list of messages will show up and when click on the messages,
+           a chatbox will show up at the bottom-right.
 
-       3. Chat with Others (functionality for both user and admin)
-          When click on the the "chat" icon on the top-right side of the page.
-          A dropdown list of messages will show up and when click on the messages,
-          a chatbox will show up at the bottom-right.
+           User can send messages using the chatbox to other users.
 
-          User can send messages using the chatbox to other users.
+           Note: In Phase 2, we will use database to store messages and load previous messages
+                 to chat window.
 
-          Note: In Phase 2, we will use database to store messages and load previous messages
-                to chat window.
-
-       4. Posts I've Made
-	  This button jumps to the list of posts I've made in the postings page (items.html). For Phase 1 now, it jumps to all the
-	  posts made by all users because we don't have the "search" functionality implemented yet. "Search" will be implemented with
-	  a back end database search in Phase 2.
+	4. Posts I've Made
+	   This button jumps to the list of posts I've made in the postings page (items.html). For Phase 1 now, it jumps to all the
+	   posts made by all users because we don't have the "search" functionality implemented yet. "Search" will be implemented with
+	   a back end database search in Phase 2.
 	
-	  Note: In Phase 2, after we implemented the "search" functionality on our postings page (items.html), this link will refer to 		  	the page of items.html filtered by searching with the username of the current user.
+	   Note: In Phase 2, after we implemented the "search" functionality on our postings page (items.html), this link will refer to 		 the page of items.html filtered by searching with the username of the current user.
 	
-       5. Log Out
-	  The user logs out and we return the user to the main index page.
+	5. Log Out
+	   The user logs out and we return the user to the main index page.
 	  
 
 admin dashboard page:
-        1. Side Navigation Bar:
+	1. Side Navigation Bar:
             The side navigation bar will be open when click on the 'hamburger' icon,
             and be closed when click on the 'close' icon in the side navigation bar.
 
@@ -191,8 +197,9 @@ Post-ad page:
 
 
 Payment page:
-        1. Standard payment method form page. User will enter all fields and click "Pay now" to
-           complete payment.
+        1. Standard payment method form page:
+	   User will enter all personal information and credit card information fields. After that, the user clicks
+	   "Pay now" to complete the online purchase.
 
 
 

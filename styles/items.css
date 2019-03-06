@@ -272,6 +272,13 @@ body {
     font-weight: bold;
 }
 
+#logOut {
+    display: inline-block;
+    margin: 10px;
+    position: relative;
+    bottom: 10px;
+}
+
 #topBarIcons {
     float: right;
     position: relative;
