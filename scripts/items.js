@@ -333,4 +333,6 @@ function addMessage(msg) {
     chat.appendChild(messageContainer);
 }
 
+/*********************** Contact Seller by User "user" for Phase 1 ************************/
 
+// 
