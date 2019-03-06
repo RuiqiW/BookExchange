@@ -134,15 +134,15 @@ user profile page:
 	This page also shows when the user clicks the top right circle filled with a profile picture on certain pages.
 
 	1. Edit profile information
-           (1)User will be able to edit their profile picture, bio, phone number, email address and payment method.
+           User will be able to edit their profile picture, bio, phone number, email address and payment method.
 
-           (2)User will select "Choose File" under the profile picture and then select a picture on his or her computer.
+           (1)User will select "Choose File" under the profile picture and then select a picture on his or her computer.
 	   For Phase 1, it works up until the point that the file selected is correctly showing its name on the page.  
 
-	   (3)User will click on the "pencil" icons to make edits to bio, phone number and email address. After the user is
+	   (2)User will click on the "pencil" icons to make edits to bio, phone number and email address. After the user is
 	   done with the edits, the user will click on the "save" icons to save the changes made.
 	
-	   (4)User will click on the payment method drop down box and select their preferred payment method. Here is only for the
+	   (3)User will click on the payment method drop down box and select their preferred payment method. Here is only for the
 	   profile information, we don't ask to fill in credit card information. The actual transaction will be handled when 
 	   the user purchases a book from the postings page (items.html).
 	  
