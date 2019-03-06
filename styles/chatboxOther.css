@@ -15,11 +15,16 @@
 #chatTitle{
     display: block;
     background-color: lightsteelblue;
+    width: 260px;
+    height: 32px;
+    font-weight: bold;
 }
 
 #chatName {
     display: inline-block;
     margin-left: 10px;
+    margin-top: 2px;
+    font-size: 120%;
 }
 
 #chatHide{

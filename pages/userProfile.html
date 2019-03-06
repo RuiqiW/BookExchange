@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>User Profile</title>
-  <link href="../styles/chatbox.css" type="text/css" rel="stylesheet">
+  <link href="../styles/chatboxOther.css" type="text/css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="../styles/userProfile.css">
   <!--icon library-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -13,10 +13,12 @@
 <body>
   <!--Chat Box-->
   <div id="chatRoom">
-
-    <!--close button-->
-    <div id="chatHide">
-      <a href="#">&times;</a>
+    <div id="chatTitle">
+      <h5 id="chatName">user</h5>
+      <!--close button-->
+      <div id="chatHide">
+        <a href="#">&times;</a>
+      </div>
     </div>
 
     <!--messages-->
@@ -31,10 +33,11 @@
     <div id="message">
       <form>
         <textarea id="messageBox" placeholder="Message..."></textarea>
-        <button id="sendButton" class="submit"><i class="fa fa-send blue submit"></i></button>
+        <button id="sendButton" class="submit"><i class="fa fa-send blue submit sendIcon"></i></button>
       </form>
     </div>
   </div>
+
 
   <!--Top Bar -->
   <div id="topNavBar">
