@@ -28,7 +28,9 @@ body {
 
 #userInfo {
     display: inline-block;
-    float: right;
+    position: relative;
+    left: 1235px;
+    bottom: 5px;
 }
 
 #logOut {
@@ -36,6 +38,7 @@ body {
     margin: 10px;
     position: relative;
     bottom: 10px;
+    left: 1350px;
 }
 
 #searchBox {
@@ -77,7 +80,7 @@ body {
 #logIn {
     position: relative;
     right: 20px;
-    top: 10px;
+    bottom: 10px;
     height: 40px;
     width: 64px;
     outline: none;
@@ -240,7 +243,8 @@ body {
 
 #chatShow {
     position: relative;
-    left: 1300px;
+    left: 1250px;
+    bottom: 10px;
 }
 .profileImage {
     height: 50px;
