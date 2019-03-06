@@ -1,7 +1,5 @@
-Credentials:
-
-Standard user: username user, password: user
-Admin user: username: admin, password: admin
+Credentials: (1) Standard user: username user, password: user
+	     (2) Admin user: username: admin, password: admin
 
 
 Functionality:
@@ -25,16 +23,15 @@ index page:
 
 
 login page:
-       1. Log in
+       1. Log In
           Please use the credentials as in "Credential" section above to log in.
           Log in using Admin credential will jump to the admin dashboard. Log in using
           normal user credential will jump to the profile page.
 
-       2. Sign up
+       2. Sign Up
           Note：The newly created user will not be saved in this phase.
           	In Phase 2, we will implement this functionality by saving user information in the database
           	when "submit" is clicked on, and look up this user information when log in.
-
 
 
 Create account page:
@@ -44,6 +41,8 @@ Create account page:
 
 
 shopping cart page:
+	This page is shown when the user clicks on the top right shopping cart icon on certain pages.
+
 	This page is the collection of postings that the user selected "Add to Cart" in the items page.
 	1. Remove from Cart
 	   When the user clicks "Remove from Cart" in a certain item in the cart, that item will be removed from the cart.
@@ -110,7 +109,7 @@ items page:
 	6. Make My Post
 	   User jumps to post-ad page.
 
-	7. My User Profile (to the right of top navigation bar, the circle filled with a profile picture)
+	***7. My User Profile (to the right of top navigation bar, the circle filled with a profile picture)
 	   User jumps to user profile page.
 
 	8. Manage Shopping Cart
@@ -121,6 +120,9 @@ items page:
 
 
 user profile page:
+	This page is shown when the user logs in with username = user, password = user from the index page.
+	This page also shows when the user clicks the top right circle filled with a profile picture on certain pages.
+
 	1. Edit profile information
            (1)User will be able to edit their profile picture, bio, phone number, email address and payment method.
 
@@ -163,7 +165,8 @@ user profile page:
 	  
 
 admin dashboard page:
-	This page is what the admin sees when the admin logs in from the index page.
+	This page is shown when the admin logs in with username = admin, password = admin from the index page.
+
 	1. Side Navigation Bar:
             The side navigation bar will be open when click on the 'hamburger' icon,
             and be closed when click on the 'close' icon in the side navigation bar.
@@ -206,7 +209,8 @@ admin dashboard page:
 
 
 Post-ad page:
-	This page shows when user clicks "Make My Post" in the postings page (items.html). 
+	This page is shown when user clicks "Make My Post" in the postings page (items.html). 
+
         1. There are three section that the user must complete in order to post a new ad of the
            item they want to sell. Note: this page was designed using a css framework.
 
@@ -224,9 +228,9 @@ Post-ad page:
 	   list of postings page should he or she decided not to make a post.
 
 
-
 Payment page:
-	This page shows when user clicks "Buy this Item"
+	This page is shown when user clicks "Buy this Item"
+
         1. Standard payment method form page
 	   User will enter all personal information and credit card information fields. After that, the user clicks
 	   "Pay now" to complete the online purchase.
