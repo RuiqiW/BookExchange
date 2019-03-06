@@ -4,7 +4,6 @@ Standard user: username user, password: user
 Admin user: username: admin, password: admin
 
 
-
 Functionality:
 
 index page:
@@ -48,11 +47,17 @@ items page:
        1. Sorting items (View by price/type/post date)
 
        2. Add to Cart
+	  When the user clicks "Add to Cart" in a certain posting, that item will be added to "My cart" and the user can
+	  see the number of items in "My cart" has incremented by 1. The "Add to Cart" button will also change to a highlighted 
+	  "Remove from Cart" button. If the user choose to "Remove from Cart" of an item, the shopping cart will also remove
+	  the item and the user can see the number of items in "My cart" has decremented by 1.
 
-       3. Contact the Seller - Since the implementation of the chatting system requires a server and more 
-	  back end support, for phase 1, our message box is hard coded. Therefore, we used hard code to make the 
-	  "Contact Seller" button work in the post of "user1 user1". The first "Contact Seller" button works and 
-	  shows as a sample of what the user should see when they click "Contact Seller" buttons in Phase 2. 
+       3. Contact the Seller
+          Since the implementation of the chatting system requires a server and more back end support, 
+	  for phase 1, our message box is hard coded. Therefore, we hard coded to make the first
+	  "Contact Seller" button work in the post of "user1 user1". When the user clicks "Contact Seller",
+	  the user should enter a chat box with the corresponding seller. The first "Contact Seller" button works and 
+	  shows as an example of what the user should see when they click any "Contact Seller" buttons in Phase 2. 
 		
 	  Note: We will have all the "Contact Seller" buttons work well when the chatting system works in Phase 2.
 

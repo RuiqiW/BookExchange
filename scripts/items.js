@@ -202,7 +202,7 @@ function generatePost(post, user) {
     } else {
         const addButton = document.createElement("button");
         addButton.className = "removeFromCart";
-        addButton.appendChild(document.createTextNode("remove From Cart"));
+        addButton.appendChild(document.createTextNode("Remove from Cart"));
         postDiv.appendChild(addButton);
     }
 
@@ -246,7 +246,7 @@ function addToCart(e) {
     //Change the button to remove the item from shopping cart.
     e.target.className = "removeFromCart";
     e.target.innerHTML = "";
-    e.target.appendChild(document.createTextNode("Remove From Cart"));
+    e.target.appendChild(document.createTextNode("Remove from Cart"));
     e.target.removeEventListener("click", addToCart);
     e.target.addEventListener("click", removeFromCart);
 }
@@ -335,4 +335,11 @@ function addMessage(msg) {
 
 /*********************** Contact Seller by User "user" for Phase 1 ************************/
 
-// 
+const contactButton = document.querySelectorAll('.contactSeller');
+
+// as explained in phase1.txt, we are showing how the button should behave from "user1 user1"'s post for phase 1
+contactButton[0].addEventListener("click", contactTheSeller);
+
+function contactTheSeller(e) {
+    showChatRoom(e);
+}
