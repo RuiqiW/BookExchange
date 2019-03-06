@@ -304,6 +304,16 @@ body {
 
 }
 
+#backToPostButton {
+    height: 30px;
+    bottom: 20px;
+    right: 10px;
+    font-size: 120%;
+    background-color: #44aaee;
+    color: white;
+    border-radius: 10px;
+}
+
 .deletePost {
     margin-bottom: 5px;
     margin-left: 10px;
