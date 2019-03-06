@@ -234,6 +234,11 @@ for (let i = 0; i<addToCartButtons.length; i++) {
     addToCartButtons[i].addEventListener("click", addToCart);
 }
 
+const removeFromCartButtons = document.querySelectorAll(".removeFromCart");
+for (let i = 0; i<removeFromCartButtons.length; i++) {
+    removeFromCartButtons[i].addEventListener("click", removeFromCart);
+}
+
 function addToCart(e) {
     //Server call to update the shopping cart of the user
     // Here just user0
