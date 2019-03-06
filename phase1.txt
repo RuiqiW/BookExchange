@@ -81,6 +81,8 @@ shopping cart page:
 	
 
 items page:
+	This page is shown when the user clicks on "Search on UofTExchange" on the index page.
+
 	1. Sorting items (View by price/type/post date)
 	   User can select how to view the postings among sorting by (1)Posting time(New to Old), (2)Posting time(Old to New), 
 	   (3)price(High to Low) and (4)price(Low to High). 
