@@ -120,17 +120,17 @@ function init() {
             removeButton.className="removeFromCart";
             removeButton.appendChild(document.createTextNode("Remove from Cart"));
 
-            const contactSeller = document.createElement("button");
-            contactSeller.className="contactSeller";
-            contactSeller.appendChild(document.createTextNode("Contact the seller"));
-
             const buyItem = document.createElement("button");
             buyItem.className="buyItem";
             buyItem.appendChild(document.createTextNode("Buy this item"));
 
+            const contactSeller = document.createElement("button");
+            contactSeller.className="contactSeller";
+            contactSeller.appendChild(document.createTextNode("Contact the seller"));
+
             postDiv.appendChild(removeButton);
-            postDiv.appendChild(contactSeller);
             postDiv.appendChild(buyItem);
+            postDiv.appendChild(contactSeller);
 
             document.querySelector("#posts").appendChild(postDiv);
         }
@@ -150,3 +150,30 @@ function searching(e) {
     document.location = "../pages/items.html";
 }
 
+/*********************** Contact Seller by User "user" for Phase 1 ************************/
+// Show / Hide chatbox
+const chatShow = document.querySelector("#chatShow");
+const chatHide = document.querySelector("#chatHide");
+chatHide.addEventListener('click', hideChatRoom);
+chatShow.addEventListener('click', showChatRoom);
+
+function showChatRoom(e) {
+    e.preventDefault();
+    const chatRoom = document.querySelector('#chatRoom');
+    chatRoom.style.display = "block";
+}
+
+function hideChatRoom(e) {
+    e.preventDefault();
+    const chatRoom = document.querySelector('#chatRoom');
+    chatRoom.style.display = "none";
+}
+
+const contactButton = document.querySelectorAll('.contactSeller');
+
+// as explained in phase1.txt, we are showing how the button should behave from "user1 user1"'s post for phase 1
+contactButton[1].addEventListener("click", contactTheSeller);
+
+function contactTheSeller(e) {
+    showChatRoom(e);
+}
