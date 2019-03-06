@@ -4,12 +4,40 @@
     <meta charset="UTF-8">
     <title>Shooping Cart</title>
     <link href="../styles/shoppingCart.css" type="text/css" rel="stylesheet">
+    <link href="../styles/chatboxOther.css" type="text/css" rel="stylesheet">
     <!--Lightbox CSS-->
     <link href="../lightbox/css/lightbox.css" rel="stylesheet">
     <!--jquery for lightbox-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+
+<div id="chatRoom">
+    <div id="chatTitle">
+        <h5 id="chatName">user</h5>
+        <!--close button-->
+        <div id="chatHide">
+            <a href="#">&times;</a>
+        </div>
+    </div>
+
+    <!--messages-->
+    <div id="chat">
+        <!--A sample bubble-->
+        <div class="chatInBubble">
+            <p class="chatInText">Hello</p>
+        </div>
+    </div>
+
+    <!--write new message-->
+    <div id="message">
+        <form>
+            <textarea id="messageBox" placeholder="Message..."></textarea>
+            <button id="sendButton" class="submit"><img id="sendIcon" src="../images/send.png"></button>
+        </form>
+    </div>
+</div>
+
 <div id="topBar">
     <img id="topBarLogo" src="../images/logo.png" alt="logo">
 
@@ -19,6 +47,22 @@
             <span id="searchButtonText">Search</span>
         </button>
     </form>
+
+    <div id="chatShow" class="topBarImageContainer dropdown">
+        <img class="topBarImage" src="../images/admin/chat.png" alt="chatPlaceholder">
+
+        <!--Dropdown List of Messages-->
+        <div class="dropdownContent">
+            <div class="profile">
+                <div class="profileIconContainer">
+                    <img src="../images/person.jpg" alt="ProfilePic" class="profileIcon">
+                </div>
+                <div class="profileContent">
+                    <strong>user1</strong><br><span class="grey">Hello</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--This is used to hold the user icon after login-->
     <div id="userInfo">

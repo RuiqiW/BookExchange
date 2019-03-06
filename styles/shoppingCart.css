@@ -229,3 +229,41 @@ body {
     color: grey;
 
 }
+
+#chatShow {
+    position: relative;
+    left: 1300px;
+}
+.profileImage {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border-style: solid;
+}
+
+.topBarImage {
+    height: 30px;
+    display: inline-block;
+}
+
+.topBarImageContainer {
+    display: inline-block;
+    border-radius: 50%;
+    height: 30px;
+}
+
+.topBarImageContainer:hover{
+    background-color: lightskyblue;
+}
+
+.topBarText {
+    font-weight: bold;
+    display: inline-block;
+    right: 20px;
+    font-size: 90%;
+}
+
+#sendIcon {
+    height: 20px;
+    width: 20px;
+}
