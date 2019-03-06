@@ -197,9 +197,11 @@ admin dashboard page:
         4. Manage Users:
            When click on "show more / show less", more or less users will be displayed.
            Admin will be able to delete a user when click on the corresponding delete button,
-           or view a user's profile in detail when click on "View Detail".
+           or view a user's profile in detail when click on "View Detail". Note that, in phase1,
+           only the first user is linked to the profile page. Other "view Detail" buttons are not
+           functional and they will be complete in phase2.
 
-           The search bar is already function and can correctly remove user from the page.
+           The search bar is already functional. And the "Delete" button can correctly remove user from the page.
            
 	   Note: The actual delete user will require the assistant of server, which will be
            	 implemented in Phase 2.
