@@ -20,6 +20,9 @@ function handleLogin(e) {
   if (user === null || user === undefined || user.user.password !== password) {
     alert(`Login failed.`);
     return;
+
+  } else {
+    alert(`Welcome back ${user.user.firstName}`);
   }
 
   // Success. Bring the user to their profile page

@@ -56,5 +56,6 @@ function handleCreateAccount(e) {
   users.push(user);
 
   // Redirect the page to login
+  alert(`Account created successfully!`)
   document.location = '../pages/login.html';
 }
