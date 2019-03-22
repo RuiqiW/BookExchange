@@ -5,14 +5,6 @@
 const form = document.querySelector('#paymentForm');
 form.addEventListener('submit', handlePayment);
 
-const payButton = document.querySelector('#payButton');
-payButton.addEventListener('click',continueOrder);
-
-function continueOrder(e){
-  e.preventDefault();
-
-  document.location = "../pages/placeOrder.html";
-}
 
 
 function handlePayment(e) {
@@ -34,5 +26,5 @@ function handlePayment(e) {
 
 
   // Redirect user to profile back
-  document.location = '../pages/userProfile.html';
+  document.location = "../pages/placeOrder.html";
 }
