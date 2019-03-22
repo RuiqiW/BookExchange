@@ -190,7 +190,7 @@ function createPost(post){
 
     const id = document.createElement("span");
     id.className = "postId";
-    id.innerText = post.postId;
+    id.innerText = `postId: ${post.postId}`;
 
     const seller = document.createElement("span");
     seller.className = "seller";
