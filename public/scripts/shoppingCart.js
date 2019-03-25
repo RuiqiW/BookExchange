@@ -128,16 +128,11 @@ function init() {
             removeButton.className="removeFromCart";
             removeButton.appendChild(document.createTextNode("Remove from Cart"));
 
-            const buyItem = document.createElement("button");
-            buyItem.className="buyItem";
-            buyItem.appendChild(document.createTextNode("Buy this Item"));
-
             const contactSeller = document.createElement("button");
             contactSeller.className="contactSeller";
             contactSeller.appendChild(document.createTextNode("Contact the Seller"));
 
             postDiv.appendChild(removeButton);
-            postDiv.appendChild(buyItem);
             postDiv.appendChild(contactSeller);
 
             document.querySelector("#posts").appendChild(postDiv);
@@ -219,27 +214,3 @@ contactButton[1].addEventListener("click", contactTheSeller);
 function contactTheSeller(e) {
     showChatRoom(e);
 }
-
-const buyItemButtons = document.querySelectorAll(".buyItem");
-for (let i = 0; i < buyItemButtons.length;i++) {
-    buyItemButtons[i].addEventListener("click", buyItem);
-}
-function buyItem(e) {
-    //Server call to update the shopping cart of user
-    // Here just use user0
-    const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
-    //Should make a server call to fetch the post, here just use the hardcoded posts array
-    const post = posts.filter(x => x.postId === postId)[0];
-    console.log(post);
-    if (!post.byCreditCard) {
-        alert("The seller want you to pay him/her directly, please contact the seller!");
-    } else {
-        // jump to the credit card page
-        document.location = "./payment.html";
-        //Make a server call to submit the credit card Number and the postId!
-    }
-
-
-
-}
-
