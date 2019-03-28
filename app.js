@@ -1,7 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const logger = require('morgan');
 
 const routes = require('./routes/index');
@@ -15,10 +15,24 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
 app.use(logger('dev'));
+// don't need body-parser: https://stackoverflow.com/questions/47232187/express-json-vs-bodyparser-json
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(session({
+  secret: 'mySecret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    httpOnly: true
+  }
+}));
+
+// Static directories
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/pages", express.static(__dirname + '/public/pages'));
+app.use("/styles", express.static(__dirname + '/public/styles'));
+app.use("/scripts", express.static(__dirname + '/public/scripts'));
 
 // let the routes router handle all the routes
 app.use('/', routes);
@@ -36,7 +50,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  // res.render('error');
+  res.redirect('/404');
 });
 
 module.exports = app;
