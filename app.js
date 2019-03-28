@@ -9,9 +9,7 @@ const routes = require('./routes/index');
 const app = express();
 
 // Set up mongoose connection
-const mongoose = require('mongoose');
-const mongoDB = 'mongodb+srv://team25:team25@csc309-tciyp.mongodb.net/uoft_exchange?retryWrites=true';
-mongoose.connect(mongoDB, { useNewUrlParser: true });
+const mongoose = require('./db/mongoose');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
