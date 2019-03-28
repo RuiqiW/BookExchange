@@ -104,3 +104,6 @@ Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+
+# NPM
+package-lock.json
