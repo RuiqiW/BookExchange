@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
 // Connect to our database
-const mongoDB = 'mongodb+srv://team25:team25@csc309-tciyp.mongodb.net/uoft_exchange?retryWrites=true';
+// NOTE: This is a cloud deployed database, the username and password are both "server"
+const mongoDB = 'mongodb+srv://server:server@cluster0-pyppi.mongodb.net/test?retryWrites=true';
 
-mongoose.connect(mongoDB, { useNewUrlParser: true });
+mongoose.connect(mongoDB, { useNewUrlParser: true }).catch((error) => {
+    console.log("Error Connecting Database Server!");
+});
 
 
 module.exports = mongoose;
