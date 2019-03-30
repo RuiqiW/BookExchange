@@ -3,6 +3,7 @@
 const express = require('express');
 const port = process.env.PORT || 3000;
 const session = require('express-session');
+
 const mongoose = require('./db/mongoose').mongoose;
 const multer = require("multer");
 const upload = multer({dest: "uploads/"});
@@ -19,10 +20,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Static directories
+app.use("/", express.static(__dirname + '/public'));
 app.use("/pages", express.static(__dirname + '/public/pages'));
 app.use("/styles", express.static(__dirname + '/public/styles'));
 app.use("/scripts", express.static(__dirname + '/public/scripts'));
 app.use("/images", express.static(__dirname + '/public/images'));
+
+// Routes
+app.use("/", routes);
 
 app.use(session({
     secret: "UofTExchange",
