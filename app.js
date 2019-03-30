@@ -42,6 +42,10 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
+app.get('/404', (req, res, next) => {
+  res.sendFile(__dirname + '/public/pages/404.html');
+});
+
 app.post('/api/createAccount', (req, res) => {
     const username = req.body.username.trim();
     const email = req.body.email.trim();
