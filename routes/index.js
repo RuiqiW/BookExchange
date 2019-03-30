@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 
 
 /** Get all the other routers */
@@ -23,8 +22,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/404', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../public/pages.404.html'))
-  // res.sendFile(__dirname + '../public/pages.404.html');
+  res.sendFile(__dirname + '../public/pages.404.html');
 });
 
 

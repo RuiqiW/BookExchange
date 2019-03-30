@@ -4,6 +4,7 @@ const express = require('express');
 const port = process.env.PORT || 3000;
 const session = require('express-session');
 const mongoose = require('./db/mongoose');
+const routes = require('./routes');
 
 const ImageSchema = require("./models/Image").ImageSchema;
 const Post = require("./models/Post").Post;
@@ -17,9 +18,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Static directories
+app.use("/", express.static(__dirname + '/public'));
 app.use("/pages", express.static(__dirname + '/public/pages'));
 app.use("/styles", express.static(__dirname + '/public/styles'));
 app.use("/scripts", express.static(__dirname + '/public/scripts'));
+
+// Routes
+app.use("/", routes);
 
 app.use(session({
     secret: "UofTExchange",
