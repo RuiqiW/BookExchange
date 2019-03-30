@@ -635,19 +635,77 @@ function addNewChat(e) {
             } else {
                 window.alert("User not found");
             }
-        }).catch((error)=>{})
+        }).catch((error) => {
+        })
     }
+}
 
 
-    function showChatRoom(e) {
-        e.preventDefault();
-        const userToChat = e.target.lastElementChild.firstElementChild.innerText;
+function showChatRoom(e) {
+    e.preventDefault();
+    const userToChat = e.target.lastElementChild.firstElementChild.innerText;
 
-        if (userToChat !== '') {
-            const newChat = {user1: thisUser, user2: userToChat};
-            const request = new Request("/api/chat", {
-                method: 'get',
-                body: JSON.stringify(newChat),
+    if (userToChat !== '') {
+        const newChat = {user1: thisUser, user2: userToChat};
+        const request = new Request("/api/chat", {
+            method: 'get',
+            body: JSON.stringify(newChat),
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+        });
+        fetch(request).then((res) => {
+            if (res.status === 200) {
+                // set up chat box
+                const chatName = document.querySelector('#chatName');
+                chatName.innerText = userToChat;
+                const chatRoom = document.querySelector('#chatRoom');
+                chatRoom.style.display = "block";
+                loadChatHistory(res.body);
+            }
+        });
+    }
+}
+
+function loadChatHistory(chat) {
+    const chatHistory = JSON.parse(chat);
+    currentChatId = chatHistory._id;
+    for (let i = 0; i < chatHistory.messages.length; i++) {
+        if (chatHistory.messages[i].sender === thisUser) {
+            addSendMessage(chatHistory.messages[i].content);
+        } else {
+            addReceivedMessage(chatHistory.messages[i].content);
+        }
+    }
+}
+
+
+function hideChatRoom(e) {
+    e.preventDefault();
+    const chatRoom = document.querySelector('#chatRoom');
+    chatRoom.style.display = "none";
+}
+
+
+const chat = document.querySelector('#chat');
+const sendButton = document.querySelector("#sendButton");
+sendButton.addEventListener('click', sendMessage);
+
+function sendMessage(e) {
+    e.preventDefault();
+
+    if (e.target.classList.contains("submit")) {
+        const message = document.querySelector("#messageBox").value;
+        if (message.length > 0 && message.length < 200) {
+            const newMessage = {
+                time: new Date(),
+                sender: thisUser,
+                content: message
+            };
+            const request = new Request(`/api/chat/${currentChatId}`, {
+                method: 'post',
+                body: JSON.stringify(newMessage),
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'Content-Type': 'application/json'
@@ -655,95 +713,39 @@ function addNewChat(e) {
             });
             fetch(request).then((res) => {
                 if (res.status === 200) {
-                    // set up chat box
-                    const chatName = document.querySelector('#chatName');
-                    chatName.innerText = userToChat;
-                    const chatRoom = document.querySelector('#chatRoom');
-                    chatRoom.style.display = "block";
-                    loadChatHistory(res.body);
+                    addSendMessage(message);
+                } else {
+                    window.alert("Failed to send message.");
                 }
             });
+
         }
     }
-
-    function loadChatHistory(chat) {
-        const chatHistory = JSON.parse(chat);
-        currentChatId = chatHistory._id;
-        for (let i = 0; i < chatHistory.messages.length; i++) {
-            if (chatHistory.messages[i].sender === thisUser) {
-                addSendMessage(chatHistory.messages[i].content);
-            } else {
-                addReceivedMessage(chatHistory.messages[i].content);
-            }
-        }
-    }
-
-
-    function hideChatRoom(e) {
-        e.preventDefault();
-        const chatRoom = document.querySelector('#chatRoom');
-        chatRoom.style.display = "none";
-    }
-
-
-    const chat = document.querySelector('#chat');
-    const sendButton = document.querySelector("#sendButton");
-    sendButton.addEventListener('click', sendMessage);
-
-    function sendMessage(e) {
-        e.preventDefault();
-
-        if (e.target.classList.contains("submit")) {
-            const message = document.querySelector("#messageBox").value;
-            if (message.length > 0 && message.length < 200) {
-                const newMessage = {
-                    time: new Date(),
-                    sender: thisUser,
-                    content: message
-                };
-                const request = new Request(`/api/chat/${currentChatId}`, {
-                    method: 'post',
-                    body: JSON.stringify(newMessage),
-                    headers: {
-                        'Accept': 'application/json, text/plain, */*',
-                        'Content-Type': 'application/json'
-                    },
-                });
-                fetch(request).then((res) => {
-                    if (res.status === 200) {
-                        addSendMessage(message);
-                    } else {
-                        window.alert("Failed to send message.");
-                    }
-                });
-
-            }
-        }
-        chat.scrollTop = chat.scrollHeight;
-    }
+    chat.scrollTop = chat.scrollHeight;
+}
 
 
 // helper function for sendMessage, add message to chat window
-    function addSendMessage(msg) {
-        const newMessage = document.createElement('p');
-        newMessage.className = "chatOutText";
-        newMessage.innerText = msg;
-        const bubble = document.createElement('div');
-        bubble.className = "chatOutBubble";
-        bubble.appendChild(newMessage);
-        const messageContainer = document.createElement('div');
-        messageContainer.appendChild(bubble);
-        chat.appendChild(messageContainer);
-    }
+function addSendMessage(msg) {
+    const newMessage = document.createElement('p');
+    newMessage.className = "chatOutText";
+    newMessage.innerText = msg;
+    const bubble = document.createElement('div');
+    bubble.className = "chatOutBubble";
+    bubble.appendChild(newMessage);
+    const messageContainer = document.createElement('div');
+    messageContainer.appendChild(bubble);
+    chat.appendChild(messageContainer);
+}
 
-    function addReceivedMessage(msg) {
-        const newMessage = document.createElement('p');
-        newMessage.className = "chatInText";
-        newMessage.innerText = msg;
-        const bubble = document.createElement('div');
-        bubble.className = "chatInBubble";
-        bubble.appendChild(newMessage);
-        const messageContainer = document.createElement('div');
-        messageContainer.appendChild(bubble);
-        chat.appendChild(messageContainer);
-    }
+function addReceivedMessage(msg) {
+    const newMessage = document.createElement('p');
+    newMessage.className = "chatInText";
+    newMessage.innerText = msg;
+    const bubble = document.createElement('div');
+    bubble.className = "chatInBubble";
+    bubble.appendChild(newMessage);
+    const messageContainer = document.createElement('div');
+    messageContainer.appendChild(bubble);
+    chat.appendChild(messageContainer);
+}
