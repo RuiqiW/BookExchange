@@ -5,10 +5,9 @@ const PostSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        minlength: 1,
-        unique: true
+        minlength: 1
     },
-    sellerUsername: {
+    seller: {
         type: String,
         required: true,
         minlength: 1
@@ -58,4 +57,4 @@ const PostSchema = new mongoose.Schema({
 
 const Post = mongoose.model("Post", PostSchema);
 
-module.exports = { Post };
+module.exports = { Post, PostSchema };

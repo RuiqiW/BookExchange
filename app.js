@@ -4,6 +4,7 @@ const express = require('express');
 const port = process.env.PORT || 3000;
 const session = require('express-session');
 
+const fs = require('fs');
 const mongoose = require('./db/mongoose').mongoose;
 const multer = require("multer");
 const upload = multer({dest: "uploads/"});
@@ -25,9 +26,6 @@ app.use("/pages", express.static(__dirname + '/public/pages'));
 app.use("/styles", express.static(__dirname + '/public/styles'));
 app.use("/scripts", express.static(__dirname + '/public/scripts'));
 app.use("/images", express.static(__dirname + '/public/images'));
-
-// Routes
-app.use("/", routes);
 
 app.use(session({
     secret: "UofTExchange",
@@ -66,6 +64,23 @@ app.post('/api/createAccount', (req, res) => {
             password: req.body.email,
             isAdmin: false
         });
+        const defaultProfile = fs.readFileSync("./public/images/user.png");
+        const newUserProfile = new UserProfile({
+            userName: req.body.username,
+            avatar: {
+               data: defaultProfile,
+               contentType: "image/png"
+            },
+            bio: "Set your Bio",
+            phone: "Set your PhoneNumber",
+            sell: [],
+            purchase: [],
+            transaction: [],
+            shortlist: []
+        });
+        newUserProfile.save().catch((error) => {
+            console.log(error);
+        });
         newUser.save().then((result) => {
             res.send(result)
         }).catch((error) => {
@@ -79,15 +94,40 @@ app.post('/api/createAccount', (req, res) => {
 });
 
 app.post('/api/postAd', upload.array("image", 4), (req, res) => {
-    const files = req.file;
+    //TODO: Finish this after finishing the login route.
+    if (!req.session.user) {
+        // res.redirect()
+    }
+    // if user is logged in
+    //TODO: fix this when Eric finish modyfying frontend
+    const files = req.files;
     const newPost = new Post({
         title: req.body.title,
-        category: req.body.category,
+        seller: "haha",
+        image: [],
         condition: req.body.condition,
+        ISBN: req.body.ISBN,
+        edition: req.body.edition,
         description: req.body.description,
-        price: req.body.price
+        price: req.body.price,
+        postingDate: new Date(),
+        isSold: false,
+        byCreditCard: true
     });
-
+    for (let i = 0; i < files.length; i++) {
+        const fileData = fs.readFileSync(files[i].path);
+        console.log(files[i].mimetype);
+        newPost.image.push({
+            data: fileData,
+            contentType: files[i].mimetype
+        });
+    }
+    newPost.save().then((result) => {
+        res.status(200).send();
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
 });
 
 app.post('/api/test', (req, res) => {

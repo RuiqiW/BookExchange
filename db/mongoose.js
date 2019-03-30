@@ -9,4 +9,4 @@ mongoose.connect(mongoDB, { useNewUrlParser: true }).catch((error) => {
 });
 
 
-module.exports = mongoose;
+module.exports = { mongoose };

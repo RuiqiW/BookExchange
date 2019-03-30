@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const ImageSchema = require("./Image.js").ImageSchema;
+const PostSchema = require("./Post").PostSchema;
+const TransactionSchema = require("./Transaction").TransactionSchema;
 
 const userProfileSchema = new mongoose.Schema({
     userName: {
@@ -16,15 +18,17 @@ const userProfileSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
-        required: true,
-        minlength: 1
+        required: true
     },
     phone: {
         type: String,
         minlength: 4,
         required: true
-    }
-    //TODO: Three fields left: sell, purchase and shortlist
+    },
+    sell: [PostSchema],
+    purchase: [PostSchema],
+    transaction: [TransactionSchema],
+    shortlist: [PostSchema]
 });
 
 const UserProfile = mongoose.model("UserProfile", userProfileSchema);
