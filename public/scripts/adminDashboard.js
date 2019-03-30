@@ -1,6 +1,6 @@
 // load list of messages received, need server call in Phase2
-const messages=[];
-messages.push("Hello");
+const thisUser = "admin"; //TODO: get current user from cookie
+let currentChatId = 0;
 
 let postEdited = 0;
 let shownUserNum = 2;
@@ -27,31 +27,31 @@ function loadPostNum() {
 }
 
 function loadTransactionNum() {
-    document.querySelector('#transactionData').innerText = transactions.reduce((total, transaction)=>
+    document.querySelector('#transactionData').innerText = transactions.reduce((total, transaction) =>
         total + (transaction.status === 0 ? 1 : 0), 0);
 }
 
-function loadMessageNum() {
-    document.querySelector('#msgData').innerText = messages.length;
-}
+// function loadMessageNum() {
+//     document.querySelector('#msgData').innerText = messages.length;
+// }
 
-function loadTransaction(){
-    for(let i=0; i < transactions.length; i++){
-        if(transactions[i].status === 0){
+function loadTransaction() {
+    for (let i = 0; i < transactions.length; i++) {
+        if (transactions[i].status === 0) {
             createTransactionEntry(transactions[i]);
         }
     }
 }
 
-function loadPost(){
+function loadPost() {
     let j = 5;
-    for(let i = 0; i < posts.length; i++){
-        if(j > 0){
-           if(posts[i].isSold === false){
-               createPost(posts[i]);
-           }
+    for (let i = 0; i < posts.length; i++) {
+        if (j > 0) {
+            if (posts[i].isSold === false) {
+                createPost(posts[i]);
+            }
             j--;
-        }else{
+        } else {
             break;
         }
     }
@@ -63,9 +63,9 @@ function loadPost(){
 }
 
 
-function loadUserList(){
+function loadUserList() {
     const length = Math.min(users.length - shownUserNum, 3);
-    for(let i = 0; i < length; i++){
+    for (let i = 0; i < length; i++) {
         const userEntry = createUserEntry(users[i + shownUserNum]);
         userTable.appendChild(userEntry);
     }
@@ -73,8 +73,7 @@ function loadUserList(){
 }
 
 
-
-/********** navigation bar and chat box expansion and close ***********/
+/********** navigation bar expansion and close ***********/
 
 
 const main = document.querySelector("#main");
@@ -82,11 +81,6 @@ const navExpansion = document.querySelector("#navExpansion");
 const navClose = document.querySelector('#navClose');
 navExpansion.addEventListener('click', openSideNav);
 navClose.addEventListener('click', closeSideNav);
-
-const chatShow = document.querySelector("#chatShow");
-const chatHide = document.querySelector("#chatHide");
-chatHide.addEventListener('click', hideChatRoom);
-chatShow.addEventListener('click', showChatRoom);
 
 function openSideNav(e) {
     e.preventDefault();
@@ -99,20 +93,6 @@ function closeSideNav(e) {
     document.querySelector("#sideNav").style.width = "0";
     main.style.marginLeft = "0";
 }
-
-function showChatRoom(e) {
-    e.preventDefault();
-    const chatRoom = document.querySelector('#chatRoom');
-    chatRoom.style.display = "block";
-}
-
-function hideChatRoom(e) {
-    e.preventDefault();
-    const chatRoom = document.querySelector('#chatRoom');
-    chatRoom.style.display = "none";
-}
-
-
 
 
 /***************** Post Management *****************/
@@ -152,8 +132,8 @@ function deleteItem(e) {
         const postId = parseInt(postNum.innerText);
 
         // delete post from posts array, will need server in Phase 2
-        for(let i = 0; i < posts.length; i++){
-            if(posts[i].postId === postId){
+        for (let i = 0; i < posts.length; i++) {
+            if (posts[i].postId === postId) {
                 posts.splice(i, 1);
                 break;
             }
@@ -173,7 +153,7 @@ function removePost(e) {
 }
 
 
-function createPost(post){
+function createPost(post) {
 
     const close = document.createElement("span");
     close.className = "deleteItem";
@@ -213,8 +193,6 @@ function createPost(post){
 }
 
 
-
-
 /******************** User Management ********************/
 
 const userList = document.querySelector("#userList");
@@ -234,7 +212,7 @@ userSearchButton.addEventListener('click', searchUser);
 
 // view the user profile of the sample user
 // will require server call to find the url of the personal profile page in Phase 2
-function viewUserDetail(e){
+function viewUserDetail(e) {
     e.preventDefault();
 
     window.open("../pages/userProfile.html");
@@ -242,60 +220,61 @@ function viewUserDetail(e){
 
 
 // show less user, remove userEntry in DOM
-function showLess(e){
+function showLess(e) {
     e.preventDefault();
 
     const userEntries = document.querySelectorAll('.userEntry');
     const num = shownUserNum;
-    for(let i = 1; i <= num; i++){
+    for (let i = 1; i <= num; i++) {
         try {
             userTable.removeChild(userEntries[i]);
             shownUserNum--;
-        }catch(error){}
+        } catch (error) {
+        }
     }
 }
 
 
 // show more user
-function showMore(e){
+function showMore(e) {
     e.preventDefault();
 
     loadUserList();
 }
 
 
-function searchUser(e){
+function searchUser(e) {
     e.preventDefault();
 
     const keyword = document.querySelector('#userKeyword').value;
-    if(keyword !== ""){
+    if (keyword !== "") {
 
         // code below need server call to find the user matching the keyword
-        for(let i=0; i < users.length; i++){
-            if(keyword === users[i].user.username){
+        for (let i = 0; i < users.length; i++) {
+            if (keyword === users[i].user.username) {
                 showResult(users[i]);
                 return;
             }
         }
         showNoResult();
 
-    }else{
+    } else {
         userTable.style.display = "block";
         listEnd.style.display = "block";
 
         // hide search result table
         const userTable1 = document.querySelector('#userTable1');
-        if(userTable1!== null){
+        if (userTable1 !== null) {
             userTable1.style.display = "none";
         }
     }
 }
 
 
-function showResult(user){
+function showResult(user) {
 
     const resultTableOld = document.querySelector("#userTable1");
-    if(resultTableOld !== null){
+    if (resultTableOld !== null) {
         userList.removeChild(resultTableOld);
     }
 
@@ -315,11 +294,11 @@ function showResult(user){
 
 // helper function for show search user, deals with the situation when
 // no result has been found
-function showNoResult(){
+function showNoResult() {
 
     const resultTableOld = document.querySelector("#userTable1");
-    if(resultTableOld !== null){
-       userList.removeChild(resultTableOld);
+    if (resultTableOld !== null) {
+        userList.removeChild(resultTableOld);
     }
 
     const userTable1 = document.createElement('div');
@@ -347,8 +326,8 @@ function deleteUserEntry(e) {
         const usernameContainer = user.firstElementChild.lastElementChild.firstElementChild;
         const username = usernameContainer.innerText;
         // delete user from users array, will need server in Phase 2
-        for(let i = 0; i < users.length; i++){
-            if(users[i].user.username === username){
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].user.username === username) {
                 users.splice(i, 1);
                 break;
             }
@@ -370,7 +349,7 @@ function removeUser(e) {
 
 
 // Create an entry for user table
-function createUserEntry(user){
+function createUserEntry(user) {
 
     const userEntry = document.createElement("div");
     userEntry.className = "userEntry";
@@ -421,8 +400,6 @@ function createUserEntry(user){
 
     return userEntry;
 }
-
-
 
 
 /***************** Transaction Management *****************/
@@ -480,7 +457,7 @@ function deleteTransactionEntry(e) {
     tableBody.removeChild(row);
 }
 
-function createTransactionEntry(transaction){
+function createTransactionEntry(transaction) {
 
     const row = document.createElement('tr');
     const id = document.createElement('td');
@@ -536,35 +513,237 @@ function createTransactionEntry(transaction){
 }
 
 
-
 /*********************** Chat Box ************************/
 
-const chat = document.querySelector('#chat');
-const sendButton = document.querySelector("#sendButton");
-sendButton.addEventListener('click', sendMessage);
+const chatShow = document.querySelector("#chatShowButton");
+const chatHide = document.querySelector("#chatHide");
+chatShow.addEventListener('click', showChatRecords);
+chatHide.addEventListener('click', hideChatRoom);
 
-function sendMessage(e) {
+let shownChatRecords = false;
+const chatRecords = document.querySelector("#chatRecords");
+
+// show the dropdown list of existing chat
+
+function showChatRecords(e) {
     e.preventDefault();
+    if (shownChatRecords === false) {
+        const request = new Request("/api/allChats", {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+        });
+        fetch(request).then((res) => {
+            if (res.status === 200) {
+                const chatHistories = JSON.parse(res.body);
+                const records = document.querySelectorAll('.profile');
+                for (let i = 0; i < records.length - 1; i++) {
+                    chatRecords.removeChild(chatRecords.lastElementChild);
+                }
+                for (let i = 0; i < chatHistories.length; i++) {
+                    addChatRecord(chatHistories[i]);
+                }
+            }
+        });
+        chatRecords.style.display = 'block';
+        shownChatRecords = true;
+    } else {
+        chatRecords.style.display = 'none';
+        shownChatRecords = false;
+    }
+}
 
-    if (e.target.classList.contains("submit")) {
-        const message = document.querySelector("#messageBox").value;
-        if (message.length > 0 && message.length < 200) {
-            addMessage(message);
+
+function addChatRecord(chatHistory) {
+    const profile = document.createElement('div');
+    profile.className = "profile";
+
+    const profileIconContainer = document.createElement('div');
+    const icon = document.createElement('img');
+    // icon.src =;
+    icon.alt = "ProfilePic";
+    icon.className = "profileIcon";
+    profileIconContainer.appendChild(icon);
+
+    const profileContent = document.createElement('div');
+    profileContent.className = "profileContent";
+    const user = document.createElement('strong');
+    if (chatHistory.user1 === thisUser) {
+        user.innerText = chatHistory.user2;
+    } else {
+        user.innerText = chatHistory.user1;
+    }
+
+    profileContent.appendChild(user);
+
+    profile.appendChild(profileIconContainer);
+    profile.appendChild(profileContent);
+    profile.addEventListener('click', showChatRoom);
+    chatRecords.appendChild(profile);
+}
+
+
+const chatCreateButton = document.querySelector('#chatCreateButton');
+chatCreateButton.addEventListener('click', addNewChat);
+
+function addNewChat(e) {
+    e.preventDefault();
+    const keyword = document.querySelector('#userToChat').value;
+    if (keyword !== '') {
+
+        // find if the user to chat exists
+        const userRequest = new Request("/api/user", {
+            method: 'get',
+            body: JSON.stringify({username: keyword}),
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(userRequest).then((res) => {
+            if (res.status === 200) {
+                const newChat = {
+                    user1: thisUser,
+                    user2: keyword,
+                    newMessages: 0,
+                    messages: []
+                };
+
+                const request = new Request("/api/createChat", {
+                    method: 'post',
+                    body: JSON.stringify(newChat),
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                fetch(request).then((res) => {
+                    if (res.status === 200) {
+
+                        // set up chat box
+                        const chatName = document.querySelector('#chatName');
+                        chatName.innerText = keyword;
+                        const chatRoom = document.querySelector('#chatRoom');
+                        chatRoom.style.display = "block";
+
+                        loadChatHistory(res.body);
+                    }
+                });
+            } else {
+                window.alert("User not found");
+            }
+        }).catch((error)=>{})
+    }
+
+
+    function showChatRoom(e) {
+        e.preventDefault();
+        const userToChat = e.target.lastElementChild.firstElementChild.innerText;
+
+        if (userToChat !== '') {
+            const newChat = {user1: thisUser, user2: userToChat};
+            const request = new Request("/api/chat", {
+                method: 'get',
+                body: JSON.stringify(newChat),
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+            });
+            fetch(request).then((res) => {
+                if (res.status === 200) {
+                    // set up chat box
+                    const chatName = document.querySelector('#chatName');
+                    chatName.innerText = userToChat;
+                    const chatRoom = document.querySelector('#chatRoom');
+                    chatRoom.style.display = "block";
+                    loadChatHistory(res.body);
+                }
+            });
         }
     }
-    chat.scrollTop = chat.scrollHeight;
-}
+
+    function loadChatHistory(chat) {
+        const chatHistory = JSON.parse(chat);
+        currentChatId = chatHistory._id;
+        for (let i = 0; i < chatHistory.messages.length; i++) {
+            if (chatHistory.messages[i].sender === thisUser) {
+                addSendMessage(chatHistory.messages[i].content);
+            } else {
+                addReceivedMessage(chatHistory.messages[i].content);
+            }
+        }
+    }
+
+
+    function hideChatRoom(e) {
+        e.preventDefault();
+        const chatRoom = document.querySelector('#chatRoom');
+        chatRoom.style.display = "none";
+    }
+
+
+    const chat = document.querySelector('#chat');
+    const sendButton = document.querySelector("#sendButton");
+    sendButton.addEventListener('click', sendMessage);
+
+    function sendMessage(e) {
+        e.preventDefault();
+
+        if (e.target.classList.contains("submit")) {
+            const message = document.querySelector("#messageBox").value;
+            if (message.length > 0 && message.length < 200) {
+                const newMessage = {
+                    time: new Date(),
+                    sender: thisUser,
+                    content: message
+                };
+                const request = new Request(`/api/chat/${currentChatId}`, {
+                    method: 'post',
+                    body: JSON.stringify(newMessage),
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                });
+                fetch(request).then((res) => {
+                    if (res.status === 200) {
+                        addSendMessage(message);
+                    } else {
+                        window.alert("Failed to send message.");
+                    }
+                });
+
+            }
+        }
+        chat.scrollTop = chat.scrollHeight;
+    }
 
 
 // helper function for sendMessage, add message to chat window
-function addMessage(msg) {
-    const newMessage = document.createElement('p');
-    newMessage.className = "chatOutText";
-    newMessage.innerText = msg;
-    const bubble = document.createElement('div');
-    bubble.className = "chatOutBubble";
-    bubble.appendChild(newMessage);
-    const messageContainer = document.createElement('div');
-    messageContainer.appendChild(bubble);
-    chat.appendChild(messageContainer);
-}
+    function addSendMessage(msg) {
+        const newMessage = document.createElement('p');
+        newMessage.className = "chatOutText";
+        newMessage.innerText = msg;
+        const bubble = document.createElement('div');
+        bubble.className = "chatOutBubble";
+        bubble.appendChild(newMessage);
+        const messageContainer = document.createElement('div');
+        messageContainer.appendChild(bubble);
+        chat.appendChild(messageContainer);
+    }
+
+    function addReceivedMessage(msg) {
+        const newMessage = document.createElement('p');
+        newMessage.className = "chatInText";
+        newMessage.innerText = msg;
+        const bubble = document.createElement('div');
+        bubble.className = "chatInBubble";
+        bubble.appendChild(newMessage);
+        const messageContainer = document.createElement('div');
+        messageContainer.appendChild(bubble);
+        chat.appendChild(messageContainer);
+    }

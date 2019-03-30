@@ -130,9 +130,7 @@
 .dropdown:hover{
     cursor: pointer;
 }
-.dropdown:hover .dropdownContent {
-    display: block;
-}
+
 
 .profileIconContainer {
     height: 50px;
@@ -159,4 +157,17 @@
 
 .grey {
     color: grey;
+}
+
+#userToChat{
+    display: inline-block;
+    width: 75%;
+    margin: 10px;
+    margin-right: 0;
+}
+
+#chatCreateButton{
+    border: none;
+    background-color: white;
+    color: #44aaee;
 }
