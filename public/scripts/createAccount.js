@@ -11,51 +11,53 @@ createAccountForm.addEventListener('submit', handleCreateAccount);
 
 
 function handleCreateAccount(e) {
-  e.preventDefault();
+    e.preventDefault();
+    // Collect the entered fields
+    const firstName = document.querySelector('#firstName').value;
+    const lastName = document.querySelector('#lastName').value;
+    const username = document.querySelector('#username').value;
+    const email = document.querySelector('#email').value;
+    const password = document.querySelector('#password').value;
+    const confirm = document.querySelector('#confirm').value;
 
+    // Check if password matches confirm
+    if (password !== confirm) {
+        alert('Password does not match');
+        return;
+    }
 
-  // Collect the entered fields
-  const firstName = document.querySelector('#firstName').value;
-  const lastName = document.querySelector('#lastName').value;
-  const username = document.querySelector('#username').value;
-  const email = document.querySelector('#email').value;
-  const password = document.querySelector('#password').value;
-  const confirm = document.querySelector('#confirm').value;
+    // Check that the other fields are correct. We can make these more precise later
+    let nameRegex = /^[a-zA-Z]+$/;
+    let emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    if (!nameRegex.test(firstName) || !nameRegex.test(lastName) || !nameRegex.test(username) || !emailRegex.test(email.toString())) {
+        alert('Please correct fields and try again.');
+        return;
+    }
 
-  // Check if password matches confirm
-  if (password !== confirm) {
-    alert('Password does not match');
-    return;
-  }
+    const newUser = {
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      email: email,
+      password: password,
+    };
 
-  // Check if the username or email already exist
-  if (users.some((user) => user.username === username)) {
-    alert(`${username} already exists`);
-    return;
-
-  } else if (users.some((user) => {
-    return user.email === email;
-  })) {
-    // Body of else if
-    alert(`${email} already exists`);
-    return;
-  }
-
-  // Check that the other fields are correct. We can make these more precise later
-  let nameRegex = /^[a-zA-Z]+$/;
-  let emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-  if (!nameRegex.test(firstName) || !nameRegex.test(lastName) || !nameRegex.test(username) || !emailRegex.test(email.toString())) {
-    alert('Please correct fields and try again.');
-    return;
-  }
-
-  // Create the new User
-  const user = new User(firstName, lastName, username, email, password, false);
-
-  // We would send to database here
-  users.push(user);
-
-  // Redirect the page to login
-  alert(`Account created successfully!`)
-  document.location = '../pages/login.html';
+    const request = new Request("/api/createAccount", {
+        method: 'post',
+        body: JSON.stringify(newUser),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+    });
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            alert(`Account created successfully!\nPlease login.`);
+            window.location = '/pages/login.html';
+        } else if (res.status === 600) {
+            alert("The username you choose has been taken.");
+        } else if (res.status === 601) {
+            alert("The email is already registered.");
+        }
+    });
 }

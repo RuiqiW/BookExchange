@@ -19,7 +19,7 @@
 
 </head>
 <body>
-
+<form action="/api/postAd" method="post" enctype="multipart/form-data" id="postAdForm">
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
@@ -61,7 +61,7 @@
     <div class="columns is-centered">
       <div class="column is-8">
 
-        <form id="adDetails" method="POST" action="#">
+        <!--<form id="adDetails" method="POST" action="#">-->
           <div class="field is-horizontal">
 
             <div class="field-label is-normal">
@@ -71,7 +71,7 @@
             <div class="field-body">
               <div class="field">
                 <div class="control">
-                  <input id="adTitle" class="input" type="text" placeholder="Title" required>
+                  <input id="adTitle" name="title" class="input" type="text" placeholder="Title" required>
                 </div>
                 <p class="help">Descriptive titles are more helpful!</p>
               </div>
@@ -88,7 +88,7 @@
                 <div class="control">
                   <div class="select">
                     <label>
-                      <select id="selCategory">
+                      <select id="selCategory" name="category">
                         <option>Textbook</option>
                         <option>Furniture</option>
                         <option>School Accessories</option>
@@ -109,7 +109,7 @@
                 <div class="control">
                   <div class="select">
                     <label>
-                      <select id="selCondition">
+                      <select id="selCondition" name="condition">
                         <option>New</option>
                         <option>Used - Like New</option>
                         <option>Used - Very Good</option>
@@ -130,14 +130,14 @@
             <div class="field-body">
               <div class="field">
                 <div class="control">
-                  <textarea id="description" class="textarea" placeholder="" required>
+                  <textarea id="description" name = "description" class="textarea" placeholder="" required>
                   </textarea>
                 </div>
               </div>
             </div>
           </div>
 
-        </form>
+        <!--</form>-->
       </div>
     </div>
 
@@ -169,7 +169,7 @@
         <div class="field">
           <div class="file is-link is-centered has-name is-boxed">
             <label class="file-label">
-              <input class="file-input" type="file" name="image1" accept="image/*">
+              <input class="file-input" type="file" name="image" accept="image/*">
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-cloud-upload-alt"></i>
@@ -190,7 +190,7 @@
         <div class="field">
           <div class="file is-link is-centered has-name is-boxed">
             <label class="file-label">
-              <input class="file-input" type="file" name="image2" accept="image/*">
+              <input class="file-input" type="file" name="image" accept="image/*">
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-cloud-upload-alt"></i>
@@ -211,7 +211,7 @@
         <div class="field">
           <div class="file is-link is-centered has-name is-boxed">
             <label class="file-label">
-              <input class="file-input" type="file" name="image3" accept="image/*">
+              <input class="file-input" type="file" name="image" accept="image/*">
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-cloud-upload-alt"></i>
@@ -232,7 +232,7 @@
         <div class="field">
           <div class="file is-link is-centered has-name is-boxed">
             <label class="file-label">
-              <input class="file-input" type="file" name="image4" accept="image/*">
+              <input class="file-input" type="file" name="image" accept="image/*">
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-cloud-upload-alt"></i>
@@ -268,7 +268,7 @@
       <div class="column is-6">
 
 
-        <form method="POST" action="#">
+        <!--<form method="POST" action="#">-->
           <div class="field is-horizontal">
 
             <div class="field-label is-normal">
@@ -289,7 +289,7 @@
                               </select>
                             </span>
                           </p>
-                          <input id="priceInput" class="input" type="text" placeholder="10.00">
+                          <input id="priceInput" name="price" class="input" type="text" placeholder="10.00">
                         </div>
                       </span>
                     </label>
@@ -297,13 +297,13 @@
                   <div id="priceRadio">
                     <div>
                       <label class="radio">
-                        <input class="radio is-link is-large" type="radio" name="price">
+                        <input class="radio is-link is-large" name="isFree" type="radio" name="price">
                         Free
                       </label>
                     </div>
                     <div>
                       <label class="radio">
-                        <input class="radio is-link is-large" type="radio" name="price">
+                        <input class="radio is-link is-large" name="isContact" type="radio" name="price">
                         Please Contact
                       </label>
                     </div>
@@ -312,7 +312,7 @@
               </div>
             </div>
           </div>
-        </form>
+        <!--</form>-->
       </div>
     </div>
   </div>
@@ -330,6 +330,7 @@
     </div>
   </div>
 </section>
+</form>
 
 <!--Javascript-->
 <script src="../scripts/postAd.js" type="text/javascript"></script>

@@ -15,7 +15,7 @@ uploads[0].addEventListener('change', (e) => updateFileName(e, 0));
 uploads[1].addEventListener('change', event => updateFileName(event, 1));
 uploads[2].addEventListener('change', e => updateFileName(e, 2));
 uploads[3].addEventListener('change', e => updateFileName(e, 3));
-
+const postAdFrom = document.querySelector("#postAdForm");
 
 
 function handlePostAd(e) {
@@ -82,9 +82,9 @@ function handlePostAd(e) {
   // const post = new Post(title, "SELLER??", price, category, condition, description, images, false);
   // posts.push(post);
 
-
+  postAdFrom.submit();
   // Redirect back to their profile page
-  document.location = '../pages/userProfile.html';
+  //document.location = '../pages/userProfile.html';
 
 }
 
