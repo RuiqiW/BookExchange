@@ -4,6 +4,7 @@
  * only unused because we need to implement creating
  * the new Post in phase 2.
  */
+const log = console.log;
 
 
 // DOM event listeners
@@ -24,8 +25,7 @@ function handlePostAd(e) {
   // DOM elements
   const title = document.querySelector('#adTitle').value;
 
-  const selectCat = document.querySelector('#selCategory');
-  const category = selectCat.options[selectCat.selectedIndex].value;
+  const isbn = document.querySelector('#isbn').value;
 
   const selectCond = document.querySelector('#selCondition');
   const condition = selectCond.options[selectCond.selectedIndex].value;
