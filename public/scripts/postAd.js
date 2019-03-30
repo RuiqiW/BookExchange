@@ -19,6 +19,15 @@ uploads[3].addEventListener('change', e => updateFileName(e, 3));
 const postAdFrom = document.querySelector("#postAdForm");
 
 
+// Price radio buttons
+const priceInput = document.querySelector('#priceInput').value;
+const priceRadio = document.querySelectorAll('.radio');
+// log(priceInput);
+// log(priceRadio);
+
+
+
+
 function handlePostAd(e) {
   e.preventDefault();
 
@@ -26,6 +35,8 @@ function handlePostAd(e) {
   const title = document.querySelector('#adTitle').value;
 
   const isbn = document.querySelector('#isbn').value;
+
+  const edition = document.querySelector('#edition').value;
 
   const selectCond = document.querySelector('#selCondition');
   const condition = selectCond.options[selectCond.selectedIndex].value;
