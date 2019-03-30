@@ -130,10 +130,6 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
     });
 });
 
-app.post('/api/test', (req, res) => {
-    console.log(req.body);
-});
-
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
 });
