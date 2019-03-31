@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/404', (req, res, next) => {
-  res.sendFile(__dirname + '/public/pages/404.html');
+    res.sendFile(__dirname + '/public/pages/404.html');
 });
 
 app.post('/api/createAccount', (req, res) => {
@@ -136,50 +136,58 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
 });
 
 
-app.get('api/user', (req, res) => {
-    User.findOne({username: req.body.username}).then((user) => {
-        if(!user){
-            res.send(user);
-        }else{
+app.get('/api/user/:username', (req, res) => {
+    User.findOne({username: req.params.username}).then((user) => {
+        if (!user) {
             res.status(404).send();
+        } else {
+            res.send(user);
         }
     }).catch((error) => {
         res.status(500).send(error);
     })
-})
+});
 
 
 app.post('/api/createChat', (req, res) => {
-    const user1 = req.body.user1.trim();
-    const user2 = req.body.user2.trim();
+    const user1 = req.body.user1;
+    const user2 = req.body.user2;
     Chat.findOne({$or: [{user1: user1, user2: user2}, {user1: user2, user2: user1}]}).then((chat) => {
         if (chat !== null) {
             res.send(chat);
-        }
-        const newChat = new Chat({
-            user1: req.body.user1,
-            user2: req.body.user2,
-            newMessages: 0,
-            messages: []
-        });
+        } else {
+            const newChat = new Chat({
+                user1: user1,
+                user2: user2,
+                user1Messages: [],
+                user2Messages: [],
+                messages: []
+            });
 
-        newChat.save().then((result) => {
-            res.send(result)
-        });
+            newChat.save().then((result) => {
+                if (!result) {
+                    res.status(404).send();
+                } else {
+                    res.send(result);
+                }
+            }).catch((error) => {
+                res.status(500).send(error)
+            })
+        }
     }).catch((error) => {
-        console.log(error);
         res.status(500).send(error);
     });
 });
 
 
-app.get('/api/chat', (req, res) => {
-    const user1 = req.body.user1.trim();
-    const user2 = req.body.user2.trim();
+app.get('/api/chat/:user1/:user2', (req, res) => {
+    const user1 = req.params.user1;
+    const user2 = req.params.user2;
+
     Chat.findOne({$or: [{user1: user1, user2: user2}, {user1: user2, user2: user1}]}).then((chat) => {
-        if(!chat){
+        if (!chat) {
             res.status(404).send();
-        }else{
+        } else {
             res.send(chat);
         }
     }).catch((error) => {
@@ -188,17 +196,20 @@ app.get('/api/chat', (req, res) => {
     });
 });
 
-app.get('/api/allChats', (req, res) => {
-    Chat.find().then((chats) => {
-        if(!chat){
+app.get('/api/allChats/:user', (req, res) => {
+    const username = req.params.user;
+    Chat.find({$or: [{user1: username}, {user2: username}]}).then((chats) => {
+        if (!chat) {
             res.status(404).send();
-        }else{
+        } else {
             res.send(chats);
         }
+    }).catch((error) => {
+        res.status(500).send(error);
     })
 });
 
-app.post('/api/chat/:chatId',(req, res) => {
+app.post('/api/chat/:chatId', (req, res) => {
     const chatId = req.params.chatId;
 
     if (!ObjectID.isValid(chatId)) {
@@ -206,12 +217,16 @@ app.post('/api/chat/:chatId',(req, res) => {
     }
 
     Chat.findById(chatId).then((chat) => {
-        if(!chat){
+        if (!chat) {
             res.status(404).send();
-        }else{
+        } else {
             chat.messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
-            chat.newMessages++;
-            chat.save().then((result)=>{
+            if (req.body.sender === chat.user1) {
+                chat.user1Messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
+            } else {
+                chat.user2Messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
+            }
+            chat.save().then((result) => {
                 res.send(result)
             })
         }
@@ -221,19 +236,24 @@ app.post('/api/chat/:chatId',(req, res) => {
 });
 
 
-app.update('/api/chat/:chatId', (req, res) => {
+app.patch('/api/chat/:chatId/:username', (req, res) => {
     const chatId = req.params.chatId;
+    const user = req.params.username;
 
     if (!ObjectID.isValid(chatId)) {
         res.status(404).send();
     }
 
     Chat.findById(chatId).then((chat) => {
-        if(!chat){
+        if (!chat) {
             res.status(404).send();
-        }else{
-            chat.newMessages = 0;
-            chat.save().then((result)=>{
+        } else {
+            if (user === chat.user1) {
+                chat.user2Messages = [];
+            } else if (user === chat.user2) {
+                chat.user1Messages = [];
+            }
+            chat.save().then((result) => {
                 res.send(result)
             })
         }
@@ -241,7 +261,6 @@ app.update('/api/chat/:chatId', (req, res) => {
         res.status(500).send(error);
     })
 });
-
 
 
 app.listen(port, () => {

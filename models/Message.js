@@ -31,10 +31,8 @@ const ChatSchema = new mongoose.Schema({
         trim: true,
         minlength: 1
     },
-    newMessages: {
-        type: Number,
-        required: true
-    },
+    user1Messages: [MessageSchema],
+    user2Messages: [MessageSchema],
     messages: [MessageSchema]
 });
 

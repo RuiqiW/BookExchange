@@ -1,6 +1,5 @@
 // load list of messages received, need server call in Phase2
 const thisUser = "admin"; //TODO: get current user from cookie
-let currentChatId = 0;
 
 let postEdited = 0;
 let shownUserNum = 2;
@@ -32,7 +31,7 @@ function loadTransactionNum() {
 }
 
 function loadMessageNum() {
-    const request = new Request("/api/allChats", {
+    const request = new Request(`/api/allChats/${thisUser}`, {
         method: 'get',
         headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -42,12 +41,15 @@ function loadMessageNum() {
     fetch(request).then((res) => {
         if (res.status === 200) {
             const chatHistories = JSON.parse(res.body);
-            const newChatNum = chatHistories.reduce((total, chat) => {
-                total += chat.newMessages
-            }, 0);
-
-            document.querySelector('#msgData').innerText = newChatNum;
-
+            if(thisUser === chatHistories.user1){
+                document.querySelector('#msgData').innerText = chatHistories.reduce((total, chat) => {
+                    total += chat.user2Messages.length;
+                }, 0);
+            }else{
+                document.querySelector('#msgData').innerText = chatHistories.reduce((total, chat) => {
+                    total += chat.user2Messages.length;
+                }, 0);
+            }
         } else {
             document.querySelector('#msgData').innerText = 0;
         }
@@ -530,255 +532,4 @@ function createTransactionEntry(transaction) {
     const tableBody = document.querySelector("#transactionTable").lastElementChild;
     tableBody.appendChild(row);
 
-}
-
-
-/*********************** Chat Box ************************/
-
-const chatShow = document.querySelector("#chatShowButton");
-const chatHide = document.querySelector("#chatHide");
-chatShow.addEventListener('click', showChatRecords);
-chatHide.addEventListener('click', hideChatRoom);
-
-let shownChatRecords = false;
-const chatRecords = document.querySelector("#chatRecords");
-
-// show the dropdown list of existing chat
-
-function showChatRecords(e) {
-    e.preventDefault();
-    if (shownChatRecords === false) {
-        const request = new Request("/api/allChats", {
-            method: 'get',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
-        });
-        fetch(request).then((res) => {
-            if (res.status === 200) {
-                const chatHistories = JSON.parse(res.body);
-                const records = document.querySelectorAll('.profile');
-                for (let i = 0; i < records.length - 1; i++) {
-                    chatRecords.removeChild(chatRecords.lastElementChild);
-                }
-                for (let i = 0; i < chatHistories.length; i++) {
-                    addChatRecord(chatHistories[i]);
-                }
-            }
-        });
-        chatRecords.style.display = 'block';
-        shownChatRecords = true;
-    } else {
-        chatRecords.style.display = 'none';
-        shownChatRecords = false;
-    }
-}
-
-
-function addChatRecord(chatHistory) {
-    const profile = document.createElement('div');
-    profile.className = "profile";
-
-    const profileIconContainer = document.createElement('div');
-    const icon = document.createElement('img');
-    // icon.src =;
-    icon.alt = "ProfilePic";
-    icon.className = "profileIcon";
-    profileIconContainer.appendChild(icon);
-
-    const profileContent = document.createElement('div');
-    profileContent.className = "profileContent";
-    const user = document.createElement('strong');
-    if (chatHistory.user1 === thisUser) {
-        user.innerText = chatHistory.user2;
-    } else {
-        user.innerText = chatHistory.user1;
-    }
-
-    profileContent.appendChild(user);
-
-    profile.appendChild(profileIconContainer);
-    profile.appendChild(profileContent);
-    profile.addEventListener('click', showChatRoom);
-    chatRecords.appendChild(profile);
-}
-
-
-const chatCreateButton = document.querySelector('#chatCreateButton');
-chatCreateButton.addEventListener('click', addNewChat);
-
-function addNewChat(e) {
-    e.preventDefault();
-    const keyword = document.querySelector('#userToChat').value;
-    if (keyword !== '') {
-
-        // find if the user to chat exists
-        const userRequest = new Request("/api/user", {
-            method: 'get',
-            body: JSON.stringify({username: keyword}),
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
-        });
-
-        fetch(userRequest).then((res) => {
-            if (res.status === 200) {
-                const newChat = {
-                    user1: thisUser,
-                    user2: keyword
-                };
-
-                const request = new Request("/api/createChat", {
-                    method: 'post',
-                    body: JSON.stringify(newChat),
-                    headers: {
-                        'Accept': 'application/json, text/plain, */*',
-                        'Content-Type': 'application/json'
-                    }
-                });
-                fetch(request).then((res) => {
-                    if (res.status === 200) {
-
-                        // set up chat box
-                        const chatName = document.querySelector('#chatName');
-                        chatName.innerText = keyword;
-                        const chatRoom = document.querySelector('#chatRoom');
-                        chatRoom.style.display = "block";
-
-                        loadChatHistory(res.body);
-                    }
-                });
-            } else {
-                window.alert("User not found");
-            }
-        }).catch((error) => {
-        })
-    }
-}
-
-
-function showChatRoom(e) {
-    e.preventDefault();
-    const userToChat = e.target.lastElementChild.firstElementChild.innerText;
-
-    if (userToChat !== '') {
-        const newChat = {user1: thisUser, user2: userToChat};
-        const request = new Request("/api/chat", {
-            method: 'get',
-            body: JSON.stringify(newChat),
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
-        });
-        fetch(request).then((res) => {
-            if (res.status === 200) {
-                // set up chat box
-                const chatName = document.querySelector('#chatName');
-                chatName.innerText = userToChat;
-                const chatRoom = document.querySelector('#chatRoom');
-                chatRoom.style.display = "block";
-                loadChatHistory(res.body);
-            }
-        });
-    }
-}
-
-function loadChatHistory(chat) {
-    const chatHistory = JSON.parse(chat);
-    currentChatId = chatHistory._id;
-
-    // remove old chats
-    const chatBox = document.querySelector('#chat');
-    while(chatBox.hasChildNodes()){
-        chatBox.removeChild(chatBox.lastElementChild);
-    }
-
-    // load new chats
-    for (let i = 0; i < chatHistory.messages.length; i++) {
-        if (chatHistory.messages[i].sender === thisUser) {
-            addSendMessage(chatHistory.messages[i].content);
-        } else {
-            addReceivedMessage(chatHistory.messages[i].content);
-        }
-    }
-    const request = new Request(`/api/chat/${currentChatId}`, {
-        method: 'update',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
-    });
-}
-
-
-function hideChatRoom(e) {
-    e.preventDefault();
-    const chatRoom = document.querySelector('#chatRoom');
-    chatRoom.style.display = "none";
-}
-
-
-const chat = document.querySelector('#chat');
-const sendButton = document.querySelector("#sendButton");
-sendButton.addEventListener('click', sendMessage);
-
-function sendMessage(e) {
-    e.preventDefault();
-
-    if (e.target.classList.contains("submit")) {
-        const message = document.querySelector("#messageBox").value;
-        if (message.length > 0 && message.length < 200) {
-            const newMessage = {
-                time: new Date(),
-                sender: thisUser,
-                content: message
-            };
-            const request = new Request(`/api/chat/${currentChatId}`, {
-                method: 'post',
-                body: JSON.stringify(newMessage),
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                }
-            });
-            fetch(request).then((res) => {
-                if (res.status === 200) {
-                    addSendMessage(message);
-                } else {
-                    window.alert("Failed to send message.");
-                }
-            });
-
-        }
-    }
-    chat.scrollTop = chat.scrollHeight;
-}
-
-
-// helper function for sendMessage, add message to chat window
-function addSendMessage(msg) {
-    const newMessage = document.createElement('p');
-    newMessage.className = "chatOutText";
-    newMessage.innerText = msg;
-    const bubble = document.createElement('div');
-    bubble.className = "chatOutBubble";
-    bubble.appendChild(newMessage);
-    const messageContainer = document.createElement('div');
-    messageContainer.appendChild(bubble);
-    chat.appendChild(messageContainer);
-}
-
-function addReceivedMessage(msg) {
-    const newMessage = document.createElement('p');
-    newMessage.className = "chatInText";
-    newMessage.innerText = msg;
-    const bubble = document.createElement('div');
-    bubble.className = "chatInBubble";
-    bubble.appendChild(newMessage);
-    const messageContainer = document.createElement('div');
-    messageContainer.appendChild(bubble);
-    chat.appendChild(messageContainer);
 }
