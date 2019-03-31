@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const MessageSchema = new mongoose.Schema({
     time: {
-        type: date,
+        type: Date,
         required: true
     },
     sender: {
