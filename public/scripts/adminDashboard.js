@@ -689,6 +689,14 @@ function showChatRoom(e) {
 function loadChatHistory(chat) {
     const chatHistory = JSON.parse(chat);
     currentChatId = chatHistory._id;
+
+    // remove old chats
+    const chatBox = document.querySelector('#chat');
+    while(chatBox.hasChildNodes()){
+        chatBox.removeChild(chatBox.lastElementChild);
+    }
+
+    // load new chats
     for (let i = 0; i < chatHistory.messages.length; i++) {
         if (chatHistory.messages[i].sender === thisUser) {
             addSendMessage(chatHistory.messages[i].content);
