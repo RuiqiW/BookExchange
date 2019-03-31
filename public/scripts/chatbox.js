@@ -111,7 +111,7 @@ function addNewChat(e) {
                         chatName.innerText = keyword;
                         const chatRoom = document.querySelector('#chatRoom');
                         chatRoom.style.display = "block";
-                        loadChatHistory(res2.body);
+                        loadChatHistory(JSON.parse(res2.body));
                     }
                 });
             } else {
@@ -262,8 +262,8 @@ while (shownChatRoom === true) {
             if (res.status === 200) {
                 const chatHistory = res.body;
                 if (thisUser === chatHistory.user1) {
-                    for (let i = 0; i < chatHistory.user2Metssages.length; i++) {
-                        addReceivedMessage(chatHistory.user2Metssages[i]);
+                    for (let i = 0; i < chatHistory.user2Messages.length; i++) {
+                        addReceivedMessage(chatHistory.user2Messages[i]);
                     }
                 } else {
                     for (let i = 0; i < chatHistory.user1Messages.length; i++) {
