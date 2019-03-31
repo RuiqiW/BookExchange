@@ -206,6 +206,29 @@ app.post('/api/chat/:chatId',(req, res) => {
             res.status(404).send();
         }else{
             chat.messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
+            chat.newMessages++;
+            chat.save().then((result)=>{
+                res.send(result)
+            })
+        }
+    }).catch((error) => {
+        res.status(500).send(error);
+    })
+});
+
+
+app.update('/api/chat/:chatId', (req, res) => {
+    const chatId = req.params.chatId;
+
+    if (!ObjectID.isValid(chatId)) {
+        res.status(404).send();
+    }
+
+    Chat.findById(chatId).then((chat) => {
+        if(!chat){
+            res.status(404).send();
+        }else{
+            chat.newMessages = 0;
             chat.save().then((result)=>{
                 res.send(result)
             })

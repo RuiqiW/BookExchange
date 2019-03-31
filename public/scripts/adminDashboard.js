@@ -31,9 +31,29 @@ function loadTransactionNum() {
         total + (transaction.status === 0 ? 1 : 0), 0);
 }
 
-// function loadMessageNum() {
-//     document.querySelector('#msgData').innerText = messages.length;
-// }
+function loadMessageNum() {
+    const request = new Request("/api/allChats", {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            const chatHistories = JSON.parse(res.body);
+            const newChatNum = chatHistories.reduce((total, chat) => {
+                total += chat.newMessages
+            }, 0);
+
+            document.querySelector('#msgData').innerText = newChatNum;
+
+        } else {
+            document.querySelector('#msgData').innerText = 0;
+        }
+    });
+
+}
 
 function loadTransaction() {
     for (let i = 0; i < transactions.length; i++) {
@@ -533,7 +553,7 @@ function showChatRecords(e) {
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
-            },
+            }
         });
         fetch(request).then((res) => {
             if (res.status === 200) {
@@ -607,9 +627,7 @@ function addNewChat(e) {
             if (res.status === 200) {
                 const newChat = {
                     user1: thisUser,
-                    user2: keyword,
-                    newMessages: 0,
-                    messages: []
+                    user2: keyword
                 };
 
                 const request = new Request("/api/createChat", {
@@ -653,7 +671,7 @@ function showChatRoom(e) {
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
-            },
+            }
         });
         fetch(request).then((res) => {
             if (res.status === 200) {
@@ -678,6 +696,13 @@ function loadChatHistory(chat) {
             addReceivedMessage(chatHistory.messages[i].content);
         }
     }
+    const request = new Request(`/api/chat/${currentChatId}`, {
+        method: 'update',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
 }
 
 
@@ -709,7 +734,7 @@ function sendMessage(e) {
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'Content-Type': 'application/json'
-                },
+                }
             });
             fetch(request).then((res) => {
                 if (res.status === 200) {

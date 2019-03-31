@@ -48,7 +48,7 @@ function handleCreateAccount(e) {
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
-        },
+        }
     });
     fetch(request).then((res) => {
         if (res.status === 200) {
