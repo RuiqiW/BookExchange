@@ -59,11 +59,12 @@ label em span {
   top: 20px;
 }
 
-.radioLabel {
-    /* margin-right: -550px; */
-    position: absolute;
-    margin-left: -170px;
-    text-align: right;
+section {
+    margin-top: 10px;
+}
+
+.wideInput {
+    width: 350px;
 }
 
 /* label span {
@@ -79,7 +80,7 @@ textarea {
   font: 1em sans-serif;
 
   /* To give the same size to all text fields */
-  width: 350px;
+  /* width: 350px; */
   box-sizing: border-box;
 
   /* To harmonize the look & feel of text field border */

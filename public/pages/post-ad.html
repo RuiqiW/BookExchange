@@ -6,21 +6,22 @@
       href="https://fonts.googleapis.com/css?family=Roboto"
       rel="stylesheet"
     />
-    <link href="../styles/post-ad.css" rel="stylesheet" type="text/css">
+    <link href="../styles/post-ad.css" rel="stylesheet" type="text/css" />
 
     <title>Post-Ad</title>
   </head>
   <body>
     <picture>
-      <source srcset="../images/logo.png" media="(min-width: 400px)">
+      <source srcset="../images/logo.png" media="(min-width: 400px)" />
       <a href="../index.html">
-        <img src="../images/logo.png" alt="UofT Exchange">
+        <img src="../images/logo.png" alt="UofT Exchange" />
       </a>
     </picture>
 
     <h1>Post Ad</h1>
     <!-- action="/my-handling-form-page" to go in form -->
-    <form id="postAdForm"
+    <form
+      id="postAdForm"
       action="/my-handling-form-page"
       method="post"
       enctype="multipart/form-data"
@@ -32,25 +33,44 @@
           <label for="adTitle">
             <span>Ad Title: </span>
           </label>
-          <input type="text" id="adTitle" name="adTitle" />
+          <input
+            class="wideInput"
+            type="text"
+            id="adTitle"
+            name="adTitle"
+            maxlength="50"
+            required
+          />
         </p>
         <p>
           <label for="isbn">
             <span>ISBN: </span>
           </label>
-          <input type="number" id="isbn" name="isbn" />
+          <input
+            class="wideInput"
+            type="number"
+            id="isbn"
+            name="isbn"
+            required
+          />
         </p>
         <p>
           <label for="edition">
             <span>Edition: </span>
           </label>
-          <input type="number" id="edition" name="edition" />
+          <input type="number" id="edition" name="edition" required />
         </p>
         <p>
           <label for="description">
             <span>Description: </span>
           </label>
-          <textarea type="email" id="description" name="description">
+          <textarea
+            class="wideInput"
+            type="email"
+            id="description"
+            name="description"
+            required
+          >
           </textarea>
         </p>
       </section>
@@ -59,7 +79,6 @@
         <h2>Photos</h2>
         <hr />
         <label for="bookPic">Photos:</label>
-
         <input
           type="file"
           id="bookPic"
@@ -84,26 +103,32 @@
           max="100"
           placeholder="10.00"
         />
+      </section>
+
+      <section>
         <div>
-          <input type="radio" id="freeRadio" name="drone" value="Free" />
-          <label class="radioLabel" for="freeRadio">Free</label>
+          <label class="radioLabel" for="freeRadio">
+            <span>Free</span>
+          </label>
+          <input type="radio" id="freeRadio" name="price" value="Free" />
         </div>
 
         <div>
+          <label class="radioLabel" for="contactRadio">
+            <span>Please Contact</span>
+          </label>
           <input
             type="radio"
             id="contactRadio"
-            name="drone"
+            name="price"
             value="Please Contact"
           />
-          <label class="radioLabel" for="contactRadio">Please Contact</label>
         </div>
       </section>
       <section>
         <p><button type="submit">Post Ad</button></p>
       </section>
     </form>
-
 
     <script src="../scripts/postAd.js" type="text/javascript"></script>
   </body>

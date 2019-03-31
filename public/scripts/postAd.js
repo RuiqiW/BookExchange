@@ -6,11 +6,43 @@ const log = console.log;
 
 const postAdForm = document.querySelector('#postAdForm');
 postAdForm.addEventListener('submit', handlePostAd);
+// log(postAdForm);
+
+const price = document.querySelector('#price');
+price.addEventListener('input', handlePrice);
+
+
+function handlePrice(event) {
+  // log(event.target.value);
+  // log(event);
+
+  if (event.target.value !== '') {
+    document.getElementById("freeRadio").checked = false;
+    document.getElementById("freeRadio").disabled = true;
+    document.getElementById("contactRadio").checked = false;
+    document.getElementById("contactRadio").disabled = true;
+
+  } else {
+    document.getElementById("freeRadio").disabled = false;
+    document.getElementById("contactRadio").disabled = false;
+  }
+}
+
 
 
 function handlePostAd(event) {
   event.preventDefault();
-  log('hi');
+
+  // Ad details
+  const title = document.querySelector('#adTitle').value;
+  const isbn = document.querySelector('#isbn').value;
+  const edition = document.querySelector('#edition').value;
+  const description = document.querySelector('#description').value;
+
+  // Photos
+  const photos = document.querySelector('#bookPic');
+
+  // Price
 
 }
 
@@ -23,7 +55,32 @@ function handlePostAd(event) {
 
 
 
+// const form = document.querySelector('#paymentForm');
+// form.addEventListener('submit', handlePayment);
 
+
+
+// function handlePayment(e) {
+//   e.preventDefault();
+
+//   // Contact info
+//   const firstName = form[0].value;
+//   const lastName = form[1].value;
+//   const email = form[2].value;
+
+//   // Payment info
+//   const cardType = form[3].value;
+//   const cardNumber = form[4].value;
+//   const cardCVV = form[5].value;
+//   const cardExpDate = form[6].value;
+
+//   // Check that entered values are correctly formatted
+//       // This will be completed in phase 2 when we can properly pass these values somewhere
+
+
+//   // Redirect user to profile back
+//   document.location = "../pages/placeOrder.html";
+// }
 
 
 
