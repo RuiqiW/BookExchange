@@ -326,7 +326,7 @@ app.post('/api/chat/:chatId', (req, res) => {
 });
 
 
-app.patch('/api/chat/:chatId/:username', (req, res) => {
+app.post('/api/chat/:chatId/:username', (req, res) => {
     const chatId = req.params.chatId;
     const user = req.params.username;
 
