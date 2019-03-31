@@ -12,11 +12,12 @@ const upload = multer({dest: "public/uploads/"});
 const Post = require("./models/Post").Post;
 const User = require("./models/User").User;
 const Transaction = require("./models/Transaction").Transaction;
+const Chat = require("./models/Message").Chat;
 
 const app = express();
 const ObjectID = require("mongodb").ObjectID;
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 
 // Static directories
 app.use("/", express.static(__dirname + '/public'));
@@ -38,7 +39,11 @@ app.use(session({
 }));
 
 app.get('/', (req, res) => {
-   res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/index.html');
+});
+
+app.get('/404', (req, res, next) => {
+    res.sendFile(__dirname + '/public/pages/404.html');
 });
 
 app.get('/login', (req, res) => {
@@ -116,6 +121,7 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
         res.status(401).send();
     }
     // if user is logged in
+    //TODO: fix this when Eric finish modifying frontend
     const files = req.files;
     const newPost = new Post({
         title: req.body.title,
@@ -218,7 +224,133 @@ app.delete("/api/removeFromCart/:postId", (req, res) => {
     }
 });
 
+app.get('/api/user/:username', (req, res) => {
+    User.findOne({username: req.params.username}).then((user) => {
+        if (!user) {
+            res.status(404).send();
+        } else {
+            res.send(user);
+        }
+    }).catch((error) => {
+        res.status(500).send(error);
+    })
+});
 
+
+app.post('/api/createChat', (req, res) => {
+    const user1 = req.body.user1;
+    const user2 = req.body.user2;
+    Chat.findOne({$or: [{user1: user1, user2: user2}, {user1: user2, user2: user1}]}).then((chat) => {
+        if (chat !== null) {
+            res.send(chat);
+        } else {
+            const newChat = new Chat({
+                user1: user1,
+                user2: user2,
+                user1Messages: [],
+                user2Messages: [],
+                messages: []
+            });
+
+            newChat.save().then((result) => {
+                if (!result) {
+                    res.status(404).send();
+                } else {
+                    res.send(result);
+                }
+            }).catch((error) => {
+                res.status(500).send(error)
+            })
+        }
+    }).catch((error) => {
+        res.status(500).send(error);
+    });
+});
+
+
+app.get('/api/chat/:user1/:user2', (req, res) => {
+    const user1 = req.params.user1;
+    const user2 = req.params.user2;
+
+    Chat.findOne({$or: [{user1: user1, user2: user2}, {user1: user2, user2: user1}]}).then((chat) => {
+        if (!chat) {
+            res.status(404).send();
+        } else {
+            res.send(chat);
+        }
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send(error);
+    });
+});
+
+app.get('/api/allChats/:username', (req, res) => {
+    const username = req.params.username;
+    Chat.find({$or: [{user1: username}, {user2: username}]}).then((chats) => {
+        if (!chats) {
+            res.status(404).send();
+        } else {
+            res.send(chats);
+        }
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send(error);
+    })
+});
+
+
+app.post('/api/chat/:chatId', (req, res) => {
+    const chatId = req.params.chatId;
+
+    if (!ObjectID.isValid(chatId)) {
+        res.status(404).send();
+    }
+
+    Chat.findById(chatId).then((chat) => {
+        if (!chat) {
+            res.status(404).send();
+        } else {
+            chat.messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
+            if (req.body.sender === chat.user1) {
+                chat.user1Messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
+            } else {
+                chat.user2Messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
+            }
+            chat.save().then((result) => {
+                res.send(result)
+            })
+        }
+    }).catch((error) => {
+        res.status(500).send(error);
+    })
+});
+
+
+app.patch('/api/chat/:chatId/:username', (req, res) => {
+    const chatId = req.params.chatId;
+    const user = req.params.username;
+
+    if (!ObjectID.isValid(chatId)) {
+        res.status(404).send();
+    }
+
+    Chat.findById(chatId).then((chat) => {
+        if (!chat) {
+            res.status(404).send();
+        } else {
+            if (user === chat.user1) {
+                chat.user2Messages = [];
+            } else if (user === chat.user2) {
+                chat.user1Messages = [];
+            }
+            chat.save().then((result) => {
+                res.send(result)
+            })
+        }
+    }).catch((error) => {
+        res.status(500).send(error);
+    })
+});
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);

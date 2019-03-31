@@ -77,18 +77,24 @@
             <!--Chat Button-->
             <li>
                 <div id="chatShow" class="topBarImageContainer dropdown">
-                    <img class="topBarImage" src="../images/admin/chat.png" alt="chatPlaceholder">
+                    <img class="topBarImage" id="chatShowButton" src="../images/admin/chat.png" alt="chatPlaceholder">
 
                     <!--Dropdown List of Messages-->
-                    <div class="dropdownContent">
+                    <div class="dropdownContent" id="chatRecords">
                         <div class="profile">
-                            <div class="profileIconContainer">
-                                <img src="../images/profilePic.jpg" alt="ProfilePic" class="profileIcon">
-                            </div>
-                            <div class="profileContent">
-                                <strong>user</strong><br><span class="grey">Hello</span>
-                            </div>
+                            <form>
+                                <input id="userToChat" type="text" placeholder="New chat...">
+                                <button id="chatCreateButton"><i class="fa fa-plus"></i></button>
+                            </form>
                         </div>
+                        <!--<div class="profile">-->
+                            <!--<div class="profileIconContainer">-->
+                                <!--<img src="../images/profilePic.jpg" alt="ProfilePic" class="profileIcon">-->
+                            <!--</div>-->
+                            <!--<div class="profileContent">-->
+                                <!--<strong>user</strong><br><span class="grey">Hello</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </li>
@@ -241,5 +247,6 @@
 
 <script type="text/javascript" src="../scripts/classes.js"></script>
 <script type="text/javascript" src="../scripts/adminDashboard.js"></script>
+<script type="text/javascript" src="../scripts/chatbox.js"></script>
 </body>
 </html>

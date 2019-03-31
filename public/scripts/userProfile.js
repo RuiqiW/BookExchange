@@ -1,56 +1,58 @@
-/*********************** Navigation Button ************************/
+const thisUser = "will";
 
-const chatShow = document.querySelector("#chatShow");
-const chatHide = document.querySelector("#chatHide");
-chatHide.addEventListener('click', hideChatRoom);
-chatShow.addEventListener('click', showChatRoom);
-
-// show the chatroom
-function showChatRoom(e) {
-    e.preventDefault();
-    const chatRoom = document.querySelector('#chatRoom');
-    chatRoom.style.display = "block";
-}
-
-// hide the chatroom
-function hideChatRoom(e) {
-    e.preventDefault();
-    const chatRoom = document.querySelector('#chatRoom');
-    chatRoom.style.display = "none";
-}
-
-/*********************** Chat Box ************************/
-
-const chat = document.querySelector('#chat');
-const sendButton = document.querySelector("#sendButton");
-sendButton.addEventListener('click', sendMessage);
-
-// sends messages
-function sendMessage(e) {
-    e.preventDefault();
-
-    if (e.target.classList.contains("submit")) {
-        const message = document.querySelector("#messageBox").value;
-        if (message.length > 0 && message.length < 200) {
-            addMessage(message);
-        }
-    }
-    chat.scrollTop = chat.scrollHeight;
-}
-
-
-// helper function for sendMessage, add message to chat window
-function addMessage(msg) {
-    const newMessage = document.createElement('p');
-    newMessage.className = "chatOutText";
-    newMessage.innerText = msg;
-    const bubble = document.createElement('div');
-    bubble.className = "chatOutBubble";
-    bubble.appendChild(newMessage);
-    const messageContainer = document.createElement('div');
-    messageContainer.appendChild(bubble);
-    chat.appendChild(messageContainer);
-}
+// /*********************** Navigation Button ************************/
+//
+// const chatShow = document.querySelector("#chatShow");
+// const chatHide = document.querySelector("#chatHide");
+// chatHide.addEventListener('click', hideChatRoom);
+// chatShow.addEventListener('click', showChatRoom);
+//
+// // show the chatroom
+// function showChatRoom(e) {
+//     e.preventDefault();
+//     const chatRoom = document.querySelector('#chatRoom');
+//     chatRoom.style.display = "block";
+// }
+//
+// // hide the chatroom
+// function hideChatRoom(e) {
+//     e.preventDefault();
+//     const chatRoom = document.querySelector('#chatRoom');
+//     chatRoom.style.display = "none";
+// }
+//
+// /*********************** Chat Box ************************/
+//
+// const chat = document.querySelector('#chat');
+// const sendButton = document.querySelector("#sendButton");
+// sendButton.addEventListener('click', sendMessage);
+//
+// // sends messages
+// function sendMessage(e) {
+//     e.preventDefault();
+//
+//     if (e.target.classList.contains("submit")) {
+//         const message = document.querySelector("#messageBox").value;
+//         if (message.length > 0 && message.length < 200) {
+//             addMessage(message);
+//         }
+//     }
+//     chat.scrollTop = chat.scrollHeight;
+// }
+//
+//
+// // helper function for sendMessage, add message to chat window
+// function addMessage(msg) {
+//     const newMessage = document.createElement('p');
+//     newMessage.className = "chatOutText";
+//     newMessage.innerText = msg;
+//     const bubble = document.createElement('div');
+//     bubble.className = "chatOutBubble";
+//     bubble.appendChild(newMessage);
+//     const messageContainer = document.createElement('div');
+//     messageContainer.appendChild(bubble);
+//     chat.appendChild(messageContainer);
+// }
 
 /*********************** Edit Profile Info By Clicking the Edit Buttons ************************/
 
