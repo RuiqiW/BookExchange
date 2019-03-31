@@ -39,7 +39,7 @@ function loadMessageNum() {
         }
     });
 
-    // TODO
+
     fetch(request).then((res) => {
         if (res.status === 200) {
             return res.json()
@@ -49,9 +49,9 @@ function loadMessageNum() {
     }).then((json) => {
         document.querySelector('#msgData').innerText = json.reduce((total, chat) => {
             if (thisUser === chat.user1) {
-                total += chat.user2Messages.length;
+                return total += chat.user2Messages.length;
             } else {
-                total += chat.user1Messages.length;
+                return total += chat.user1Messages.length;
             }
         }, 0);
     }).catch((error) => {

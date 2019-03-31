@@ -191,6 +191,7 @@ function loadChatHistory(chatHistory) {
     }
 
     shownChatRoom = true;
+    chat.scrollTop = chat.scrollHeight;
 }
 
 

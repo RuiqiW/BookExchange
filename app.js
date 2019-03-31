@@ -196,8 +196,8 @@ app.get('/api/chat/:user1/:user2', (req, res) => {
     });
 });
 
-app.get('/api/allChats/:user', (req, res) => {
-    const username = req.params.user;
+app.get('/api/allChats/:username', (req, res) => {
+    const username = req.params.username;
     Chat.find({$or: [{user1: username}, {user2: username}]}).then((chats) => {
         if (!chats) {
             res.status(404).send();
