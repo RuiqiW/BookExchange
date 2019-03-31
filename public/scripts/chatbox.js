@@ -23,16 +23,18 @@ function showChatRecords(e) {
         });
         fetch(request).then((res) => {
             if (res.status === 200) {
-                const chatHistories = JSON.parse(res.body);
-                const records = document.querySelectorAll('.profile');
-                for (let i = 0; i < records.length - 1; i++) {
-                    chatRecords.removeChild(chatRecords.lastElementChild);
-                }
-                for (let i = 0; i < chatHistories.length; i++) {
-                    addChatRecord(chatHistories[i]);
-                }
+               return res.json();
+            }
+        }).then((chatHistories) => {
+            const records = document.querySelectorAll('.profile');
+            for (let i = 0; i < records.length - 1; i++) {
+                chatRecords.removeChild(chatRecords.lastElementChild);
+            }
+            for (let i = 0; i < chatHistories.length; i++) {
+                addChatRecord(chatHistories[i]);
             }
         });
+
         chatRecords.style.display = 'block';
         shownChatRecords = true;
     } else {
@@ -111,12 +113,15 @@ function addNewChat(e) {
                         chatName.innerText = keyword;
                         const chatRoom = document.querySelector('#chatRoom');
                         chatRoom.style.display = "block";
-                        loadChatHistory(JSON.parse(res2.body));
+                        return res2.json();
                     }
                 });
             } else {
                 window.alert("User not found");
             }
+        }).then((json) => {
+            console.log(json);
+            loadChatHistory(json);
         }).catch((error) => {
         })
     }
@@ -125,7 +130,14 @@ function addNewChat(e) {
 
 function showChatRoom(e) {
     e.preventDefault();
-    const userToChat = e.target.lastElementChild.firstElementChild.innerText;
+    let userToChat;
+    if(e.target.innerText !== null){
+        userToChat = e.target.innerText;
+    }else if(e.target.className.contains('profileContent')){
+        userToChat = e.target.firstElementChild.innerText;
+    }else{
+        return;
+    }
 
     if (userToChat !== '') {
         const request = new Request(`/api/chat/${thisUser}/${userToChat}`, {
@@ -142,9 +154,12 @@ function showChatRoom(e) {
                 chatName.innerText = userToChat;
                 const chatRoom = document.querySelector('#chatRoom');
                 chatRoom.style.display = "block";
-                loadChatHistory(res.body);
+                return res.json();
             }
-        });
+        }).then((json) => {
+            loadChatHistory(json);
+        }).catch((error) => {
+        })
     }
 }
 

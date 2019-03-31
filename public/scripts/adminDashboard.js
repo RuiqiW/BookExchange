@@ -38,23 +38,25 @@ function loadMessageNum() {
             'Content-Type': 'application/json'
         }
     });
+
+    // TODO
     fetch(request).then((res) => {
         if (res.status === 200) {
-            const chatHistories = JSON.parse(res.body);
-            if(thisUser === chatHistories.user1){
-                document.querySelector('#msgData').innerText = chatHistories.reduce((total, chat) => {
-                    total += chat.user2Messages.length;
-                }, 0);
-            }else{
-                document.querySelector('#msgData').innerText = chatHistories.reduce((total, chat) => {
-                    total += chat.user2Messages.length;
-                }, 0);
-            }
+            return res.json()
         } else {
             document.querySelector('#msgData').innerText = 0;
         }
-    });
-
+    }).then((json) => {
+        document.querySelector('#msgData').innerText = json.reduce((total, chat) => {
+            if (thisUser === chat.user1) {
+                total += chat.user2Messages.length;
+            } else {
+                total += chat.user1Messages.length;
+            }
+        }, 0);
+    }).catch((error) => {
+        console.log(error);
+    })
 }
 
 function loadTransaction() {

@@ -14,7 +14,7 @@ const Post = require("./models/Post").Post;
 const User = require("./models/User").User;
 const UserProfile = require("./models/UserProfile").UserProfile;
 const Transaction = require("./models/Transaction").Transaction;
-const Chat = require('./models/Message').Chat;
+const Chat = require("./models/Message").Chat;
 
 const app = express();
 const ObjectID = require("mongodb").ObjectID;
@@ -104,7 +104,7 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
         // res.redirect()
     }
     // if user is logged in
-    //TODO: fix this when Eric finish modyfying frontend
+    //TODO: fix this when Eric finish modifying frontend
     const files = req.files;
     const newPost = new Post({
         title: req.body.title,
@@ -199,15 +199,17 @@ app.get('/api/chat/:user1/:user2', (req, res) => {
 app.get('/api/allChats/:user', (req, res) => {
     const username = req.params.user;
     Chat.find({$or: [{user1: username}, {user2: username}]}).then((chats) => {
-        if (!chat) {
+        if (!chats) {
             res.status(404).send();
         } else {
             res.send(chats);
         }
     }).catch((error) => {
+        console.log(error);
         res.status(500).send(error);
     })
 });
+
 
 app.post('/api/chat/:chatId', (req, res) => {
     const chatId = req.params.chatId;
