@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const ImageSchema = require("./Image").ImageSchema;
 
 const PostSchema = new mongoose.Schema({
     title: {
@@ -12,7 +11,7 @@ const PostSchema = new mongoose.Schema({
         required: true,
         minlength: 1
     },
-    image: [ImageSchema],
+    image: [String],
     condition: {
         type: String,
         required: true,
@@ -52,6 +51,10 @@ const PostSchema = new mongoose.Schema({
     byCreditCard: {
         type: Boolean,
         required: true
+    },
+    buyer: {
+        type: String,
+        required: false
     }
 });
 

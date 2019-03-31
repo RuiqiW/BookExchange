@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const PostSchema = require("./Post").PostSchema;
+const TransactionSchema = require("./Transaction").TransactionSchema;
+
 
 
 const UserSchema = new mongoose.Schema({
@@ -37,12 +40,30 @@ const UserSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         required: true
-    }
+    },
+    avatar: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    bio: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: String,
+        minlength: 4,
+        required: true
+    },
+    sell: [PostSchema],
+    purchase: [PostSchema],
+    transaction: [TransactionSchema],
+    shortlist: [PostSchema]
 });
 
-UserSchema.statics.findByEmailPassword = function(email, password) {
+UserSchema.statics.findByEmailPassword = function(username, password) {
     const User = this;
-    return User.findOne({email: email}).then((user) => {
+    return User.findOne({username: username}).then((user) => {
         if (!user) {
             return Promise.reject();
         }
@@ -51,6 +72,7 @@ UserSchema.statics.findByEmailPassword = function(email, password) {
                 if (result) {
                     resolve(user);
                 } else {
+                    console.log("sdajkksa");
                     reject();
                 }
             })
@@ -75,4 +97,4 @@ UserSchema.pre("save", function(next) {
 
 const User = mongoose.model("User", UserSchema);
 
-module.exports = { User };
+module.exports = { User, UserSchema };

@@ -9,28 +9,32 @@ signInForm.addEventListener('submit', handleLogin);
 
 
 function handleLogin(e) {
-  e.preventDefault();
-  // Get their entered email and password. (We need .value and not innerText or textContent)
-  const username = document.getElementById('email').value;
-  const password = document.querySelector('#password').value;
+    e.preventDefault();
+    // Get their entered email and password. (We need .value and not innerText or textContent)
+    const username = document.getElementById('email').value;
+    const password = document.querySelector('#password').value;
 
-  // Check if it matches with a User in our database
-  // This is hardcoded for phase 1
-  const user = users.find((user) => user.user.username === username);
-  if (user === null || user === undefined || user.user.password !== password) {
-    alert(`Login failed.`);
-    return;
+    const payload = {
+        username: username,
+        password: password
+    };
 
-  } else {
-    alert(`Welcome back ${user.user.firstName}`);
-  }
+    const request = new Request('/api/login', {
+        method: 'post',
+        body: JSON.stringify(payload),
+        headers: {
+            "Accept": "application/json, text/plain, */*",
+            "content-Type": "application/json"
+        }
+    });
 
-  // Success. Bring the user to their profile page
-  // This will be changed in phase 2
-  if (user.user.isAdmin) {
-    document.location = '../pages/adminDashboard.html';
-  } else {
-    document.location = '../pages/userProfile.html';
-  }
+    fetch(request).then(function(res) {
+        if (res.status === 200) {
+            alert("You have successfully logged in.");
+            window.location = '/index.html';
+        } else if (res.status === 401) {
+            alert("Username or password incorrectly");
+        }
 
+    })
 }

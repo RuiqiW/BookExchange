@@ -63,8 +63,9 @@ searchButton.addEventListener("click", search);
 function search(e){
     e.preventDefault();
     const keyword = document.querySelector("#searchBox").value;
-    //Serer call to retrieve data......
-    //jump to result page....
-    document.location = "pages/items.html";
+    //Store the keyword in localstorage,
+    //The actual server call happen in the items page.
+    localStorage.keyword = keyword;
+    document.location = "/pages/items.html";
 }
 init();

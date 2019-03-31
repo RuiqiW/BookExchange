@@ -7,12 +7,10 @@ const session = require('express-session');
 const fs = require('fs');
 const mongoose = require('./db/mongoose').mongoose;
 const multer = require("multer");
-const upload = multer({dest: "uploads/"});
+const upload = multer({dest: "public/uploads/"});
 
-const ImageSchema = require("./models/Image").ImageSchema;
 const Post = require("./models/Post").Post;
 const User = require("./models/User").User;
-const UserProfile = require("./models/UserProfile").UserProfile;
 const Transaction = require("./models/Transaction").Transaction;
 
 const app = express();
@@ -26,6 +24,8 @@ app.use("/pages", express.static(__dirname + '/public/pages'));
 app.use("/styles", express.static(__dirname + '/public/styles'));
 app.use("/scripts", express.static(__dirname + '/public/scripts'));
 app.use("/images", express.static(__dirname + '/public/images'));
+app.use("/public/uploads", express.static(__dirname + '/public/uploads'));
+app.use("/public/images", express.static(__dirname + '/public/images'));
 
 app.use(session({
     secret: "UofTExchange",
@@ -39,6 +39,33 @@ app.use(session({
 
 app.get('/', (req, res) => {
    res.sendFile(__dirname + '/public/index.html');
+});
+
+app.get('/login', (req, res) => {
+   if (req.session.user) {
+       console.log("has logged in!");
+       res.redirect('profile');
+   } else {
+       res.sendFile(__dirname + '/public/pages/login.html');
+   }
+});
+
+app.get('/api/search/:keyword', (req, res) => {
+    const keyword = req.params.keyword;
+    console.log("dsjakd");
+    //TODO: currently just find anything in the database, need to be fixed once have a dataset
+    Post.find().then((result) => {
+        const payload = {result: result};
+        if (!req.session.user) {
+            payload.user = null;
+            res.send(payload);
+        } else {
+            User.findOne({username: req.session.user}).then((result) => {
+                payload.user = result;
+               res.send(payload);
+            });
+        }
+    });
 });
 
 app.post('/api/createAccount', (req, res) => {
@@ -61,25 +88,16 @@ app.post('/api/createAccount', (req, res) => {
             lastName: req.body.lastName,
             username: req.body.username,
             email: req.body.email,
-            password: req.body.email,
-            isAdmin: false
-        });
-        const defaultProfile = fs.readFileSync("./public/images/user.png");
-        const newUserProfile = new UserProfile({
+            password: req.body.password,
+            isAdmin: false,
             userName: req.body.username,
-            avatar: {
-               data: defaultProfile,
-               contentType: "image/png"
-            },
+            avatar: "/public/images/user.png",
             bio: "Set your Bio",
             phone: "Set your PhoneNumber",
             sell: [],
             purchase: [],
             transaction: [],
             shortlist: []
-        });
-        newUserProfile.save().catch((error) => {
-            console.log(error);
         });
         newUser.save().then((result) => {
             res.send(result)
@@ -94,16 +112,14 @@ app.post('/api/createAccount', (req, res) => {
 });
 
 app.post('/api/postAd', upload.array("image", 4), (req, res) => {
-    //TODO: Finish this after finishing the login route.
     if (!req.session.user) {
-        // res.redirect()
+        res.status(401).send();
     }
     // if user is logged in
-    //TODO: fix this when Eric finish modyfying frontend
     const files = req.files;
     const newPost = new Post({
         title: req.body.title,
-        seller: "haha",
+        seller: req.session.user,
         image: [],
         condition: req.body.condition,
         ISBN: req.body.ISBN,
@@ -115,12 +131,7 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
         byCreditCard: true
     });
     for (let i = 0; i < files.length; i++) {
-        const fileData = fs.readFileSync(files[i].path);
-        console.log(files[i].mimetype);
-        newPost.image.push({
-            data: fileData,
-            contentType: files[i].mimetype
-        });
+        newPost.image.push(files[i].path);
     }
     newPost.save().then((result) => {
         res.status(200).send();
@@ -129,6 +140,85 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
         res.status(500).send();
     });
 });
+
+app.post('/api/login', (req, res) => {
+   const username = req.body.username;
+   const password = req.body.password;
+   User.findByEmailPassword(username, password).then((user) => {
+      req.session.user = user.username;
+      res.send();
+   }).catch((error) => {
+       res.status(401).send();
+   });
+});
+
+app.get('/api/getUser/:username', (req, res) => {
+    User.findOne({username: req.params.username}).then((result) => {
+        if (!result) {
+            res.status(404).send();
+        }
+        res.send({result});
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
+});
+
+app.post("/api/addToCart/:postId", (req, res) => {
+   if (!req.session.user) {
+       res.status(401).send();
+   } else {
+       if (!ObjectID.isValid(req.params.postId)) {
+           res.status(600).send();
+       }
+       User.findOne({username: req.session.user}).then((user) => {
+           if (!user) {
+               res.status(404).send();
+           }
+           Post.findById(req.params.postId).then((post) => {
+               user.shortlist.push(post);
+               user.save().then((user) => {
+                   res.send({user});
+               }).catch((error) => {
+                   console.log(error);
+                   res.status(500).send();
+               });
+           });
+       }).catch((error) => {
+           console.log(error);
+           res.status(500).send();
+       });
+   }
+});
+
+app.delete("/api/removeFromCart/:postId", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+    } else {
+        if (!ObjectID.isValid(req.params.postId)) {
+            res.status(600).send();
+        }
+        User.findOne({username: req.session.user}).then((user) => {
+            if (!user) {
+                res.status(404).send();
+            }
+            user.shortlist = user.shortlist.filter((post) => {
+                return post._id !== req.params.postId;
+            });
+            user.save().then((newUser) => {
+                res.send({newUser});
+            }).catch((error) => {
+                console.log(error);
+                res.status(500).send();
+            })
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        });
+    }
+});
+
+
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);

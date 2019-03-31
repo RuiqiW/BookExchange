@@ -48,12 +48,12 @@ function handleCreateAccount(e) {
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
-        },
+        }
     });
     fetch(request).then((res) => {
         if (res.status === 200) {
             alert(`Account created successfully!\nPlease login.`);
-            window.location = '/pages/login.html';
+            window.location = '/';
         } else if (res.status === 600) {
             alert("The username you choose has been taken.");
         } else if (res.status === 601) {
