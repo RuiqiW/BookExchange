@@ -6,13 +6,58 @@ const log = console.log;
 
 const postAdForm = document.querySelector('#postAdForm');
 postAdForm.addEventListener('submit', handlePostAd);
+// log(postAdForm);
+
+const price = document.querySelector('#price');
+price.addEventListener('input', handlePrice);
+
+
+function handlePrice(event) {
+  // log(event.target.value);
+  // log(event);
+
+  if (event.target.value !== '') {
+    document.getElementById("freeRadio").checked = false;
+    document.getElementById("freeRadio").disabled = true;
+    document.getElementById("contactRadio").checked = false;
+    document.getElementById("contactRadio").disabled = true;
+
+  } else {
+    document.getElementById("freeRadio").disabled = false;
+    document.getElementById("contactRadio").disabled = false;
+  }
+}
+
 
 
 function handlePostAd(event) {
   event.preventDefault();
-  log('hi');
+
+  // Ad details
+  const title = document.querySelector('#adTitle').value;
+  const isbn = document.querySelector('#isbn').value;
+  const edition = document.querySelector('#edition').value;
+  const description = document.querySelector('#description').value;
+
+  // Photos
+  const photos = document.querySelector('#bookPic');
+
+  // Price
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
