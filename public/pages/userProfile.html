@@ -11,32 +11,32 @@
 </head>
 
 <body>
-  <!--Chat Box-->
-  <div id="chatRoom">
-    <div id="chatTitle">
-      <h5 id="chatName">user</h5>
-      <!--close button-->
-      <div id="chatHide">
-        <a href="#">&times;</a>
-      </div>
-    </div>
-
-    <!--messages-->
-    <div id="chat">
-      <!--A sample bubble-->
-      <div class="chatInBubble">
-        <p class="chatInText">Hello</p>
-      </div>
-    </div>
-
-    <!--write new message-->
-    <div id="message">
-      <form>
-        <textarea id="messageBox" placeholder="Message..."></textarea>
-        <button id="sendButton" class="submit"><i class="fa fa-send blue submit sendIcon"></i></button>
-      </form>
+<!--Chat Box-->
+<div id="chatRoom">
+  <div id="chatTitle">
+    <h5 id="chatName">user</h5>
+    <!--close button-->
+    <div id="chatHide">
+      <a href="#">&times;</a>
     </div>
   </div>
+
+  <!--messages-->
+  <div id="chat">
+    <!--A sample bubble-->
+    <!--<div class="chatInBubble">-->
+      <!--<p class="chatInText">Hello</p>-->
+    <!--</div>-->
+  </div>
+
+  <!--write new message-->
+  <div id="message">
+    <form>
+      <textarea id="messageBox" placeholder="Message..."></textarea>
+      <button id="sendButton" class="submit"><i class="fa fa-send blue submit"></i></button>
+    </form>
+  </div>
+</div>
 
 
   <!--Top Bar -->
@@ -47,21 +47,27 @@
     <ul>
       <!--Chat Button-->
       <li>
-        <div id="chatShow" class="topBarImageContainer dropdown">
-          <img class="topBarImage" src="../images/admin/chat.png" alt="chatPlaceholder">
+          <div id="chatShow" class="topBarImageContainer dropdown">
+              <img class="topBarImage" id="chatShowButton" src="../images/admin/chat.png" alt="chatPlaceholder">
 
-          <!--Dropdown List of Messages-->
-          <div class="dropdownContent">
-            <div class="profile">
-              <div class="profileIconContainer">
-                <img src="../images/person.jpg" alt="ProfilePic" class="profileIcon">
+              <!--Dropdown List of Messages-->
+              <div class="dropdownContent" id="chatRecords">
+                  <div class="profile">
+                      <form>
+                          <input id="userToChat" type="text" placeholder="New chat...">
+                          <button id="chatCreateButton"><i class="fa fa-plus"></i></button>
+                      </form>
+                  </div>
+                  <!--<div class="profile">-->
+                  <!--<div class="profileIconContainer">-->
+                  <!--<img src="../images/profilePic.jpg" alt="ProfilePic" class="profileIcon">-->
+                  <!--</div>-->
+                  <!--<div class="profileContent">-->
+                  <!--<strong>user</strong><br><span class="grey">Hello</span>-->
+                  <!--</div>-->
+                  <!--</div>-->
               </div>
-              <div class="profileContent">
-                <strong>user1</strong><br><span class="grey">Hello</span>
-              </div>
-            </div>
           </div>
-        </div>
       </li>
 
       <!--Shopping Cart Button-->
@@ -141,5 +147,6 @@
 
   <script type="text/javascript" src="../scripts/classes.js"></script>
   <script type="text/javascript" src="../scripts/userProfile.js"></script>
+  <script type="text/javascript" src="../scripts/chatbox.js"></script>
 </body>
 </html>

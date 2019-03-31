@@ -67,12 +67,14 @@
 }
 
 .chatInBubble {
-    margin: 5px;
     display: inline-block;
+    margin: 5px;
     min-width: 60px;
     max-width: 150px;
     background-color: skyblue;
     border-radius: 20px;
+    float: left;
+    clear: both;
 }
 
 .chatInText{
@@ -85,7 +87,7 @@
 
 
 .chatOutBubble {
-    display: inline-block;
+    display: block;
     margin: 5px;
     min-width: 60px;
     max-width: 150px;

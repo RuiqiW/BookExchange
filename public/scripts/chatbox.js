@@ -23,7 +23,7 @@ function showChatRecords(e) {
         });
         fetch(request).then((res) => {
             if (res.status === 200) {
-               return res.json();
+                return res.json();
             }
         }).then((chatHistories) => {
             const records = document.querySelectorAll('.profile');
@@ -107,21 +107,20 @@ function addNewChat(e) {
                 });
                 fetch(request).then((res2) => {
                     if (res2.status === 200) {
-
-                        // set up chat box
-                        const chatName = document.querySelector('#chatName');
-                        chatName.innerText = keyword;
-                        const chatRoom = document.querySelector('#chatRoom');
-                        chatRoom.style.display = "block";
                         return res2.json();
                     }
-                });
+                }).then((json) => {
+
+                    loadChatHistory(json);
+                    // set up chat box
+                    const chatName = document.querySelector('#chatName');
+                    chatName.innerText = keyword;
+                    const chatRoom = document.querySelector('#chatRoom');
+                    chatRoom.style.display = "block";
+                })
             } else {
                 window.alert("User not found");
             }
-        }).then((json) => {
-            console.log(json);
-            loadChatHistory(json);
         }).catch((error) => {
         })
     }
@@ -131,11 +130,11 @@ function addNewChat(e) {
 function showChatRoom(e) {
     e.preventDefault();
     let userToChat;
-    if(e.target.innerText !== null){
+    if (e.target.innerText !== null) {
         userToChat = e.target.innerText;
-    }else if(e.target.className.contains('profileContent')){
+    } else if (e.target.className.contains('profileContent')) {
         userToChat = e.target.firstElementChild.innerText;
-    }else{
+    } else {
         return;
     }
 
@@ -149,15 +148,14 @@ function showChatRoom(e) {
         });
         fetch(request).then((res) => {
             if (res.status === 200) {
-                // set up chat box
-                const chatName = document.querySelector('#chatName');
-                chatName.innerText = userToChat;
-                const chatRoom = document.querySelector('#chatRoom');
-                chatRoom.style.display = "block";
                 return res.json();
             }
         }).then((json) => {
             loadChatHistory(json);
+            const chatName = document.querySelector('#chatName');
+            chatName.innerText = userToChat;
+            const chatRoom = document.querySelector('#chatRoom');
+            chatRoom.style.display = "block";
         }).catch((error) => {
         })
     }

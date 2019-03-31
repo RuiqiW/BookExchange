@@ -72,12 +72,14 @@
 }
 
 .chatInBubble {
-    margin: 5px;
     display: inline-block;
+    margin: 5px;
     min-width: 60px;
     max-width: 150px;
     background-color: skyblue;
     border-radius: 20px;
+    float: left;
+    clear: both;
 }
 
 .chatInText{
@@ -88,7 +90,7 @@
 
 
 .chatOutBubble {
-    display: inline-block;
+    display: block;
     margin: 5px;
     min-width: 60px;
     max-width: 150px;
@@ -111,7 +113,7 @@
     display: none;
     position: absolute;
     right: 200px;
-    background-color: #e6ecf0;
+    background-color: white;
     min-width: 170px;
     z-index: 1;
 }
@@ -124,16 +126,16 @@
 
 .dropdownContent a:hover {
     text-decoration: none;
-    background-color: whitesmoke;
+    background-color: floralwhite;
     display: block;
 }
 
 .dropdown:hover{
     cursor: pointer;
 }
-.dropdown:hover .dropdownContent {
-    display: block;
-}
+/*.dropdown:hover .dropdownContent {*/
+    /*display: block;*/
+/*}*/
 
 .profileIconContainer {
     height: 50px;
@@ -160,4 +162,17 @@
 
 .grey {
     color: grey;
+}
+
+#userToChat{
+    display: inline-block;
+    width: 75%;
+    margin: 10px;
+    margin-right: 0;
+}
+
+#chatCreateButton{
+    border: none;
+    background-color: white;
+    color: #44aaee;
 }
