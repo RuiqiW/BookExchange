@@ -70,6 +70,7 @@ function init() {
                 input.setAttribute("type", "checkbox");
                 input.setAttribute("checked", "checked");
                 input.setAttribute("class", "check");
+                input.addEventListener("click", updateOrderSummary);
                 label.appendChild(input);
                 const spanInLabel = document.createElement("span");
                 spanInLabel.setAttribute("class", "checkmark");
@@ -157,7 +158,6 @@ function init() {
                 posts.appendChild(label);
                 posts.appendChild(postDiv);
 
-                checkboxSelect[i].addEventListener("click", updateOrderSummary);
             }
         }
     });
@@ -238,7 +238,7 @@ function updateOrderSummary(e) {
     const count = spanCount.getElementsByTagName("b")[0];
     count.innerText = 0;
     const summary = document.getElementById("summary");
-    orderSummary.removeClass("book");
+    orderSummary.remove(book);
     const cost = summary.getElementsByTagName("b")[0];
     cost.innerText = "$0.00";
 
@@ -260,7 +260,8 @@ function updateOrderSummary(e) {
                     bElement.appendChild(document.createTextNode(`$${basket[i].price}`));
                     spanElement.appendChild(bElement);
                     book.appendChild(spanElement);
-                    orderSummary.insertBefore(book, document.getElementsByTagName("hr")[0]);
+                    const hrElement = document.getElementsByTagName("hr")[0];
+                    hrElement.before(book);
                     const newCost = parseInt(cost.innerText.slice(1)) + basket[i].price;
                     cost.innerText = `$${newCost}`;
                     count.innerText = parseInt(count.innerText) + 1;
