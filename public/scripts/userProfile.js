@@ -61,13 +61,34 @@ const profilePic = document.querySelector('#profilePic');
 const userInfo = document.querySelector('#profileInfo');
 const picSubmit = document.querySelector("#pic-submit");
 const picSelect = document.querySelector("#pic-select");
+const paymentSelection = document.querySelector("#paymentSelection");
+
+paymentSelection.addEventListener("change", (e) => {
+    console.log(e.target.value);
+    if (parseInt(e.target.value) === 1) {
+        const request = new Request("/api/updatePayment/" + "credit", {
+            method: "post"
+        });
+        fetch(request).catch((error) => {
+            console.log(error);
+        })
+    } else {
+        const request = new Request("/api/updatePayment/" + "myself", {
+            method: "post"
+        });
+        fetch(request).catch((error) => {
+            console.log(error);
+        })
+    }
+});
+
 picSelect.addEventListener("change", (e) => {
     console.log("dsjah");
     picSubmit.disabled = false;
 });
 userInfo.addEventListener('click', editProfile);
 
-// Modify the info
+// Modify the info, textArea is for bio, the other is for phone number
 function editProfile(e) {
     e.preventDefault();
     if (!e.target.classList.contains("textArea")) {
@@ -122,9 +143,15 @@ function addInfoTextArea(infoElement) {
     infoElement.parentElement.removeChild(infoElement);
 }
 
-// Remove the text boxes
+// Remove the text boxes, this is for phone number
 function removeInfoTextBox(infoElement) {
     const newElement = document.createElement('span');
+    const request = new Request("/api/updatePhoneNumber/"+infoElement.value.trim(), {
+        method: "post"
+    });
+    fetch(request).catch((error) => {
+        console.log(error);
+    });
     newElement.innerText = infoElement.value;
     infoElement.parentElement.firstElementChild.before(newElement);
     infoElement.parentElement.removeChild(infoElement);
@@ -133,6 +160,12 @@ function removeInfoTextBox(infoElement) {
 // Remove the text boxes
 function removeInfoTextArea(infoElement) {
     const newElement = document.createElement('span');
+    const request = new Request("/api/updateBio/"+infoElement.value.trim(), {
+        method: "post"
+    });
+    fetch(request).catch((error) => {
+        console.log(error);
+    });
     newElement.innerText = infoElement.value;
     infoElement.parentElement.firstElementChild.before(newElement);
     infoElement.parentElement.removeChild(infoElement);

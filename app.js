@@ -172,7 +172,7 @@ app.get('/api/getUser/:username', (req, res) => {
 
 app.post("/api/addToCart/:postId", (req, res) => {
     if (!req.session.user) {
-        res.status(401).send();
+        res.redirect("/login");
     } else {
         if (!ObjectID.isValid(req.params.postId)) {
             res.status(600).send();
@@ -199,7 +199,7 @@ app.post("/api/addToCart/:postId", (req, res) => {
 
 app.delete("/api/removeFromCart/:postId", (req, res) => {
     if (!req.session.user) {
-        res.status(401).send();
+        res.redirect("/login");
     } else {
         if (!ObjectID.isValid(req.params.postId)) {
             res.status(600).send();
@@ -384,7 +384,7 @@ app.post('/api/chat/:chatId/:username', (req, res) => {
 
 app.post('/api/changeProfilePicture', upload.single("image"), (req, res) => {
     if (!req.session.user) {
-        res.status(401).send();
+        res.redirect("/login");
     }
     User.findOne({username: req.session.user}).then((user) => {
         user.avatar = "/" + req.file.path;
@@ -396,11 +396,12 @@ app.post('/api/changeProfilePicture', upload.single("image"), (req, res) => {
 
 app.get("/api/getCurrentUser", (req, res) => {
     if (!req.session.user) {
-        res.status(401).send();
+        res.redirect("/login");
+    } else {
+        User.findOne({username: req.session.user}).then((user) => {
+            res.send({user: user});
+        })
     }
-    User.findOne({username: req.session.user}).then((user) => {
-        res.send({user: user});
-    })
 });
 
 
@@ -419,6 +420,61 @@ app.get("/api/findSeller/:postId", (req, res) => {
     }).catch((error) => {
         res.status(500).send(error);
     })
+});
+
+app.post("/api/updatePhoneNumber/:newNumber", (req, res) => {
+    const newNumber = req.params.newNumber;
+    console.log(newNumber);
+    if (!req.session.user) {
+        res.redirect("/login");
+    }
+    if (isNaN(parseInt(newNumber)) || newNumber.trim().length !== 10) {
+        res.status(600).send();
+    }
+    User.findOne({username: req.session.user}).then((user) => {
+        user.phone = newNumber;
+        user.save().then((newUser) => {
+            res.redirect("/pages/userProfile.html");
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        })
+    });
+});
+
+app.post("/api/updateBio/:newBio", (req, res) => {
+    const newBio = req.params.newBio;
+    if (!req.session.user) {
+        res.redirect("/login");
+    }
+    User.findOne({username: req.session.user}).then((user) => {
+        user.bio = newBio;
+        user.save().then((newUser) => {
+            res.redirect("/pages/userProfile.html");
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        })
+    });
+});
+
+app.post("/api/updatePayment/:newPayment", (req, res) => {
+    if (!req.session.user) {
+        res.redirect("/login");
+    }
+    const newPayment = req.params.newPayment;
+    console.log(newPayment);
+    let byCreditCard = false;
+    if (newPayment === 'credit') {
+        byCreditCard = true;
+    } else {
+        byCreditCard = false;
+    }
+    User.findOne({username: req.session.user}).then((user) => {
+       user.byCreditCard = byCreditCard;
+       user.save().then((res.redirect("/pages/userProfile.html")));
+    });
+
 });
 
 app.listen(port, () => {
