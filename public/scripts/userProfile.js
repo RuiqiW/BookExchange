@@ -259,7 +259,8 @@ function loadUserProfile(currUser){
     spanElement2.before(email);
     spanEmail.removeChild(spanElement2);
 
-    const select = document.getElementsByClassName("select")[0];
+    const custom = document.getElementsByClassName("custom-select")[0];
+    const select = custom.getElementsByTagName("select")[0];
     const option = select.getElementsByTagName("option")[0];
     if (user.byCreditCard) {
         option.innerText = "Handle Transaction by Credit Card";
