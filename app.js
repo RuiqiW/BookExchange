@@ -241,7 +241,7 @@ app.get('/api/user/:username', (req, res) => {
 // create new chat between two users
 app.post('/api/createChat', (req, res) => {
     const user1 = req.body.user1;
-    const user2 = req.body.user2;
+    const user2 = req.session.user;
     Chat.findOne({$or: [{user1: user1, user2: user2}, {user1: user2, user2: user1}]}).then((chat) => {
         if (chat !== null) {
             res.send(chat);
@@ -271,9 +271,9 @@ app.post('/api/createChat', (req, res) => {
 
 
 // find the chat between two users
-app.get('/api/chat/:user1/:user2', (req, res) => {
+app.get('/api/chat/:user1', (req, res) => {
     const user1 = req.params.user1;
-    const user2 = req.params.user2;
+    const user2 = req.session.user;
 
     Chat.findOne({$or: [{user1: user1, user2: user2}, {user1: user2, user2: user1}]}).then((chat) => {
         if (!chat) {
@@ -289,8 +289,8 @@ app.get('/api/chat/:user1/:user2', (req, res) => {
 
 
 // find all chat histories belonging to a user
-app.get('/api/allChats/:username', (req, res) => {
-    const username = req.params.username;
+app.get('/api/allChats', (req, res) => {
+    const username = req.session.user;
     Chat.find({$or: [{user1: username}, {user2: username}]}).then((chats) => {
         if (!chats) {
             res.status(404).send();
