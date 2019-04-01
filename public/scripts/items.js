@@ -227,6 +227,7 @@ function generatePost(post, user) {
 
             const contactSeller = document.createElement("button");
             contactSeller.className = "contactSeller";
+            contactSeller.addEventListener("click", contactTheSeller);
             contactSeller.appendChild(document.createTextNode("Contact Seller"));
 
             if (user.isAdmin) {
@@ -270,7 +271,6 @@ function addToCart(e) {
     fetch(request).then((newUser) => {
         return newUser.json()
     }).then((newUser) => {
-        console.log(newUser);
         updateShoppingCart(newUser.user.shortlist.length);
         //Change the button to remove the item from shopping cart.
         e.target.className = "removeFromCart";
@@ -292,7 +292,6 @@ function removeFromCart(e) {
     fetch(request).then((newUser) => {
         return newUser.json()
     }).then((newUser) => {
-        console.log(newUser);
         updateShoppingCart(newUser.newUser.shortlist.length);
         //Change the button to remove the item from shopping cart.
         e.target.className = "addToCart";
@@ -327,7 +326,6 @@ function buyItem(e) {
     const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
     //Should make a server call to fetch the post, here just use the hardcoded posts array
     const post = posts.filter(x => x.postId === postId)[0];
-    console.log(post);
     if (!post.byCreditCard) {
         alert("The seller want you to pay him/her directly, please contact the seller!");
     } else {
