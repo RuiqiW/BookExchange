@@ -1,6 +1,6 @@
 let user;
 let basket;
-
+const checkboxSelect = document.querySelectorAll(".check");
 init();
 
 const removeButtons = document.querySelectorAll(".removeFromCart");
@@ -156,6 +156,8 @@ function init() {
                 const posts = document.querySelector("#posts");
                 posts.appendChild(label);
                 posts.appendChild(postDiv);
+
+                checkboxSelect[i].addEventListener("click", updateOrderSummary);
             }
         }
     });
@@ -223,17 +225,12 @@ function contactTheSeller(e) {
 }
 
 /*********************** Select Books for Checkout ************************/
-const checkboxSelect = document.querySelectorAll(".check");
 
-if (user) {
-    basket = user.shortlist;
-    for (let i = 0; i < basket.length; i++) {
-        checkboxSelect[i].addEventListener("change", updateOrderSummary, false);
-    }
-}
 
 function updateOrderSummary(e) {
     e.preventDefault();
+
+    console.log("called");
 
     const orderSummary = document.getElementById("checkout");
     const h4 = document.getElementsByTagName("h4")[0];
@@ -245,24 +242,34 @@ function updateOrderSummary(e) {
     const cost = summary.getElementsByTagName("b")[0];
     cost.innerText = "$0.00";
 
+    // we only handle transactions online when both user and seller selected handle by credit card
+    let needToAlert = false;
+
     if (user.shortlist.length !== 0) {
-        // TODO: check byCreditCard
         for (let i = 0; i<basket.length;i++) {
             if (document.getElementsByClassName("check")[i].checked) {
-                const book = document.createElement("p");
-                book.class = "book";
-                book.appendChild(document.createTextNode(`Book ${i}`));
-                const spanElement = document.createElement("span");
-                spanElement.class = "amount";
-                const bElement = document.createElement("b");
-                bElement.appendChild(document.createTextNode(`$${basket[i].price}`));
-                spanElement.appendChild(bElement);
-                book.appendChild(spanElement);
-                orderSummary.insertBefore(book, document.getElementsByTagName("hr")[0]);
-                const newCost = parseInt(cost.innerText.slice(1)) + basket[i].price;
-                cost.innerText = `$${newCost}`;
-                count.innerText = parseInt(count.innerText) + 1;
+                if (!basket[i].byCreditCard) {
+                    needToAlert = true;
+                } else {
+                    const book = document.createElement("p");
+                    book.class = "book";
+                    book.appendChild(document.createTextNode(`Book ${i}`));
+                    const spanElement = document.createElement("span");
+                    spanElement.class = "amount";
+                    const bElement = document.createElement("b");
+                    bElement.appendChild(document.createTextNode(`$${basket[i].price}`));
+                    spanElement.appendChild(bElement);
+                    book.appendChild(spanElement);
+                    orderSummary.insertBefore(book, document.getElementsByTagName("hr")[0]);
+                    const newCost = parseInt(cost.innerText.slice(1)) + basket[i].price;
+                    cost.innerText = `$${newCost}`;
+                    count.innerText = parseInt(count.innerText) + 1;
+                }
             }
         }
+    }
+
+    if (needToAlert) {
+        alert("Some selected book(s) cannot be handled online.");
     }
 }
