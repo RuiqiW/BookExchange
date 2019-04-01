@@ -213,10 +213,10 @@ function contactTheSeller(e) {
 }
 
 /*********************** Select Books for Checkout ************************/
-const checkboxSelect = document.querySelectorAll("");
+const checkboxSelect = document.querySelectorAll(".check");
 
 // as explained in phase1.txt, we are showing how the button should behave from "user1 user1"'s post for phase 1
-contactButton[1].addEventListener("click", contactTheSeller);
+checkboxSelect[i].addEventListener("CheckboxStateChange", updateOrderSummary, false);
 
 function checkOrUncheck(e) {
     e.preventDefault();
