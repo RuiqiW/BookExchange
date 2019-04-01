@@ -101,7 +101,8 @@ app.post('/api/createAccount', (req, res) => {
             sell: [],
             purchase: [],
             transaction: [],
-            shortlist: []
+            shortlist: [],
+            byCreditCard: true
         });
         newUser.save().then((result) => {
             res.send(result)

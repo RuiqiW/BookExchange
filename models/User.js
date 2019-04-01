@@ -55,6 +55,10 @@ const UserSchema = new mongoose.Schema({
         minlength: 4,
         required: true
     },
+    byCreditCard: {
+        type: Boolean,
+        required: true
+    },
     sell: [PostSchema],
     purchase: [PostSchema],
     transaction: [TransactionSchema],
