@@ -82,7 +82,7 @@
     <div class="row">
         <div id="posts">
             <label class="container">
-                <input type="checkbox" checked="checked">
+                <input type="checkbox" checked="checked" class="check">
                 <span class="checkmark"></span>
             </label>
             <div class="post">
@@ -103,7 +103,7 @@
                 <button class="contactSeller">Contact the Seller</button>
             </div>
             <label class="container">
-                <input type="checkbox" checked="checked">
+                <input type="checkbox" checked="checked" class="check">
                 <span class="checkmark"></span>
             </label>
             <div class="post">
@@ -137,14 +137,12 @@
                     <b>2</b>
                     </span>
                 </h4>
-                <p>Book 1<span class="amount"><b>$19.99</b></span></p>
-                <p>Book 2<span class="amount"><b>$29.99</b></span></p>
+                <p class="book">Book 1<span class="amount"><b>$19.99</b></span></p>
+                <p class="book">Book 2<span class="amount"><b>$29.99</b></span></p>
                 <hr>
-                <p>Total<span class="total"><b>$49.98</b></span></p>
+                <p id="summary">Total<span class="total"><b>$49.98</b></span></p>
                 <section>
-                    <p>
-                        <button id="payButton" class="button -flower center" type="submit">Place Order</button>
-                    </p>
+                    <p><button id="payButton" class="button -flower center" type="submit">Place Order</button></p>
                 </section>
             </div>
         </div>
