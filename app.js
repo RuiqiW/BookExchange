@@ -398,7 +398,7 @@ app.post('/api/changeProfilePicture', upload.single("image"), (req, res) => {
     User.findOne({username: req.session.user}).then((user) => {
         user.avatar = "/" + req.file.path;
         user.save().then((newUser) => {
-            res.send({user: newUser});
+            res.redirect("/pages/userProfile.html");
         });
     })
 });

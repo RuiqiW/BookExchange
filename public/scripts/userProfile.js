@@ -59,6 +59,12 @@ const thisUser = "will";
 const profile = document.querySelector('#profile');
 const profilePic = document.querySelector('#profilePic');
 const userInfo = document.querySelector('#profileInfo');
+const picSubmit = document.querySelector("#pic-submit");
+const picSelect = document.querySelector("#pic-select");
+picSelect.addEventListener("change", (e) => {
+    console.log("dsjah");
+    picSubmit.disabled = false;
+});
 userInfo.addEventListener('click', editProfile);
 
 // Modify the info

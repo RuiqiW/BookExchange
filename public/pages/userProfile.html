@@ -98,8 +98,8 @@
         <br>
         Change Profile Picture
         <form id="pic-form" action="/api/changeProfilePicture" method="post" enctype="multipart/form-data">
-          <input type="file" class="file-upload" name="image" accept="image/*"/>
-          <button id="pic-submit" type="submit">
+          <input type="file" id="pic-select" class="file-upload" name="image" accept="image/*"/>
+          <button id="pic-submit" type="submit" disabled>
             Upload
           </button>
         </form>
