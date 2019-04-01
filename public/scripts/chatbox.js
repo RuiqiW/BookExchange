@@ -187,8 +187,8 @@ function loadChatHistory(chatHistory) {
             }
         });
 
-        fetch(request).then((res)=> {
-            if(res.status!== 200){
+        fetch(request).then((res) => {
+            if (res.status !== 200) {
                 console.log("Fail to clear new messages");
             }
         })
@@ -255,6 +255,7 @@ function addSendMessage(msg) {
     const messageContainer = document.createElement('div');
     messageContainer.appendChild(bubble);
     chat.appendChild(messageContainer);
+    chat.scrollTop = chat.scrollHeight;
 }
 
 function addReceivedMessage(msg) {
@@ -267,44 +268,48 @@ function addReceivedMessage(msg) {
     const messageContainer = document.createElement('div');
     messageContainer.appendChild(bubble);
     chat.appendChild(messageContainer);
+    chat.scrollTop = chat.scrollHeight;
 }
 
-// while (shownChatRoom === true) {
-//     setTimeout(function () {
-//         const request = new Request(`/api/chat/${currentChatId}`, {
-//             method: 'get',
-//             headers: {
-//                 'Accept': 'application/json, text/plain, */*',
-//                 'Content-Type': 'application/json'
-//             }
-//         });
-//         fetch(request).then((res) => {
-//             if (res.status === 200) {
-//                 const chatHistory = res.body;
-//                 if (thisUser === chatHistory.user1) {
-//                     for (let i = 0; i < chatHistory.user2Messages.length; i++) {
-//                         addReceivedMessage(chatHistory.user2Messages[i]);
-//                     }
-//                 } else {
-//                     for (let i = 0; i < chatHistory.user1Messages.length; i++) {
-//                         addReceivedMessage(chatHistory.user1Messages[i]);
-//                     }
-//                 }
-//             }
-//             const request = new Request(`/api/chat/${currentChatId}/${thisUser}`, {
-//                 method: 'post',
-//                 headers: {
-//                     'Accept': 'application/json, text/plain, */*',
-//                     'Content-Type': 'application/json'
-//                 }
-//             });
-//
-//             fetch(request).then((res)=> {
-//                 if(res.status!== 200){
-//                     console.log("Fail to clear new messages");
-//                 }
-//             })
-//         });
-//     }, 1000)
-// }
+setTimeout(function updateChat() {
+    if (shownChatRoom === true) {
+        const request = new Request(`/api/chat/${currentChatId}`, {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+        fetch(request).then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((chatHistory) => {
+            if (thisUser === chatHistory.user1) {
+                for (let i = 0; i < chatHistory.user2Messages.length; i++) {
+                    addReceivedMessage(chatHistory.user2Messages[i].content);
+                }
+            } else {
+                for (let i = 0; i < chatHistory.user1Messages.length; i++) {
+                    addReceivedMessage(chatHistory.user1Messages[i].content);
+                }
+            }
+            const request = new Request(`/api/chat/${currentChatId}/${thisUser}`, {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            fetch(request).then((res) => {
+                if (res.status !== 200) {
+                    console.log("Fail to clear new messages");
+                }
+            });
+        })
+    }
+    setTimeout(updateChat, 1000);
+
+}, 1000);
 
