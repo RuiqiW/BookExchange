@@ -137,22 +137,8 @@ function init() {
 
             document.querySelector("#posts").appendChild(postDiv);
         }
-        const endOfResults = document.createElement("div");
-        endOfResults.id = "endOfResults";
-        endOfResults.appendChild(document.createTextNode("End of Results"));
-        document.querySelector("#posts").appendChild(endOfResults);
     }
 }
-
-const searchButton = document.querySelector("#searchButton");
-searchButton.addEventListener("click", searching);
-
-function searching(e) {
-    e.preventDefault();
-    //Server call to request search result, here just jump to the item.html;
-    document.location = "../pages/items.html";
-}
-
 
 /*********************** Chat Box ************************/
 

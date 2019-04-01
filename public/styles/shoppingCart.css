@@ -85,7 +85,7 @@ body {
     height: 40px;
     width: 64px;
     outline: none;
-    background-color: blue;
+    background-color: dodgerblue;
 }
 
 #logInButtonText {
@@ -116,11 +116,6 @@ body {
     padding-right: 16px;
     padding-bottom: 10px;
     padding-left: 10px;
-}
-
-#result{
-    color: blue;
-    font-weight: bold;
 }
 
 .profilePhoto {
@@ -446,6 +441,7 @@ span.total {
     background: var(--color-flower);
 }
 
-#pictureContainer {
+.itemPicture{
+    display: inline-block;
     margin-left: 75px;
 }
