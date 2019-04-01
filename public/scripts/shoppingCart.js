@@ -28,8 +28,13 @@ function removeCartItem(e) {
 function init() {
     //Get the User from server here
     //User users[0] as an demonstration.
-    const user = users[0];
     //Update the profile photo on top right corner
+    const request = new Request("/api/getCurrentUser");
+    fetch(request).then((result) => {
+       return result.json();
+    }).then((json) => {
+        const user = json.user;
+    });
     const userInfoDiv = document.querySelector("#userInfo");
     userInfoDiv.removeChild(userInfoDiv.lastElementChild);
     const a = document.createElement("a");
