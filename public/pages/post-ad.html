@@ -14,11 +14,11 @@
     <picture>
       <source srcset="../images/logo.png" media="(min-width: 400px)" />
       <a href="../index.html">
-        <img src="../images/logo.png" alt="UofT Exchange" />
+        <img id="logo" src="../images/logo.png" alt="UofT Exchange" />
       </a>
     </picture>
 
-    <h1>Post Ad</h1>
+    <h1 id="h1Title">Post Ad</h1>
     <!-- action="/my-handling-form-page" to go in form -->
     <form
       id="postAdForm"
@@ -78,14 +78,44 @@
       <section>
         <h2>Photos</h2>
         <hr />
+        <div>
+          <p>
+            Upload images to help sell your ad!
+          </p>
+        </div>
+
         <label for="bookPic">Photos:</label>
         <input
           type="file"
-          id="bookPic"
           name="bookPic"
           accept="image/png, image/jpeg"
-          multiple
         />
+        <img class="photos" id="photo1" />
+
+        <label for="bookPic"></label>
+        <input
+          type="file"
+          name="bookPic"
+          accept="image/png, image/jpeg"
+        />
+        <img class="photos" id="photo2" />
+
+        <label for="bookPic"></label>
+        <input
+          type="file"
+          name="bookPic"
+          accept="image/png, image/jpeg"
+        />
+        <img class="photos" id="photo3" />
+
+        <label for="bookPic"></label>
+        <input
+          type="file"
+          name="bookPic"
+          accept="image/png, image/jpeg"
+        />
+        <img class="photos" id="photo4" />
+
       </section>
 
       <section>
