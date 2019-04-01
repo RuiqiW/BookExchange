@@ -138,53 +138,6 @@ function removeInfoTextArea(infoElement) {
     infoElement.parentElement.removeChild(infoElement);
 }
 
-/*********************** Drop down select ************************/
-
-// the select drop down box with 2 payment options
-const x = document.getElementsByClassName("custom-select");
-for (let i = 0; i < x.length; i++) {
-  const selElmnt = x[i].getElementsByTagName("select")[0];
-  // for each element, create a div DIV that will act as the selected item
-  const a = document.createElement("div");
-  a.setAttribute("class", "select-selected");
-  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-  x[i].appendChild(a);
-  // for each element, create a new div that will contain the option list
-  const b = document.createElement("div");
-  b.setAttribute("class", "select-items select-hide");
-  for (let j = 1; j < selElmnt.length; j++) {
-    // for each option in the original select element, create a new div that will act as an option item
-    const c = document.createElement("div");
-    c.innerHTML = selElmnt.options[j].innerHTML;
-    c.addEventListener("click", function(e) {
-        // when an item is clicked, update the original select box and the selected item
-        const s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-        const h = this.parentNode.previousSibling;
-        for (let l = 0; l < s.length; l++) {
-          if (s.options[l].innerHTML === this.innerHTML) {
-            s.selectedIndex = l;
-            h.innerHTML = this.innerHTML;
-            const y = this.parentNode.getElementsByClassName("same-as-selected");
-            for (let k = 0; k < y.length; k++) {
-              y[k].removeAttribute("class");
-            }
-            this.setAttribute("class", "same-as-selected");
-            break;
-          }
-        }
-        h.click();
-    });
-    b.appendChild(c);
-  }
-  x[i].appendChild(b);
-  a.addEventListener("click", function(e) {
-      // when the select box is clicked, close any other select boxes and open/close the current select box
-      e.stopPropagation();
-      closeAllSelect(this);
-      this.nextSibling.classList.toggle("select-hide");
-      this.classList.toggle("select-arrow-active");
-    });
-}
 
 // closes the select box
 function closeAllSelect(elmnt) {
@@ -262,7 +215,7 @@ function loadUserProfile(currUser){
     const custom = document.getElementsByClassName("custom-select")[0];
     const select = custom.getElementsByTagName("select")[0];
     const option = select.getElementsByTagName("option")[0];
-    if (user.byCreditCard) {
+    if (currUser.byCreditCard) {
         option.innerText = "Handle Transaction by Credit Card";
     } else {
         option.innerText = "Handle Transaction by Myself";
@@ -295,3 +248,49 @@ function jumpToPostIMade(e) {
     //Here just jump to items page directly.
     document.location = "../pages/items.html";
 }
+
+/*********************** Drop down select ************************/
+
+// the select drop down box with 2 payment options
+const x = document.getElementsByClassName("custom-select")[0];
+const selElmnt = x.getElementsByTagName("select")[0];
+// for each element, create a div DIV that will act as the selected item
+const a = document.createElement("div");
+a.setAttribute("class", "select-selected");
+a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+x.appendChild(a);
+// for each element, create a new div that will contain the option list
+const b = document.createElement("div");
+b.setAttribute("class", "select-items select-hide");
+for (let j = 1; j < selElmnt.length; j++) {
+// for each option in the original select element, create a new div that will act as an option item
+    const c = document.createElement("div");
+    c.innerHTML = selElmnt.options[j].innerHTML;
+    c.addEventListener("click", function(e) {
+        // when an item is clicked, update the original select box and the selected item
+        const s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        const h = this.parentNode.previousSibling;
+        for (let l = 0; l < s.length; l++) {
+            if (s.options[l].innerHTML === this.innerHTML) {
+                s.selectedIndex = l;
+                h.innerHTML = this.innerHTML;
+                const y = this.parentNode.getElementsByClassName("same-as-selected");
+                for (let k = 0; k < y.length; k++) {
+                    y[k].removeAttribute("class");
+                }
+                this.setAttribute("class", "same-as-selected");
+                break;
+            }
+        }
+        h.click();
+    });
+    b.appendChild(c);
+}
+x.appendChild(b);
+a.addEventListener("click", function(e) {
+    // when the select box is clicked, close any other select boxes and open/close the current select box
+    e.stopPropagation();
+    closeAllSelect(this);
+    this.nextSibling.classList.toggle("select-hide");
+    this.classList.toggle("select-arrow-active");
+});
