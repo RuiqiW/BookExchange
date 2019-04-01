@@ -40,7 +40,6 @@ function handlePostAd(event) {
   const description = document.querySelector('#description').value;
 
   // Photos
-  const photos = document.querySelector('#bookPic');
 
   // Price
 

@@ -59,9 +59,13 @@ const thisUser = "will";
 const profile = document.querySelector('#profile');
 const profilePic = document.querySelector('#profilePic');
 const userInfo = document.querySelector('#profileInfo');
-
+const picSubmit = document.querySelector("#pic-submit");
+const picSelect = document.querySelector("#pic-select");
+picSelect.addEventListener("change", (e) => {
+    console.log("dsjah");
+    picSubmit.disabled = false;
+});
 userInfo.addEventListener('click', editProfile);
-profilePic.addEventListener('file', editProfilePic);
 
 // Modify the info
 function editProfile(e) {
@@ -132,26 +136,6 @@ function removeInfoTextArea(infoElement) {
     newElement.innerText = infoElement.value;
     infoElement.parentElement.firstElementChild.before(newElement);
     infoElement.parentElement.removeChild(infoElement);
-}
-
-// Reads the input profile picture URL
-// To be finished with back end in phase 2
-function editProfilePic(e) {
-    e.preventDefault();
-
-    const edit = e.target.parentElement;
-    const img = edit.getElementsByTagName('img')[0];
-    img.src = e.target.result;
-
-    if (e.files && e.files[0]) {
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('.profile-pic').attr('src', e.target.result);
-        };
-
-        reader.readAsDataURL(input.files[0]);
-    }
 }
 
 /*********************** Drop down select ************************/
@@ -236,17 +220,17 @@ function loadUserProfile(currUser){
 
     // create the DOM elements in the user profile info for name, username, phone number and email
     const name = document.createElement('h3');
-    name.appendChild(document.createTextNode(currUser.user.firstName + ' ' + currUser.user.lastName));
+    name.appendChild(document.createTextNode(currUser.firstName + ' ' + currUser.lastName));
 
     const id = document.createElement('span');
     id.id = "userId";
-    id.appendChild(document.createTextNode(currUser.user.username));
+    id.appendChild(document.createTextNode(currUser.username));
 
     const phone = document.createElement('span');
     phone.appendChild(document.createTextNode(currUser.phone));
 
     const email = document.createElement('span');
-    email.appendChild(document.createTextNode(currUser.user.email));
+    email.appendChild(document.createTextNode(currUser.email));
 
     // modify the DOM elements in the user profile info for name, username, phone number and email
     const currName = profile.getElementsByTagName('h3')[0];
@@ -284,7 +268,16 @@ function loadUserProfile(currUser){
     }
 }
 
-loadUserProfile(users[0]);
+function init() {
+    const request = new Request("/api/getCurrentUser");
+    fetch(request).then((result) => {
+        return result.json();
+    }).then((json) => {
+        const user = json.user;
+        loadUserProfile(user);
+    })
+}
+init();
 
 /*********************** Jump to the Posts I Made ************************/
 
