@@ -49,6 +49,23 @@ function init() {
         a.appendChild(image);
         userInfoDiv.appendChild(a);
 
+        const orderSummary = document.getElementById("checkout");
+        const h4 = orderSummary.getElementsByTagName("h4")[0];
+        const spanCount = h4.getElementsByTagName("span")[0];
+        const count = spanCount.getElementsByTagName("b")[0];
+        count.innerText = 0;
+
+        const summary = document.getElementById("summary");
+        const costSpan = summary.getElementsByTagName("span")[0];
+        const cost = costSpan.getElementsByTagName("b")[0];
+        cost.innerText = "$0.00";
+
+        const books = document.getElementsByClassName("book");
+        const len = books.length;
+        for (let c = 0; c < len; c++) {
+            orderSummary.removeChild(books[0]);
+        }
+
         basket = user.shortlist;
         //Remove items hard-coded in the html file
         const posts = document.querySelector("#posts");
@@ -75,6 +92,21 @@ function init() {
                 const spanInLabel = document.createElement("span");
                 spanInLabel.setAttribute("class", "checkmark");
                 label.appendChild(spanInLabel);
+
+                const book = document.createElement("p");
+                book.setAttribute("class", "book");
+                book.appendChild(document.createTextNode(`Book ${i+1}`));
+                const spanElement = document.createElement("span");
+                spanElement.setAttribute("class", "amount");
+                const bElement = document.createElement("b");
+                bElement.appendChild(document.createTextNode(`$${basket[i].price}`));
+                spanElement.appendChild(bElement);
+                book.appendChild(spanElement);
+                const hrElement = document.getElementsByTagName("hr");
+                hrElement[hrElement.length-1].before(book);
+                const newCost = parseFloat(cost.innerText.slice(1)) + parseFloat(basket[i].price);
+                cost.innerText = `$${newCost}`;
+                count.innerText = parseInt(count.innerText) + 1;
 
                 const postDiv = document.createElement("div");
                 postDiv.className = "post";
@@ -228,19 +260,23 @@ function contactTheSeller(e) {
 
 
 function updateOrderSummary(e) {
-    e.preventDefault();
-
     console.log("called");
 
     const orderSummary = document.getElementById("checkout");
-    const h4 = document.getElementsByTagName("h4")[0];
+    const h4 = orderSummary.getElementsByTagName("h4")[0];
     const spanCount = h4.getElementsByTagName("span")[0];
     const count = spanCount.getElementsByTagName("b")[0];
     count.innerText = 0;
     const summary = document.getElementById("summary");
-    orderSummary.remove(book);
-    const cost = summary.getElementsByTagName("b")[0];
+    const costSpan = summary.getElementsByTagName("span")[0];
+    const cost = costSpan.getElementsByTagName("b")[0];
     cost.innerText = "$0.00";
+
+    const books = document.getElementsByClassName("book");
+    const len = books.length;
+    for (let c = 0; c < len; c++) {
+        orderSummary.removeChild(books[0]);
+    }
 
     // we only handle transactions online when both user and seller selected handle by credit card
     let needToAlert = false;
@@ -252,17 +288,17 @@ function updateOrderSummary(e) {
                     needToAlert = true;
                 } else {
                     const book = document.createElement("p");
-                    book.class = "book";
-                    book.appendChild(document.createTextNode(`Book ${i}`));
+                    book.setAttribute("class", "book");
+                    book.appendChild(document.createTextNode(`Book ${i+1}`));
                     const spanElement = document.createElement("span");
-                    spanElement.class = "amount";
+                    spanElement.setAttribute("class", "amount");
                     const bElement = document.createElement("b");
                     bElement.appendChild(document.createTextNode(`$${basket[i].price}`));
                     spanElement.appendChild(bElement);
                     book.appendChild(spanElement);
-                    const hrElement = document.getElementsByTagName("hr")[0];
-                    hrElement.before(book);
-                    const newCost = parseInt(cost.innerText.slice(1)) + basket[i].price;
+                    const hrElement = document.getElementsByTagName("hr");
+                    hrElement[hrElement.length-1].before(book);
+                    const newCost = parseFloat(cost.innerText.slice(1)) + parseFloat(basket[i].price);
                     cost.innerText = `$${newCost}`;
                     count.innerText = parseInt(count.innerText) + 1;
                 }
