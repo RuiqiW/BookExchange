@@ -16,6 +16,14 @@ const TransactionSchema = new mongoose.Schema({
     amount: {
         type: Number,
         required: true
+    },
+    seller: {
+        type: String,
+        required: true
+    },
+    buyer: {
+        type: String,
+        required: false
     }
 });
 
