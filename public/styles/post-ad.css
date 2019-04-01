@@ -6,7 +6,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 body {
@@ -25,7 +25,7 @@ h1 {
   /*   text-shadow: 3px 3px 1px black; */
 }
 
-img {
+#logo {
   display: block;
   margin: 0 auto;
   width: 80%;
@@ -118,4 +118,27 @@ button {
   /* This extra margin represent roughly the same space as the space
          between the labels and their text fields */
   margin-left: 0.5em;
+}
+
+
+.photos {
+    max-width:90px;
+  }
+
+input[type=file] {
+    padding:10px;
+    /* background:#2d2d2d; */
+}
+
+h2 {
+    color: lightskyblue;
+}
+
+#h1Title {
+    font-size: 60px;
+    text-align: center;
+    margin: 0;
+    padding: 20px 0;
+    color: rgb(86, 193, 235);
+    text-shadow: 3px 3px 1px black;
 }
