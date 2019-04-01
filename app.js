@@ -392,6 +392,16 @@ app.post('/api/chat/:chatId/:username', (req, res) => {
     })
 });
 
+app.post('/api/changeProfilePicture', upload.single("image"), (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+    }
+    User.find({username: req.session.user}).then((user) => {
+        console.log(req.file);
+        res.status(200).send();
+    })
+});
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
 });
