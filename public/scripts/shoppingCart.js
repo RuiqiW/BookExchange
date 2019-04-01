@@ -57,6 +57,17 @@ function init() {
         document.querySelector("#posts").appendChild(emptyInfoDiv);
     } else {
         for (let i = 0; i<basket.length;i++) {
+            const label = document.createElement("label");
+            label.class = "container";
+            const input = document.createElement("input");
+            input.setAttribute("type", "checkbox");
+            input.setAttribute("checked", "checked");
+            input.class = "check";
+            label.appendChild(input);
+            const spanInLabel = document.createElement("span");
+            spanInLabel.class = "checkmark";
+            label.appendChild(spanInLabel);
+
             const postDiv = document.createElement("div");
             postDiv.className = "post";
 
@@ -199,4 +210,50 @@ contactButton[1].addEventListener("click", contactTheSeller);
 
 function contactTheSeller(e) {
     showChatRoom(e);
+}
+
+/*********************** Select Books for Checkout ************************/
+const checkboxSelect = document.querySelectorAll("");
+
+// as explained in phase1.txt, we are showing how the button should behave from "user1 user1"'s post for phase 1
+contactButton[1].addEventListener("click", contactTheSeller);
+
+function checkOrUncheck(e) {
+    e.preventDefault();
+
+    if (e.target.classList.contains("submit")) {
+        const message = document.querySelector("#messageBox").value;
+        if (message.length > 0 && message.length < 200) {
+            addMessage(message);
+        }
+    }
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function updateOrderSummary(e) {
+    const basket = user.shortlist;
+    const orderSummary = document.getElementById("checkout");
+    const summary = document.getElementById("summary");
+    orderSummary.removeClass("book");
+    const cost = summary.getElementsByTagName("b")[0];
+    if (user.shortlist.length === 0) {
+        cost.innerText = "$0.00";
+    } else {
+        for (let i = 0; i<basket.length;i++) {
+            if (document.getElementsByClassName("check")[i].checked) {
+                const book = document.createElement("p");
+                book.class = "book";
+                book.appendChild(document.createTextNode(`Book ${i}`));
+                const spanElement = document.createElement("span");
+                spanElement.class = "amount";
+                const bElement = document.createElement("b");
+                bElement.appendChild(document.createTextNode(`$${basket[i].price}`));
+                spanElement.appendChild(bElement);
+                book.appendChild(spanElement);
+                orderSummary.insertBefore(book, document.getElementsByTagName("hr")[0]);
+                const newCost = parseInt(cost.innerText.slice(1)) + basket[i].price;
+                cost.innerText = `$${newCost}`;
+            }
+        }
+    }
 }
