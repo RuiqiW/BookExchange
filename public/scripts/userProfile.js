@@ -274,6 +274,14 @@ function loadUserProfile(currUser){
     const spanElement2 = spanEmail.getElementsByTagName('span')[0];
     spanElement2.before(email);
     spanEmail.removeChild(spanElement2);
+
+    const select = document.getElementsByClassName("select")[0];
+    const option = select.getElementsByTagName("option")[0];
+    if (user.byCreditCard) {
+        option.innerText = "Handle Transaction by Credit Card";
+    } else {
+        option.innerText = "Handle Transaction by Myself";
+    }
 }
 
 loadUserProfile(users[0]);
