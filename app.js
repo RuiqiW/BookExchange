@@ -47,12 +47,12 @@ app.get('/404', (req, res, next) => {
 });
 
 app.get('/login', (req, res) => {
-   if (req.session.user) {
-       console.log("has logged in!");
-       res.redirect('profile');
-   } else {
-       res.sendFile(__dirname + '/public/pages/login.html');
-   }
+    if (req.session.user) {
+        console.log("has logged in!");
+        res.redirect('profile');
+    } else {
+        res.sendFile(__dirname + '/public/pages/login.html');
+    }
 });
 
 app.get('/api/search/:keyword', (req, res) => {
@@ -67,7 +67,7 @@ app.get('/api/search/:keyword', (req, res) => {
         } else {
             User.findOne({username: req.session.user}).then((result) => {
                 payload.user = result;
-               res.send(payload);
+                res.send(payload);
             });
         }
     });
@@ -148,14 +148,14 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
 });
 
 app.post('/api/login', (req, res) => {
-   const username = req.body.username;
-   const password = req.body.password;
-   User.findByEmailPassword(username, password).then((user) => {
-      req.session.user = user.username;
-      res.send();
-   }).catch((error) => {
-       res.status(401).send();
-   });
+    const username = req.body.username;
+    const password = req.body.password;
+    User.findByEmailPassword(username, password).then((user) => {
+        req.session.user = user.username;
+        res.send();
+    }).catch((error) => {
+        res.status(401).send();
+    });
 });
 
 app.get('/api/getUser/:username', (req, res) => {
@@ -171,30 +171,30 @@ app.get('/api/getUser/:username', (req, res) => {
 });
 
 app.post("/api/addToCart/:postId", (req, res) => {
-   if (!req.session.user) {
-       res.status(401).send();
-   } else {
-       if (!ObjectID.isValid(req.params.postId)) {
-           res.status(600).send();
-       }
-       User.findOne({username: req.session.user}).then((user) => {
-           if (!user) {
-               res.status(404).send();
-           }
-           Post.findById(req.params.postId).then((post) => {
-               user.shortlist.push(post);
-               user.save().then((user) => {
-                   res.send({user});
-               }).catch((error) => {
-                   console.log(error);
-                   res.status(500).send();
-               });
-           });
-       }).catch((error) => {
-           console.log(error);
-           res.status(500).send();
-       });
-   }
+    if (!req.session.user) {
+        res.status(401).send();
+    } else {
+        if (!ObjectID.isValid(req.params.postId)) {
+            res.status(600).send();
+        }
+        User.findOne({username: req.session.user}).then((user) => {
+            if (!user) {
+                res.status(404).send();
+            }
+            Post.findById(req.params.postId).then((post) => {
+                user.shortlist.push(post);
+                user.save().then((user) => {
+                    res.send({user});
+                }).catch((error) => {
+                    console.log(error);
+                    res.status(500).send();
+                });
+            });
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        });
+    }
 });
 
 app.delete("/api/removeFromCart/:postId", (req, res) => {
@@ -237,6 +237,7 @@ app.get('/api/user/:username', (req, res) => {
 });
 
 
+// create new chat between two users
 app.post('/api/createChat', (req, res) => {
     const user1 = req.body.user1;
     const user2 = req.body.user2;
@@ -268,6 +269,7 @@ app.post('/api/createChat', (req, res) => {
 });
 
 
+// find the chat between two users
 app.get('/api/chat/:user1/:user2', (req, res) => {
     const user1 = req.params.user1;
     const user2 = req.params.user2;
@@ -284,6 +286,8 @@ app.get('/api/chat/:user1/:user2', (req, res) => {
     });
 });
 
+
+// find all chat histories belonging to a user
 app.get('/api/allChats/:username', (req, res) => {
     const username = req.params.username;
     Chat.find({$or: [{user1: username}, {user2: username}]}).then((chats) => {
@@ -298,8 +302,51 @@ app.get('/api/allChats/:username', (req, res) => {
     })
 });
 
-
+// add a new message to chat history
 app.post('/api/chat/:chatId', (req, res) => {
+    // const username = req.params.username;
+    // Chat.find({$or: [{user1: username}, {user2: username}]}).then((chats) => {
+    //     if (!chats) {
+    //         res.status(404).send();
+    //     } else {
+    //         res.send(chats);
+    //     }
+    // }).catch((error) => {
+    //     console.log(error);
+    //     res.status(500).send(error);
+    // })
+    const chatId = req.params.chatId;
+    if (!ObjectID.isValid(chatId)) {
+        res.status(404).send();
+    }
+
+    Chat.findById(chatId).then((chat) => {
+        if (!chat) {
+            res.status(404).send();
+        }else{
+            const newMessage = {
+                time: req.body.time,
+                sender: req.body.sender,
+                content: req.body.content
+            };
+            chat.messages.push(newMessage);
+            if(req.body.sender === chat.user1){
+                chat.user1Messages.push(newMessage);
+            }else{
+                chat.user2Messages.push(newMessage);
+            }
+            chat.save().then((result) => {
+                res.send(result);
+            })
+        }
+    }).catch((error) => {
+        res.status(500).send(error);
+    })
+});
+
+
+// get a specific chat
+app.get('/api/chat/:chatId', (req, res) => {
     const chatId = req.params.chatId;
 
     if (!ObjectID.isValid(chatId)) {
@@ -310,15 +357,7 @@ app.post('/api/chat/:chatId', (req, res) => {
         if (!chat) {
             res.status(404).send();
         } else {
-            chat.messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
-            if (req.body.sender === chat.user1) {
-                chat.user1Messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
-            } else {
-                chat.user2Messages.push({time: req.body.time, sender: req.body.sender, content: req.body.content});
-            }
-            chat.save().then((result) => {
-                res.send(result)
-            })
+            res.send(chat);
         }
     }).catch((error) => {
         res.status(500).send(error);
@@ -326,7 +365,8 @@ app.post('/api/chat/:chatId', (req, res) => {
 });
 
 
-app.patch('/api/chat/:chatId/:username', (req, res) => {
+// update chat history after loading new messages
+app.post('/api/chat/:chatId/:username', (req, res) => {
     const chatId = req.params.chatId;
     const user = req.params.username;
 

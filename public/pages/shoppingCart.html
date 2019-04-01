@@ -9,6 +9,7 @@
     <link href="../lightbox/css/lightbox.css" rel="stylesheet">
     <!--jquery for lightbox-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -80,57 +81,83 @@
         </button>
     </div>
 </div>
+
 <div id="resultPage">
     <div id="searchResult">
         Here is your shopping cart.........
     </div>
-    <div id="posts">
-        <div class="post">
-            <img class="profilePhoto" src="../images/items/seller1.jpg" alt="sellerPhoto">
-            <span class="userName"> Donald Trump </span>
-            <br>
-            <span class="category"> Category: Books </span>
-            <span class="condition"> Condition: New </span>
-            <div class="description">
-                I want to sell a textbook for MAT224. Please contact me if you want
-                more information!
+    <div class="row">
+        <div id="posts">
+            <label class="container">
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+            </label>
+            <div class="post">
+                <img class="profilePhoto" src="../images/items/seller1.jpg" alt="sellerPhoto">
+                <span class="userName"> Donald Trump </span>
+                <br>
+                <span class="category"> Category: Books </span>
+                <span class="condition"> Condition: New </span>
+                <div class="description">
+                    I want to sell a textbook for MAT224. Please contact me if you want
+                    more information!
+                </div>
+                <div class="price">
+                    CAD 19.99
+                </div>
+                <hr>
+                <button class="removeFromCart">Remove from Cart</button>
+                <button class="contactSeller">Contact the Seller</button>
             </div>
-            <div class="price">
-                CAD 19.99
+            <label class="container">
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+            </label>
+            <div class="post">
+                <img class="profilePhoto" src="../images/items/seller2.jpeg" alt="sellerPhoto">
+                <span class="userName"> Mike Penth </span>
+                <br>
+                <span class="category"> Category: Books </span>
+                <span class="condition"> Condition: New </span>
+                <div class="description">
+                    I want to sell a textbook for MAT223. Please contact me if you want
+                    more information!
+                </div>
+                <div class="price">
+                    CAD 29.99
+                </div>
+                <div class="pictureContainer">
+                    <a href="../images/items/sampleBook1.jpg" data-lightbox="sampleBook1">
+                        <img class="itemPicture" src="../images/items/sampleBook1.jpg" alt="picture">
+                    </a>
+                </div>
+                <hr>
+                <button class="removeFromCart">Remove from Cart</button>
+                <button class="contactSeller">Contact the Seller</button>
             </div>
-            <hr>
-            <button class="removeFromCart">Remove from Cart</button>
-            <button class="contactSeller">Contact the Seller</button>
         </div>
-        <div class="post">
-            <img class="profilePhoto" src="../images/items/seller2.jpeg" alt="sellerPhoto">
-            <span class="userName"> Mike Penth </span>
-            <br>
-            <span class="category"> Category: Books </span>
-            <span class="condition"> Condition: New </span>
-            <div class="description">
-                I want to sell a textbook for MAT223. Please contact me if you want
-                more information!
+        <div class="col-25">
+            <div id="checkout">
+                <h4>Order Summary
+                    <span class="total">
+                        <i class="fa fa-shopping-cart"></i>
+                    <b>2</b>
+                    </span>
+                </h4>
+                <p>Book 1<span class="amount"><b>$15</b></span></p>
+                <p>Book 2<span class="amount"><b>$5</b></span></p>
+                <hr>
+                <p>Total<span class="total"><b>$20</b></span></p>
+                <section>
+                    <p>
+                        <button id="payButton" class="button -flower center" type="submit">Place Order</button>
+                    </p>
+                </section>
             </div>
-            <div class="price">
-                CAD 29.99
-            </div>
-            <div class="pictureContainer">
-                <a href="../images/items/sampleBook1.jpg" data-lightbox="sampleBook1">
-                    <img class="itemPicture" src="../images/items/sampleBook1.jpg" alt="picture">
-                </a>
-            </div>
-            <hr>
-            <button class="removeFromCart">Remove from Cart</button>
-            <button class="contactSeller">Contact the Seller</button>
-        </div>
-        <div id="endOfResults">
-            End of results
         </div>
     </div>
-
-
 </div>
+
 <!--Script for lightbox-->
 <script src="../lightbox/js/lightbox.js"></script>
 <script type="text/javascript" src="../scripts/classes.js"></script>
