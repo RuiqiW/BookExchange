@@ -9,37 +9,19 @@ let posts;
 let user;
 let isRealUser;
 
-// // Show / Hide chatbox
-// const chatShow = document.querySelector("#chatShow");
-// const chatHide = document.querySelector("#chatHide");
-// chatHide.addEventListener('click', hideChatRoom);
-// chatShow.addEventListener('click', showChatRoom);
-//
-// function showChatRoom(e) {
-//     e.preventDefault();
-//     const chatRoom = document.querySelector('#chatRoom');
-//     chatRoom.style.display = "block";
-// }
-//
-// function hideChatRoom(e) {
-//     e.preventDefault();
-//     const chatRoom = document.querySelector('#chatRoom');
-//     chatRoom.style.display = "none";
-// }
-
 
 function onSortingOptChange() {
     const newOption = sortingOpt.value;
     if (newOption === "timeNewToOld") {
-        posts.sort(function(a,b) {
+        posts.sort(function (a, b) {
             if (a.postingDate <= b.postingDate) {
                 return 1;
             } else {
                 return -1;
             }
         });
-    } else if(newOption === "timeOldToNew") {
-        posts.sort(function(a,b) {
+    } else if (newOption === "timeOldToNew") {
+        posts.sort(function (a, b) {
             if (a.postingDate <= b.postingDate) {
                 return -1;
             } else {
@@ -47,7 +29,7 @@ function onSortingOptChange() {
             }
         });
     } else if (newOption === "priceLowToHigh") {
-        posts.sort(function(a, b) {
+        posts.sort(function (a, b) {
             if (a.price <= b.price) {
                 return -1;
             } else {
@@ -55,7 +37,7 @@ function onSortingOptChange() {
             }
         });
     } else {//priceHighToLow
-        posts.sort(function(a, b) {
+        posts.sort(function (a, b) {
             if (a.price <= b.price) {
                 return 1;
             } else {
@@ -77,13 +59,12 @@ function init() {
         fetch(request).then((res) => {
             return res.json();
         }).then((json) => {
-            debugger;
             if (json.user === null) {
                 //Create a trivial user for page generation
                 user =
                     new User('user', 'user', 'user', 'user@example.com', 'user', false);
                 posts = json.result;
-                posts.sort(function(a,b) {
+                posts.sort(function (a, b) {
                     if (a.postingDate <= b.postingDate) {
                         return 1;
                     } else {
@@ -133,7 +114,7 @@ function generateSearchResult(posts, user) {
     while (document.querySelector("#posts").lastElementChild) {
         document.querySelector("#posts").removeChild(document.querySelector("#posts").lastElementChild)
     }
-    for (let i = 0; i<posts.length; i++) {
+    for (let i = 0; i < posts.length; i++) {
         generatePost(posts[i], user).then((resultDiv) => {
             document.querySelector("#posts").firstElementChild.before(resultDiv);
         }).catch((error) => {
@@ -154,128 +135,130 @@ function generateSearchResult(posts, user) {
  */
 function generatePost(post, user) {
     return new Promise((resolve, reject) => {
-       fetch("/api/getUser/" + post.seller).then((result) => {
-           return result.json();
-       }).then((json) => {
-           debugger;
-           const seller = json.result;
-           const postDiv = document.createElement("div");
-           postDiv.className = "post";
+        fetch("/api/getUser/" + post.seller).then((result) => {
+            return result.json();
+        }).then((json) => {
+            const seller = json.result;
+            const postDiv = document.createElement("div");
+            postDiv.className = "post";
 
-           const sellerProfilePhoto = document.createElement("img");
-           sellerProfilePhoto.className="profilePhoto";
-           sellerProfilePhoto.setAttribute("src", seller.avatar);
-           sellerProfilePhoto.setAttribute("alt", "sellerPhoto");
+            const sellerProfilePhoto = document.createElement("img");
+            sellerProfilePhoto.className = "profilePhoto";
+            sellerProfilePhoto.setAttribute("src", seller.avatar);
+            sellerProfilePhoto.setAttribute("alt", "sellerPhoto");
 
-           const sellerNameSpan = document.createElement("span");
-           sellerNameSpan.className="userName";
-           sellerNameSpan.appendChild(document.createTextNode(seller.firstName + " " + seller.lastName));
+            const sellerNameSpan = document.createElement("span");
+            sellerNameSpan.className = "userName";
+            sellerNameSpan.appendChild(document.createTextNode(seller.firstName + " " + seller.lastName));
 
-           postDiv.appendChild(sellerProfilePhoto);
-           postDiv.appendChild(sellerNameSpan);
-           postDiv.appendChild(document.createElement("br"));
+            postDiv.appendChild(sellerProfilePhoto);
+            postDiv.appendChild(sellerNameSpan);
+            postDiv.appendChild(document.createElement("br"));
 
-           // const postIdSpan = document.createElement("span");
-           // postIdSpan.className = "postId";
-           // const postIdNumber = document.createElement("span");
-           // postIdNumber.className = "postIdNumber";
-           // postIdNumber.appendChild(document.createTextNode(post.postId));
-           // postIdSpan.appendChild(postIdNumber);
-           // postDiv.appendChild(postIdSpan);
-           postDiv.id = post._id;
+            // const postIdSpan = document.createElement("span");
+            // postIdSpan.className = "postId";
+            // const postIdNumber = document.createElement("span");
+            // postIdNumber.className = "postIdNumber";
+            // postIdNumber.appendChild(document.createTextNode(post.postId));
+            // postIdSpan.appendChild(postIdNumber);
+            // postDiv.appendChild(postIdSpan);
+            postDiv.id = post._id;
 
-           const categorySpan = document.createElement("span");
-           categorySpan.className = "category";
-           categorySpan.appendChild(document.createTextNode("Title: " + post.title));
-           postDiv.appendChild(categorySpan);
+            const categorySpan = document.createElement("span");
+            categorySpan.className = "category";
+            categorySpan.appendChild(document.createTextNode("Title: " + post.title));
+            postDiv.appendChild(categorySpan);
 
-           const conditionSpan = document.createElement("span");
-           conditionSpan.className = "condition";
-           conditionSpan.appendChild(document.createTextNode("Condition: " + post.condition));
-           postDiv.appendChild(conditionSpan);
+            const conditionSpan = document.createElement("span");
+            conditionSpan.className = "condition";
+            conditionSpan.appendChild(document.createTextNode("Condition: " + post.condition));
+            postDiv.appendChild(conditionSpan);
 
-           const timeSpan = document.createElement("span");
-           timeSpan.className = "timespan";
-           const date = new Date(post.postingDate);
-           timeSpan.appendChild(document.createTextNode("Posting Time: " +
-                + date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
-           postDiv.appendChild(timeSpan);
+            const timeSpan = document.createElement("span");
+            timeSpan.className = "timespan";
+            const date = new Date(post.postingDate);
+            timeSpan.appendChild(document.createTextNode("Posting Time: " +
+                +date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
+            postDiv.appendChild(timeSpan);
 
-           const descriptionDiv = document.createElement("div");
-           descriptionDiv.className="description";
-           descriptionDiv.appendChild(document.createTextNode(post.description));
-           postDiv.appendChild(descriptionDiv);
+            const descriptionDiv = document.createElement("div");
+            descriptionDiv.className = "description";
+            descriptionDiv.appendChild(document.createTextNode(post.description));
+            postDiv.appendChild(descriptionDiv);
 
-           const priceDiv = document.createElement("div");
-           priceDiv.className = "price";
-           priceDiv.appendChild(document.createTextNode("CAD "+post.price));
-           postDiv.appendChild(priceDiv);
+            const priceDiv = document.createElement("div");
+            priceDiv.className = "price";
+            priceDiv.appendChild(document.createTextNode("CAD " + post.price));
+            postDiv.appendChild(priceDiv);
 
-           if (post.image.length > 0) {
-               const pictureContainer = document.createElement("div");
-               const lightboxAttr = `pictureSet${num_posts}`;
-               for (let k=0;k<post.image.length;k++) {
-                   const a = document.createElement("a");
-                   a.setAttribute("href", "/" + post.image[k]);
-                   a.setAttribute("data-lightbox",lightboxAttr);
-                   const image = document.createElement("img");
-                   image.className = "itemPicture";
-                   image.setAttribute("src", "/" + post.image[k]);
-                   a.appendChild(image);
-                   pictureContainer.appendChild(a);
-               }
-               postDiv.appendChild(pictureContainer);
-           }
+            if (post.image.length > 0) {
+                const pictureContainer = document.createElement("div");
+                const lightboxAttr = `pictureSet${num_posts}`;
+                for (let k = 0; k < post.image.length; k++) {
+                    const a = document.createElement("a");
+                    a.setAttribute("href", "/" + post.image[k]);
+                    a.setAttribute("data-lightbox", lightboxAttr);
+                    const image = document.createElement("img");
+                    image.className = "itemPicture";
+                    image.setAttribute("src", "/" + post.image[k]);
+                    a.appendChild(image);
+                    pictureContainer.appendChild(a);
+                }
+                postDiv.appendChild(pictureContainer);
+            }
 
-           postDiv.appendChild(document.createElement("hr"));
+            postDiv.appendChild(document.createElement("hr"));
 
-           if (user.shortlist.filter((post) => {return post._id === post._id}).length === 0) {
-               const removeButton = document.createElement("button");
-               removeButton.className = "addToCart";
-               removeButton.appendChild(document.createTextNode("Add to Cart"));
-               removeButton.addEventListener("click", addToCart);
-               postDiv.appendChild(removeButton);
-           } else {
-               const addButton = document.createElement("button");
-               addButton.className = "removeFromCart";
-               addButton.appendChild(document.createTextNode("Remove from Cart"));
-               addButton.addEventListener("click", removeFromCart);
-               postDiv.appendChild(addButton);
-           }
+            if (user.shortlist.filter((post) => {
+                return post._id === post._id
+            }).length === 0) {
+                const removeButton = document.createElement("button");
+                removeButton.className = "addToCart";
+                removeButton.appendChild(document.createTextNode("Add to Cart"));
+                removeButton.addEventListener("click", addToCart);
+                postDiv.appendChild(removeButton);
+            } else {
+                const addButton = document.createElement("button");
+                addButton.className = "removeFromCart";
+                addButton.appendChild(document.createTextNode("Remove from Cart"));
+                addButton.addEventListener("click", removeFromCart);
+                postDiv.appendChild(addButton);
+            }
 
-           const contactSeller = document.createElement("button");
-           contactSeller.className="contactSeller";
-           contactSeller.appendChild(document.createTextNode("Contact Seller"));
+            const contactSeller = document.createElement("button");
+            contactSeller.className = "contactSeller";
+            contactSeller.appendChild(document.createTextNode("Contact Seller"));
 
-           if (user.isAdmin) {
-               const deletePost = document.createElement("button");
-               deletePost.className="deletePost";
-               deletePost.appendChild(document.createTextNode("Delete this post"));
-               postDiv.appendChild(deletePost);
-           } else {
-               const buyItem = document.createElement("button");
-               buyItem.className="buyItem";
-               buyItem.appendChild(document.createTextNode("Buy this item"));
-               buyItem.addEventListener("click", buyItem);
-               postDiv.appendChild(buyItem);
-           }
+            if (user.isAdmin) {
+                const deletePost = document.createElement("button");
+                deletePost.className = "deletePost";
+                deletePost.appendChild(document.createTextNode("Delete this post"));
+                postDiv.appendChild(deletePost);
+            } else {
+                const buyItem = document.createElement("button");
+                buyItem.className = "buyItem";
+                buyItem.appendChild(document.createTextNode("Buy this item"));
+                buyItem.addEventListener("click", buyItem);
+                postDiv.appendChild(buyItem);
+            }
 
-           postDiv.appendChild(contactSeller);
-           resolve(postDiv);
-       }).catch((error) => {
-           console.log(error);
-           reject();
-       });
+            postDiv.appendChild(contactSeller);
+            resolve(postDiv);
+        }).catch((error) => {
+            console.log(error);
+            reject();
+        });
     });
 }
+
 init();
 const addToCartButtons = document.querySelectorAll(".addToCart");
-for (let i = 0; i<addToCartButtons.length; i++) {
+for (let i = 0; i < addToCartButtons.length; i++) {
     addToCartButtons[i].addEventListener("click", addToCart);
 }
 
 const removeFromCartButtons = document.querySelectorAll(".removeFromCart");
-for (let i = 0; i<removeFromCartButtons.length; i++) {
+for (let i = 0; i < removeFromCartButtons.length; i++) {
     removeFromCartButtons[i].addEventListener("click", removeFromCart);
 }
 
@@ -334,9 +317,10 @@ function makePost(e) {
 }
 
 const buyItemButtons = document.querySelectorAll(".buyItem");
-for (let i = 0; i < buyItemButtons.length;i++) {
+for (let i = 0; i < buyItemButtons.length; i++) {
     buyItemButtons[i].addEventListener("click", buyItem);
 }
+
 function buyItem(e) {
     //Server call to update the shopping cart of user
     // Here just use user0
@@ -351,10 +335,8 @@ function buyItem(e) {
         document.location = "./payment.html";
         //Make a server call to submit the credit card Number and the postId!
     }
-
-
-
 }
+
 
 // /*********************** Chat Box ************************/
 //
@@ -396,7 +378,56 @@ const contactButton = document.querySelectorAll('.contactSeller');
 contactButton[0].addEventListener("click", contactTheSeller);
 
 function contactTheSeller(e) {
-    showChatRoom(e);
+    e.preventDefault();
+
+    const postId = e.target.parentElement.id;
+
+    const postRequest = new Request(`/api/findSeller/${postId}`, {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    fetch(postRequest).then((res) => {
+        if (res.status === 200) {
+            return res.json();
+        }else {
+            window.alert("Seller not found.");
+        }
+    }).then((json) => {
+        const keyword = json.username;
+
+        // find if the user to chat exists
+        const newChat = {
+            user1: thisUser,
+            user2: keyword
+        };
+
+        const request = new Request("/api/createChat", {
+            method: 'post',
+            body: JSON.stringify(newChat),
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+        fetch(request).then((res2) => {
+            if (res2.status === 200) {
+                return res2.json();
+            }
+        }).then((json) => {
+
+            loadChatHistory(json);
+            // set up chat box
+            const chatName = document.querySelector('#chatName');
+            chatName.innerText = keyword;
+            const chatRoom = document.querySelector('#chatRoom');
+            chatRoom.style.display = "block";
+        })
+    })
+
 }
 
 const searchButton = document.querySelector("#searchButton");
@@ -426,7 +457,7 @@ for (let i = 0; i < x.length; i++) {
         // for each option in the original select element, create a new div that will act as an option item
         const c = document.createElement("div");
         c.innerHTML = selElmnt.options[j].innerHTML;
-        c.addEventListener("click", function(e) {
+        c.addEventListener("click", function (e) {
             // when an item is clicked, update the original select box and the selected item
             const s = this.parentNode.parentNode.getElementsByTagName("select")[0];
             const h = this.parentNode.previousSibling;
@@ -447,7 +478,7 @@ for (let i = 0; i < x.length; i++) {
         b.appendChild(c);
     }
     x[i].appendChild(b);
-    a.addEventListener("click", function(e) {
+    a.addEventListener("click", function (e) {
         // when the select box is clicked, close any other select boxes and open/close the current select box
         e.stopPropagation();
         closeAllSelect(this);

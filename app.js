@@ -237,6 +237,7 @@ app.get('/api/user/:username', (req, res) => {
 });
 
 
+/********************** for chat *************************/
 // create new chat between two users
 app.post('/api/createChat', (req, res) => {
     const user1 = req.body.user1;
@@ -304,17 +305,6 @@ app.get('/api/allChats/:username', (req, res) => {
 
 // add a new message to chat history
 app.post('/api/chat/:chatId', (req, res) => {
-    // const username = req.params.username;
-    // Chat.find({$or: [{user1: username}, {user2: username}]}).then((chats) => {
-    //     if (!chats) {
-    //         res.status(404).send();
-    //     } else {
-    //         res.send(chats);
-    //     }
-    // }).catch((error) => {
-    //     console.log(error);
-    //     res.status(500).send(error);
-    // })
     const chatId = req.params.chatId;
     if (!ObjectID.isValid(chatId)) {
         res.status(404).send();
@@ -323,16 +313,16 @@ app.post('/api/chat/:chatId', (req, res) => {
     Chat.findById(chatId).then((chat) => {
         if (!chat) {
             res.status(404).send();
-        }else{
+        } else {
             const newMessage = {
                 time: req.body.time,
                 sender: req.body.sender,
                 content: req.body.content
             };
             chat.messages.push(newMessage);
-            if(req.body.sender === chat.user1){
+            if (req.body.sender === chat.user1) {
                 chat.user1Messages.push(newMessage);
-            }else{
+            } else {
                 chat.user2Messages.push(newMessage);
             }
             chat.save().then((result) => {
@@ -410,6 +400,24 @@ app.get("/api/getCurrentUser", (req, res) => {
     }
     User.findOne({username: req.session.user}).then((user) => {
         res.send({user: user});
+    })
+});
+
+
+app.get("/api/findSeller/:postId", (req, res) => {
+    const postId = req.params.postId;
+    if (!ObjectID.isValid(postId)) {
+        res.status(404).send();
+    }
+
+    Post.findById(postId).then((post) => {
+        if (!post) {
+            res.status(404).send();
+        } else {
+            res.send({username: post.seller});
+        }
+    }).catch((error) => {
+        res.status(500).send(error);
     })
 });
 
