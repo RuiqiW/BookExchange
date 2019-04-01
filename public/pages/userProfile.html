@@ -97,8 +97,8 @@
         <br>
         <br>
         Change Profile Picture
-        <form id="pic-form">
-          <input type="file" class="file-upload" name="file" accept="image/*"/>
+        <form id="pic-form" action="/api/changeProfilePicture" method="post" enctype="multipart/form-data">
+          <input type="file" class="file-upload" name="image" accept="image/*"/>
           <button id="pic-submit" type="submit">
             Upload
           </button>

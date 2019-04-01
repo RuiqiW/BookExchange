@@ -57,7 +57,6 @@ app.get('/login', (req, res) => {
 
 app.get('/api/search/:keyword', (req, res) => {
     const keyword = req.params.keyword;
-    console.log("dsjakd");
     //TODO: currently just find anything in the database, need to be fixed once have a dataset
     Post.find().then((result) => {
         const payload = {result: result};
@@ -396,9 +395,20 @@ app.post('/api/changeProfilePicture', upload.single("image"), (req, res) => {
     if (!req.session.user) {
         res.status(401).send();
     }
-    User.find({username: req.session.user}).then((user) => {
-        console.log(req.file);
-        res.status(200).send();
+    User.findOne({username: req.session.user}).then((user) => {
+        user.avatar = "/" + req.file.path;
+        user.save().then((newUser) => {
+            res.send({user: newUser});
+        });
+    })
+});
+
+app.get("/api/getCurrentUser", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+    }
+    User.findOne({username: req.session.user}).then((user) => {
+        res.send({user: user});
     })
 });
 
