@@ -79,8 +79,7 @@ chatCreateButton.addEventListener('click', addNewChat);
 function addNewChat(e) {
     e.preventDefault();
     const keyword = document.querySelector('#userToChat').value;
-    if (keyword !== '') {
-
+    if (keyword !== '' || keyword === thisUser) {
         // find if the user to chat exists
         const userRequest = new Request(`/api/user/${keyword}`, {
             method: 'get',
