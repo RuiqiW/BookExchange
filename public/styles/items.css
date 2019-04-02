@@ -85,6 +85,8 @@ body {
     min-width: 500px;
     margin-right: 100px;
     background-color: #e6ecf0;
+    -ms-flex: 75%; /* IE10 */
+    flex: 75%;
 }
 
 .post{
@@ -92,9 +94,13 @@ body {
     max-width: 800px;
     min-width: 500px;
     background-color: white;
-    margin-top: 10px;
+    margin-left: 40px;
     margin-bottom: 10px;
     border-radius: 10px;
+    padding-top: 10px;
+    padding-right: 16px;
+    padding-bottom: 10px;
+    padding-left: 10px;
 }
 
 #result{
@@ -149,7 +155,7 @@ body {
     float: right;
     position: relative;
     right: 10px;
-    top: -62px;
+    top: -25px;
     font-weight: bold;
 }
 
@@ -206,13 +212,12 @@ body {
     border: 1px solid grey;
     background-color: white;
     border-radius: 10px;
-
+    margin-left: 40px;
 }
 
 #sortingOption {
     position: relative;
     left: 10px;
-
 }
 
 #signIn {

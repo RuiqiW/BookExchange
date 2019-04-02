@@ -181,15 +181,15 @@ function generatePost(post, user) {
                 +date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
             postDiv.appendChild(timeSpan);
 
-            const descriptionDiv = document.createElement("div");
-            descriptionDiv.className = "description";
-            descriptionDiv.appendChild(document.createTextNode(post.description));
-            postDiv.appendChild(descriptionDiv);
-
             const priceDiv = document.createElement("div");
             priceDiv.className = "price";
             priceDiv.appendChild(document.createTextNode("CAD " + post.price));
             postDiv.appendChild(priceDiv);
+
+            const descriptionDiv = document.createElement("div");
+            descriptionDiv.className = "description";
+            descriptionDiv.appendChild(document.createTextNode(post.description));
+            postDiv.appendChild(descriptionDiv);
 
             if (post.image.length > 0) {
                 const pictureContainer = document.createElement("div");

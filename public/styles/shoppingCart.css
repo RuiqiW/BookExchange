@@ -153,7 +153,6 @@ body {
     position: relative;
     right: 10px;
     top: -25px;
-
     font-weight: bold;
 }
 
@@ -197,19 +196,12 @@ body {
     width: 100px;
     height: 100px;
     margin-top: 10px;
+    display: inline-block;
+    margin-left: 75px;
 }
 
 .itemPicture:hover {
     cursor: url("../images/magnifyingGlass.cur"), pointer;
-}
-
-#endOfResults{
-    text-align: center;
-    padding: 5px;
-    border: 1px solid grey;
-    background-color: white;
-    border-radius: 10px;
-
 }
 
 #emptyInformation {
@@ -434,9 +426,4 @@ span.total {
 .button.-flower {
     color: #FE8CDF;
     background: var(--color-flower);
-}
-
-.itemPicture{
-    display: inline-block;
-    margin-left: 75px;
 }
