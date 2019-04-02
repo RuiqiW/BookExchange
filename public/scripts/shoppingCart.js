@@ -11,7 +11,10 @@ for (let i = 0; i<removeButtons.length;i++) {
 function removeCartItem(e) {
     const target = e.target;
     const posts = document.querySelector("#posts");
+    posts.removeChild(target.parentElement.previousElementSibling);
     posts.removeChild(target.parentElement);
+    updateOrderSummary();
+
     //Make a server call to remove the item
     //Check whether the shopping cart is empty, replace with an
     // information if there is no item in shopping cart.
