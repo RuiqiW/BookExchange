@@ -16,6 +16,7 @@ free.addEventListener("click", handleFree);
 
 function handleFree(event) {
     if (event.target.checked) {
+        price.value = "";
         price.placeholder = "Free";
     } else {
         price.placeholder = "10"
