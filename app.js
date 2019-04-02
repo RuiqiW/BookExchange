@@ -598,6 +598,43 @@ app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
     });
 });
 
+app.get("/api/dashboard/users", adminAuthenticate, (req, res) => {
+    User.find().then((users) => {
+        if(!users){
+            res.status(404).send();
+        }else{
+            res.send(users);
+        }
+    }).catch((error)=> {
+        res.status(500).send();
+    });
+});
+
+app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
+
+    const username = req.params.user;
+    User.findOneAndDelete({username: username}).then((user) => {
+        if(!user){
+            res.status(404).send();
+        }else{
+            if(user.isAdmin){
+              res.status(605).send();
+            }else{
+                User.find().then((users) => {
+                    if(!users){
+                        res.status(404).send();
+                    }else{
+                        res.send({userNum : users.length});
+                    }
+                })
+            }
+        }
+    }).catch((error)=> {
+        res.status(500).send();
+    });
+});
+
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
 });

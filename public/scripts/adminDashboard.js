@@ -6,18 +6,14 @@ let shownUserNum = 0;
 
 // load data on DOM loaded, will use database query instead in Phase 2
 document.addEventListener('DOMContentLoaded', function () {
-    // loadUserNum();
     // loadTransactionNum();
     loadMessageNum();
     // loadTransaction();
     loadPost();
-    // loadUserList();
+    loadUserList();
 
 });
 
-function loadUserNum() {
-    document.querySelector('#userData').innerText = users.length;
-}
 
 function loadTransactionNum() {
     document.querySelector('#transactionData').innerText = transactions.reduce((total, transaction) =>
@@ -106,12 +102,32 @@ function loadPost() {
 
 
 function loadUserList() {
-    const length = Math.min(users.length - shownUserNum, 3);
-    for (let i = 0; i < length; i++) {
-        const userEntry = createUserEntry(users[i + shownUserNum]);
-        userTable.appendChild(userEntry);
-    }
-    shownUserNum += length;
+    const request = new Request("/api/dashboard/users", {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            return res.json()
+        } else {
+            document.querySelector('#userData').innerText = 0;
+        }
+    }).then((users) => {
+        document.querySelector('#userData').innerText = users.length;
+        const length = Math.min(users.length - shownUserNum, 3);
+        for (let i = 0; i < length; i++) {
+            const userEntry = createUserEntry(users[i + shownUserNum]);
+            userTable.appendChild(userEntry);
+        }
+        shownUserNum += length;
+
+    }).catch((error) => {
+    })
 }
 
 
@@ -185,7 +201,7 @@ function deleteItem(e) {
                 // remove post in DOM
                 removePost(e);
                 window.alert("You have deleted this post.");
-            }else {
+            } else {
                 window.alert("Fail to delete this post.");
             }
         }).catch((error) => {
@@ -367,22 +383,36 @@ function deleteUserEntry(e) {
 
     if (window.confirm("Do you want to delete this user?")) {
 
-        // get userId
+        // get username
         const user = e.target.parentElement.parentElement;
         const usernameContainer = user.firstElementChild.lastElementChild.firstElementChild;
         const username = usernameContainer.innerText;
-        // delete user from users array, will need server in Phase 2
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].user.username === username) {
-                users.splice(i, 1);
-                break;
-            }
-        }
 
-        // remove post in DOM
-        removeUser(e);
-        loadUserNum();
-        window.alert("You have deleted this user.");
+        const request = new Request(`/api/dashboard/user/${username}`, {
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+
+        fetch(request).then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            } else if (res.status === 605) {
+                window.alert("You cannot delete yourself.");
+            } else {
+                window.alert("Fail to delete this user.");
+            }
+        }).then((json) => {
+                // remove post in DOM
+                removeUser(e);
+                window.alert("You have deleted this user.");
+                document.querySelector('#userData').innerText = parseInt(json.userNum);
+            }
+        ).catch((error) => {
+        })
     }
 }
 
@@ -421,7 +451,7 @@ function createUserEntry(user) {
     userContainer.appendChild(userContent);
 
     const username = document.createElement('strong');
-    username.innerText = user.user.username;
+    username.innerText = user.username;
     userContent.appendChild(username);
 
     const bio = document.createElement('p');
