@@ -276,12 +276,8 @@ function viewUserDetail(e) {
     e.preventDefault();
 
     const userToView = e.target.parentElement.parentElement.id;
-    localStorage.setItem("viewUserProfile", userToView);
-    // const request = new Request(`/api/dashboard/profile/${userToView}`, {
-    //     method: 'get'
-    // });
-
-    window.location = "/pages/userProfile.html";
+    sessionStorage.setItem("viewUserProfile", userToView);
+    window.open( "/pages/userProfile.html");
 }
 
 
