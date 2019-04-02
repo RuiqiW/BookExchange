@@ -1,3 +1,4 @@
+const thisUser = "will"; //TODO: get current user from cookie
 
 let num_posts = 0;
 
@@ -205,41 +206,12 @@ function generatePost(post, user) {
 
             postDiv.appendChild(document.createElement("hr"));
 
-            if (user.shortlist.filter((post) => {
-                return post._id === postDiv.id;
-            }).length === 0) {
-                const removeButton = document.createElement("button");
-                removeButton.className = "addToCart";
-                removeButton.appendChild(document.createTextNode("Add to Cart"));
-                removeButton.addEventListener("click", addToCart);
-                postDiv.appendChild(removeButton);
-            } else {
-                const addButton = document.createElement("button");
-                addButton.className = "removeFromCart";
-                addButton.appendChild(document.createTextNode("Remove from Cart"));
-                addButton.addEventListener("click", removeFromCart);
-                postDiv.appendChild(addButton);
-            }
-
             const contactSeller = document.createElement("button");
             contactSeller.className = "contactSeller";
             contactSeller.addEventListener("click", contactTheSeller);
-            contactSeller.appendChild(document.createTextNode("Contact Seller"));
-
-            if (user.isAdmin) {
-                const deletePost = document.createElement("button");
-                deletePost.className = "deletePost";
-                deletePost.appendChild(document.createTextNode("Delete this post"));
-                postDiv.appendChild(deletePost);
-            } else {
-                const buyItem = document.createElement("button");
-                buyItem.className = "buyItem";
-                buyItem.appendChild(document.createTextNode("Buy this item"));
-                buyItem.addEventListener("click", buyItem);
-                postDiv.appendChild(buyItem);
-            }
-
+            contactSeller.appendChild(document.createTextNode("Contact Seller");
             postDiv.appendChild(contactSeller);
+
             resolve(postDiv);
         }).catch((error) => {
             console.log(error);
@@ -250,77 +222,7 @@ function generatePost(post, user) {
 
 init();
 
-function addToCart(e) {
-    const postId = e.target.parentElement.id;
-    const request = new Request("/api/addToCart/" + postId, {
-        method: 'post',
-    });
-    fetch(request).then((newUser) => {
-        return newUser.json()
-    }).then((newUser) => {
-        updateShoppingCart(newUser.user.shortlist.length);
-        //Change the button to remove the item from shopping cart.
-        e.target.className = "removeFromCart";
-        e.target.innerHTML = "";
-        e.target.appendChild(document.createTextNode("Remove from Cart"));
-        e.target.removeEventListener("click", addToCart);
-        e.target.addEventListener("click", removeFromCart);
-        user = newUser.user;
-        updateShoppingCart(user.shortlist.length);
-    });
-}
-
-function removeFromCart(e) {
-    const postId = e.target.parentElement.id;
-    const request = new Request("/api/removeFromCart/" + postId, {
-        method: 'delete',
-    });
-    fetch(request).then((newUser) => {
-        return newUser.json()
-    }).then((newUser) => {
-        updateShoppingCart(newUser.newUser.shortlist.length);
-        //Change the button to remove the item from shopping cart.
-        e.target.className = "addToCart";
-        e.target.innerHTML = "";
-        e.target.appendChild(document.createTextNode("Add to Cart"));
-        e.target.removeEventListener("click", removeFromCart);
-        e.target.addEventListener("click", addToCart);
-        user = newUser.newUser;
-    });
-}
-
-const makePostButton = document.querySelector("#makePostButton");
-makePostButton.addEventListener("click", makePost);
-
-function makePost(e) {
-    //Here should be some code check whether user is logged in
-    //If not logged in, should jump to login page
-    //Here simply jump to make post page
-    document.location = "./post-ad.html";
-}
-
-const buyItemButtons = document.querySelectorAll(".buyItem");
-for (let i = 0; i < buyItemButtons.length; i++) {
-    buyItemButtons[i].addEventListener("click", buyItem);
-}
-
-function buyItem(e) {
-    //Server call to update the shopping cart of user
-    // Here just use user0
-    const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
-    //Should make a server call to fetch the post, here just use the hardcoded posts array
-    const post = posts.filter(x => x.postId === postId)[0];
-    if (!post.byCreditCard) {
-        alert("The seller want you to pay him/her directly, please contact the seller!");
-    } else {
-        // jump to the credit card page
-        document.location = "./payment.html";
-        //Make a server call to submit the credit card Number and the postId!
-    }
-}
-
-
-/*********************** Contact Seller by User "user" ************************/
+/*********************** Contact Seller by User ************************/
 
 function contactTheSeller(e) {
     e.preventDefault();
@@ -338,17 +240,21 @@ function contactTheSeller(e) {
     fetch(postRequest).then((res) => {
         if (res.status === 200) {
             return res.json();
-        }else if(res.status === 605){
-            window.alert("This is your item.");
-        }else{
+        }else {
             window.alert("Seller not found.");
         }
     }).then((json) => {
         const keyword = json.username;
 
+        if(keyword === thisUser){
+            window.alert("This is your item.");
+            return;
+        }
+
         // find if the user to chat exists
         const newChat = {
-            user1: keyword
+            user1: thisUser,
+            user2: keyword
         };
 
         const request = new Request("/api/createChat", {
@@ -373,86 +279,5 @@ function contactTheSeller(e) {
             chatRoom.style.display = "block";
         })
     })
+
 }
-
-const searchButton = document.querySelector("#searchButton");
-searchButton.addEventListener("click", searching);
-
-//TODO: FIX THIS!!!
-function searching(e) {
-    e.preventDefault();
-    //Server call to request search result, here just jump to the item.html;
-    document.location = "../pages/items.html";
-}
-
-/*********************** Drop down select ************************/
-
-// the select drop down box with 3 search options
-const x = document.getElementsByClassName("custom-select");
-for (let i = 0; i < x.length; i++) {
-    const selElmnt = x[i].getElementsByTagName("select")[0];
-    // for each element, create a div DIV that will act as the selected item
-    const a = document.createElement("div");
-    a.setAttribute("class", "select-selected");
-    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-    x[i].appendChild(a);
-    // for each element, create a new div that will contain the option list
-    const b = document.createElement("div");
-    b.setAttribute("class", "select-items select-hide");
-    for (let j = 1; j < selElmnt.length; j++) {
-        // for each option in the original select element, create a new div that will act as an option item
-        const c = document.createElement("div");
-        c.innerHTML = selElmnt.options[j].innerHTML;
-        c.addEventListener("click", function (e) {
-            // when an item is clicked, update the original select box and the selected item
-            const s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-            const h = this.parentNode.previousSibling;
-            for (let l = 0; l < s.length; l++) {
-                if (s.options[l].innerHTML === this.innerHTML) {
-                    s.selectedIndex = l;
-                    h.innerHTML = this.innerHTML;
-                    const y = this.parentNode.getElementsByClassName("same-as-selected");
-                    for (let k = 0; k < y.length; k++) {
-                        y[k].removeAttribute("class");
-                    }
-                    this.setAttribute("class", "same-as-selected");
-                    break;
-                }
-            }
-            h.click();
-        });
-        b.appendChild(c);
-    }
-    x[i].appendChild(b);
-    a.addEventListener("click", function (e) {
-        // when the select box is clicked, close any other select boxes and open/close the current select box
-        e.stopPropagation();
-        closeAllSelect(this);
-        this.nextSibling.classList.toggle("select-hide");
-        this.classList.toggle("select-arrow-active");
-    });
-}
-
-// closes the select box
-function closeAllSelect(elmnt) {
-    /*a function that will close all select boxes in the document,
-    except the current select box:*/
-    const arrNo = [];
-    const x = document.getElementsByClassName("select-items");
-    const y = document.getElementsByClassName("select-selected");
-    for (let i = 0; i < y.length; i++) {
-        if (elmnt === y[i]) {
-            arrNo.push(i)
-        } else {
-            y[i].classList.remove("select-arrow-active");
-        }
-    }
-    for (let j = 0; j < x.length; j++) {
-        if (arrNo.indexOf(j)) {
-            x[j].classList.add("select-hide");
-        }
-    }
-}
-
-// Close all select boxes if the user clickes outside of the box
-document.addEventListener("click", closeAllSelect);

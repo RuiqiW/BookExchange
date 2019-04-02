@@ -243,11 +243,6 @@ function makePost(e) {
     document.location = "./post-ad.html";
 }
 
-const deleteItemButtons = document.querySelectorAll(".deleteItem");
-for (let i = 0; i < deleteItemButtons.length; i++) {
-    deleteItemButtons[i].addEventListener("click", deleteAnItem);
-}
-
 // TODO: implement func
 function deleteAnItem(e) {
     //Server call to update the shopping cart of user
@@ -266,12 +261,6 @@ function deleteAnItem(e) {
 
 
 /*********************** Mark an item as sold ************************/
-
-const soldItemButton = document.querySelectorAll('.soldItem');
-
-for (let i = 0; i < soldItemButton.length; i++) {
-    soldItemButton[i].addEventListener("click", soldAnItem);
-}
 
 // TODO: implement func
 function soldAnItem(e) {

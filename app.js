@@ -763,7 +763,7 @@ app.get("/api/isLogin", (req, res) => {
 app.post('/api/createTransaction', (req, res) => {
     const buyer = req.body.username.trim();
 
-    /*const newTransaction = new Transaction({
+    /*const  `newTransaction = new Transaction({
         postId: ,
         date: ,
         isComplete: true,
