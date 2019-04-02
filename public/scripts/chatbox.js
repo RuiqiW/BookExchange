@@ -15,11 +15,7 @@ function showChatRecords(e) {
     e.preventDefault();
     if (shownChatRecords === false) {
         const request = new Request("/api/allChats", {
-            method: 'get',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
+            method: 'get'
         });
         fetch(request).then((res) => {
             if (res.status === 200) {
@@ -84,11 +80,7 @@ function addNewChat(e) {
     if (keyword !== '') {
         // find if the user to chat exists
         const userRequest = new Request(`/api/user/${keyword}`, {
-            method: 'get',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
+            method: 'get'
         });
 
         fetch(userRequest).then((res) => {
@@ -140,11 +132,7 @@ function showChatRoom(e) {
 
     if (userToChat !== '') {
         const request = new Request(`/api/startChat/${userToChat}`, {
-            method: 'get',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
+            method: 'get'
         });
         fetch(request).then((res) => {
             if (res.status === 200) {
@@ -274,11 +262,7 @@ function addReceivedMessage(msg) {
 setTimeout(function updateChat() {
     if (shownChatRoom === true) {
         const request = new Request(`/api/chat/${currentChatId}`, {
-            method: 'get',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
+            method: 'get'
         });
         fetch(request).then((res) => {
             if (res.status === 200) {

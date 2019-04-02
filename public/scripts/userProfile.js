@@ -1,59 +1,3 @@
-const thisUser = "will";
-
-// /*********************** Navigation Button ************************/
-//
-// const chatShow = document.querySelector("#chatShow");
-// const chatHide = document.querySelector("#chatHide");
-// chatHide.addEventListener('click', hideChatRoom);
-// chatShow.addEventListener('click', showChatRoom);
-//
-// // show the chatroom
-// function showChatRoom(e) {
-//     e.preventDefault();
-//     const chatRoom = document.querySelector('#chatRoom');
-//     chatRoom.style.display = "block";
-// }
-//
-// // hide the chatroom
-// function hideChatRoom(e) {
-//     e.preventDefault();
-//     const chatRoom = document.querySelector('#chatRoom');
-//     chatRoom.style.display = "none";
-// }
-//
-// /*********************** Chat Box ************************/
-//
-// const chat = document.querySelector('#chat');
-// const sendButton = document.querySelector("#sendButton");
-// sendButton.addEventListener('click', sendMessage);
-//
-// // sends messages
-// function sendMessage(e) {
-//     e.preventDefault();
-//
-//     if (e.target.classList.contains("submit")) {
-//         const message = document.querySelector("#messageBox").value;
-//         if (message.length > 0 && message.length < 200) {
-//             addMessage(message);
-//         }
-//     }
-//     chat.scrollTop = chat.scrollHeight;
-// }
-//
-//
-// // helper function for sendMessage, add message to chat window
-// function addMessage(msg) {
-//     const newMessage = document.createElement('p');
-//     newMessage.className = "chatOutText";
-//     newMessage.innerText = msg;
-//     const bubble = document.createElement('div');
-//     bubble.className = "chatOutBubble";
-//     bubble.appendChild(newMessage);
-//     const messageContainer = document.createElement('div');
-//     messageContainer.appendChild(bubble);
-//     chat.appendChild(messageContainer);
-// }
-
 /*********************** Edit Profile Info By Clicking the Edit Buttons ************************/
 
 const profile = document.querySelector('#profile');
@@ -119,7 +63,7 @@ function addInfoTextBox(infoElement) {
     // Modify info
     const infoTextBox = document.createElement('input');
     infoTextBox.type = 'text';
-    if(infoElement.parentElement.className === "boxed") {
+    if (infoElement.parentElement.className === "boxed") {
         infoTextBox.className = "fill";
     }
     infoTextBox.value = infoElement.innerText;
@@ -134,7 +78,7 @@ function addInfoTextArea(infoElement) {
     const infoTextBox = document.createElement('textArea');
     infoTextBox.setAttribute("rows", "5");
     infoTextBox.setAttribute("cols", "40");
-    if(infoElement.parentElement.className === "boxed") {
+    if (infoElement.parentElement.className === "boxed") {
         infoTextBox.className = "fill";
     }
     infoTextBox.value = infoElement.innerText;
@@ -146,7 +90,7 @@ function addInfoTextArea(infoElement) {
 // Remove the text boxes, this is for phone number
 function removeInfoTextBox(infoElement) {
     const newElement = document.createElement('span');
-    const request = new Request("/api/updatePhoneNumber/"+infoElement.value.trim(), {
+    const request = new Request("/api/updatePhoneNumber/" + infoElement.value.trim(), {
         method: "post"
     });
     fetch(request).catch((error) => {
@@ -160,7 +104,7 @@ function removeInfoTextBox(infoElement) {
 // Remove the text boxes
 function removeInfoTextArea(infoElement) {
     const newElement = document.createElement('span');
-    const request = new Request("/api/updateBio/"+infoElement.value.trim(), {
+    const request = new Request("/api/updateBio/" + infoElement.value.trim(), {
         method: "post"
     });
     fetch(request).catch((error) => {
@@ -174,23 +118,23 @@ function removeInfoTextArea(infoElement) {
 
 // closes the select box
 function closeAllSelect(elmnt) {
-  /*a function that will close all select boxes in the document,
-  except the current select box:*/
-  const arrNo = [];
-  const x = document.getElementsByClassName("select-items");
-  const y = document.getElementsByClassName("select-selected");
-  for (let i = 0; i < y.length; i++) {
-    if (elmnt === y[i]) {
-      arrNo.push(i)
-    } else {
-      y[i].classList.remove("select-arrow-active");
+    /*a function that will close all select boxes in the document,
+    except the current select box:*/
+    const arrNo = [];
+    const x = document.getElementsByClassName("select-items");
+    const y = document.getElementsByClassName("select-selected");
+    for (let i = 0; i < y.length; i++) {
+        if (elmnt === y[i]) {
+            arrNo.push(i)
+        } else {
+            y[i].classList.remove("select-arrow-active");
+        }
     }
-  }
-  for (let j = 0; j < x.length; j++) {
-    if (arrNo.indexOf(j)) {
-      x[j].classList.add("select-hide");
+    for (let j = 0; j < x.length; j++) {
+        if (arrNo.indexOf(j)) {
+            x[j].classList.add("select-hide");
+        }
     }
-  }
 }
 
 // Close all select boxes if the user clickes outside of the box
@@ -199,7 +143,7 @@ document.addEventListener("click", closeAllSelect);
 /*********************** Display an User Object's Profile Info from an Array of Users ************************/
 
 // Load a user profile by creating new DOM elements from a user profile to replace the default DOM elements
-function loadUserProfile(currUser){
+function loadUserProfile(currUser) {
     // change the src of the profile picture
     const currPic = profilePic.getElementsByTagName('img')[0];
     currPic.src = currUser.avatar;
@@ -264,9 +208,16 @@ function init() {
         return result.json();
     }).then((json) => {
         const user = json.user;
-        loadUserProfile(user);
+        if (!user.isAdmin) {
+            loadUserProfile(user);
+        }else{
+            loadUserProfile(localStorage.getItem("viewUserProfile"));
+            localStorage.removeItem("viewUserProfile");
+        }
+
     })
 }
+
 init();
 
 /*********************** Jump to the Posts I Made ************************/
