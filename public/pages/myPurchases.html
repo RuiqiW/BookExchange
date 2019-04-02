@@ -46,29 +46,7 @@
         <img id="topBarLogo" src="../images/logo.png" alt="logo">
     </a>
 
-    <!-Drop down box for select option->
-    <div id="searchOption">
-        <div class="custom-select">
-            <select>
-                <option value="0">Select</option>
-                <option value="1">ISBN</option>
-                <option value="2">Title</option>
-                <option value="3">Author</option>
-            </select>
-        </div>
-    </div>
-
-    <form id="searchForm">
-        <input id="searchBox" type="text" placeholder="Search here...">
-        <button id="searchButton" type="submit">
-            <span id="searchButtonText">Search</span>
-        </button>
-    </form>
-
     <div id="topBarIcons">
-
-        <button id="makePostButton">Make My Post</button>
-        <!--This is used to hold the user icon after login-->
 
         <div id="chatShow" class="topBarImageContainer dropdown">
             <img class="topBarImage" id="chatShowButton" src="../images/admin/chat.png" alt="chatPlaceholder">
@@ -127,7 +105,7 @@
 
 <div id="resultPage">
     <div id="searchResult">
-        Following is the search result for <span id="result">textbook </span>......
+        Following is your purchase history ......
     </div>
     <select id="sortingOption">
         <option value="timeNewToOld">Sorting by Posting time(New to Old)</option>
@@ -150,8 +128,6 @@
                 more information!
             </div>
             <hr>
-            <button class="addToCart">Add to Cart</button>
-            <button class="buyItem"> Buy this item</button>
             <button class="contactSeller">Contact the Seller</button>
         </div>
         <div class="post">
@@ -173,12 +149,7 @@
                 </a>
             </div>
             <hr>
-            <button class="addToCart">Add to Cart</button>
-            <button class="buyItem"> Buy this item</button>
             <button class="contactSeller">Contact the Seller</button>
-        </div>
-        <div id="endOfResults">
-            End of results
         </div>
     </div>
 </div>

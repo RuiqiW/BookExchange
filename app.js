@@ -724,7 +724,7 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
 app.post('/api/createTransaction', (req, res) => {
     const buyer = req.body.username.trim();
 
-    /*const newTransaction = new Transaction({
+    /*const  `newTransaction = new Transaction({
         postId: ,
         date: ,
         isComplete: true,
