@@ -721,16 +721,8 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
     });
 });
 
-app.get("/api/dashboard/profile/:user", adminAuthenticate, (req, res) => {
-    const username = req.params.user;
-    User.findOne({username: username}).then((user) => {
-        if (!user) {
-            res.status(404).send();
-        } else {
-            console.log("sdajkdsaj");
-            res.redirect('/login');
-        }
-    })
+app.get("/userProfile", (req, res) => {
+   res.sendFile(__dirname + "/public/pages/userProfile.html");
 });
 
 app.get("/api/logout", (req, res) => {

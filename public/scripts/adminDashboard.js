@@ -277,11 +277,11 @@ function viewUserDetail(e) {
 
     const userToView = e.target.parentElement.parentElement.id;
     localStorage.setItem("viewUserProfile", userToView);
-    const request = new Request(`/api/dashboard/profile/${userToView}`, {
-        method: 'get'
-    });
+    // const request = new Request(`/api/dashboard/profile/${userToView}`, {
+    //     method: 'get'
+    // });
 
-    fetch(request);
+    window.location = "/pages/userProfile.html";
 }
 
 

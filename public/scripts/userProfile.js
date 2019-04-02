@@ -211,8 +211,14 @@ function init() {
         if (!user.isAdmin) {
             loadUserProfile(user);
         }else{
-            loadUserProfile(localStorage.getItem("viewUserProfile"));
-            localStorage.removeItem("viewUserProfile");
+            console.log(localStorage.getItem("viewUserProfile"));
+            const request = new Request("/api/getUser/" +localStorage.getItem("viewUserProfile"));
+            fetch(request).then((result) => {
+                return result.json();
+            }).then((json) => {
+                const user = json.result;
+                loadUserProfile(user);
+            });
         }
 
     })
