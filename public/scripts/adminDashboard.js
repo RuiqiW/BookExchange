@@ -7,13 +7,13 @@ let shownUserNum = 2;
 
 // load data on DOM loaded, will use database query instead in Phase 2
 document.addEventListener('DOMContentLoaded', function () {
-    loadUserNum();
-    loadPostNum();
-    loadTransactionNum();
+    // loadUserNum();
+    // loadPostNum();
+    // loadTransactionNum();
     loadMessageNum();
-    loadTransaction();
-    loadPost();
-    loadUserList();
+    // loadTransaction();
+    // loadPost();
+    // loadUserList();
 
 });
 
@@ -31,7 +31,7 @@ function loadTransactionNum() {
 }
 
 function loadMessageNum() {
-    const request = new Request(`/api/allChats/${thisUser}`, {
+    const request = new Request("/api/allChats", {
         method: 'get',
         headers: {
             'Accept': 'application/json, text/plain, */*',
