@@ -219,6 +219,8 @@ function init() {
                 const user = json.result;
                 loadUserProfile(user);
             });
+            const rightNav = document.querySelector("#rightNav");
+            rightNav.style.display = "none";
         }
 
     })

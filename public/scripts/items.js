@@ -77,22 +77,43 @@ function init() {
                 posts = json.result;
             }
             if (isRealUser) {
-                const cartNumber = user.shortlist.length;
-                updateShoppingCart(cartNumber);
-                const signInDiv = document.querySelector("#signIn");
-                signInDiv.removeChild(signInDiv.lastElementChild);
+                if (!user.isAdmin) {
+                    const cartNumber = user.shortlist.length;
+                    updateShoppingCart(cartNumber);
+                    const signInDiv = document.querySelector("#signIn");
+                    signInDiv.removeChild(signInDiv.lastElementChild);
 
-                const a = document.createElement("a");
-                a.setAttribute("href", "/pages/userProfile.html");
-                const imageContainer = document.createElement("div");
-                imageContainer.className = "topBarImageContainer";
-                const image = document.createElement("img");
-                image.className = "profileImage";
-                image.setAttribute("src", user.avatar);
-                imageContainer.appendChild(image);
-                a.appendChild(imageContainer);
-                imageContainer.appendChild(image);
-                signInDiv.appendChild(a);
+                    const a = document.createElement("a");
+                    a.setAttribute("href", "/pages/userProfile.html");
+                    const imageContainer = document.createElement("div");
+                    imageContainer.className = "topBarImageContainer";
+                    const image = document.createElement("img");
+                    image.className = "profileImage";
+                    image.setAttribute("src", user.avatar);
+                    imageContainer.appendChild(image);
+                    a.appendChild(imageContainer);
+                    imageContainer.appendChild(image);
+                    signInDiv.appendChild(a);
+                } else {
+                    const signInDiv = document.querySelector("#signIn");
+                    signInDiv.removeChild(signInDiv.lastElementChild);
+
+                    const a = document.createElement("a");
+                    a.setAttribute("href", "/pages/adminDashboard.html");
+                    const imageContainer = document.createElement("div");
+                    imageContainer.className = "topBarImageContainer";
+                    const image = document.createElement("img");
+                    image.className = "dashboardImage";
+                    image.setAttribute("src", "/images/dashboard.svg");
+                    imageContainer.appendChild(image);
+                    a.appendChild(imageContainer);
+                    imageContainer.appendChild(image);
+                    signInDiv.appendChild(a);
+                    const makePost = document.querySelector("#makePost");
+                    const myCart = document.querySelector("#myCart");
+                    makePost.style.display = "none";
+                    myCart.style.display = "none";
+                }
             } else {
                 // hide the logout button if the user is not logged in
                 const logout = document.querySelector("#logOut");
@@ -257,7 +278,11 @@ function addToCart(e) {
         method: 'post',
     });
     fetch(request).then((newUser) => {
-        return newUser.json()
+        if (newUser.status === 401) {
+            window.location = '/login';
+        } else {
+            return newUser.json();
+        }
     }).then((newUser) => {
         updateShoppingCart(newUser.user.shortlist.length);
         //Change the button to remove the item from shopping cart.
@@ -277,7 +302,11 @@ function removeFromCart(e) {
         method: 'delete',
     });
     fetch(request).then((newUser) => {
-        return newUser.json()
+        if (newUser.status === 401) {
+            window.location = '/login';
+        } else {
+            return newUser.json();
+        }
     }).then((newUser) => {
         updateShoppingCart(newUser.newUser.shortlist.length);
         //Change the button to remove the item from shopping cart.

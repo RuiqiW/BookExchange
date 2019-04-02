@@ -187,7 +187,7 @@ app.get('/api/getUser/:username', (req, res) => {
 
 app.post("/api/addToCart/:postId", (req, res) => {
     if (!req.session.user) {
-        res.redirect("/login");
+        res.status(401).send();
     } else {
         if (!ObjectID.isValid(req.params.postId)) {
             res.status(600).send();
@@ -224,7 +224,7 @@ app.post("/api/addToCart/:postId", (req, res) => {
 
 app.delete("/api/removeFromCart/:postId", (req, res) => {
     if (!req.session.user) {
-        res.redirect("/login");
+        res.status(401).send();
     } else {
         console.log("sdddd");
         if (!ObjectID.isValid(req.params.postId)) {
@@ -454,7 +454,7 @@ app.post('/api/loadChat/:chatId',authenticate, (req, res) => {
 
 app.post('/api/changeProfilePicture', upload.single("image"), (req, res) => {
     if (!req.session.user) {
-        res.redirect("/login");
+        res.status(401).send();
     }
     User.findOne({username: req.session.user}).then((user) => {
         user.avatar = "/" + req.file.path;
@@ -466,7 +466,7 @@ app.post('/api/changeProfilePicture', upload.single("image"), (req, res) => {
 
 app.get("/api/getCurrentUser", (req, res) => {
     if (!req.session.user) {
-        res.redirect("/login");
+        res.status(401).send();
     } else {
         User.findOne({username: req.session.user}).then((user) => {
             res.send({user: user});
@@ -496,7 +496,7 @@ app.post("/api/updatePhoneNumber/:newNumber", (req, res) => {
     const newNumber = req.params.newNumber;
     console.log(newNumber);
     if (!req.session.user) {
-        res.redirect("/login");
+        res.status(401).send();
     }
     if (isNaN(parseInt(newNumber)) || newNumber.trim().length !== 10) {
         res.status(600).send();
@@ -515,7 +515,7 @@ app.post("/api/updatePhoneNumber/:newNumber", (req, res) => {
 app.post("/api/updateBio/:newBio", (req, res) => {
     const newBio = req.params.newBio;
     if (!req.session.user) {
-        res.redirect("/login");
+        res.status(401).send();
     }
     User.findOne({username: req.session.user}).then((user) => {
         user.bio = newBio;
@@ -530,7 +530,7 @@ app.post("/api/updateBio/:newBio", (req, res) => {
 
 app.post("/api/updatePayment/:newPayment", (req, res) => {
     if (!req.session.user) {
-        res.redirect("/login");
+        res.status(401).send();
     }
     const newPayment = req.params.newPayment;
     console.log(newPayment);

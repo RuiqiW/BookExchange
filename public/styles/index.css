@@ -143,5 +143,9 @@ a {
     border-style: solid;
 }
 
+.dashboardImage {
+    height: 50px;
+    width: 50px;
+}
 
 

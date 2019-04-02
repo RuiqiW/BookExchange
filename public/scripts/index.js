@@ -66,18 +66,33 @@ function init() {
         updateShoppingCart(cartNumber);
         const signInDiv = document.querySelector("#signIn");
         signInDiv.removeChild(signInDiv.lastElementChild);
-
-        const a = document.createElement("a");
-        a.setAttribute("href", "/pages/userProfile.html");
-        const imageContainer = document.createElement("div");
-        imageContainer.className = "topBarImageContainer";
-        const image = document.createElement("img");
-        image.className = "profileImage";
-        image.setAttribute("src", user.avatar);
-        imageContainer.appendChild(image);
-        a.appendChild(imageContainer);
-        imageContainer.appendChild(image);
-        signInDiv.appendChild(a);
+        if (!user.isAdmin) {
+            const a = document.createElement("a");
+            a.setAttribute("href", "/pages/userProfile.html");
+            const imageContainer = document.createElement("div");
+            imageContainer.className = "topBarImageContainer";
+            const image = document.createElement("img");
+            image.className = "profileImage";
+            image.setAttribute("src", user.avatar);
+            imageContainer.appendChild(image);
+            a.appendChild(imageContainer);
+            imageContainer.appendChild(image);
+            signInDiv.appendChild(a);
+        } else {
+            const a = document.createElement("a");
+            a.setAttribute("href", "/pages/adminDashboard.html");
+            const imageContainer = document.createElement("div");
+            imageContainer.className = "topBarImageContainer";
+            const image = document.createElement("img");
+            image.className = "dashboardImage";
+            image.setAttribute("src", "/images/dashboard.svg");
+            imageContainer.appendChild(image);
+            a.appendChild(imageContainer);
+            imageContainer.appendChild(image);
+            signInDiv.appendChild(a);
+            const myCart = document.querySelector("#myCart");
+            myCart.style.display = "none";
+        }
     })
 }
 
