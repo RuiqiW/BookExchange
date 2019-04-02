@@ -14,7 +14,7 @@ const chatRecords = document.querySelector("#chatRecords");
 function showChatRecords(e) {
     e.preventDefault();
     if (shownChatRecords === false) {
-        const request = new Request(`/api/allChats/${thisUser}`, {
+        const request = new Request("/api/allChats", {
             method: 'get',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -92,8 +92,7 @@ function addNewChat(e) {
         fetch(userRequest).then((res) => {
             if (res.status === 200) {
                 const newChat = {
-                    user1: thisUser,
-                    user2: keyword
+                    user1: keyword
                 };
 
                 const request = new Request("/api/createChat", {
@@ -138,7 +137,7 @@ function showChatRoom(e) {
     }
 
     if (userToChat !== '') {
-        const request = new Request(`/api/chat/${thisUser}/${userToChat}`, {
+        const request = new Request(`/api/startChat/${userToChat}`, {
             method: 'get',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -178,7 +177,7 @@ function loadChatHistory(chatHistory) {
                 addReceivedMessage(chatHistory.messages[i].content);
             }
         }
-        const request = new Request(`/api/chat/${currentChatId}/${thisUser}`, {
+        const request = new Request(`/api/loadChat/${currentChatId}`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -293,7 +292,7 @@ setTimeout(function updateChat() {
                     addReceivedMessage(chatHistory.user1Messages[i].content);
                 }
             }
-            const request = new Request(`/api/chat/${currentChatId}/${thisUser}`, {
+            const request = new Request(`/api/loadChat/${currentChatId}`, {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
