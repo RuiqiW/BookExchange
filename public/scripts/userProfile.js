@@ -241,3 +241,19 @@ function jumpToPostIMade(e) {
     //Here just jump to items page directly.
     document.location = "../pages/myPosts.html";
 }
+
+/*********************** Jump to the Items I Bought ************************/
+
+// Jump to the purchases page
+const itemsIBought = document.querySelector("#itemsIBought");
+itemsIBought.addEventListener("click", jumpToItemsIBought);
+
+function jumpToItemsIBought(e) {
+    const userId = document.querySelector("#userId").innerHTML.trim();
+    console.log(userId);
+    //Make a server call and to find all the post this user have made,
+    //Which should be stored in the field "user.sell", use the generatePost function
+    // in item.js to generate all the result in the items page.
+    //Here just jump to items page directly.
+    document.location = "../pages/myPurchases.html";
+}

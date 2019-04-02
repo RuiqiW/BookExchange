@@ -321,13 +321,7 @@ function buyItem(e) {
 }
 
 
-/*********************** Contact Seller by User "user" for Phase 1 ************************/
-
-const contactButton = document.querySelectorAll('.contactSeller');
-
-for (let i = 0; i < contactButton.length; i++) {
-    contactButton[i].addEventListener("click", contactTheSeller);
-}
+/*********************** Contact Seller by User "user" ************************/
 
 function contactTheSeller(e) {
     e.preventDefault();
@@ -384,7 +378,6 @@ function contactTheSeller(e) {
             chatRoom.style.display = "block";
         })
     })
-
 }
 
 const searchButton = document.querySelector("#searchButton");

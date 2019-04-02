@@ -197,6 +197,7 @@ function init() {
 
                 const contactSeller = document.createElement("button");
                 contactSeller.className="contactSeller";
+                contactSeller.addEventListener("click", contactTheSeller);
                 contactSeller.appendChild(document.createTextNode("Contact the Seller"));
                 postDiv.appendChild(contactSeller);
 
@@ -243,7 +244,7 @@ function addMessage(msg) {
     chat.appendChild(messageContainer);
 }
 
-/*********************** Contact Seller by User "user" for Phase 1 ************************/
+/*********************** Contact Seller by User "user" ************************/
 
 // Show / Hide chatbox
 const chatShow = document.querySelector("#chatShow");
@@ -263,13 +264,61 @@ function hideChatRoom(e) {
     chatRoom.style.display = "none";
 }
 
-const contactButton = document.querySelectorAll('.contactSeller');
-
-// as explained in phase1.txt, we are showing how the button should behave from "user1 user1"'s post for phase 1
-contactButton[1].addEventListener("click", contactTheSeller);
-
 function contactTheSeller(e) {
-    showChatRoom(e);
+    e.preventDefault();
+
+    const postId = e.target.parentElement.id;
+
+    const postRequest = new Request(`/api/findSeller/${postId}`, {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    fetch(postRequest).then((res) => {
+        if (res.status === 200) {
+            return res.json();
+        }else {
+            window.alert("Seller not found.");
+        }
+    }).then((json) => {
+        const keyword = json.username;
+
+        if(keyword === thisUser){
+            window.alert("This is your item.");
+            return;
+        }
+
+        // find if the user to chat exists
+        const newChat = {
+            user1: thisUser,
+            user2: keyword
+        };
+
+        const request = new Request("/api/createChat", {
+            method: 'post',
+            body: JSON.stringify(newChat),
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+        fetch(request).then((res2) => {
+            if (res2.status === 200) {
+                return res2.json();
+            }
+        }).then((json) => {
+
+            loadChatHistory(json);
+            // set up chat box
+            const chatName = document.querySelector('#chatName');
+            chatName.innerText = keyword;
+            const chatRoom = document.querySelector('#chatRoom');
+            chatRoom.style.display = "block";
+        })
+    })
 }
 
 /*********************** Select Books for Checkout ************************/

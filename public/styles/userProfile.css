@@ -216,3 +216,17 @@
 .fill{
   width: 100%;
 }
+
+#itemsIBought {
+  background: transparent;
+  border-style: none;
+  outline: none;
+  text-decoration: underline;
+  color: mediumpurple;
+}
+
+.myPurchases {
+  font-weight: bold;
+  pointer: cursor;
+  font-size: 14px;
+}
