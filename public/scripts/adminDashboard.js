@@ -260,24 +260,24 @@ function createPost(post) {
 const userList = document.querySelector("#userList");
 const userTable = document.querySelector("#userTable");
 const listEnd = document.querySelector("#userListEnd");
-const sampleViewUser = document.querySelector("#sampleViewUser");
+// const sampleViewUser = document.querySelector("#sampleViewUser");
 
 const showLessButton = document.querySelector("#showLessUser");
 const showMoreButton = document.querySelector('#showMoreUser');
 const userSearchButton = document.querySelector('#userSearchButton');
 
-sampleViewUser.addEventListener('click', viewUserDetail);
+// sampleViewUser.addEventListener('click', viewUserDetail);
 showLessButton.addEventListener('click', showLess);
 showMoreButton.addEventListener('click', showMore);
 userSearchButton.addEventListener('click', searchUser);
 
 
-// view the user profile of the sample user
-// will require server call to find the url of the personal profile page in Phase 2
 function viewUserDetail(e) {
     e.preventDefault();
 
-    window.open("../pages/userProfile.html");
+    const userToView = e.target.parentElement.parentElement.id;
+    sessionStorage.setItem("viewUserProfile", userToView);
+    window.open( "/pages/userProfile.html");
 }
 
 
@@ -429,6 +429,7 @@ function createUserEntry(user) {
 
     const userEntry = document.createElement("div");
     userEntry.className = "userEntry";
+    userEntry.id = user.username;
 
     const userContainer = document.createElement('div');
     userContainer.className = "user";
@@ -466,6 +467,7 @@ function createUserEntry(user) {
     const viewUser = document.createElement('button');
     viewUser.className = "viewUserDetail";
     viewUser.innerText = "View Detail";
+    viewUser.addEventListener("click", viewUserDetail);
     userAction.appendChild(viewUser);
 
     const deleteUser = document.createElement("button");

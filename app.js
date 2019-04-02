@@ -52,7 +52,7 @@ app.get('/404', (req, res, next) => {
 app.get('/login', (req, res) => {
     if (req.session.user) {
         console.log("has logged in!");
-        res.redirect('profile');
+        res.sendFile(__dirname + "/public/pages/userProfile.html");
     } else {
         res.sendFile(__dirname + '/public/pages/login.html');
     }
@@ -687,7 +687,7 @@ app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
 });
 
 app.get("/api/dashboard/users", adminAuthenticate, (req, res) => {
-    User.find().then((users) => {
+    User.find({isAdmin: false}).then((users) => {
         if(!users){
             res.status(404).send();
         }else{
@@ -719,6 +719,41 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
     }).catch((error)=> {
         res.status(500).send();
     });
+});
+
+app.get("/userProfile", (req, res) => {
+   res.sendFile(__dirname + "/public/pages/userProfile.html");
+});
+
+app.get("/api/logout", (req, res) => {
+    req.session.destroy((error) => {
+       if (error) {
+           res.status(500).send()
+       } else {
+           res.redirect("/");
+       }
+    });
+});
+
+app.get("/shoppingCart", (req, res) => {
+    if (!req.session.user) {
+        res.redirect("/login");
+    } else {
+        res.redirect("/pages/shoppingCart.html");
+    }
+});
+
+app.get("/api/isLogin", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+    } else {
+        User.findOne({username: req.session.user}).then((user) => {
+            res.send({user: user});
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        })
+    }
 });
 
 app.post('/api/createTransaction', (req, res) => {
