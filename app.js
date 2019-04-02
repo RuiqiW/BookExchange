@@ -124,8 +124,6 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
     let price;
     if (req.body.isFree) {
         price = 0;
-    } else if (req.body.isContact) {
-        price = undefined;
     } else {
         price = req.body.price;
     }

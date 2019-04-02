@@ -11,20 +11,24 @@ postAdForm.addEventListener('submit', handlePostAd);
 const price = document.querySelector('#price');
 price.addEventListener('input', handlePrice);
 
+const free = document.querySelector("#freeCheck");
+free.addEventListener("click", handleFree);
+
+function handleFree(event) {
+    if (event.target.checked) {
+        price.placeholder = "Free";
+    } else {
+        price.placeholder = "10"
+    }
+}
+
 
 function handlePrice(event) {
     // log(event.target.value);
     // log(event);
 
     if (event.target.value !== '') {
-        document.getElementById("freeRadio").checked = false;
-        document.getElementById("freeRadio").disabled = true;
-        document.getElementById("contactRadio").checked = false;
-        document.getElementById("contactRadio").disabled = true;
-
-    } else {
-        document.getElementById("freeRadio").disabled = false;
-        document.getElementById("contactRadio").disabled = false;
+        document.getElementById("freeCheck").checked = false;
     }
 }
 
