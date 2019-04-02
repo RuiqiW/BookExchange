@@ -340,8 +340,9 @@ function buyItem(e) {
 
 const contactButton = document.querySelectorAll('.contactSeller');
 
-// as explained in phase1.txt, we are showing how the button should behave from "user1 user1"'s post for phase 1
-contactButton[0].addEventListener("click", contactTheSeller);
+for (let i = 0; i < contactButton.length; i++) {
+    contactButton[i].addEventListener("click", contactTheSeller);
+}
 
 function contactTheSeller(e) {
     e.preventDefault();

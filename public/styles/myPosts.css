@@ -18,49 +18,9 @@ body {
     position: relative;
 }
 
-#searchForm {
-    display: inline;
-    text-align: center;
-    position: absolute;
-    left: 300px;
-    top: 0px;
-}
-
 #userInfo {
     display: inline-block;
     float: right;
-}
-
-#searchBox {
-    height: 35px;
-    width: 400px;
-    outline: none;
-    box-shadow: 0px 1px 1px 1px grey;
-    position: absolute;
-    top: 13px;
-    border-radius: 20px;
-}
-
-#searchButton {
-    height: 40px;
-    width: 80px;
-    margin-left: 30px;
-    margin-top: 20px;
-    position: relative;
-    left: 400px;
-    top: -4px;
-    border-radius: 10px;
-    padding: 0;
-    background-color: lightgrey;
-}
-
-#searchButtonText {
-    font-size: 150%;
-    color: grey;
-}
-
-#searchButton:hover {
-    background-color: white;
 }
 
 #logIn {
@@ -151,18 +111,6 @@ body {
     right: 10px;
     top: -62px;
     font-weight: bold;
-}
-
-.addToCart {
-    margin-bottom: 5px;
-    margin-left: 10px;
-    background-color: dodgerblue;
-    font-weight: bold;
-    color: white;
-    height: 26px;
-    font-size: 90%;
-    border-radius: 5px;
-
 }
 
 .soldItem {
