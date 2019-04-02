@@ -260,8 +260,6 @@ function contactTheSeller(e) {
 
 
 function updateOrderSummary(e) {
-    console.log("called");
-
     const orderSummary = document.getElementById("checkout");
     const h4 = orderSummary.getElementsByTagName("h4")[0];
     const spanCount = h4.getElementsByTagName("span")[0];
