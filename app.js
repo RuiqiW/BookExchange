@@ -3,7 +3,9 @@
 const express = require('express');
 const port = process.env.PORT || 3000;
 const session = require('express-session');
-
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.EMAIL_TOKEN);
+console.log(process.env.EMAIL_TOKEN);
 const fs = require('fs');
 const mongoose = require('./db/mongoose').mongoose;
 const multer = require("multer");
@@ -13,6 +15,7 @@ const Post = require("./models/Post").Post;
 const User = require("./models/User").User;
 const Transaction = require("./models/Transaction").Transaction;
 const Chat = require("./models/Message").Chat;
+const Recovery = require("./models/Recovery").Recovery;
 
 const app = express();
 const ObjectID = require("mongodb").ObjectID;
@@ -544,6 +547,56 @@ app.post("/api/updatePayment/:newPayment", (req, res) => {
 
 });
 
+app.post("/api/sendCode/:email", (req, res) => {
+    const email = req.params.email;
+    User.findOne({email: email}).then((user) => {
+       if (!user) {
+           res.status(404).send();
+           return;
+       }
+       let code = "";
+       for (let i = 0; i < 6; i++) {
+           code += Math.floor(Math.random() * 10);
+       }
+        const msg = {
+            to: email,
+            from: "recovery@uoftexchange.ca",
+            subject: "Recovery your password",
+            text: "Your recovery code is " + code
+        };
+
+       Recovery.findOne({email: email}).then((result) => {
+          if (result) {
+              result.code = code;
+              result.save().then((newUser) => {
+                  sgMail.send(msg).catch((error) => {
+                      console.log(error);
+                  });
+                  req.session.recoverEmail = email;
+                  res.send();
+              });
+          } else {
+              const recovery = new Recovery({
+                  email: email,
+                  code: code
+              });
+              recovery.save().then((newUser) => {
+                  sgMail.send(msg).catch((error) => {
+                      console.log(error);
+                  });
+                  res.send();
+              });
+          }
+       }).catch((error) => {
+           console.log(error);
+           res.status(500).send();
+       });
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
+});
+
 /****************** for dashboard *****************/
 // Middleware for authentication for resources
 const adminAuthenticate = (req, res, next) => {
@@ -580,6 +633,41 @@ app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
     });
 });
 
+app.post("/api/recover", (req, res) => {
+    if (!req.session.recoverEmail) {
+        res.status(401).send();
+    }
+    const code = req.body.code;
+    const email = req.session.recoverEmail;
+    const password = req.body.password;
+    Recovery.findOne({email: email}).then((entry) => {
+        if (!entry) {
+            res.status(401).send();
+        } else {
+            if (entry.code !== code) {
+                res.status(401).send();
+            } else {
+                User.findOne({email: email}).then((user) => {
+                    user.password = password;
+                    user.save().then((newUser) => {
+                        req.session.destroy((error) => {
+                            if (error) {
+                                res.status(500).send(error);
+                            } else {
+                                res.send(newUser);
+                            }
+                        });
+                    });
+                });
+            }
+        }
+   }).catch((error) => {
+       console.log(error);
+       res.status(500).send();
+    });
+
+});
+
 app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
 
     if (!ObjectID.isValid(req.params.postId)) {
@@ -611,7 +699,6 @@ app.get("/api/dashboard/users", adminAuthenticate, (req, res) => {
 });
 
 app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
-
     const username = req.params.user;
     User.findOneAndDelete({username: username}).then((user) => {
         if(!user){
@@ -637,14 +724,65 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
 app.get("/api/dashboard/profile/:user", adminAuthenticate, (req, res) => {
     const username = req.params.user;
     User.findOne({username: username}).then((user) => {
-        if(!user){
+        if (!user) {
             res.status(404).send();
-        }else{
+        } else {
             console.log("sdajkdsaj");
             res.redirect('/login');
         }
     })
+});
 
+app.get("/api/logout", (req, res) => {
+    req.session.destroy((error) => {
+       if (error) {
+           res.status(500).send()
+       } else {
+           res.redirect("/");
+       }
+    });
+});
+
+app.get("/shoppingCart", (req, res) => {
+    if (!req.session.user) {
+        res.redirect("/login");
+    } else {
+        res.redirect("/pages/shoppingCart.html");
+    }
+});
+
+app.get("/api/isLogin", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+    } else {
+        User.findOne({username: req.session.user}).then((user) => {
+            res.send({user: user});
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        })
+    }
+});
+
+app.post('/api/createTransaction', (req, res) => {
+    const buyer = req.body.username.trim();
+
+    /*const newTransaction = new Transaction({
+        postId: ,
+        date: ,
+        isComplete: true,
+        amount: ,
+        seller: "",
+        buyer: buyer
+    });
+
+    // store result into database
+    newTransaction.save().then((result) => {
+        res.send(result)
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });*/
 });
 
 app.listen(port, () => {

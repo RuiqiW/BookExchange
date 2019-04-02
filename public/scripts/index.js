@@ -53,8 +53,32 @@ function updateShoppingCart(newNumber) {
 
 function init() {
     //Server call to request item in the shopping cart
-    const cartNumber = 2;
-    updateShoppingCart(cartNumber);
+    const request = new Request("/api/isLogin");
+    fetch(request).then((res) => {
+        if (res.status === 401) {
+            updateShoppingCart(0);
+        } else {
+            return res.json();
+        }
+    }).then((json) => {
+        const user = json.user;
+        const cartNumber = user.shortlist.length;
+        updateShoppingCart(cartNumber);
+        const signInDiv = document.querySelector("#signIn");
+        signInDiv.removeChild(signInDiv.lastElementChild);
+
+        const a = document.createElement("a");
+        a.setAttribute("href", "/pages/userProfile.html");
+        const imageContainer = document.createElement("div");
+        imageContainer.className = "topBarImageContainer";
+        const image = document.createElement("img");
+        image.className = "profileImage";
+        image.setAttribute("src", user.avatar);
+        imageContainer.appendChild(image);
+        a.appendChild(imageContainer);
+        imageContainer.appendChild(image);
+        signInDiv.appendChild(a);
+    })
 }
 
 const searchButton = document.querySelector("#searchButton");

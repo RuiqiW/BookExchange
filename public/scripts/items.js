@@ -93,6 +93,10 @@ function init() {
                 a.appendChild(imageContainer);
                 imageContainer.appendChild(image);
                 signInDiv.appendChild(a);
+            } else {
+                // hide the logout button if the user is not logged in
+                const logout = document.querySelector("#logOut");
+                logout.style.display = "none";
             }
             generateSearchResult(posts, user);
         });
@@ -155,13 +159,6 @@ function generatePost(post, user) {
             postDiv.appendChild(sellerNameSpan);
             postDiv.appendChild(document.createElement("br"));
 
-            // const postIdSpan = document.createElement("span");
-            // postIdSpan.className = "postId";
-            // const postIdNumber = document.createElement("span");
-            // postIdNumber.className = "postIdNumber";
-            // postIdNumber.appendChild(document.createTextNode(post.postId));
-            // postIdSpan.appendChild(postIdNumber);
-            // postDiv.appendChild(postIdSpan);
             postDiv.id = post._id;
 
             const categorySpan = document.createElement("span");
@@ -253,15 +250,6 @@ function generatePost(post, user) {
 }
 
 init();
-const addToCartButtons = document.querySelectorAll(".addToCart");
-for (let i = 0; i < addToCartButtons.length; i++) {
-    addToCartButtons[i].addEventListener("click", addToCart);
-}
-
-const removeFromCartButtons = document.querySelectorAll(".removeFromCart");
-for (let i = 0; i < removeFromCartButtons.length; i++) {
-    removeFromCartButtons[i].addEventListener("click", removeFromCart);
-}
 
 function addToCart(e) {
     const postId = e.target.parentElement.id;
@@ -281,7 +269,6 @@ function addToCart(e) {
         user = newUser.user;
         updateShoppingCart(user.shortlist.length);
     });
-
 }
 
 function removeFromCart(e) {
