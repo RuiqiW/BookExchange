@@ -72,6 +72,8 @@ function init() {
         while (posts.lastElementChild) {
             posts.removeChild(posts.lastElementChild);
         }
+
+        let needToAlert = false;
         if (user.shortlist.length === 0) {
             const emptyInfoDiv = document.createElement("div");
             emptyInfoDiv.id = "emptyInformation";
@@ -93,20 +95,24 @@ function init() {
                 spanInLabel.setAttribute("class", "checkmark");
                 label.appendChild(spanInLabel);
 
-                const book = document.createElement("p");
-                book.setAttribute("class", "book");
-                book.appendChild(document.createTextNode(`Book ${i+1}`));
-                const spanElement = document.createElement("span");
-                spanElement.setAttribute("class", "amount");
-                const bElement = document.createElement("b");
-                bElement.appendChild(document.createTextNode(`$${basket[i].price}`));
-                spanElement.appendChild(bElement);
-                book.appendChild(spanElement);
-                const hrElement = document.getElementsByTagName("hr");
-                hrElement[hrElement.length-1].before(book);
-                const newCost = parseFloat(cost.innerText.slice(1)) + parseFloat(basket[i].price);
-                cost.innerText = `$${newCost}`;
-                count.innerText = parseInt(count.innerText) + 1;
+                if (basket[i].byCreditCard) {
+                    const book = document.createElement("p");
+                    book.setAttribute("class", "book");
+                    book.appendChild(document.createTextNode(`Book ${i+1}`));
+                    const spanElement = document.createElement("span");
+                    spanElement.setAttribute("class", "amount");
+                    const bElement = document.createElement("b");
+                    bElement.appendChild(document.createTextNode(`$${basket[i].price}`));
+                    spanElement.appendChild(bElement);
+                    book.appendChild(spanElement);
+                    const hrElement = document.getElementsByTagName("hr");
+                    hrElement[hrElement.length-1].before(book);
+                    const newCost = parseFloat(cost.innerText.slice(1)) + parseFloat(basket[i].price);
+                    cost.innerText = `$${newCost}`;
+                    count.innerText = parseInt(count.innerText) + 1;
+                } else {
+                    needToAlert = true;
+                }
 
                 const postDiv = document.createElement("div");
                 postDiv.className = "post";
@@ -192,6 +198,9 @@ function init() {
 
             }
         }
+        if (needToAlert) {
+            alert("Some selected book(s) cannot be handled online according to the seller's preference and will not be added to the order summary. Contact the seller(s) for further action. ");
+        }
     });
 }
 
@@ -276,14 +285,17 @@ function updateOrderSummary(e) {
         orderSummary.removeChild(books[0]);
     }
 
-    // we only handle transactions online when both user and seller selected handle by credit card
-    let needToAlert = false;
-
     if (user.shortlist.length !== 0) {
         for (let i = 0; i<basket.length;i++) {
-            if (document.getElementsByClassName("check")[i].checked) {
+            const checked = document.getElementsByClassName("check")[i].getAttribute("checked");
+            if (checked.localeCompare("checked") === 0) {
+                document.getElementsByClassName("check")[i].setAttribute("checked", "");
+            } else {
+                document.getElementsByClassName("check")[i].setAttribute("checked", "checked");
+                // we can only handle transactions online when both user and seller selected handle by credit card
+                // we stop the transaction if the user if prompted that some item needs to be handled offline
                 if (!basket[i].byCreditCard) {
-                    needToAlert = true;
+                    alert("The selected book cannot not be handled online according to the seller's preference and will not be added to the order summary. Contact the seller for further action.");
                 } else {
                     const book = document.createElement("p");
                     book.setAttribute("class", "book");
@@ -303,8 +315,14 @@ function updateOrderSummary(e) {
             }
         }
     }
+}
 
-    if (needToAlert) {
-        alert("Some selected book(s) cannot be handled online.");
-    }
+/*********************** Place the Order ************************/
+
+// Jump to the payment page
+const placeOrder = document.querySelector("#payButton");
+placeOrder.addEventListener("click", jumpToPayment);
+
+function jumpToPayment(e) {
+    document.location = "../pages/payment.html";
 }
