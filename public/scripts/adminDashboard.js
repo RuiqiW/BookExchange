@@ -1,27 +1,22 @@
 // load list of messages received, need server call in Phase2
 
 let postEdited = 0;
-let shownUserNum = 2;
+let shownUserNum = 0;
 
 
 // load data on DOM loaded, will use database query instead in Phase 2
 document.addEventListener('DOMContentLoaded', function () {
     // loadUserNum();
-    // loadPostNum();
     // loadTransactionNum();
     loadMessageNum();
     // loadTransaction();
-    // loadPost();
+    loadPost();
     // loadUserList();
 
 });
 
 function loadUserNum() {
     document.querySelector('#userData').innerText = users.length;
-}
-
-function loadPostNum() {
-    document.querySelector('#postData').innerText = posts.length;
 }
 
 function loadTransactionNum() {
@@ -48,7 +43,7 @@ function loadMessageNum() {
     }).then((json) => {
         const thisUser = json.user;
         document.querySelector('#msgData').innerText = json.chats.reduce((total, chat) => {
-            if ( thisUser === chat.user1) {
+            if (thisUser === chat.user1) {
                 return total += chat.user2Messages.length;
             } else {
                 return total += chat.user1Messages.length;
@@ -68,22 +63,45 @@ function loadTransaction() {
 }
 
 function loadPost() {
-    let j = 5;
-    for (let i = 0; i < posts.length; i++) {
-        if (j > 0) {
-            if (posts[i].isSold === false) {
-                createPost(posts[i]);
-            }
-            j--;
-        } else {
-            break;
+    const request = new Request("/api/dashboard/posts", {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
         }
-    }
-
-    const deleteItems = document.querySelectorAll('.deleteItem');
-    Array.from(deleteItems).forEach(function (element) {
-        element.addEventListener('click', deleteItem);
     });
+
+
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            return res.json()
+        } else {
+            document.querySelector('#postData').innerText = 0;
+        }
+    }).then((posts) => {
+        document.querySelector('#postData').innerText = posts.length;
+        const postList = document.querySelector('#postListRow');
+        while (postList.firstElementChild.id !== "viewAll") {
+            postList.removeChild(postList.firstElementChild);
+        }
+        let j = 5;
+        for (let i = 0; i < posts.length; i++) {
+            if (j > 0) {
+                if (posts[i].isSold === false) {
+                    createPost(posts[i]);
+                }
+                j--;
+            } else {
+                break;
+            }
+        }
+
+        const deleteItems = document.querySelectorAll('.deleteItem');
+        Array.from(deleteItems).forEach(function (element) {
+            element.addEventListener('click', deleteItem);
+        });
+    }).catch((error) => {
+    })
 }
 
 
@@ -137,7 +155,7 @@ function changeEditMode(e) {
     } else {
         postEdited = 0;
         editPost.innerText = "edit";
-        loadPostNum();
+        loadPost();
         const deleteItems = document.querySelectorAll('.deleteItem');
         for (let i = 0; i < deleteItems.length; i++) {
             deleteItems[i].style.display = "none";
@@ -151,21 +169,28 @@ function deleteItem(e) {
     if (window.confirm("Do you want to delete this post?")) {
 
         // get postId
-        const post = e.target.parentElement.parentElement;
-        const postNum = post.lastElementChild.previousSibling;
-        const postId = parseInt(postNum.innerText);
+        const postId = e.target.parentElement.parentElement.parentElement.id;
 
-        // delete post from posts array, will need server in Phase 2
-        for (let i = 0; i < posts.length; i++) {
-            if (posts[i].postId === postId) {
-                posts.splice(i, 1);
-                break;
+        const request = new Request(`/api/dashboard/post/${postId}`, {
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
             }
-        }
+        });
 
-        // remove post in DOM
-        removePost(e);
-        window.alert("You have deleted this post.");
+
+        fetch(request).then((res) => {
+            if (res.status === 200) {
+                // remove post in DOM
+                removePost(e);
+                window.alert("You have deleted this post.");
+            }else {
+                window.alert("Fail to delete this post.");
+            }
+        }).catch((error) => {
+        })
+
     }
 }
 
@@ -188,29 +213,26 @@ function createPost(post) {
     close.appendChild(icon);
 
     const img = document.createElement('img');
-    img.src = post.images[0];
+    img.src = post.image[0];
     img.alt = "textbook";
     img.className = "textbookImg";
 
-    const id = document.createElement("span");
-    id.className = "postId";
-    id.innerText = `postId: ${post.postId}`;
-
     const seller = document.createElement("span");
     seller.className = "seller";
-    seller.innerText = `seller: ${post.seller.user.username}`;
+    seller.innerText = `seller: ${post.seller}`;
 
     const postContainer = document.createElement('div');
     postContainer.className = "post";
     postContainer.appendChild(close);
     postContainer.appendChild(img);
-    postContainer.appendChild(id);
     postContainer.appendChild(seller);
 
     const container = document.createElement('div');
     container.classList.add("col-lg-2");
     container.classList.add("col-md-4");
     container.appendChild(postContainer);
+
+    container.id = post._id;
 
     const viewAll = document.querySelector("#viewAll");
     viewAll.before(container);

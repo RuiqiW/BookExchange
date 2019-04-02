@@ -300,7 +300,7 @@ app.post('/api/createChat', authenticate, (req, res) => {
             })
         }
     }).catch((error) => {
-        res.status(500).send(error);
+        res.status(500).send();
     });
 });
 
@@ -318,7 +318,7 @@ app.get('/api/startChat/:user', authenticate, (req, res) => {
         }
     }).catch((error) => {
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).send();
     });
 });
 
@@ -334,7 +334,7 @@ app.get('/api/allChats', authenticate, (req, res) => {
         }
     }).catch((error) => {
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).send();
     })
 });
 
@@ -371,7 +371,7 @@ app.post('/api/chat/:chatId', authenticate,(req, res) => {
             }
         }
     }).catch((error) => {
-        res.status(500).send(error);
+        res.status(500).send();
     })
 });
 
@@ -396,7 +396,7 @@ app.get('/api/chat/:chatId', authenticate, (req, res) => {
             }
         }
     }).catch((error) => {
-        res.status(500).send(error);
+        res.status(500).send();
     })
 });
 
@@ -427,7 +427,7 @@ app.post('/api/loadChat/:chatId',authenticate, (req, res) => {
             })
         }
     }).catch((error) => {
-        res.status(500).send(error);
+        res.status(500).send();
     })
 });
 
@@ -524,6 +524,54 @@ app.post("/api/updatePayment/:newPayment", (req, res) => {
        user.save().then((res.redirect("/pages/userProfile.html")));
     });
 
+});
+
+/****************** for dashboard *****************/
+// Middleware for authentication for resources
+const adminAuthenticate = (req, res, next) => {
+    if (req.session.user) {
+        User.findOne({username: req.session.user}).then((user) => {
+            if (!user) {
+                return Promise.reject()
+            } else {
+                if(user.isAdmin){
+                    req.user = user;
+                    next();
+                }else{
+                    return Promise.reject();
+                }
+            }
+        }).catch((error) => {
+            res.redirect('/login')
+        })
+    } else {
+        res.redirect('/login')
+    }
+};
+
+
+app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
+    Post.find().then((posts) => {
+        if(!posts){
+            res.status(404).send();
+        }else{
+            res.send(posts);
+        }
+    }).catch((error)=> {
+        res.status(500).send();
+    });
+});
+
+app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
+    Post.findByIdAndDelete(postId).then((post) => {
+        if(!post){
+            res.status(404).send();
+        }else{
+            res.send(post);
+        }
+    }).catch((error)=> {
+        res.status(500).send();
+    });
 });
 
 app.listen(port, () => {
