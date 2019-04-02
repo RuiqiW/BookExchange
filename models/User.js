@@ -3,8 +3,6 @@ const bcrypt = require("bcryptjs");
 const PostSchema = require("./Post").PostSchema;
 const TransactionSchema = require("./Transaction").TransactionSchema;
 
-
-
 const UserSchema = new mongoose.Schema({
     firstName: {
         type: String,

@@ -329,5 +329,9 @@ const placeOrder = document.querySelector("#payButton");
 placeOrder.addEventListener("click", jumpToPayment);
 
 function jumpToPayment(e) {
+    //Store the transaction info in localstorage,
+    //The actual server call happen in the payment page.
+    localStorage.buyer = user.username;
+
     document.location = "../pages/payment.html";
 }

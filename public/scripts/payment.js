@@ -5,8 +5,6 @@
 const form = document.querySelector('#paymentForm');
 form.addEventListener('submit', handlePayment);
 
-
-
 function handlePayment(e) {
   e.preventDefault();
 
@@ -21,10 +19,6 @@ function handlePayment(e) {
   const cardCVV = form[5].value;
   const cardExpDate = form[6].value;
 
-  // Check that entered values are correctly formatted
-      // This will be completed in phase 2 when we can properly pass these values somewhere
-
-
   // Redirect user to profile back
-  document.location = "../pages/placeOrder.html";
+  document.location = "../index.html";
 }

@@ -352,6 +352,7 @@ body {
     background-color: white;
     border-radius: 4px;
     margin-top: 25px;
+    height: 80%;
 }
 
 .checkout {
@@ -409,6 +410,7 @@ span.total {
     align-items: center;
     flex: 0 0 160px;
     box-shadow: 2px 5px 10px var(--color-smoke);
+    margin-top: 50px;
 }
 .button:hover {
     transition: all 150ms linear;
