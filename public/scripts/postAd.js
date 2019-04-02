@@ -13,35 +13,42 @@ price.addEventListener('input', handlePrice);
 
 
 function handlePrice(event) {
-  // log(event.target.value);
-  // log(event);
+    // log(event.target.value);
+    // log(event);
 
-  if (event.target.value !== '') {
-    document.getElementById("freeRadio").checked = false;
-    document.getElementById("freeRadio").disabled = true;
-    document.getElementById("contactRadio").checked = false;
-    document.getElementById("contactRadio").disabled = true;
+    if (event.target.value !== '') {
+        document.getElementById("freeRadio").checked = false;
+        document.getElementById("freeRadio").disabled = true;
+        document.getElementById("contactRadio").checked = false;
+        document.getElementById("contactRadio").disabled = true;
 
-  } else {
-    document.getElementById("freeRadio").disabled = false;
-    document.getElementById("contactRadio").disabled = false;
-  }
+    } else {
+        document.getElementById("freeRadio").disabled = false;
+        document.getElementById("contactRadio").disabled = false;
+    }
 }
 
 
 
 function handlePostAd(event) {
-  event.preventDefault();
 
-  // Ad details
-  const title = document.querySelector('#adTitle').value;
-  const isbn = document.querySelector('#isbn').value;
-  const edition = document.querySelector('#edition').value;
-  const description = document.querySelector('#description').value;
+    // Ad details
+    const title = document.querySelector('#adTitle').value;
+    const isbn = document.querySelector('#isbn').value;
+    const edition = document.querySelector('#edition').value;
+    const description = document.querySelector('#description').value;
 
-  // Photos
+    // Photos
+    if (title.trim().length === 0) {
+        alert("You have to fill in the title of the post");
+        return;
+    } else if (description.trim().length === 0) {
+        alert("You have to fill in a description for the post");
+        return;
+    }
+    postAdForm.submit();
 
-  // Price
+    // Price
 
 }
 
