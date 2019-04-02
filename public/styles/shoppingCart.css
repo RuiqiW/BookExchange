@@ -49,9 +49,7 @@ body {
     box-shadow: 0px 1px 1px 1px grey;
     position: absolute;
     top: 13px;
-
     border-radius: 20px;
-
 }
 
 #searchButton {
@@ -62,10 +60,7 @@ body {
     position: relative;
     left: 400px;
     top: -8px;
-
     padding: 0;
-
-
     background-color: lightgrey;
 }
 

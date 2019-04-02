@@ -121,11 +121,6 @@ function generateSearchResult(posts, user) {
             console.log(error);
         });
     }
-    const endOfResults = document.createElement("div");
-    endOfResults.id = "endOfResults";
-    endOfResults.appendChild(document.createTextNode("End of Results"));
-    document.querySelector("#posts").appendChild(endOfResults);
-
 }
 
 /**
