@@ -699,7 +699,6 @@ app.get("/api/dashboard/users", adminAuthenticate, (req, res) => {
 });
 
 app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
-
     const username = req.params.user;
     User.findOneAndDelete({username: username}).then((user) => {
         if(!user){
@@ -741,16 +740,37 @@ app.get("/shoppingCart", (req, res) => {
 });
 
 app.get("/api/isLogin", (req, res) => {
-   if (!req.session.user) {
-       res.status(401).send();
-   } else {
-       User.findOne({username: req.session.user}).then((user) => {
-           res.send({user: user});
-       }).catch((error) => {
-           console.log(error);
-           res.status(500).send();
-       })
-   }
+    if (!req.session.user) {
+        res.status(401).send();
+    } else {
+        User.findOne({username: req.session.user}).then((user) => {
+            res.send({user: user});
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        })
+    }
+});
+
+app.post('/api/createTransaction', (req, res) => {
+    const buyer = req.body.username.trim();
+
+    /*const newTransaction = new Transaction({
+        postId: ,
+        date: ,
+        isComplete: true,
+        amount: ,
+        seller: "",
+        buyer: buyer
+    });
+
+    // store result into database
+    newTransaction.save().then((result) => {
+        res.send(result)
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });*/
 });
 
 app.listen(port, () => {
