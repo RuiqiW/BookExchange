@@ -8,6 +8,7 @@ function removeCartItem(e) {
     const request = new Request("/api/removeFromCart/" + postId, {
         method: 'delete',
     });
+
     fetch(request).then((newUser) => {
         return newUser.json()
     }).then((newUser) => {
@@ -30,7 +31,7 @@ function removeCartItem(e) {
         }
 
         user = newUser.newUser;
-        
+
         updateOrderSummary();
     });
 }
