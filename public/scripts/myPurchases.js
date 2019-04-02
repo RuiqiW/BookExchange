@@ -15,37 +15,37 @@ function onSortingOptChange() {
     if (newOption === "timeNewToOld") {
         posts.sort(function (a, b) {
             if (a.postingDate <= b.postingDate) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         });
     } else if (newOption === "timeOldToNew") {
         posts.sort(function (a, b) {
             if (a.postingDate <= b.postingDate) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         });
     } else if (newOption === "priceLowToHigh") {
         posts.sort(function (a, b) {
             if (a.price <= b.price) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         });
     } else {//priceHighToLow
         posts.sort(function (a, b) {
             if (a.price <= b.price) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         });
     }
-    generateSearchResult(posts, users[0]);
+    generateSearchResult(posts, user);
 }
 
 function init() {
@@ -93,6 +93,10 @@ function init() {
                 a.appendChild(imageContainer);
                 imageContainer.appendChild(image);
                 signInDiv.appendChild(a);
+            } else {
+                // hide the logout button if the user is not logged in
+                const logout = document.querySelector("#logOut");
+                logout.style.display = "none";
             }
             generateSearchResult(posts, user);
         });
@@ -121,6 +125,11 @@ function generateSearchResult(posts, user) {
             console.log(error);
         });
     }
+    const endOfResults = document.createElement("div");
+    endOfResults.id = "endOfResults";
+    endOfResults.appendChild(document.createTextNode("End of Results"));
+    document.querySelector("#posts").appendChild(endOfResults);
+
 }
 
 /**
@@ -150,13 +159,6 @@ function generatePost(post, user) {
             postDiv.appendChild(sellerNameSpan);
             postDiv.appendChild(document.createElement("br"));
 
-            // const postIdSpan = document.createElement("span");
-            // postIdSpan.className = "postId";
-            // const postIdNumber = document.createElement("span");
-            // postIdNumber.className = "postIdNumber";
-            // postIdNumber.appendChild(document.createTextNode(post.postId));
-            // postIdSpan.appendChild(postIdNumber);
-            // postDiv.appendChild(postIdSpan);
             postDiv.id = post._id;
 
             const categorySpan = document.createElement("span");
@@ -173,7 +175,7 @@ function generatePost(post, user) {
             timeSpan.className = "timespan";
             const date = new Date(post.postingDate);
             timeSpan.appendChild(document.createTextNode("Posting Time: " +
-                +date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
+                +date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
             postDiv.appendChild(timeSpan);
 
             const priceDiv = document.createElement("div");
@@ -204,24 +206,11 @@ function generatePost(post, user) {
 
             postDiv.appendChild(document.createElement("hr"));
 
-            const soldItem = document.createElement("button");
-            soldItem.className = "soldItem";
-            soldItem.addEventListener("click", soldAnItem);
-            soldItem.appendChild(document.createTextNode("Mark as Sold"));
-            postDiv.appendChild(soldItem);
-
-            if (user.isAdmin) {
-                const deletePost = document.createElement("button");
-                deletePost.className = "deletePost";
-                deletePost.appendChild(document.createTextNode("Delete this post"));
-                postDiv.appendChild(deletePost);
-            } else {
-                const deleteItem = document.createElement("button");
-                deleteItem.className = "deleteItem";
-                deleteItem.appendChild(document.createTextNode("Delete this Post"));
-                deleteItem.addEventListener("click", deleteAnItem);
-                postDiv.appendChild(deleteItem);
-            }
+            const contactSeller = document.createElement("button");
+            contactSeller.className = "contactSeller";
+            contactSeller.addEventListener("click", contactTheSeller);
+            contactSeller.appendChild(document.createTextNode("Contact Seller");
+            postDiv.appendChild(contactSeller);
 
             resolve(postDiv);
         }).catch((error) => {
@@ -233,37 +222,9 @@ function generatePost(post, user) {
 
 init();
 
-const makePostButton = document.querySelector("#makePostButton");
-makePostButton.addEventListener("click", makePost);
+/*********************** Contact Seller by User ************************/
 
-function makePost(e) {
-    //Here should be some code check whether user is logged in
-    //If not logged in, should jump to login page
-    //Here simply jump to make post page
-    document.location = "./post-ad.html";
-}
-
-// TODO: implement func
-function deleteAnItem(e) {
-    //Server call to update the shopping cart of user
-    // Here just use user0
-    const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
-    //Should make a server call to fetch the post, here just use the hardcoded posts array
-    const post = posts.filter(x => x.postId === postId)[0];
-    if (!post.byCreditCard) {
-        alert("The seller want you to pay him/her directly, please contact the seller!");
-    } else {
-        // jump to the credit card page
-        document.location = "./payment.html";
-        //Make a server call to submit the credit card Number and the postId!
-    }
-}
-
-
-/*********************** Mark an item as sold ************************/
-
-// TODO: implement func
-function soldAnItem(e) {
+function contactTheSeller(e) {
     e.preventDefault();
 
     const postId = e.target.parentElement.id;

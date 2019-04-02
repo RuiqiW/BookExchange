@@ -485,7 +485,11 @@ app.get("/api/findSeller/:postId", (req, res) => {
         if (!post) {
             res.status(404).send();
         } else {
-            res.send({username: post.seller});
+            if(post.seller !== req.session.user) {
+                res.send({username: post.seller});
+            }else{
+                res.status(605).send();
+            }
         }
     }).catch((error) => {
         res.status(500).send(error);
@@ -759,7 +763,7 @@ app.get("/api/isLogin", (req, res) => {
 app.post('/api/createTransaction', (req, res) => {
     const buyer = req.body.username.trim();
 
-    /*const newTransaction = new Transaction({
+    /*const  `newTransaction = new Transaction({
         postId: ,
         date: ,
         isComplete: true,

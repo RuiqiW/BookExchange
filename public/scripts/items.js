@@ -1,4 +1,3 @@
-const thisUser = "will"; //TODO: get current user from cookie
 
 let num_posts = 0;
 
@@ -350,13 +349,7 @@ function buyItem(e) {
 }
 
 
-/*********************** Contact Seller by User "user" for Phase 1 ************************/
-
-const contactButton = document.querySelectorAll('.contactSeller');
-
-for (let i = 0; i < contactButton.length; i++) {
-    contactButton[i].addEventListener("click", contactTheSeller);
-}
+/*********************** Contact Seller by User "user" ************************/
 
 function contactTheSeller(e) {
     e.preventDefault();
@@ -374,21 +367,17 @@ function contactTheSeller(e) {
     fetch(postRequest).then((res) => {
         if (res.status === 200) {
             return res.json();
-        }else {
+        }else if(res.status === 605){
+            window.alert("This is your item.");
+        }else{
             window.alert("Seller not found.");
         }
     }).then((json) => {
         const keyword = json.username;
 
-        if(keyword === thisUser){
-            window.alert("This is your item.");
-            return;
-        }
-
         // find if the user to chat exists
         const newChat = {
-            user1: thisUser,
-            user2: keyword
+            user1: keyword
         };
 
         const request = new Request("/api/createChat", {
@@ -413,7 +402,6 @@ function contactTheSeller(e) {
             chatRoom.style.display = "block";
         })
     })
-
 }
 
 const searchButton = document.querySelector("#searchButton");

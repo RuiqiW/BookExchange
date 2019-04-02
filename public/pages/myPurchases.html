@@ -46,30 +46,7 @@
         <img id="topBarLogo" src="../images/logo.png" alt="logo">
     </a>
 
-    <!-Drop down box for select option->
-    <div id="searchOption">
-        <div class="custom-select">
-            <select>
-                <option value="0">Select</option>
-                <option value="1">ISBN</option>
-                <option value="2">Title</option>
-                <option value="3">Author</option>
-            </select>
-        </div>
-    </div>
-
-    <form id="searchForm">
-        <input id="searchBox" type="text" placeholder="Search here...">
-        <button id="searchButton" type="submit">
-            <span id="searchButtonText">Search</span>
-        </button>
-    </form>
-
     <div id="topBarIcons">
-        <a id="makePost" href="/shoppingCart">
-            <button id="makePostButton">Make My Post</button>
-        </a>
-        <!--This is used to hold the user icon after login-->
 
         <div id="chatShow" class="topBarImageContainer dropdown">
             <img class="topBarImage" id="chatShowButton" src="../images/admin/chat.png" alt="chatPlaceholder">
@@ -94,7 +71,7 @@
         </div>
 
         <div id="signIn">
-            <a href="/login">
+            <a href="ml">
                 <div class="topBarImageContainer">
                     <img class="topBarImage" src="../images/index/user.svg" alt="userPlaceholder">
                 </div>
@@ -104,7 +81,7 @@
         </div>
 
         <div id="myCart">
-            <a href="/shoppingCart">
+            <a href="shoppingCart.html">
                 <div class="topBarImageContainer">
                     <img class="topBarImage" src="../images/index/cart.svg" alt="cartLogo">
                 </div>
@@ -117,7 +94,7 @@
         </div>
 
         <div id="logOut">
-            <a href="/api/logout">
+            <a href="../index.html">
                 <div class="topBarImageContainer">
                     <img class="topBarImage" src="../images/admin/logout.png" alt="logOutPlaceholder">
                 </div>
@@ -128,7 +105,7 @@
 
 <div id="resultPage">
     <div id="searchResult">
-        Following is the search result for <span id="result">textbook </span>......
+        Following is your purchase history ......
     </div>
     <select id="sortingOption">
         <option value="timeNewToOld">Sorting by Posting time(New to Old)</option>
@@ -151,8 +128,6 @@
                 more information!
             </div>
             <hr>
-            <button class="addToCart">Add to Cart</button>
-            <button class="buyItem"> Buy this item</button>
             <button class="contactSeller">Contact the Seller</button>
         </div>
         <div class="post">
@@ -174,12 +149,7 @@
                 </a>
             </div>
             <hr>
-            <button class="addToCart">Add to Cart</button>
-            <button class="buyItem"> Buy this item</button>
             <button class="contactSeller">Contact the Seller</button>
-        </div>
-        <div id="endOfResults">
-            End of results
         </div>
     </div>
 </div>
@@ -187,7 +157,7 @@
 <!--Script for lightbox-->
 <script src="../lightbox/js/lightbox.js"></script>
 <script type="text/javascript" src="../scripts/classes.js"></script>
-<script src="../scripts/items.js" type="text/javascript"></script>
+<script src="../scripts/myPurchases.js" type="text/javascript"></script>
 <script src="../scripts/chatbox.js" type="text/javascript"></script>
 </body>
 </html>
