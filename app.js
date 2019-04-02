@@ -193,7 +193,17 @@ app.post("/api/addToCart/:postId", (req, res) => {
             if (!user) {
                 res.status(404).send();
             }
+            if (user.shortlist.filter((post) => {
+                return post._id.equals(req.params.postId);
+            }).length !== 0) {
+                console.log("jsakjds");
+                res.send({user});
+                return;
+            }
             Post.findById(req.params.postId).then((post) => {
+                if (!post) {
+                    res.status(404).send();
+                }
                 user.shortlist.push(post);
                 user.save().then((user) => {
                     res.send({user});
@@ -213,6 +223,7 @@ app.delete("/api/removeFromCart/:postId", (req, res) => {
     if (!req.session.user) {
         res.redirect("/login");
     } else {
+        console.log("sdddd");
         if (!ObjectID.isValid(req.params.postId)) {
             res.status(600).send();
         }
@@ -220,9 +231,16 @@ app.delete("/api/removeFromCart/:postId", (req, res) => {
             if (!user) {
                 res.status(404).send();
             }
-            user.shortlist = user.shortlist.filter((post) => {
-                return post._id !== req.params.postId;
+            const temp = user.shortlist.filter((post) => {
+                return !post._id.equals(req.params.postId);
             });
+            if (temp.length === user.shortlist.length) {
+                console.log("sdjkahfff");
+                res.send({newUser: user});
+                return;
+            } else {
+                user.shortlist = temp;
+            }
             user.save().then((newUser) => {
                 res.send({newUser});
             }).catch((error) => {

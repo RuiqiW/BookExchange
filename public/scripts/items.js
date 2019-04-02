@@ -210,7 +210,7 @@ function generatePost(post, user) {
             postDiv.appendChild(document.createElement("hr"));
 
             if (user.shortlist.filter((post) => {
-                return post._id === post._id
+                return post._id === postDiv.id;
             }).length === 0) {
                 const removeButton = document.createElement("button");
                 removeButton.className = "addToCart";
