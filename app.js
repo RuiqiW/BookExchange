@@ -687,7 +687,7 @@ app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
 });
 
 app.get("/api/dashboard/users", adminAuthenticate, (req, res) => {
-    User.find().then((users) => {
+    User.find({isAdmin: false}).then((users) => {
         if(!users){
             res.status(404).send();
         }else{
@@ -719,6 +719,18 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
     }).catch((error)=> {
         res.status(500).send();
     });
+});
+
+app.get("/api/dashboard/profile/:user", adminAuthenticate, (req, res) => {
+    const username = req.params.user;
+    User.findOne({username: username}).then((user) => {
+        if (!user) {
+            res.status(404).send();
+        } else {
+            console.log("sdajkdsaj");
+            res.redirect('/login');
+        }
+    })
 });
 
 app.get("/api/logout", (req, res) => {
