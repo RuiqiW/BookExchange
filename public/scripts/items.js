@@ -93,6 +93,10 @@ function init() {
                 a.appendChild(imageContainer);
                 imageContainer.appendChild(image);
                 signInDiv.appendChild(a);
+            } else {
+                // hide the logout button if the user is not logged in
+                const logout = document.querySelector("#logOut");
+                logout.style.display = "none";
             }
             generateSearchResult(posts, user);
         });

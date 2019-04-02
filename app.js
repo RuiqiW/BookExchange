@@ -722,6 +722,37 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
     });
 });
 
+app.get("/api/logout", (req, res) => {
+    req.session.destroy((error) => {
+       if (error) {
+           res.status(500).send()
+       } else {
+           res.redirect("/");
+       }
+    });
+});
+
+app.get("/shoppingCart", (req, res) => {
+    if (!req.session.user) {
+        res.redirect("/login");
+    } else {
+        res.redirect("/pages/shoppingCart.html");
+    }
+});
+
+app.get("/api/isLogin", (req, res) => {
+   if (!req.session.user) {
+       res.status(401).send();
+   } else {
+       User.findOne({username: req.session.user}).then((user) => {
+           res.send({user: user});
+       }).catch((error) => {
+           console.log(error);
+           res.status(500).send();
+       })
+   }
+});
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
 });
