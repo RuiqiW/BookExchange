@@ -301,8 +301,6 @@ function removeFromCart(e) {
         e.target.addEventListener("click", addToCart);
         user = newUser.newUser;
     });
-
-
 }
 
 const makePostButton = document.querySelector("#makePostButton");
