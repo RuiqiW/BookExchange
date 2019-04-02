@@ -485,7 +485,11 @@ app.get("/api/findSeller/:postId", (req, res) => {
         if (!post) {
             res.status(404).send();
         } else {
-            res.send({username: post.seller});
+            if(post.seller !== req.session.user) {
+                res.send({username: post.seller});
+            }else{
+                res.status(605).send();
+            }
         }
     }).catch((error) => {
         res.status(500).send(error);
