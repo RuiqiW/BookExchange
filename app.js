@@ -52,7 +52,7 @@ app.get('/404', (req, res, next) => {
 app.get('/login', (req, res) => {
     if (req.session.user) {
         console.log("has logged in!");
-        res.redirect('profile');
+        res.sendFile(__dirname + "/public/pages/userProfile.html");
     } else {
         res.sendFile(__dirname + '/public/pages/login.html');
     }
