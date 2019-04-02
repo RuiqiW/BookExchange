@@ -11,6 +11,9 @@ let isRealUser;
 
 
 function onSortingOptChange() {
+    if (posts.length === 0) {
+        return;
+    }
     const newOption = sortingOpt.value;
     if (newOption === "timeNewToOld") {
         posts.sort(function (a, b) {
@@ -49,58 +52,52 @@ function onSortingOptChange() {
 }
 
 function init() {
-    // Server call to request the search results to display and the current user
-    // Here we use the hard-coded posts in the class.js as an demonstration
-    //By default sorting by posting date from new to old
-    const keyword = localStorage.keyword;
-    if (keyword) {
-        const request = new Request("/api/search/keyword");
+    const request = new Request("/api/myPurchases");
 
-        fetch(request).then((res) => {
-            return res.json();
-        }).then((json) => {
-            if (json.user === null) {
-                //Create a trivial user for page generation
-                user =
-                    new User('user', 'user', 'user', 'user@example.com', 'user', false);
-                posts = json.result;
-                posts.sort(function (a, b) {
-                    if (a.postingDate <= b.postingDate) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
-                });
+    fetch(request).then((res) => {
+        if (res.status === 401) {
+            window.location = '/login';
+        }
+        return res.json();
+    }).then((json) => {
+        posts = json.posts;
+        posts.sort(function (a, b) {
+            if (a.postingDate <= b.postingDate) {
+                return 1;
             } else {
-                isRealUser = true;
-                user = json.user;
-                posts = json.result;
+                return -1;
             }
-            if (isRealUser) {
-                const cartNumber = user.shortlist.length;
-                updateShoppingCart(cartNumber);
-                const signInDiv = document.querySelector("#signIn");
-                signInDiv.removeChild(signInDiv.lastElementChild);
-
-                const a = document.createElement("a");
-                a.setAttribute("href", "/pages/userProfile.html");
-                const imageContainer = document.createElement("div");
-                imageContainer.className = "topBarImageContainer";
-                const image = document.createElement("img");
-                image.className = "profileImage";
-                image.setAttribute("src", user.avatar);
-                imageContainer.appendChild(image);
-                a.appendChild(imageContainer);
-                imageContainer.appendChild(image);
-                signInDiv.appendChild(a);
-            } else {
-                // hide the logout button if the user is not logged in
-                const logout = document.querySelector("#logOut");
-                logout.style.display = "none";
-            }
-            generateSearchResult(posts, user);
         });
-    }
+        isRealUser = true;
+        user = json.user;
+        const cartNumber = user.shortlist.length;
+        updateShoppingCart(cartNumber);
+        const signInDiv = document.querySelector("#signIn");
+        signInDiv.removeChild(signInDiv.lastElementChild);
+
+        const a = document.createElement("a");
+        a.setAttribute("href", "/pages/userProfile.html");
+        const imageContainer = document.createElement("div");
+        imageContainer.className = "topBarImageContainer";
+        const image = document.createElement("img");
+        image.className = "profileImage";
+        image.setAttribute("src", user.avatar);
+        imageContainer.appendChild(image);
+        a.appendChild(imageContainer);
+        imageContainer.appendChild(image);
+        signInDiv.appendChild(a);
+        if (posts.length === 0) {
+            while (document.querySelector("#posts").lastElementChild) {
+                document.querySelector("#posts").removeChild(document.querySelector("#posts").lastElementChild)
+            }
+            const endOfResults = document.createElement("div");
+            endOfResults.id = "endOfResults";
+            endOfResults.appendChild(document.createTextNode("You haven't bought any items yet"));
+            document.querySelector("#posts").appendChild(endOfResults);
+        } else {
+            generateSearchResult(posts, user);
+        }
+    });
 }
 
 function updateShoppingCart(newNumber) {
@@ -209,7 +206,7 @@ function generatePost(post, user) {
             const contactSeller = document.createElement("button");
             contactSeller.className = "contactSeller";
             contactSeller.addEventListener("click", contactTheSeller);
-            contactSeller.appendChild(document.createTextNode("Contact Seller");
+            contactSeller.appendChild(document.createTextNode("Contact Seller"));
             postDiv.appendChild(contactSeller);
 
             resolve(postDiv);

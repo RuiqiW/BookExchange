@@ -764,25 +764,22 @@ app.get("/api/isLogin", (req, res) => {
     }
 });
 
-app.post('/api/createTransaction', (req, res) => {
-    const buyer = req.body.username.trim();
-
-    /*const  `newTransaction = new Transaction({
-        postId: ,
-        date: ,
-        isComplete: true,
-        amount: ,
-        seller: "",
-        buyer: buyer
-    });
-
-    // store result into database
-    newTransaction.save().then((result) => {
-        res.send(result)
+app.get("/api/myPurchases", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+        return;
+    }
+    const username = req.session.user;
+    Transaction.find({buyer: username}).then((transactions) => {
+        Post.find({_id: {$in: transactions} }).then((posts) => {
+            User.findOne({username: username}).then((user) => {
+                res.send({posts: posts, user: user});
+            });
+        });
     }).catch((error) => {
         console.log(error);
         res.status(500).send();
-    });*/
+    });
 });
 
 app.listen(port, () => {
