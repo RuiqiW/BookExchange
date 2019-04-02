@@ -22,7 +22,7 @@
     <!-- action="/my-handling-form-page" to go in form -->
     <form
       id="postAdForm"
-      action="/my-handling-form-page"
+      action="/api/postAd"
       method="post"
       enctype="multipart/form-data"
     >
@@ -37,7 +37,7 @@
             class="wideInput"
             type="text"
             id="adTitle"
-            name="adTitle"
+            name="title"
             maxlength="50"
             required
           />
@@ -50,7 +50,7 @@
             class="wideInput"
             type="number"
             id="isbn"
-            name="isbn"
+            name="ISBN"
             required
           />
         </p>
@@ -61,12 +61,23 @@
           <input type="number" id="edition" name="edition" required />
         </p>
         <p>
+          <label for="condition">
+            <span>Condition: </span>
+          </label>
+          <select name="condition" id="condition">
+            <option value="new">New</option>
+            <option value="Like New">Like New</option>
+            <option value="Very Good">Very Good</option>
+            <option value="Good">Good</option>
+            <option value="Acceptable">Acceptable</option>
+          </select>
+        </p>
+        <p>
           <label for="description">
             <span>Description: </span>
           </label>
           <textarea
             class="wideInput"
-            type="email"
             id="description"
             name="description"
             required
@@ -84,38 +95,21 @@
           </p>
         </div>
 
-        <label for="bookPic">Photos:</label>
-        <input
-          type="file"
-          name="bookPic"
-          accept="image/png, image/jpeg"
-        />
+        <label>Photos:</label>
+        <input type="file" name="image" accept="image/png, image/jpeg" />
         <img class="photos" id="photo1" />
 
-        <label for="bookPic"></label>
-        <input
-          type="file"
-          name="bookPic"
-          accept="image/png, image/jpeg"
-        />
+        <label></label>
+        <input type="file" name="image" accept="image/png, image/jpeg" />
         <img class="photos" id="photo2" />
 
-        <label for="bookPic"></label>
-        <input
-          type="file"
-          name="bookPic"
-          accept="image/png, image/jpeg"
-        />
+        <label></label>
+        <input type="file" name="image" accept="image/png, image/jpeg" />
         <img class="photos" id="photo3" />
 
-        <label for="bookPic"></label>
-        <input
-          type="file"
-          name="bookPic"
-          accept="image/png, image/jpeg"
-        />
+        <label></label>
+        <input type="file" name="image" accept="image/png, image/jpeg" />
         <img class="photos" id="photo4" />
-
       </section>
 
       <section>
@@ -137,28 +131,17 @@
 
       <section id="radioSection">
         <div>
-          <label class="radioLabel" for="freeRadio">
-            <span>Free</span>
-          </label>
-          <input type="radio" id="freeRadio" name="price" value="Free" />
+            <label class="checkLabel" for="freeCheck">
+                <span>Free</span>
+            </label>
+            <input type="checkbox" id="freeCheck" name="isFree" value="Free" />
         </div>
 
-        <div>
-          <label class="radioLabel" for="contactRadio">
-            <span>Please Contact</span>
-          </label>
-          <input
-            type="radio"
-            id="contactRadio"
-            name="price"
-            value="Please Contact"
-          />
-        </div>
-      </section>
-      <section id="postAdButtonSection">
-        <button class="button -sun center" type="submit">Post Ad</button>
-      </section>
-    </form>
+    </section>
+    <section id="postAdButtonSection">
+        <input class="button -sun center" type="submit" value="PostAd">
+    </section>
+</form>
 
     <script src="../scripts/postAd.js" type="text/javascript"></script>
   </body>

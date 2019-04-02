@@ -1,6 +1,6 @@
 let user;
 let basket;
-const checkboxSelect = document.querySelectorAll(".check");
+
 init();
 
 const removeButtons = document.querySelectorAll(".removeFromCart");
@@ -17,9 +17,6 @@ function removeCartItem(e) {
     // information if there is no item in shopping cart.
     const currentPosts = document.querySelectorAll(".post");
     if (currentPosts.length === 0) {
-        const endOfResult = document.querySelector("#endOfResults");
-        posts.removeChild(endOfResult);
-
         const emptyInfoDiv = document.createElement("div");
         emptyInfoDiv.id = "emptyInformation";
         const text = document.createTextNode("Your shopping cart is currently empty");

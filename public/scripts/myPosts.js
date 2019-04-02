@@ -121,11 +121,6 @@ function generateSearchResult(posts, user) {
             console.log(error);
         });
     }
-    const endOfResults = document.createElement("div");
-    endOfResults.id = "endOfResults";
-    endOfResults.appendChild(document.createTextNode("End of Results"));
-    document.querySelector("#posts").appendChild(endOfResults);
-
 }
 
 /**
@@ -209,26 +204,11 @@ function generatePost(post, user) {
 
             postDiv.appendChild(document.createElement("hr"));
 
-            if (user.shortlist.filter((post) => {
-                return post._id === post._id
-            }).length === 0) {
-                const removeButton = document.createElement("button");
-                removeButton.className = "addToCart";
-                removeButton.appendChild(document.createTextNode("Add to Cart"));
-                removeButton.addEventListener("click", addToCart);
-                postDiv.appendChild(removeButton);
-            } else {
-                const addButton = document.createElement("button");
-                addButton.className = "removeFromCart";
-                addButton.appendChild(document.createTextNode("Remove from Cart"));
-                addButton.addEventListener("click", removeFromCart);
-                postDiv.appendChild(addButton);
-            }
-
-            const contactSeller = document.createElement("button");
-            contactSeller.className = "contactSeller";
-            contactSeller.addEventListener("click", contactTheSeller);
-            contactSeller.appendChild(document.createTextNode("Contact Seller"));
+            const soldItem = document.createElement("button");
+            soldItem.className = "soldItem";
+            soldItem.addEventListener("click", soldAnItem);
+            soldItem.appendChild(document.createTextNode("Mark as Sold"));
+            postDiv.appendChild(soldItem);
 
             if (user.isAdmin) {
                 const deletePost = document.createElement("button");
@@ -236,14 +216,13 @@ function generatePost(post, user) {
                 deletePost.appendChild(document.createTextNode("Delete this post"));
                 postDiv.appendChild(deletePost);
             } else {
-                const buyItem = document.createElement("button");
-                buyItem.className = "buyItem";
-                buyItem.appendChild(document.createTextNode("Buy this item"));
-                buyItem.addEventListener("click", buyItem);
-                postDiv.appendChild(buyItem);
+                const deleteItem = document.createElement("button");
+                deleteItem.className = "deleteItem";
+                deleteItem.appendChild(document.createTextNode("Delete this Post"));
+                deleteItem.addEventListener("click", deleteAnItem);
+                postDiv.appendChild(deleteItem);
             }
 
-            postDiv.appendChild(contactSeller);
             resolve(postDiv);
         }).catch((error) => {
             console.log(error);
@@ -253,57 +232,6 @@ function generatePost(post, user) {
 }
 
 init();
-const addToCartButtons = document.querySelectorAll(".addToCart");
-for (let i = 0; i < addToCartButtons.length; i++) {
-    addToCartButtons[i].addEventListener("click", addToCart);
-}
-
-const removeFromCartButtons = document.querySelectorAll(".removeFromCart");
-for (let i = 0; i < removeFromCartButtons.length; i++) {
-    removeFromCartButtons[i].addEventListener("click", removeFromCart);
-}
-
-function addToCart(e) {
-    const postId = e.target.parentElement.id;
-    const request = new Request("/api/addToCart/" + postId, {
-        method: 'post',
-    });
-    fetch(request).then((newUser) => {
-        return newUser.json()
-    }).then((newUser) => {
-        updateShoppingCart(newUser.user.shortlist.length);
-        //Change the button to remove the item from shopping cart.
-        e.target.className = "removeFromCart";
-        e.target.innerHTML = "";
-        e.target.appendChild(document.createTextNode("Remove from Cart"));
-        e.target.removeEventListener("click", addToCart);
-        e.target.addEventListener("click", removeFromCart);
-        user = newUser.user;
-        updateShoppingCart(user.shortlist.length);
-    });
-
-}
-
-function removeFromCart(e) {
-    const postId = e.target.parentElement.id;
-    const request = new Request("/api/removeFromCart/" + postId, {
-        method: 'delete',
-    });
-    fetch(request).then((newUser) => {
-        return newUser.json()
-    }).then((newUser) => {
-        updateShoppingCart(newUser.newUser.shortlist.length);
-        //Change the button to remove the item from shopping cart.
-        e.target.className = "addToCart";
-        e.target.innerHTML = "";
-        e.target.appendChild(document.createTextNode("Add to Cart"));
-        e.target.removeEventListener("click", removeFromCart);
-        e.target.addEventListener("click", addToCart);
-        user = newUser.newUser;
-    });
-
-
-}
 
 const makePostButton = document.querySelector("#makePostButton");
 makePostButton.addEventListener("click", makePost);
@@ -315,12 +243,13 @@ function makePost(e) {
     document.location = "./post-ad.html";
 }
 
-const buyItemButtons = document.querySelectorAll(".buyItem");
-for (let i = 0; i < buyItemButtons.length; i++) {
-    buyItemButtons[i].addEventListener("click", buyItem);
+const deleteItemButtons = document.querySelectorAll(".deleteItem");
+for (let i = 0; i < deleteItemButtons.length; i++) {
+    deleteItemButtons[i].addEventListener("click", deleteAnItem);
 }
 
-function buyItem(e) {
+// TODO: implement func
+function deleteAnItem(e) {
     //Server call to update the shopping cart of user
     // Here just use user0
     const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
@@ -336,15 +265,16 @@ function buyItem(e) {
 }
 
 
-/*********************** Contact Seller by User "user" for Phase 1 ************************/
+/*********************** Mark an item as sold ************************/
 
-const contactButton = document.querySelectorAll('.contactSeller');
+const soldItemButton = document.querySelectorAll('.soldItem');
 
-for (let i = 0; i < contactButton.length; i++) {
-    contactButton[i].addEventListener("click", contactTheSeller);
+for (let i = 0; i < soldItemButton.length; i++) {
+    soldItemButton[i].addEventListener("click", soldAnItem);
 }
 
-function contactTheSeller(e) {
+// TODO: implement func
+function soldAnItem(e) {
     e.preventDefault();
 
     const postId = e.target.parentElement.id;
@@ -401,84 +331,3 @@ function contactTheSeller(e) {
     })
 
 }
-
-const searchButton = document.querySelector("#searchButton");
-searchButton.addEventListener("click", searching);
-
-function searching(e) {
-    e.preventDefault();
-    //Server call to request search result, here just jump to the item.html;
-    document.location = "../pages/items.html";
-}
-
-/*********************** Drop down select ************************/
-
-// the select drop down box with 3 search options
-const x = document.getElementsByClassName("custom-select");
-for (let i = 0; i < x.length; i++) {
-    const selElmnt = x[i].getElementsByTagName("select")[0];
-    // for each element, create a div DIV that will act as the selected item
-    const a = document.createElement("div");
-    a.setAttribute("class", "select-selected");
-    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-    x[i].appendChild(a);
-    // for each element, create a new div that will contain the option list
-    const b = document.createElement("div");
-    b.setAttribute("class", "select-items select-hide");
-    for (let j = 1; j < selElmnt.length; j++) {
-        // for each option in the original select element, create a new div that will act as an option item
-        const c = document.createElement("div");
-        c.innerHTML = selElmnt.options[j].innerHTML;
-        c.addEventListener("click", function (e) {
-            // when an item is clicked, update the original select box and the selected item
-            const s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-            const h = this.parentNode.previousSibling;
-            for (let l = 0; l < s.length; l++) {
-                if (s.options[l].innerHTML === this.innerHTML) {
-                    s.selectedIndex = l;
-                    h.innerHTML = this.innerHTML;
-                    const y = this.parentNode.getElementsByClassName("same-as-selected");
-                    for (let k = 0; k < y.length; k++) {
-                        y[k].removeAttribute("class");
-                    }
-                    this.setAttribute("class", "same-as-selected");
-                    break;
-                }
-            }
-            h.click();
-        });
-        b.appendChild(c);
-    }
-    x[i].appendChild(b);
-    a.addEventListener("click", function (e) {
-        // when the select box is clicked, close any other select boxes and open/close the current select box
-        e.stopPropagation();
-        closeAllSelect(this);
-        this.nextSibling.classList.toggle("select-hide");
-        this.classList.toggle("select-arrow-active");
-    });
-}
-
-// closes the select box
-function closeAllSelect(elmnt) {
-    /*a function that will close all select boxes in the document,
-    except the current select box:*/
-    const arrNo = [];
-    const x = document.getElementsByClassName("select-items");
-    const y = document.getElementsByClassName("select-selected");
-    for (let i = 0; i < y.length; i++) {
-        if (elmnt === y[i]) {
-            arrNo.push(i)
-        } else {
-            y[i].classList.remove("select-arrow-active");
-        }
-    }
-    for (let j = 0; j < x.length; j++) {
-        if (arrNo.indexOf(j)) {
-            x[j].classList.add("select-hide");
-        }
-    }
-}
-
-// Close all select boxes if the user clickes outside of the box
-document.addEventListener("click", closeAllSelect);

@@ -282,5 +282,5 @@ function jumpToPostIMade(e) {
     //Which should be stored in the field "user.sell", use the generatePost function
     // in item.js to generate all the result in the items page.
     //Here just jump to items page directly.
-    document.location = "../pages/items.html";
+    document.location = "../pages/myPosts.html";
 }
