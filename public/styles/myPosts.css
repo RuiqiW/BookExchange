@@ -1,0 +1,331 @@
+body {
+    background-color: #e6ecf0;
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+#topBar {
+    float: top;
+    min-width: 1000px;
+    background-color: white;
+    border-bottom: 1px solid grey;
+    height: 70px;
+}
+
+#topBarLogo {
+    display: inline-block;
+    height: 50px;
+    position: relative;
+}
+
+#searchForm {
+    display: inline;
+    text-align: center;
+    position: absolute;
+    left: 300px;
+    top: 0px;
+}
+
+#userInfo {
+    display: inline-block;
+    float: right;
+}
+
+#searchBox {
+    height: 35px;
+    width: 400px;
+    outline: none;
+    box-shadow: 0px 1px 1px 1px grey;
+    position: absolute;
+    top: 13px;
+    border-radius: 20px;
+}
+
+#searchButton {
+    height: 40px;
+    width: 80px;
+    margin-left: 30px;
+    margin-top: 20px;
+    position: relative;
+    left: 400px;
+    top: -4px;
+    border-radius: 10px;
+    padding: 0;
+    background-color: lightgrey;
+}
+
+#searchButtonText {
+    font-size: 150%;
+    color: grey;
+}
+
+#searchButton:hover {
+    background-color: white;
+}
+
+#logIn {
+    position: relative;
+    right: 20px;
+    top: 10px;
+    height: 40px;
+    width: 64px;
+    outline: none;
+    background-color: blue;
+}
+
+#logInButtonText {
+    font-size: 150%;
+    color: white;
+}
+
+#posts {
+    margin-left: 200px;
+    margin-top: 15px;
+    max-width: 800px;
+    min-width: 500px;
+    margin-right: 100px;
+    background-color: #e6ecf0;
+}
+
+.post{
+    border: 1px solid grey;
+    max-width: 800px;
+    min-width: 500px;
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+#result{
+    color: blue;
+    font-weight: bold;
+}
+
+.profilePhoto {
+    height: 50px;
+    width: 50px;
+    float: left;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-top: 10px;
+
+}
+.userName {
+    font-size: 130%;
+    font-weight: bold;
+    margin-left: 10px;
+}
+.category {
+    margin-top: 0;
+    margin-left: 10px;
+    font-size: 70%;
+    color: grey;
+}
+
+.condition  {
+    margin-top: 0;
+    margin-left: 10px;
+    font-size: 70%;
+    color: grey;
+
+}
+
+.timespan {
+    margin-top: 0;
+    margin-left: 10px;
+    font-size: 70%;
+    color: grey;
+
+}
+
+.description {
+    margin-left: 75px;
+}
+
+.price{
+    float: right;
+    position: relative;
+    right: 10px;
+    top: -62px;
+    font-weight: bold;
+}
+
+.addToCart {
+    margin-bottom: 5px;
+    margin-left: 10px;
+    background-color: dodgerblue;
+    font-weight: bold;
+    color: white;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+
+}
+
+.soldItem {
+    margin-left: 40px;
+    margin-right: 40px;
+    font-weight: bold;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+    color: white;
+    background-color: dodgerblue;
+}
+
+.deleteItem {
+    font-weight: bold;
+    color: white;
+    background-color: dodgerblue;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+#searchResult {
+    padding: 10px;
+}
+
+.itemPicture {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+}
+
+.itemPicture:hover {
+    cursor: url("../images/magnifyingGlass.cur"), pointer;
+}
+
+#sortingOption {
+    position: relative;
+    left: 10px;
+}
+
+#signIn {
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+    bottom: 10px;
+}
+.topBarImage {
+    height: 30px;
+    display: inline-block;
+}
+
+.topBarImageContainer {
+    display: inline-block;
+    border-radius: 50%;
+    height: 30px;
+}
+
+.topBarImageContainer:hover{
+    background-color: lightskyblue;
+}
+
+.topBarText {
+    font-weight: bold;
+    display: inline-block;
+    right: 20px;
+    font-size: 90%;
+}
+
+#myCart {
+    display: inline-block;
+    margin: 10px;
+    position: relative;
+    bottom: 10px;
+}
+
+#shoppingCartNumber {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    background-color: red;
+    position: relative;
+    top: -10px;
+    right: 25px;
+    border-radius: 50%;
+    text-align: center;
+}
+
+#cartNumber{
+    color: white;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+#logOut {
+    display: inline-block;
+    margin: 10px;
+    position: relative;
+    bottom: 20px;
+}
+
+#topBarIcons {
+    float: right;
+    position: relative;
+    top: 15px;
+    right: 10px;
+}
+.removeFromCart {
+    margin-bottom: 5px;
+    margin-left: 10px;
+    background-color: yellow;
+    font-weight: bold;
+    color: black;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+}
+
+.postId  {
+    margin-top: 0;
+    margin-left: 10px;
+    font-size: 70%;
+    color: grey;
+
+}
+
+#makePostButton {
+    height: 30px;
+    position: relative;
+    bottom: 30px;
+    right: 30px;
+    font-size: 120%;
+    background-color: #44aaee;
+    color: white;
+    border-radius: 10px;
+
+}
+
+#backToPostButton {
+    height: 30px;
+    bottom: 20px;
+    right: 10px;
+    font-size: 120%;
+    background-color: #44aaee;
+    color: white;
+    border-radius: 10px;
+}
+
+.deletePost {
+    margin-bottom: 5px;
+    margin-left: 10px;
+    background-color: red;
+    font-weight: bold;
+    color: white;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+}
+
+.profileImage {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border-style: solid;
+}
