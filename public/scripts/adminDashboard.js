@@ -1,5 +1,4 @@
 // load list of messages received, need server call in Phase2
-const thisUser = "admin"; //TODO: get current user from cookie
 
 let postEdited = 0;
 let shownUserNum = 2;
@@ -47,8 +46,9 @@ function loadMessageNum() {
             document.querySelector('#msgData').innerText = 0;
         }
     }).then((json) => {
-        document.querySelector('#msgData').innerText = json.reduce((total, chat) => {
-            if (thisUser === chat.user1) {
+        const thisUser = json.user;
+        document.querySelector('#msgData').innerText = json.chats.reduce((total, chat) => {
+            if ( thisUser === chat.user1) {
                 return total += chat.user2Messages.length;
             } else {
                 return total += chat.user1Messages.length;

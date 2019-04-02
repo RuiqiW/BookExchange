@@ -260,11 +260,14 @@ const authenticate = (req, res, next) => {
 
 // create new chat between two users
 app.post('/api/createChat', authenticate, (req, res) => {
-    const user1 = req.body.user1;
-    const user2 = req.user.username;
+    const user1 = req.user.username;
+    const user2 = req.body.user1;
+    if(user1 === user2){
+        res.status(404).send();
+    }
     Chat.findOne({$or: [{user1: user1, user2: user2}, {user1: user2, user2: user1}]}).then((chat) => {
         if (chat !== null) {
-            res.send(chat);
+            res.send({user: user1, chat: chat});
         } else {
             const newChat = new Chat({
                 user1: user1,
@@ -278,7 +281,7 @@ app.post('/api/createChat', authenticate, (req, res) => {
                 if (!result) {
                     res.status(404).send();
                 } else {
-                    res.send(result);
+                    res.send({user: user1, chat: result});
                 }
             }).catch((error) => {
                 res.status(500).send(error)
@@ -291,15 +294,15 @@ app.post('/api/createChat', authenticate, (req, res) => {
 
 
 // find the chat between two users
-app.get('/api/startChat/:user1', authenticate, (req, res) => {
-    const user1 = req.params.user1;
-    const user2 = req.user.username;
+app.get('/api/startChat/:user', authenticate, (req, res) => {
+    const user2 = req.params.user;
+    const user1 = req.user.username;
 
     Chat.findOne({$or: [{user1: user1, user2: user2}, {user1: user2, user2: user1}]}).then((chat) => {
         if (!chat) {
             res.status(404).send();
         } else {
-            res.send(chat);
+            res.send({user: user1, chat: chat});
         }
     }).catch((error) => {
         console.log(error);
@@ -315,7 +318,7 @@ app.get('/api/allChats', authenticate, (req, res) => {
         if (!chats) {
             res.status(404).send();
         } else {
-            res.send(chats);
+            res.send({user: username, chats: chats});
         }
     }).catch((error) => {
         console.log(error);
@@ -337,12 +340,12 @@ app.post('/api/chat/:chatId', authenticate,(req, res) => {
         } else {
             const newMessage = {
                 time: req.body.time,
-                sender: req.body.sender,
+                sender: username,
                 content: req.body.content
             };
             if(username === chat.user1 || username === chat.user2){
                 chat.messages.push(newMessage);
-                if (req.body.sender === chat.user1) {
+                if (username === chat.user1) {
                     chat.user1Messages.push(newMessage);
                 } else {
                     chat.user2Messages.push(newMessage);
@@ -375,7 +378,7 @@ app.get('/api/chat/:chatId', authenticate, (req, res) => {
             res.status(404).send();
         } else {
             if(username === chat.user1 || username === chat.user2) {
-                res.send(chat);
+                res.send({user: username, chat: chat});
             }else{
                 res.status(401).send();
             }

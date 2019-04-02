@@ -25,13 +25,15 @@ function showChatRecords(e) {
             if (res.status === 200) {
                 return res.json();
             }
-        }).then((chatHistories) => {
+        }).then((json) => {
+            const chatHistories = json.chats;
+            const thisUser = json.user;
             const records = document.querySelectorAll('.profile');
             for (let i = 0; i < records.length - 1; i++) {
                 chatRecords.removeChild(chatRecords.lastElementChild);
             }
             for (let i = 0; i < chatHistories.length; i++) {
-                addChatRecord(chatHistories[i]);
+                addChatRecord(thisUser, chatHistories[i]);
             }
         });
 
@@ -44,7 +46,7 @@ function showChatRecords(e) {
 }
 
 
-function addChatRecord(chatHistory) {
+function addChatRecord(thisUser, chatHistory) {
     const profile = document.createElement('div');
     profile.className = "profile";
 
@@ -79,7 +81,7 @@ chatCreateButton.addEventListener('click', addNewChat);
 function addNewChat(e) {
     e.preventDefault();
     const keyword = document.querySelector('#userToChat').value;
-    if (keyword !== '' || keyword === thisUser) {
+    if (keyword !== '') {
         // find if the user to chat exists
         const userRequest = new Request(`/api/user/${keyword}`, {
             method: 'get',
@@ -159,8 +161,10 @@ function showChatRoom(e) {
     }
 }
 
-function loadChatHistory(chatHistory) {
+function loadChatHistory(json) {
+    const chatHistory = json.chat;
     currentChatId = chatHistory._id;
+    const thisUser = json.user;
 
     // remove old chats
     const chatBox = document.querySelector('#chat');
@@ -177,6 +181,7 @@ function loadChatHistory(chatHistory) {
                 addReceivedMessage(chatHistory.messages[i].content);
             }
         }
+        chat.scrollTop = chat.scrollHeight;
         const request = new Request(`/api/loadChat/${currentChatId}`, {
             method: 'post',
             headers: {
@@ -191,9 +196,7 @@ function loadChatHistory(chatHistory) {
             }
         })
     }
-
     shownChatRoom = true;
-    chat.scrollTop = chat.scrollHeight;
 }
 
 
@@ -217,7 +220,6 @@ function sendMessage(e) {
         if (message.length > 0 && message.length < 200) {
             const newMessage = {
                 time: new Date(),
-                sender: thisUser,
                 content: message
             };
             const request = new Request(`/api/chat/${currentChatId}`, {
@@ -282,7 +284,9 @@ setTimeout(function updateChat() {
             if (res.status === 200) {
                 return res.json();
             }
-        }).then((chatHistory) => {
+        }).then((json) => {
+            const chatHistory = json.chat;
+            const thisUser = json.user;
             if (thisUser === chatHistory.user1) {
                 for (let i = 0; i < chatHistory.user2Messages.length; i++) {
                     addReceivedMessage(chatHistory.user2Messages[i].content);
