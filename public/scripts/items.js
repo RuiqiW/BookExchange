@@ -15,37 +15,37 @@ function onSortingOptChange() {
     if (newOption === "timeNewToOld") {
         posts.sort(function (a, b) {
             if (a.postingDate <= b.postingDate) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         });
     } else if (newOption === "timeOldToNew") {
         posts.sort(function (a, b) {
             if (a.postingDate <= b.postingDate) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         });
     } else if (newOption === "priceLowToHigh") {
         posts.sort(function (a, b) {
             if (a.price <= b.price) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         });
     } else {//priceHighToLow
         posts.sort(function (a, b) {
             if (a.price <= b.price) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         });
     }
-    generateSearchResult(posts, users[0]);
+    generateSearchResult(posts, user);
 }
 
 function init() {
@@ -178,7 +178,7 @@ function generatePost(post, user) {
             timeSpan.className = "timespan";
             const date = new Date(post.postingDate);
             timeSpan.appendChild(document.createTextNode("Posting Time: " +
-                +date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
+                +date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
             postDiv.appendChild(timeSpan);
 
             const priceDiv = document.createElement("div");
@@ -210,7 +210,7 @@ function generatePost(post, user) {
             postDiv.appendChild(document.createElement("hr"));
 
             if (user.shortlist.filter((post) => {
-                return post._id === post._id
+                return post._id === postDiv.id;
             }).length === 0) {
                 const removeButton = document.createElement("button");
                 removeButton.className = "addToCart";
@@ -301,8 +301,6 @@ function removeFromCart(e) {
         e.target.addEventListener("click", addToCart);
         user = newUser.newUser;
     });
-
-
 }
 
 const makePostButton = document.querySelector("#makePostButton");
@@ -405,6 +403,7 @@ function contactTheSeller(e) {
 const searchButton = document.querySelector("#searchButton");
 searchButton.addEventListener("click", searching);
 
+//TODO: FIX THIS!!!
 function searching(e) {
     e.preventDefault();
     //Server call to request search result, here just jump to the item.html;
