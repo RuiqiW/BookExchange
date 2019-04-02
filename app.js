@@ -120,31 +120,45 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
     if (!req.session.user) {
         res.status(401).send();
     }
-    // if user is logged in
-    //TODO: fix this when Eric finish modifying frontend
     const files = req.files;
-    const newPost = new Post({
-        title: req.body.title,
-        seller: req.session.user,
-        image: [],
-        condition: req.body.condition,
-        ISBN: req.body.ISBN,
-        edition: req.body.edition,
-        description: req.body.description,
-        price: req.body.price,
-        postingDate: new Date(),
-        isSold: false,
-        byCreditCard: true
-    });
-    for (let i = 0; i < files.length; i++) {
-        newPost.image.push(files[i].path);
+    let price;
+    if (req.body.isFree) {
+        price = 0;
+    } else if (req.body.isContact) {
+        price = undefined;
+    } else {
+        price = req.body.price;
     }
-    newPost.save().then((result) => {
-        res.status(200).send();
+    let byCreditCard;
+    User.findOne({username: req.session.user}).then((result) => {
+        byCreditCard = result.byCreditCard;
+        const newPost = new Post({
+            title: req.body.title,
+            seller: req.session.user,
+            image: [],
+            condition: req.body.condition,
+            ISBN: req.body.ISBN,
+            edition: req.body.edition,
+            description: req.body.description,
+            price: price,
+            postingDate: new Date(),
+            isSold: false,
+            byCreditCard: byCreditCard
+        });
+        for (let i = 0; i < files.length; i++) {
+            newPost.image.push(files[i].path);
+        }
+        newPost.save().then((result) => {
+            res.status(200).send();
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        });
     }).catch((error) => {
         console.log(error);
         res.status(500).send();
     });
+
 });
 
 app.post('/api/login', (req, res) => {
