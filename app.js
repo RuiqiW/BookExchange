@@ -283,10 +283,10 @@ const authenticate = (req, res, next) => {
                 next()
             }
         }).catch((error) => {
-            res.redirect('/login')
+            res.status(401).send();
         })
     } else {
-        res.redirect('/login')
+        res.status(401).send();
     }
 };
 
@@ -476,6 +476,10 @@ app.get("/api/getCurrentUser", (req, res) => {
 
 
 app.get("/api/findSeller/:postId", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+        return;
+    }
     const postId = req.params.postId;
     if (!ObjectID.isValid(postId)) {
         res.status(404).send();

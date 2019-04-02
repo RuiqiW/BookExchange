@@ -369,6 +369,8 @@ function contactTheSeller(e) {
             return res.json();
         }else if(res.status === 605){
             window.alert("This is your item.");
+        }else if (res.status === 401) {
+            window.location = '/login';
         }else{
             window.alert("Seller not found.");
         }

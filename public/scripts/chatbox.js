@@ -20,6 +20,8 @@ function showChatRecords(e) {
         fetch(request).then((res) => {
             if (res.status === 200) {
                 return res.json();
+            } else if (res.status === 401) {
+                window.location = '/login';
             }
         }).then((json) => {
             const chatHistories = json.chats;
@@ -31,10 +33,9 @@ function showChatRecords(e) {
             for (let i = 0; i < chatHistories.length; i++) {
                 addChatRecord(thisUser, chatHistories[i]);
             }
+            chatRecords.style.display = 'block';
+            shownChatRecords = true;
         });
-
-        chatRecords.style.display = 'block';
-        shownChatRecords = true;
     } else {
         chatRecords.style.display = 'none';
         shownChatRecords = false;
