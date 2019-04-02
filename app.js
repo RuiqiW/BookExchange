@@ -581,6 +581,12 @@ app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
 });
 
 app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
+
+    if (!ObjectID.isValid(req.params.postId)) {
+        res.status(600).send();
+        return;
+    }
+    const postId = req.params.postId;
     Post.findByIdAndDelete(postId).then((post) => {
         if(!post){
             res.status(404).send();
