@@ -321,7 +321,7 @@ app.post('/api/createChat', authenticate, (req, res) => {
             })
         }
     }).catch((error) => {
-        res.status(500).send(error);
+        res.status(500).send();
     });
 });
 
@@ -339,7 +339,7 @@ app.get('/api/startChat/:user', authenticate, (req, res) => {
         }
     }).catch((error) => {
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).send();
     });
 });
 
@@ -355,7 +355,7 @@ app.get('/api/allChats', authenticate, (req, res) => {
         }
     }).catch((error) => {
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).send();
     })
 });
 
@@ -392,7 +392,7 @@ app.post('/api/chat/:chatId', authenticate,(req, res) => {
             }
         }
     }).catch((error) => {
-        res.status(500).send(error);
+        res.status(500).send();
     })
 });
 
@@ -417,7 +417,7 @@ app.get('/api/chat/:chatId', authenticate, (req, res) => {
             }
         }
     }).catch((error) => {
-        res.status(500).send(error);
+        res.status(500).send();
     })
 });
 
@@ -448,7 +448,7 @@ app.post('/api/loadChat/:chatId',authenticate, (req, res) => {
             })
         }
     }).catch((error) => {
-        res.status(500).send(error);
+        res.status(500).send();
     })
 });
 
@@ -597,6 +597,42 @@ app.post("/api/sendCode/:email", (req, res) => {
     });
 });
 
+/****************** for dashboard *****************/
+// Middleware for authentication for resources
+const adminAuthenticate = (req, res, next) => {
+    if (req.session.user) {
+        User.findOne({username: req.session.user}).then((user) => {
+            if (!user) {
+                return Promise.reject()
+            } else {
+                if(user.isAdmin){
+                    req.user = user;
+                    next();
+                }else{
+                    return Promise.reject();
+                }
+            }
+        }).catch((error) => {
+            res.redirect('/login')
+        })
+    } else {
+        res.redirect('/login')
+    }
+};
+
+
+app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
+    Post.find().then((posts) => {
+        if(!posts){
+            res.status(404).send();
+        }else{
+            res.send(posts);
+        }
+    }).catch((error)=> {
+        res.status(500).send();
+    });
+});
+
 app.post("/api/recover", (req, res) => {
     if (!req.session.recoverEmail) {
         res.status(401).send();
@@ -630,6 +666,60 @@ app.post("/api/recover", (req, res) => {
        res.status(500).send();
     });
 
+});
+
+app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
+
+    if (!ObjectID.isValid(req.params.postId)) {
+        res.status(600).send();
+        return;
+    }
+    const postId = req.params.postId;
+    Post.findByIdAndDelete(postId).then((post) => {
+        if(!post){
+            res.status(404).send();
+        }else{
+            res.send(post);
+        }
+    }).catch((error)=> {
+        res.status(500).send();
+    });
+});
+
+app.get("/api/dashboard/users", adminAuthenticate, (req, res) => {
+    User.find().then((users) => {
+        if(!users){
+            res.status(404).send();
+        }else{
+            res.send(users);
+        }
+    }).catch((error)=> {
+        res.status(500).send();
+    });
+});
+
+app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
+
+    const username = req.params.user;
+    User.findOneAndDelete({username: username}).then((user) => {
+        if(!user){
+            res.status(404).send();
+        }else{
+            if(user.isAdmin){
+              res.status(605).send();
+            }else{
+                User.find().then((users) => {
+                    if(!users){
+                        res.status(404).send();
+                    }else{
+                        res.send({userNum : users.length});
+                    }
+                })
+            }
+        }
+    }).catch((error)=> {
+        res.status(500).send();
+    });
 });
 
 app.listen(port, () => {
