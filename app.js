@@ -3,7 +3,9 @@
 const express = require('express');
 const port = process.env.PORT || 3000;
 const session = require('express-session');
-
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.EMAIL_TOKEN);
+console.log(process.env.EMAIL_TOKEN);
 const fs = require('fs');
 const mongoose = require('./db/mongoose').mongoose;
 const multer = require("multer");
@@ -13,6 +15,7 @@ const Post = require("./models/Post").Post;
 const User = require("./models/User").User;
 const Transaction = require("./models/Transaction").Transaction;
 const Chat = require("./models/Message").Chat;
+const Recovery = require("./models/Recovery").Recovery;
 
 const app = express();
 const ObjectID = require("mongodb").ObjectID;
@@ -540,6 +543,91 @@ app.post("/api/updatePayment/:newPayment", (req, res) => {
     User.findOne({username: req.session.user}).then((user) => {
        user.byCreditCard = byCreditCard;
        user.save().then((res.redirect("/pages/userProfile.html")));
+    });
+
+});
+
+app.post("/api/sendCode/:email", (req, res) => {
+    const email = req.params.email;
+    User.findOne({email: email}).then((user) => {
+       if (!user) {
+           res.status(404).send();
+           return;
+       }
+       let code = "";
+       for (let i = 0; i < 6; i++) {
+           code += Math.floor(Math.random() * 10);
+       }
+        const msg = {
+            to: email,
+            from: "recovery@uoftexchange.ca",
+            subject: "Recovery your password",
+            text: "Your recovery code is " + code
+        };
+
+       Recovery.findOne({email: email}).then((result) => {
+          if (result) {
+              result.code = code;
+              result.save().then((newUser) => {
+                  sgMail.send(msg).catch((error) => {
+                      console.log(error);
+                  });
+                  req.session.recoverEmail = email;
+                  res.send();
+              });
+          } else {
+              const recovery = new Recovery({
+                  email: email,
+                  code: code
+              });
+              recovery.save().then((newUser) => {
+                  sgMail.send(msg).catch((error) => {
+                      console.log(error);
+                  });
+                  res.send();
+              });
+          }
+       }).catch((error) => {
+           console.log(error);
+           res.status(500).send();
+       });
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
+});
+
+app.post("/api/recover", (req, res) => {
+    if (!req.session.recoverEmail) {
+        res.status(401).send();
+    }
+    const code = req.body.code;
+    const email = req.session.recoverEmail;
+    const password = req.body.password;
+    Recovery.findOne({email: email}).then((entry) => {
+        if (!entry) {
+            res.status(401).send();
+        } else {
+            if (entry.code !== code) {
+                res.status(401).send();
+            } else {
+                User.findOne({email: email}).then((user) => {
+                    user.password = password;
+                    user.save().then((newUser) => {
+                        req.session.destroy((error) => {
+                            if (error) {
+                                res.status(500).send(error);
+                            } else {
+                                res.send(newUser);
+                            }
+                        });
+                    });
+                });
+            }
+        }
+   }).catch((error) => {
+       console.log(error);
+       res.status(500).send();
     });
 
 });
