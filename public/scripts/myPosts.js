@@ -49,54 +49,42 @@ function onSortingOptChange() {
 }
 
 function init() {
-    // Server call to request the search results to display and the current user
-    // Here we use the hard-coded posts in the class.js as an demonstration
-    //By default sorting by posting date from new to old
-    const keyword = localStorage.keyword;
-    if (keyword) {
-        const request = new Request("/api/search/keyword");
 
-        fetch(request).then((res) => {
-            return res.json();
-        }).then((json) => {
-            if (json.user === null) {
-                //Create a trivial user for page generation
-                user =
-                    new User('user', 'user', 'user', 'user@example.com', 'user', false);
-                posts = json.result;
-                posts.sort(function (a, b) {
-                    if (a.postingDate <= b.postingDate) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
-                });
+    const request = new Request("/api/myPosts");
+
+    fetch(request).then((res) => {
+        if (res.status === 401) {
+            window.location = '/login';
+        }
+        return res.json();
+    }).then((json) => {
+        user = json.user;
+        posts = json.posts;
+        posts.sort(function (a, b) {
+            if (a.postingDate <= b.postingDate) {
+                return 1;
             } else {
-                isRealUser = true;
-                user = json.user;
-                posts = json.result;
+                return -1;
             }
-            if (isRealUser) {
-                const cartNumber = user.shortlist.length;
-                updateShoppingCart(cartNumber);
-                const signInDiv = document.querySelector("#signIn");
-                signInDiv.removeChild(signInDiv.lastElementChild);
-
-                const a = document.createElement("a");
-                a.setAttribute("href", "/pages/userProfile.html");
-                const imageContainer = document.createElement("div");
-                imageContainer.className = "topBarImageContainer";
-                const image = document.createElement("img");
-                image.className = "profileImage";
-                image.setAttribute("src", user.avatar);
-                imageContainer.appendChild(image);
-                a.appendChild(imageContainer);
-                imageContainer.appendChild(image);
-                signInDiv.appendChild(a);
-            }
-            generateSearchResult(posts, user);
         });
-    }
+        const cartNumber = user.shortlist.length;
+        updateShoppingCart(cartNumber);
+        const signInDiv = document.querySelector("#signIn");
+        signInDiv.removeChild(signInDiv.lastElementChild);
+
+        const a = document.createElement("a");
+        a.setAttribute("href", "/pages/userProfile.html");
+        const imageContainer = document.createElement("div");
+        imageContainer.className = "topBarImageContainer";
+        const image = document.createElement("img");
+        image.className = "profileImage";
+        image.setAttribute("src", user.avatar);
+        imageContainer.appendChild(image);
+        a.appendChild(imageContainer);
+        imageContainer.appendChild(image);
+        signInDiv.appendChild(a);
+        generateSearchResult(posts, user);
+    });
 }
 
 function updateShoppingCart(newNumber) {
@@ -116,7 +104,7 @@ function generateSearchResult(posts, user) {
     }
     for (let i = 0; i < posts.length; i++) {
         generatePost(posts[i], user).then((resultDiv) => {
-            document.querySelector("#posts").firstElementChild.before(resultDiv);
+            document.querySelector("#posts").appendChild(resultDiv);
         }).catch((error) => {
             console.log(error);
         });
@@ -204,25 +192,19 @@ function generatePost(post, user) {
 
             postDiv.appendChild(document.createElement("hr"));
 
-            const soldItem = document.createElement("button");
-            soldItem.className = "soldItem";
-            soldItem.addEventListener("click", soldAnItem);
-            soldItem.appendChild(document.createTextNode("Mark as Sold"));
-            postDiv.appendChild(soldItem);
-
-            if (user.isAdmin) {
-                const deletePost = document.createElement("button");
-                deletePost.className = "deletePost";
-                deletePost.appendChild(document.createTextNode("Delete this post"));
-                postDiv.appendChild(deletePost);
-            } else {
+            if (!post.isSold) {
                 const deleteItem = document.createElement("button");
                 deleteItem.className = "deleteItem";
                 deleteItem.appendChild(document.createTextNode("Delete this Post"));
                 deleteItem.addEventListener("click", deleteAnItem);
                 postDiv.appendChild(deleteItem);
-            }
 
+                const soldItem = document.createElement("button");
+                soldItem.className = "soldItem";
+                soldItem.addEventListener("click", soldAnItem);
+                soldItem.appendChild(document.createTextNode("Mark as Sold"));
+                postDiv.appendChild(soldItem);
+            }
             resolve(postDiv);
         }).catch((error) => {
             console.log(error);
@@ -265,58 +247,41 @@ function deleteAnItem(e) {
 // TODO: implement func
 function soldAnItem(e) {
     e.preventDefault();
+    console.log(e.target.parentElement.id);
+    const buyer = prompt("Please input the username of the person you sold this item to:");
+    if (buyer.trim() === "") {
+        return;
+    }
+    if (confirm("After clicking yes, this item will add to the buyer's purchase and this item " +
+        "will no longer appear in the search result.\nAre you sure of doing so?")) {
 
-    const postId = e.target.parentElement.id;
-
-    const postRequest = new Request(`/api/findSeller/${postId}`, {
-        method: 'get',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
-    });
-
-    fetch(postRequest).then((res) => {
-        if (res.status === 200) {
-            return res.json();
-        }else {
-            window.alert("Seller not found.");
-        }
-    }).then((json) => {
-        const keyword = json.username;
-
-        if(keyword === thisUser){
-            window.alert("This is your item.");
-            return;
-        }
-
-        // find if the user to chat exists
-        const newChat = {
-            user1: thisUser,
-            user2: keyword
+        const payload = {
+            id: e.target.parentElement.id,
+            buyer: buyer
         };
 
-        const request = new Request("/api/createChat", {
-            method: 'post',
-            body: JSON.stringify(newChat),
+        const request = new Request("/api/sellItem", {
+            method: "post",
+            body: JSON.stringify(payload),
             headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
+                "Accept": "application/json, text/plain, */*",
+                "Content-Type": "application/json"
             }
         });
-        fetch(request).then((res2) => {
-            if (res2.status === 200) {
-                return res2.json();
-            }
-        }).then((json) => {
 
-            loadChatHistory(json);
-            // set up chat box
-            const chatName = document.querySelector('#chatName');
-            chatName.innerText = keyword;
-            const chatRoom = document.querySelector('#chatRoom');
-            chatRoom.style.display = "block";
+        fetch(request).then((res) => {
+            console.log(res);
+            debugger;
+            if (res.status === 607) {
+                alert("The user you just input doesn't exist");
+                location.reload();
+            } else {
+                location.reload();
+            }
+        }).catch((error) => {
+            console.log(error);
+            location.reload();
         })
-    })
+    }
 
 }

@@ -57,6 +57,7 @@ function init() {
     fetch(request).then((res) => {
         if (res.status === 401) {
             updateShoppingCart(0);
+            return Promise.reject();
         } else {
             return res.json();
         }
@@ -93,6 +94,8 @@ function init() {
             const myCart = document.querySelector("#myCart");
             myCart.style.display = "none";
         }
+    }).catch((error) => {
+        console.log("User not logged in");
     })
 }
 

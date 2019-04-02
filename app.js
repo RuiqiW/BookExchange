@@ -770,8 +770,11 @@ app.get("/api/myPurchases", (req, res) => {
         return;
     }
     const username = req.session.user;
+    console.log("sdjakdf");
     Transaction.find({buyer: username}).then((transactions) => {
-        Post.find({_id: {$in: transactions} }).then((posts) => {
+        const transactionIds = transactions.map((trans) => {return trans.postId});
+        console.log(transactionIds);
+        Post.find({_id: {$in: transactionIds} }).then((posts) => {
             User.findOne({username: username}).then((user) => {
                 res.send({posts: posts, user: user});
             });
@@ -780,6 +783,70 @@ app.get("/api/myPurchases", (req, res) => {
         console.log(error);
         res.status(500).send();
     });
+});
+
+app.get("/api/myPosts", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+        return;
+    }
+    const username = req.session.user;
+    Post.find({seller: username}).then((posts) => {
+       User.findOne({username: username}).then((user) => {
+           res.send({posts: posts, user: user});
+       });
+    });
+});
+
+app.post("/api/sellItem", (req, res) => {
+   if (!req.session.user) {
+       res.status(401).send();
+       return
+   }
+   const id = req.body.id;
+   const buyer = req.body.buyer;
+   const username = req.session.user;
+   Post.findById(id).then((post) => {
+       if (!post) {
+           res.status(404).send();
+           return
+       }
+       if (post.seller !== username) {
+           console.log("hahashhasd");
+           res.status(401).send();
+           return;
+       }
+       if (post.isSold) {
+           res.status(400).send()
+       }
+       User.find({username: buyer}).then((user) => {
+           if (!user) {
+               res.status(607).send();
+               return;
+           }
+           post.isSold = true;
+           post.buyer = buyer;
+           const transaction = new Transaction({
+               postId: post._id,
+               date: new Date(),
+               isComplete: true,
+               amount: 0,
+               seller: req.session.user,
+               buyer: buyer,
+               handleByUser: true
+           });
+           transaction.save().then((trans) => {
+               post.save().then((newPost) => {
+                   res.status(200).send();
+               });
+           });
+       });
+
+   }).catch((error) => {
+       console.log(error);
+       res.status(500).send();
+   });
+
 });
 
 app.listen(port, () => {

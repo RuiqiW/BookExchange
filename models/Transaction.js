@@ -24,6 +24,10 @@ const TransactionSchema = new mongoose.Schema({
     buyer: {
         type: String,
         required: false
+    },
+    handleByUser: {
+        type: Boolean,
+        required: false
     }
 });
 
