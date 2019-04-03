@@ -89,6 +89,8 @@ function init() {
                     const image = document.createElement("img");
                     image.className = "profileImage";
                     image.setAttribute("src", user.avatar);
+                    image.setAttribute("style", "width: 40px; height: 40px;");
+                    imageContainer.setAttribute("style", "width: 40px; height: 40px");
                     imageContainer.appendChild(image);
                     a.appendChild(imageContainer);
                     imageContainer.appendChild(image);
