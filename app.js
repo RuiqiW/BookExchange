@@ -189,7 +189,6 @@ app.post("/api/addToCart/:postId", (req, res) => {
             if (user.shortlist.filter((post) => {
                 return post._id.equals(req.params.postId);
             }).length !== 0) {
-                console.log("jsakjds");
                 res.send({user});
                 return;
             }
@@ -216,7 +215,6 @@ app.delete("/api/removeFromCart/:postId", (req, res) => {
     if (!req.session.user) {
         res.status(401).send();
     } else {
-        console.log("sdddd");
         if (!ObjectID.isValid(req.params.postId)) {
             res.status(600).send();
         }
@@ -228,7 +226,6 @@ app.delete("/api/removeFromCart/:postId", (req, res) => {
                 return !post._id.equals(req.params.postId);
             });
             if (temp.length === user.shortlist.length) {
-                console.log("sdjkahfff");
                 res.send({newUser: user});
                 return;
             } else {
@@ -628,7 +625,7 @@ const adminAuthenticate = (req, res, next) => {
 
 
 app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
-    Post.find().then((posts) => {
+    Post.find({isSold: false}).then((posts) => {
         if(!posts){
             res.status(404).send();
         }else{
@@ -638,6 +635,21 @@ app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
         res.status(500).send();
     });
 });
+
+
+app.get("/api/dashboard/transactions", adminAuthenticate, (req, res) => {
+    Transaction.find({isComplete: false}).then((transactions) => {
+        if(!transactions){
+            res.status(404).send();
+        }else{
+            res.send({transactions: transactions});
+        }
+    }).catch((error)=> {
+        res.status(500).send();
+    })
+});
+
+/****************************************************/
 
 app.post("/api/recover", (req, res) => {
     if (!req.session.recoverEmail) {
@@ -768,7 +780,6 @@ app.get("/api/myPurchases", (req, res) => {
         return;
     }
     const username = req.session.user;
-    console.log("sdjakdf");
     Transaction.find({buyer: username}).then((transactions) => {
         const transactionIds = transactions.map((trans) => {return trans.postId});
         console.log(transactionIds);
@@ -810,7 +821,6 @@ app.post("/api/sellItem", (req, res) => {
            return
        }
        if (post.seller !== username) {
-           console.log("hahashhasd");
            res.status(401).send();
            return;
        }
@@ -828,6 +838,7 @@ app.post("/api/sellItem", (req, res) => {
                postId: post._id,
                date: new Date(),
                isComplete: true,
+               title: post.title,
                amount: 0,
                seller: req.session.user,
                buyer: buyer,
