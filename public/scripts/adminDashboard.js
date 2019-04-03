@@ -514,11 +514,10 @@ function checkTransaction(e) {
     if (e.target.classList.contains('approve')) {
         if (window.confirm("Do you want to approve this transaction?")) {
 
+
             // change the status of the entry
             const row = e.target.parentElement.parentElement.parentElement;
-            const transaction = row.firstElementChild;
-            const transactionNum = parseInt(transaction.innerText);
-            transactions[transactionNum].status = 1;
+            const transactionId = row.id;
 
             // change num of new transactions
             loadTransactionNum();

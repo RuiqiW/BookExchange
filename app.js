@@ -281,7 +281,7 @@ app.get('/api/getUser/:username', authenticate, (req, res) => {
     User.findOne({username: req.params.username}).then((user) => {
         if (!user) {
             res.status(404).send();
-        }else {
+        } else {
             res.send(user);
         }
     }).catch((error) => {
@@ -295,7 +295,7 @@ app.get('/api/getUser/:username', authenticate, (req, res) => {
 app.post('/api/createChat', authenticate, (req, res) => {
     const user1 = req.user.username;
     const user2 = req.body.user1;
-    if(user1 === user2){
+    if (user1 === user2) {
         res.status(404).send();
     }
     Chat.findOne({$or: [{user1: user1, user2: user2}, {user1: user2, user2: user1}]}).then((chat) => {
@@ -352,17 +352,19 @@ app.get('/api/allChats', authenticate, (req, res) => {
             res.status(404).send();
         } else {
             const usersToFind = chats.map((chat) => {
-                if(chat.user1 === username){
+                if (chat.user1 === username) {
                     return chat.user2;
-                }else{
+                } else {
                     return chat.user1;
                 }
             });
             User.find({username: {$in: usersToFind}}).then((users) => {
-                if(!users){
+                if (!users) {
                     res.status(404).send();
-                }else{
-                    const avatars = users.map((user) => {return user.avatar});
+                } else {
+                    const avatars = users.map((user) => {
+                        return user.avatar
+                    });
                     res.send({user: username, avatars: avatars, chats: chats});
                 }
             });
@@ -374,7 +376,7 @@ app.get('/api/allChats', authenticate, (req, res) => {
 });
 
 // add a new message to chat history
-app.post('/api/chat/:chatId', authenticate,(req, res) => {
+app.post('/api/chat/:chatId', authenticate, (req, res) => {
     const chatId = req.params.chatId;
     const username = req.user.username;
     if (!ObjectID.isValid(chatId)) {
@@ -390,7 +392,7 @@ app.post('/api/chat/:chatId', authenticate,(req, res) => {
                 sender: username,
                 content: req.body.content
             };
-            if(username === chat.user1 || username === chat.user2){
+            if (username === chat.user1 || username === chat.user2) {
                 chat.messages.push(newMessage);
                 if (username === chat.user1) {
                     chat.user1Messages.push(newMessage);
@@ -424,9 +426,9 @@ app.get('/api/chat/:chatId', authenticate, (req, res) => {
         if (!chat) {
             res.status(404).send();
         } else {
-            if(username === chat.user1 || username === chat.user2) {
+            if (username === chat.user1 || username === chat.user2) {
                 res.send({user: username, chat: chat});
-            }else{
+            } else {
                 res.status(401).send();
             }
         }
@@ -437,7 +439,7 @@ app.get('/api/chat/:chatId', authenticate, (req, res) => {
 
 
 // update chat history after loading new messages
-app.post('/api/loadChat/:chatId',authenticate, (req, res) => {
+app.post('/api/loadChat/:chatId', authenticate, (req, res) => {
     const chatId = req.params.chatId;
     const user = req.user.username;
 
@@ -453,7 +455,7 @@ app.post('/api/loadChat/:chatId',authenticate, (req, res) => {
                 chat.user2Messages = [];
             } else if (user === chat.user2) {
                 chat.user1Messages = [];
-            }else{
+            } else {
                 res.status(401).send();
                 return;
             }
@@ -503,9 +505,9 @@ app.get("/api/findSeller/:postId", (req, res) => {
         if (!post) {
             res.status(404).send();
         } else {
-            if(post.seller !== req.session.user) {
+            if (post.seller !== req.session.user) {
                 res.send({username: post.seller});
-            }else{
+            } else {
                 res.status(605).send();
             }
         }
@@ -553,14 +555,14 @@ app.post("/api/updateBio/:newBio", (req, res) => {
 app.post("/api/sendCode/:email", (req, res) => {
     const email = req.params.email;
     User.findOne({email: email}).then((user) => {
-       if (!user) {
-           res.status(404).send();
-           return;
-       }
-       let code = "";
-       for (let i = 0; i < 6; i++) {
-           code += Math.floor(Math.random() * 10);
-       }
+        if (!user) {
+            res.status(404).send();
+            return;
+        }
+        let code = "";
+        for (let i = 0; i < 6; i++) {
+            code += Math.floor(Math.random() * 10);
+        }
         const msg = {
             to: email,
             from: "recovery@uoftexchange.ca",
@@ -568,32 +570,32 @@ app.post("/api/sendCode/:email", (req, res) => {
             text: "Your recovery code is " + code
         };
 
-       Recovery.findOne({email: email}).then((result) => {
-          if (result) {
-              result.code = code;
-              result.save().then((newUser) => {
-                  sgMail.send(msg).catch((error) => {
-                      console.log(error);
-                  });
-                  req.session.recoverEmail = email;
-                  res.send();
-              });
-          } else {
-              const recovery = new Recovery({
-                  email: email,
-                  code: code
-              });
-              recovery.save().then((newUser) => {
-                  sgMail.send(msg).catch((error) => {
-                      console.log(error);
-                  });
-                  res.send();
-              });
-          }
-       }).catch((error) => {
-           console.log(error);
-           res.status(500).send();
-       });
+        Recovery.findOne({email: email}).then((result) => {
+            if (result) {
+                result.code = code;
+                result.save().then((newUser) => {
+                    sgMail.send(msg).catch((error) => {
+                        console.log(error);
+                    });
+                    req.session.recoverEmail = email;
+                    res.send();
+                });
+            } else {
+                const recovery = new Recovery({
+                    email: email,
+                    code: code
+                });
+                recovery.save().then((newUser) => {
+                    sgMail.send(msg).catch((error) => {
+                        console.log(error);
+                    });
+                    res.send();
+                });
+            }
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        });
     }).catch((error) => {
         console.log(error);
         res.status(500).send();
@@ -608,10 +610,10 @@ const adminAuthenticate = (req, res, next) => {
             if (!user) {
                 return Promise.reject()
             } else {
-                if(user.isAdmin){
+                if (user.isAdmin) {
                     req.user = user;
                     next();
-                }else{
+                } else {
                     return Promise.reject();
                 }
             }
@@ -626,12 +628,12 @@ const adminAuthenticate = (req, res, next) => {
 
 app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
     Post.find({isSold: false}).then((posts) => {
-        if(!posts){
+        if (!posts) {
             res.status(404).send();
-        }else{
+        } else {
             res.send(posts);
         }
-    }).catch((error)=> {
+    }).catch((error) => {
         res.status(500).send();
     });
 });
@@ -639,12 +641,12 @@ app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
 
 app.get("/api/dashboard/transactions", adminAuthenticate, (req, res) => {
     Transaction.find({isComplete: false}).then((transactions) => {
-        if(!transactions){
+        if (!transactions) {
             res.status(404).send();
-        }else{
+        } else {
             res.send({transactions: transactions});
         }
-    }).catch((error)=> {
+    }).catch((error) => {
         res.status(500).send();
     })
 });
@@ -679,9 +681,9 @@ app.post("/api/recover", (req, res) => {
                 });
             }
         }
-   }).catch((error) => {
-       console.log(error);
-       res.status(500).send();
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
     });
 
 });
@@ -694,24 +696,24 @@ app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
     }
     const postId = req.params.postId;
     Post.findByIdAndDelete(postId).then((post) => {
-        if(!post){
+        if (!post) {
             res.status(404).send();
-        }else{
+        } else {
             res.send(post);
         }
-    }).catch((error)=> {
+    }).catch((error) => {
         res.status(500).send();
     });
 });
 
 app.get("/api/dashboard/users", adminAuthenticate, (req, res) => {
     User.find({isAdmin: false}).then((users) => {
-        if(!users){
+        if (!users) {
             res.status(404).send();
-        }else{
+        } else {
             res.send(users);
         }
-    }).catch((error)=> {
+    }).catch((error) => {
         res.status(500).send();
     });
 });
@@ -719,37 +721,72 @@ app.get("/api/dashboard/users", adminAuthenticate, (req, res) => {
 app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
     const username = req.params.user;
     User.findOneAndDelete({username: username}).then((user) => {
-        if(!user){
+        if (!user) {
             res.status(404).send();
-        }else{
-            if(user.isAdmin){
-              res.status(605).send();
-            }else{
+        } else {
+            if (user.isAdmin) {
+                res.status(605).send();
+            } else {
                 User.find().then((users) => {
-                    if(!users){
+                    if (!users) {
                         res.status(404).send();
-                    }else{
-                        res.send({userNum : users.length});
+                    } else {
+                        res.send({userNum: users.length});
                     }
                 })
             }
         }
-    }).catch((error)=> {
+    }).catch((error) => {
         res.status(500).send();
     });
 });
 
+app.delete("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
+    const transactionId = req.body.transactionId;
+    const postId = req.body.postId;
+    const approve = req.body.approve;
+
+    if (approve) {
+        Transaction.findByIdAndUpdate(transactionId, {$set: {isComplete: true}}).then((transaction) => {
+            if (!transaction) {
+                res.status(404).send();
+            } else {
+                res.status(200).send();
+            }
+        }).catch((error) => {
+            res.status(500).send();
+        })
+    } else {
+        Transaction.findByIdAndRemove(transactionId).then((transaction) => {
+            if (!transaction) {
+                res.status(404).send();
+            } else {
+                Post.findByIdAndUpdate(postId, {$set: {isSold: false}}).then((post) => {
+                    if (!post) {
+                        res.status(606).send();
+                    } else {
+                        res.status(200).send();
+                    }
+                });
+            }
+        }).catch((error) => {
+            res.status(500).send();
+        })
+    }
+})
+
+
 app.get("/userProfile", (req, res) => {
-   res.sendFile(__dirname + "/public/pages/userProfile.html");
+    res.sendFile(__dirname + "/public/pages/userProfile.html");
 });
 
 app.get("/api/logout", (req, res) => {
     req.session.destroy((error) => {
-       if (error) {
-           res.status(500).send()
-       } else {
-           res.redirect("/");
-       }
+        if (error) {
+            res.status(500).send()
+        } else {
+            res.redirect("/");
+        }
     });
 });
 
@@ -781,9 +818,11 @@ app.get("/api/myPurchases", (req, res) => {
     }
     const username = req.session.user;
     Transaction.find({buyer: username}).then((transactions) => {
-        const transactionIds = transactions.map((trans) => {return trans.postId});
+        const transactionIds = transactions.map((trans) => {
+            return trans.postId
+        });
         console.log(transactionIds);
-        Post.find({_id: {$in: transactionIds} }).then((posts) => {
+        Post.find({_id: {$in: transactionIds}}).then((posts) => {
             User.findOne({username: username}).then((user) => {
                 res.send({posts: posts, user: user});
             });
@@ -801,60 +840,60 @@ app.get("/api/myPosts", (req, res) => {
     }
     const username = req.session.user;
     Post.find({seller: username}).then((posts) => {
-       User.findOne({username: username}).then((user) => {
-           res.send({posts: posts, user: user});
-       });
+        User.findOne({username: username}).then((user) => {
+            res.send({posts: posts, user: user});
+        });
     });
 });
 
 app.post("/api/sellItem", (req, res) => {
-   if (!req.session.user) {
-       res.status(401).send();
-       return
-   }
-   const id = req.body.id;
-   const buyer = req.body.buyer;
-   const username = req.session.user;
-   Post.findById(id).then((post) => {
-       if (!post) {
-           res.status(404).send();
-           return
-       }
-       if (post.seller !== username) {
-           res.status(401).send();
-           return;
-       }
-       if (post.isSold) {
-           res.status(400).send()
-       }
-       User.find({username: buyer}).then((user) => {
-           if (!user) {
-               res.status(607).send();
-               return;
-           }
-           post.isSold = true;
-           post.buyer = buyer;
-           const transaction = new Transaction({
-               postId: post._id,
-               date: new Date(),
-               isComplete: true,
-               title: post.title,
-               amount: 0,
-               seller: req.session.user,
-               buyer: buyer,
-               handleByUser: true
-           });
-           transaction.save().then((trans) => {
-               post.save().then((newPost) => {
-                   res.status(200).send();
-               });
-           });
-       });
+    if (!req.session.user) {
+        res.status(401).send();
+        return
+    }
+    const id = req.body.id;
+    const buyer = req.body.buyer;
+    const username = req.session.user;
+    Post.findById(id).then((post) => {
+        if (!post) {
+            res.status(404).send();
+            return
+        }
+        if (post.seller !== username) {
+            res.status(401).send();
+            return;
+        }
+        if (post.isSold) {
+            res.status(400).send()
+        }
+        User.find({username: buyer}).then((user) => {
+            if (!user) {
+                res.status(607).send();
+                return;
+            }
+            post.isSold = true;
+            post.buyer = buyer;
+            const transaction = new Transaction({
+                postId: post._id,
+                date: new Date(),
+                isComplete: true,
+                title: post.title,
+                amount: 0,
+                seller: req.session.user,
+                buyer: buyer,
+                handleByUser: true
+            });
+            transaction.save().then((trans) => {
+                post.save().then((newPost) => {
+                    res.status(200).send();
+                });
+            });
+        });
 
-   }).catch((error) => {
-       console.log(error);
-       res.status(500).send();
-   });
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
 
 });
 
