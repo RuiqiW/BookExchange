@@ -1,11 +1,10 @@
-// load list of messages received, need server call in Phase2
-let postEdited = 0;
-let shownUserNum = 0;
+let postEdited = 0; // for edit mode
+let shownUserNum = 0; // for user display
 
 
-// load data on DOM loaded, will use database query instead in Phase 2
+// load data on DOM loaded
 document.addEventListener('DOMContentLoaded', function () {
-    loadMessageNum();
+    loadMessage();
     loadTransaction();
     loadPost();
     loadUserList();
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function loadMessageNum() {
+function loadMessage() {
     const request = new Request("/api/allChats", {
         method: 'get',
         headers: {
@@ -163,6 +162,9 @@ function closeSideNav(e) {
 const editPost = document.querySelector("#editPost");
 editPost.addEventListener('click', changeEditMode);
 
+const viewAllBtn = document.querySelector('#viewAll');
+viewAllBtn.addEventListener('click', viewAllPosts);
+
 function changeEditMode(e) {
     e.preventDefault();
 
@@ -257,8 +259,23 @@ function createPost(post) {
 
     container.id = post._id;
 
-    const viewAll = document.querySelector("#viewAll");
-    viewAll.before(container);
+    viewAllBtn.before(container);
+}
+
+
+function viewAllPosts(e) {
+    e.preventDefault();
+
+    const request = new Request("/api/getCurrentUser", {method: "get"});
+
+    fetch(request).then((res) => {
+        if(res.status === 401){
+            window.location = '/login'
+        }else if(res.status === 200){
+            window.open("../pages/items.html");
+        }
+    }).catch((error) => {
+    })
 }
 
 
@@ -267,13 +284,11 @@ function createPost(post) {
 const userList = document.querySelector("#userList");
 const userTable = document.querySelector("#userTable");
 const listEnd = document.querySelector("#userListEnd");
-// const sampleViewUser = document.querySelector("#sampleViewUser");
 
 const showLessButton = document.querySelector("#showLessUser");
 const showMoreButton = document.querySelector('#showMoreUser');
 const userSearchButton = document.querySelector('#userSearchButton');
 
-// sampleViewUser.addEventListener('click', viewUserDetail);
 showLessButton.addEventListener('click', showLess);
 showMoreButton.addEventListener('click', showMore);
 userSearchButton.addEventListener('click', searchUser);
