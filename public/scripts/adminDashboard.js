@@ -1,24 +1,17 @@
 // load list of messages received, need server call in Phase2
-
 let postEdited = 0;
 let shownUserNum = 0;
 
 
 // load data on DOM loaded, will use database query instead in Phase 2
 document.addEventListener('DOMContentLoaded', function () {
-    // loadTransactionNum();
     loadMessageNum();
-    // loadTransaction();
+    loadTransaction();
     loadPost();
     loadUserList();
 
 });
 
-
-function loadTransactionNum() {
-    document.querySelector('#transactionData').innerText = transactions.reduce((total, transaction) =>
-        total + (transaction.status === 0 ? 1 : 0), 0);
-}
 
 function loadMessageNum() {
     const request = new Request("/api/allChats", {
@@ -46,16 +39,29 @@ function loadMessageNum() {
             }
         }, 0);
     }).catch((error) => {
-        console.log(error);
     })
 }
 
 function loadTransaction() {
-    for (let i = 0; i < transactions.length; i++) {
-        if (transactions[i].status === 0) {
+
+    const request = new Request("/api/dashboard/transactions", {
+        method: 'get',
+    });
+
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            return res.json()
+        } else {
+            document.querySelector('#transactionData').innerText = 0;
+        }
+    }).then((json) => {
+        const transactions = json.transactions;
+        document.querySelector('#transactionData').innerText = transactions.length;
+        for(let i=0; i<transactions.length; i++){
             createTransactionEntry(transactions[i]);
         }
-    }
+    }).catch((error) => {
+    })
 }
 
 function loadPost() {
@@ -547,20 +553,19 @@ function deleteTransactionEntry(e) {
 function createTransactionEntry(transaction) {
 
     const row = document.createElement('tr');
-    const id = document.createElement('td');
-    id.innerText = transaction.id;
-    row.appendChild(id);
+
+    row.id = transaction._id;
 
     const title = document.createElement('td');
-    title.innerText = transaction.post.title;
+    title.innerText = transaction.title;
     row.appendChild(title);
 
     const buyer = document.createElement('td');
-    buyer.innerText = transaction.buyer.user.username;
+    buyer.innerText = transaction.buyer;
     row.appendChild(buyer);
 
     const seller = document.createElement('td');
-    seller.innerText = transaction.post.seller.user.username;
+    seller.innerText = transaction.seller;
     row.appendChild(seller);
 
     const amount = document.createElement('td');
@@ -568,7 +573,8 @@ function createTransactionEntry(transaction) {
     row.appendChild(amount);
 
     const date = document.createElement('td');
-    date.innerText = transaction.date;
+    const tranDate = new Date(transaction.date);
+    date.innerText = `${tranDate.toDateString()}   ${tranDate.getHours()}: ${tranDate.getMinutes()}: ${tranDate.getSeconds()}`;
     row.appendChild(date);
 
     const action = document.createElement('td');
