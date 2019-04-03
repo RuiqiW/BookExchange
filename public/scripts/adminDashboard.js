@@ -26,6 +26,8 @@ function loadMessageNum() {
     fetch(request).then((res) => {
         if (res.status === 200) {
             return res.json()
+        } else if (res.status === 401) {
+            window.location = '/login';
         } else {
             document.querySelector('#msgData').innerText = 0;
         }
@@ -51,6 +53,8 @@ function loadTransaction() {
     fetch(request).then((res) => {
         if (res.status === 200) {
             return res.json()
+        } else if (res.status === 401) {
+            window.location = '/login';
         } else {
             document.querySelector('#transactionData').innerText = 0;
         }
@@ -67,16 +71,13 @@ function loadTransaction() {
 function loadPost() {
     const request = new Request("/api/dashboard/posts", {
         method: 'get',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
     });
-
 
     fetch(request).then((res) => {
         if (res.status === 200) {
             return res.json()
+        } else if (res.status === 401) {
+            window.location = '/login';
         } else {
             document.querySelector('#postData').innerText = 0;
         }
@@ -109,17 +110,15 @@ function loadPost() {
 
 function loadUserList() {
     const request = new Request("/api/dashboard/users", {
-        method: 'get',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
+        method: 'get'
     });
 
 
     fetch(request).then((res) => {
         if (res.status === 200) {
             return res.json()
+        } else if (res.status === 401) {
+            window.location = '/login';
         } else {
             document.querySelector('#userData').innerText = 0;
         }
@@ -203,7 +202,9 @@ function deleteItem(e) {
 
 
         fetch(request).then((res) => {
-            if (res.status === 200) {
+            if (res.status === 401) {
+                window.location = '/login';
+            } else if (res.status === 200) {
                 // remove post in DOM
                 removePost(e);
                 window.alert("You have deleted this post.");
@@ -326,6 +327,8 @@ function searchUser(e) {
                 return res.json();
             } else if (res.status === 404) {
                 return null;
+            } else if (res.status === 401) {
+                window.location = '/login';
             }
         }).then((user) => {
             if (!user) {
@@ -414,7 +417,9 @@ function deleteUserEntry(e) {
 
 
         fetch(request).then((res) => {
-            if (res.status === 200) {
+            if (res.status === 401) {
+                window.location = '/login';
+            } else if (res.status === 200) {
                 return res.json();
             } else if (res.status === 605) {
                 window.alert("You cannot delete yourself.");
@@ -533,10 +538,12 @@ function checkTransaction(e) {
             });
 
             fetch(request).then((res) => {
-                if (res.status === 200) {
+                if (res.status === 401) {
+                    window.location = '/login';
+                } else if (res.status === 200) {
                     deleteTransactionEntry(e);
                     window.alert("You have approved this transaction.");
-                    
+
                     loadTransaction();
                     loadPost();
                 } else {
@@ -564,7 +571,9 @@ function checkTransaction(e) {
             });
 
             fetch(request).then((res) => {
-                if (res.status === 200) {
+                if (res.status === 401) {
+                    window.location = '/login';
+                } else if (res.status === 200) {
                     deleteTransactionEntry(e);
 
                     window.alert("You have denied this transaction.");
