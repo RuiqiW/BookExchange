@@ -105,7 +105,6 @@ app.post('/api/createAccount', (req, res) => {
             purchase: [],
             transaction: [],
             shortlist: [],
-            byCreditCard: req.body.byCreditCard
         });
         newUser.save().then((result) => {
             res.send(result)
@@ -278,6 +277,19 @@ const authenticate = (req, res, next) => {
 };
 
 app.get('/api/getUser/:username', authenticate, (req, res) => {
+    User.findOne({username: req.params.username}).then((user) => {
+        if (!user) {
+            res.status(404).send();
+        } else {
+            res.send(user);
+        }
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
+});
+
+app.get('/api/getUserUnsafe/:username', (req, res) => {
     User.findOne({username: req.params.username}).then((user) => {
         if (!user) {
             res.status(404).send();
