@@ -51,7 +51,7 @@ function init() {
     // Server call to request the search results to display and the current user
     // Here we use the hard-coded posts in the class.js as an demonstration
     //By default sorting by posting date from new to old
-    const keyword = localStorage.keyword;
+    const keyword = localStorage.getItem("keyword");
     if (keyword) {
         const request = new Request("/api/search/keyword");
 
@@ -173,9 +173,13 @@ function generatePost(post, user) {
             sellerProfilePhoto.setAttribute("src", seller.avatar);
             sellerProfilePhoto.setAttribute("alt", "sellerPhoto");
 
+            // This is actually the title of the post now.
             const sellerNameSpan = document.createElement("span");
             sellerNameSpan.className = "userName";
-            sellerNameSpan.appendChild(document.createTextNode(seller.firstName + " " + seller.lastName));
+            //sellerNameSpan.appendChild(document.createTextNode(seller.firstName + " " + seller.lastName));
+            sellerNameSpan.appendChild(document.createTextNode(post.title));
+
+
 
             postDiv.appendChild(sellerProfilePhoto);
             postDiv.appendChild(sellerNameSpan);
@@ -185,7 +189,7 @@ function generatePost(post, user) {
 
             const categorySpan = document.createElement("span");
             categorySpan.className = "category";
-            categorySpan.appendChild(document.createTextNode("Title: " + post.title));
+            categorySpan.appendChild(document.createTextNode("seller: " + seller.firstName + " " + seller.lastName));
             postDiv.appendChild(categorySpan);
 
             const conditionSpan = document.createElement("span");
@@ -253,10 +257,11 @@ function generatePost(post, user) {
             contactSeller.appendChild(document.createTextNode("Contact Seller"));
 
             if (user.isAdmin) {
-                const deletePost = document.createElement("button");
-                deletePost.className = "deletePost";
-                deletePost.appendChild(document.createTextNode("Delete this post"));
-                postDiv.appendChild(deletePost);
+                const deletePostBtn = document.createElement("button");
+                deletePostBtn.className = "deletePost";
+                deletePostBtn.appendChild(document.createTextNode("Delete this post"));
+                deletePostBtn.addEventListener('click', deletePost);
+                postDiv.appendChild(deletePostBtn);
             } else {
                 const buyItem = document.createElement("button");
                 buyItem.className = "buyItem";
@@ -272,6 +277,35 @@ function generatePost(post, user) {
             reject();
         });
     });
+}
+
+
+
+function deletePost(e){
+
+    if (window.confirm("Do you want to delete this post?")) {
+
+        // get postId
+        const postElement = e.target.parentElement;
+        const request = new Request(`/api/dashboard/post/${postElement.id}`, {
+            method: 'delete',
+        });
+
+
+        fetch(request).then((res) => {
+            if (res.status === 200) {
+                // remove post in DOM
+                postElement.parentElement.removeChild(postElement);
+                window.alert("You have deleted this post.");
+            } else if(res.status === 401) {
+                window.location = '/login';
+            }else{
+                window.alert("Fail to delete this post.");
+            }
+        }).catch((error) => {
+        })
+
+    }
 }
 
 init();
@@ -490,5 +524,10 @@ function closeAllSelect(elmnt) {
     }
 }
 
+<<<<<<< HEAD
 // Close all select boxes if the user clickes outside of the box
 document.addEventListener("click", closeAllSelect);
+=======
+// Close all select boxes if the user clicks outside of the box
+document.addEventListener("click", closeAllSelect);
+>>>>>>> 7bf144ec9ba57872afa7c542563231e72cc8b151

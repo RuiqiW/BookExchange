@@ -110,10 +110,13 @@ searchButton.addEventListener("click", search);
 
 function search(e){
     e.preventDefault();
-    const keyword = document.querySelector("#searchBox").value;
+    const keyword = document.querySelector("#searchBox").value.trim();
     //Store the keyword in localstorage,
     //The actual server call happen in the items page.
-    localStorage.keyword = keyword;
+    if (keyword.length === 0) {
+        return;
+    }
+    sessionStorage.setItem("keyword", keyword);
     document.location = "/pages/items.html";
 }
 init();
