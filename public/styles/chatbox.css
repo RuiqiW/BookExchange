@@ -152,9 +152,14 @@
     margin-top: 10px;
 }
 
+.profileContent strong{
+    margin-left: 5px;
+}
+
 .profile {
     border-bottom: 1px solid silver;
     overflow: auto;
+    padding: 5px;
 }
 
 .grey {

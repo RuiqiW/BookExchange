@@ -352,7 +352,21 @@ app.get('/api/allChats', authenticate, (req, res) => {
         if (!chats) {
             res.status(404).send();
         } else {
-            res.send({user: username, chats: chats});
+            const usersToFind = chats.map((chat) => {
+                if(chat.user1 === username){
+                    return chat.user2;
+                }else{
+                    return chat.user1;
+                }
+            });
+            User.find({username: {$in: usersToFind}}).then((users) => {
+                if(!users){
+                    res.status(404).send();
+                }else{
+                    const avatars = users.map((user) => {return user.avatar});
+                    res.send({user: username, avatars: avatars, chats: chats});
+                }
+            });
         }
     }).catch((error) => {
         console.log(error);

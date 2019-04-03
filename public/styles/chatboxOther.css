@@ -153,9 +153,14 @@
     margin-top: 10px;
 }
 
+.profileContent strong{
+    margin-left: 5px;
+}
+
 .profile {
     border-bottom: 1px solid silver;
     overflow: auto;
+    padding: 5px;
 }
 
 .grey {
@@ -165,7 +170,7 @@
 #userToChat{
     display: inline-block;
     width: 75%;
-    margin: 10px;
+    margin: 5px;
     margin-right: 0;
 }
 
