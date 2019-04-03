@@ -231,6 +231,14 @@ body {
     padding-left: 50px;
 }
 
+.noResultEntry{
+    background-color: white;
+    border-bottom: 1px solid grey;
+    overflow: hidden;
+    padding-left: 50px;
+    text-align: center;
+}
+
 .user {
     display: inline-block;
 }
@@ -286,7 +294,6 @@ body {
     padding-right: 10px;
     margin-right: 5px;
 }
-
 
 
 /**************** Transaction listing ****************/

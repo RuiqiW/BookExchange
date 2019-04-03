@@ -173,17 +173,6 @@ app.post('/api/login', (req, res) => {
     });
 });
 
-app.get('/api/getUser/:username', (req, res) => {
-    User.findOne({username: req.params.username}).then((result) => {
-        if (!result) {
-            res.status(404).send();
-        }
-        res.send({result});
-    }).catch((error) => {
-        console.log(error);
-        res.status(500).send();
-    });
-});
 
 app.post("/api/addToCart/:postId", (req, res) => {
     if (!req.session.user) {
@@ -289,6 +278,19 @@ const authenticate = (req, res, next) => {
         res.status(401).send();
     }
 };
+
+app.get('/api/getUser/:username', authenticate, (req, res) => {
+    User.findOne({username: req.params.username}).then((user) => {
+        if (!user) {
+            res.status(404).send();
+        }else {
+            res.send(user);
+        }
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
+});
 
 
 // create new chat between two users

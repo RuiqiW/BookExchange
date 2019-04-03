@@ -277,7 +277,7 @@ function viewUserDetail(e) {
 
     const userToView = e.target.parentElement.parentElement.id;
     sessionStorage.setItem("viewUserProfile", userToView);
-    window.open( "/pages/userProfile.html");
+    window.open("/pages/userProfile.html");
 }
 
 
@@ -311,14 +311,23 @@ function searchUser(e) {
     const keyword = document.querySelector('#userKeyword').value;
     if (keyword !== "") {
 
-        // code below need server call to find the user matching the keyword
-        for (let i = 0; i < users.length; i++) {
-            if (keyword === users[i].user.username) {
-                showResult(users[i]);
-                return;
+        const request = new Request(`/api/getUser/${keyword}`, {
+            method: 'get'
+        });
+
+        fetch(request).then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            } else if(res.status === 404){
+                return null;
             }
-        }
-        showNoResult();
+        }).then((user) => {
+            if(!user) {
+                showNoResult();
+            }else{
+                showResult(user);
+            }
+        }).catch((error)=> {})
 
     } else {
         userTable.style.display = "block";
@@ -367,7 +376,7 @@ function showNoResult() {
     userTable1.id = "userTable1";
 
     const noResultEntry = document.createElement('div');
-    noResultEntry.className = "userEntry";
+    noResultEntry.className = "noResultEntry";
     noResultEntry.innerText = "No Result Found";
 
     userTable1.appendChild(noResultEntry);

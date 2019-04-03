@@ -215,8 +215,7 @@ function init() {
             const request = new Request("/api/getUser/" +sessionStorage.getItem("viewUserProfile"));
             fetch(request).then((result) => {
                 return result.json();
-            }).then((json) => {
-                const user = json.result;
+            }).then((user) => {
                 loadUserProfile(user);
             });
             const rightNav = document.querySelector("#rightNav");
