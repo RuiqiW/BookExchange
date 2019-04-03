@@ -255,10 +255,11 @@ function generatePost(post, user) {
             contactSeller.appendChild(document.createTextNode("Contact Seller"));
 
             if (user.isAdmin) {
-                const deletePost = document.createElement("button");
-                deletePost.className = "deletePost";
-                deletePost.appendChild(document.createTextNode("Delete this post"));
-                postDiv.appendChild(deletePost);
+                const deletePostBtn = document.createElement("button");
+                deletePostBtn.className = "deletePost";
+                deletePostBtn.appendChild(document.createTextNode("Delete this post"));
+                deletePostBtn.addEventListener('click', deletePost);
+                postDiv.appendChild(deletePostBtn);
             } else {
                 const buyItem = document.createElement("button");
                 buyItem.className = "buyItem";
@@ -274,6 +275,35 @@ function generatePost(post, user) {
             reject();
         });
     });
+}
+
+
+
+function deletePost(e){
+
+    if (window.confirm("Do you want to delete this post?")) {
+
+        // get postId
+        const postElement = e.target.parentElement;
+        const request = new Request(`/api/dashboard/post/${postElement.id}`, {
+            method: 'delete',
+        });
+
+
+        fetch(request).then((res) => {
+            if (res.status === 200) {
+                // remove post in DOM
+                postElement.parentElement.removeChild(postElement);
+                window.alert("You have deleted this post.");
+            } else if(res.status === 401) {
+                window.location = '/login';
+            }else{
+                window.alert("Fail to delete this post.");
+            }
+        }).catch((error) => {
+        })
+
+    }
 }
 
 init();
@@ -492,5 +522,5 @@ function closeAllSelect(elmnt) {
     }
 }
 
-// Close all select boxes if the user clickes outside of the box
+// Close all select boxes if the user clicks outside of the box
 document.addEventListener("click", closeAllSelect);
