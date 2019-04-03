@@ -57,7 +57,7 @@ function loadTransaction() {
     }).then((json) => {
         const transactions = json.transactions;
         document.querySelector('#transactionData').innerText = transactions.length;
-        for(let i=0; i<transactions.length; i++){
+        for (let i = 0; i < transactions.length; i++) {
             createTransactionEntry(transactions[i]);
         }
     }).catch((error) => {
@@ -324,16 +324,17 @@ function searchUser(e) {
         fetch(request).then((res) => {
             if (res.status === 200) {
                 return res.json();
-            } else if(res.status === 404){
+            } else if (res.status === 404) {
                 return null;
             }
         }).then((user) => {
-            if(!user) {
+            if (!user) {
                 showNoResult();
-            }else{
+            } else {
                 showResult(user);
             }
-        }).catch((error)=> {})
+        }).catch((error) => {
+        })
 
     } else {
         userTable.style.display = "block";
@@ -511,34 +512,69 @@ Array.from(denyButtons).forEach(function (element) {
 function checkTransaction(e) {
     e.preventDefault();
 
+    const row = e.target.parentElement.parentElement.parentElement;
+    const transactionId = row.id;
+
     if (e.target.classList.contains('approve')) {
         if (window.confirm("Do you want to approve this transaction?")) {
 
+            const transactionHandler = {
+                transactionId: transactionId,
+                approve: true
+            };
 
-            // change the status of the entry
-            const row = e.target.parentElement.parentElement.parentElement;
-            const transactionId = row.id;
+            const request = new Request('/api/dashboard/transaction', {
+                method: 'post',
+                body: JSON.stringify(transactionHandler),
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            });
 
-            // change num of new transactions
-            loadTransactionNum();
+            fetch(request).then((res) => {
+                if (res.status === 200) {
+                    deleteTransactionEntry(e);
+                    window.alert("You have approved this transaction.");
+                    
+                    loadTransaction();
+                    loadPost();
+                } else {
+                    window.alert("Fail to approve this transaction.");
+                }
+            }).catch((error) => {
+            })
 
-            deleteTransactionEntry(e);
-            window.alert("You have approved this transaction.");
         }
     } else if (e.target.classList.contains('deny')) {
         if (window.confirm("Do you want to deny this transaction?")) {
 
-            // change the status of the entry
-            const row = e.target.parentElement.parentElement.parentElement;
-            const transaction = row.firstElementChild;
-            const transactionNum = parseInt(transaction.innerText);
-            transactions[transactionNum].status = -1;
+            const transactionHandler = {
+                transactionId: transactionId,
+                approve: false
+            };
 
-            // change num of new transactions
-            loadTransactionNum();
+            const request = new Request('/api/dashboard/transaction', {
+                method: 'post',
+                body: JSON.stringify(transactionHandler),
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            });
 
-            deleteTransactionEntry(e);
-            window.alert("You have denied this transaction.");
+            fetch(request).then((res) => {
+                if (res.status === 200) {
+                    deleteTransactionEntry(e);
+
+                    window.alert("You have denied this transaction.");
+                    loadTransaction();
+                    loadPost();
+                } else {
+                    window.alert("Fail to deny this transaction.");
+                }
+            }).catch((error) => {
+            })
         }
     }
 }
