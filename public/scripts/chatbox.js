@@ -26,12 +26,13 @@ function showChatRecords(e) {
         }).then((json) => {
             const chatHistories = json.chats;
             const thisUser = json.user;
+            const avatars = json.avatars;
             const records = document.querySelectorAll('.profile');
             for (let i = 0; i < records.length - 1; i++) {
                 chatRecords.removeChild(chatRecords.lastElementChild);
             }
             for (let i = 0; i < chatHistories.length; i++) {
-                addChatRecord(thisUser, chatHistories[i]);
+                addChatRecord(thisUser, avatars[i], chatHistories[i]);
             }
             chatRecords.style.display = 'block';
             shownChatRecords = true;
@@ -43,13 +44,13 @@ function showChatRecords(e) {
 }
 
 
-function addChatRecord(thisUser, chatHistory) {
+function addChatRecord(thisUser,avatar, chatHistory) {
     const profile = document.createElement('div');
     profile.className = "profile";
 
     const profileIconContainer = document.createElement('div');
     const icon = document.createElement('img');
-    // icon.src =;
+    icon.src = avatar;
     icon.alt = "ProfilePic";
     icon.className = "profileIcon";
     profileIconContainer.appendChild(icon);
