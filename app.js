@@ -638,9 +638,8 @@ app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
     });
 });
 
-//TODO: Fix the find condition if the payment is not submitted.
 app.get("/api/dashboard/transactions", adminAuthenticate, (req, res) => {
-    Transaction.find({isComplete: false}).then((transactions) => {
+    Transaction.find({isComplete: false, isSubmitted: true}).then((transactions) => {
         if (!transactions) {
             res.status(404).send();
         } else {
