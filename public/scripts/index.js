@@ -69,6 +69,10 @@ function init() {
         signInDiv.removeChild(signInDiv.lastElementChild);
         if (!user.isAdmin) {
             const a = document.createElement("a");
+            const profileSpan = document.createElement('span');
+            profileSpan.innerText = "My Profile";
+            profileSpan.className = "topBarText";
+            const brk = document.createElement('br');
             a.setAttribute("href", "/pages/userProfile.html");
             const imageContainer = document.createElement("div");
             imageContainer.className = "topBarImageContainer";
@@ -77,6 +81,8 @@ function init() {
             image.setAttribute("src", user.avatar);
             imageContainer.appendChild(image);
             a.appendChild(imageContainer);
+            a.appendChild(brk);
+            a.appendChild(profileSpan);
             imageContainer.appendChild(image);
             signInDiv.appendChild(a);
         } else {
@@ -104,10 +110,13 @@ searchButton.addEventListener("click", search);
 
 function search(e){
     e.preventDefault();
-    const keyword = document.querySelector("#searchBox").value;
+    const keyword = document.querySelector("#searchBox").value.trim();
     //Store the keyword in localstorage,
     //The actual server call happen in the items page.
-    localStorage.keyword = keyword;
+    if (keyword.length === 0) {
+        return;
+    }
+    sessionStorage.setItem("keyword", keyword);
     document.location = "/pages/items.html";
 }
 init();

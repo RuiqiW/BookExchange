@@ -51,7 +51,7 @@ function init() {
     // Server call to request the search results to display and the current user
     // Here we use the hard-coded posts in the class.js as an demonstration
     //By default sorting by posting date from new to old
-    const keyword = localStorage.keyword;
+    const keyword = localStorage.getItem("keyword");
     if (keyword) {
         const request = new Request("/api/search/keyword");
 
@@ -171,9 +171,13 @@ function generatePost(post, user) {
             sellerProfilePhoto.setAttribute("src", seller.avatar);
             sellerProfilePhoto.setAttribute("alt", "sellerPhoto");
 
+            // This is actually the title of the post now.
             const sellerNameSpan = document.createElement("span");
             sellerNameSpan.className = "userName";
-            sellerNameSpan.appendChild(document.createTextNode(seller.firstName + " " + seller.lastName));
+            //sellerNameSpan.appendChild(document.createTextNode(seller.firstName + " " + seller.lastName));
+            sellerNameSpan.appendChild(document.createTextNode(post.title));
+
+
 
             postDiv.appendChild(sellerProfilePhoto);
             postDiv.appendChild(sellerNameSpan);
@@ -183,7 +187,7 @@ function generatePost(post, user) {
 
             const categorySpan = document.createElement("span");
             categorySpan.className = "category";
-            categorySpan.appendChild(document.createTextNode("Title: " + post.title));
+            categorySpan.appendChild(document.createTextNode("seller: " + seller.firstName + " " + seller.lastName));
             postDiv.appendChild(categorySpan);
 
             const conditionSpan = document.createElement("span");
