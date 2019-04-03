@@ -33,7 +33,7 @@ function handleLogin(e) {
             alert("You have successfully logged in.");
             window.location = '/index.html';
         } else if (res.status === 401) {
-            alert("Username or password incorrectly");
+            alert("Username or password is incorrect.");
         }
 
     })
