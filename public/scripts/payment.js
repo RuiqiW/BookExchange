@@ -8,8 +8,8 @@ form.addEventListener('submit', handlePayment);
 
 function init() {
     items = JSON.parse(sessionStorage.getItem("checkoutItems"));
-    total = JSON.parse(sessionStorage.getItem("total"));
-    if (!items || !total) {
+    total = sessionStorage.getItem("total");
+    if (!items || total === undefined) {
         window.location = "/shoppingCart";
     }
     document.querySelector("#price").innerText = total;

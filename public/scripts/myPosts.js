@@ -119,7 +119,7 @@ function generatePost(post, user) {
         fetch("/api/getUser/" + post.seller).then((result) => {
             return result.json();
         }).then((json) => {
-            const seller = json.result;
+            const seller = json;
             const postDiv = document.createElement("div");
             postDiv.className = "post";
 

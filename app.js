@@ -819,7 +819,6 @@ app.get("/api/myPurchases", (req, res) => {
         const transactionIds = transactions.map((trans) => {
             return trans.postId
         });
-        console.log(transactionIds);
         Post.find({_id: {$in: transactionIds}}).then((posts) => {
             User.findOne({username: username}).then((user) => {
                 res.send({posts: posts, user: user});
