@@ -32,6 +32,16 @@ const TransactionSchema = new mongoose.Schema({
     handleByUser: {
         type: Boolean,
         required: false
+    },
+    //Label whether this payment is actually delievered
+    // THis field is used in the checkout page
+    isSubmitted: {
+        type: Boolean,
+        required: true
+    },
+    creditCardNumber: {
+        type: String,
+        required: false
     }
 });
 

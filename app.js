@@ -638,7 +638,7 @@ app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
     });
 });
 
-
+//TODO: Fix the find condition if the payment is not submitted.
 app.get("/api/dashboard/transactions", adminAuthenticate, (req, res) => {
     Transaction.find({isComplete: false}).then((transactions) => {
         if (!transactions) {
@@ -881,7 +881,8 @@ app.post("/api/sellItem", (req, res) => {
                 amount: 0,
                 seller: req.session.user,
                 buyer: buyer,
-                handleByUser: true
+                handleByUser: true,
+                isSubmitted: true
             });
             transaction.save().then((trans) => {
                 post.save().then((newPost) => {
@@ -894,6 +895,78 @@ app.post("/api/sellItem", (req, res) => {
         console.log(error);
         res.status(500).send();
     });
+
+});
+
+app.post("/api/checkout", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+        return;
+    }
+
+    const checkoutItems = req.body.items;
+    const transactions = [];
+    for (let i = 0; i < checkoutItems.length; i++) {
+        const transaction = new Transaction({
+            postId: checkoutItems[i]._id,
+            date: new Date(),
+            isComplete: false,
+            title: checkoutItems[i].title,
+            amount: checkoutItems[i].price,
+            seller: checkoutItems[i].seller,
+            buyer: req.session.user,
+            handleByUser: false,
+            isSubmitted: false
+        });
+        transactions.push(transaction);
+    }
+    Transaction.insertMany(transactions).then((docs) => {
+        res.status(200).send();
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    })
+
+});
+
+app.post("/api/submitPayment", (req, res)=> {
+   if (!req.session.user) {
+       res.status(401).send();
+       return;
+   }
+   const checkoutItems = req.body.items;
+   const creditCardNumber = req.body.creditCardNumber;
+   //The index of items to be removed from user shorlist
+   const removeIndexes = [];
+   User.findOne({username: req.session.user}).then((user) => {
+       for (let i = 0; i < checkoutItems.length; i++) {
+           for (let k = 0; k < user.shortlist.length; k++) {
+               if (user.shortlist[k]._id.equals(checkoutItems[i]._id)) {
+                   removeIndexes.push(k);
+               }
+           }
+           Transaction.findOne({postId: checkoutItems[i]._id}).then((trans) => {
+               trans.isSubmitted = true;
+               trans.creditCardNumber = creditCardNumber;
+               trans.save().catch((error) => {
+                   console.log(error);
+               });
+               const postId = trans.postId;
+           }).catch((error) => {
+               console.log(error);
+           });
+       }
+       for (let k = 0; k < removeIndexes.length; k++) {
+           user.shortlist.splice(removeIndexes[k], 1);
+       }
+       user.save().catch((error) => {
+           console.log(error);
+       });
+       res.status(200).send();
+   }).catch((error) => {
+       console.log(error);
+       res.status(500).send();
+   });
 
 });
 

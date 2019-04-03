@@ -1,6 +1,7 @@
 let user;
 let posts;
 let numImageSets = 0;
+let selection = [];
 init();
 
 function init() {
@@ -242,14 +243,14 @@ function contactTheSeller(e) {
     }).then((json) => {
         const keyword = json.username;
 
-        if(keyword === thisUser){
+        if(keyword === user.username){
             window.alert("This is your item.");
             return;
         }
 
         // find if the user to chat exists
         const newChat = {
-            user1: thisUser,
+            user1: user.username,
             user2: keyword
         };
 
@@ -281,6 +282,7 @@ function contactTheSeller(e) {
 
 
 function updateOrderSummary(e) {
+    selection = [];
     const orderSummary = document.getElementById("checkout");
     const h4 = orderSummary.getElementsByTagName("h4")[0];
     const spanCount = h4.getElementsByTagName("span")[0];
@@ -316,7 +318,7 @@ function updateOrderSummary(e) {
                     index = i;
                 }
             }
-
+            selection.push(posts[index]);
             bElement.appendChild(document.createTextNode(`$${posts[index].price}`));
             spanElement.appendChild(bElement);
             book.appendChild(document.createTextNode(`${posts[index].title}`));
@@ -340,11 +342,30 @@ const placeOrder = document.querySelector("#payButton");
 placeOrder.addEventListener("click", jumpToPayment);
 
 function jumpToPayment(e) {
-    //Store the transaction info in localstorage,
-    //The actual server call happen in the payment page.
-    localStorage.buyer = user.username;
-
-    document.location = "../pages/payment.html";
+    if (selection.length === 0) {
+        alert("You have to select some items to checkout!");
+        return;
+    }
+    sessionStorage.setItem("checkoutItems", JSON.stringify(selection));
+    sessionStorage.setItem("total", selection.reduce((amount, cur) => {
+        return amount + parseFloat(cur.price);
+    }, 0));
+    const payload = {items: selection};
+    const request = new Request("/api/checkout", {
+        method: "post",
+        body: JSON.stringify(payload),
+        headers: {
+            "Accept": "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+    fetch(request).then((res) => {
+        if (res.status === 401) {
+            window.location = "/login";
+        } else {
+            window.location = "/pages/payment.html"
+        }
+    });
 }
 
 function removeFromCart(e) {
@@ -359,14 +380,7 @@ function removeFromCart(e) {
             return newUser.json();
         }
     }).then((newUser) => {
-        updateShoppingCart(newUser.newUser.shortlist.length);
-        //Change the button to remove the item from shopping cart.
-        e.target.className = "addToCart";
-        e.target.innerHTML = "";
-        e.target.appendChild(document.createTextNode("Add to Cart"));
-        e.target.removeEventListener("click", removeFromCart);
-        e.target.addEventListener("click", addToCart);
-        user = newUser.newUser;
+        window.reload();
     });
 }
 

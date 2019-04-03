@@ -1,24 +1,62 @@
-
+let items;
+let total;
 /**
  * Module to collect and handle payment information
  */
 const form = document.querySelector('#paymentForm');
 form.addEventListener('submit', handlePayment);
 
+function init() {
+    items = JSON.parse(sessionStorage.getItem("checkoutItems"));
+    total = JSON.parse(sessionStorage.getItem("total"));
+    if (!items || !total) {
+        window.location = "/shoppingCart";
+    }
+    document.querySelector("#price").innerText = total;
+    sessionStorage.removeItem("checkoutItems");
+    sessionStorage.removeItem("total");
+
+}
+init();
+
 function handlePayment(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  // Contact info
-  const firstName = form[0].value;
-  const lastName = form[1].value;
-  const email = form[2].value;
+    // Contact info
+    const firstName = form[0].value;
+    const lastName = form[1].value;
+    const email = form[2].value;
 
-  // Payment info
-  const cardType = form[3].value;
-  const cardNumber = form[4].value;
-  const cardCVV = form[5].value;
-  const cardExpDate = form[6].value;
+    // Payment info
+    const cardType = form[3].value;
+    const cardNumber = form[4].value;
+    const cardCVV = form[5].value;
+    const cardExpDate = form[6].value;
 
-  // Redirect user to profile back
-  document.location = "../index.html";
+    // We are not really handle the payment information in this project
+    // So only creditCard number is sent
+    const payload = {
+        items: items,
+        creditCardNumber: cardNumber
+    };
+    const request = new Request("/api/submitPayment", {
+        method: "post",
+        body: JSON.stringify(payload),
+        headers: {
+            "Accept": "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            alert("You have successfully submit the payment");
+            window.location = '/pages/myPurchases.html';
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+
+    // Redirect user to profile back
+    document.location = "../index.html";
 }
