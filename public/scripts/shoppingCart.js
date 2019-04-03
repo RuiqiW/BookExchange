@@ -31,6 +31,10 @@ function init() {
         imageContainer.appendChild(image);
         signInDiv.appendChild(a);
         if (user.shortlist.length === 0) {
+            const postsDiv = document.querySelector("#posts");
+            while (postsDiv.lastElementChild) {
+                postsDiv.removeChild(postsDiv.lastElementChild);
+            }
             const emptyInfoDiv = document.createElement("div");
             emptyInfoDiv.id = "emptyInformation";
             const text = document.createTextNode("Your shopping cart is currently empty");
