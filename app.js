@@ -628,7 +628,7 @@ const adminAuthenticate = (req, res, next) => {
 
 
 app.get("/api/dashboard/posts", adminAuthenticate, (req, res) => {
-    Post.find().then((posts) => {
+    Post.find({isSold: false}).then((posts) => {
         if(!posts){
             res.status(404).send();
         }else{
