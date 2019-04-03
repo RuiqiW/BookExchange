@@ -175,7 +175,6 @@ function generatePost(post, user) {
             if (post.image.length > 0) {
                 const pictureContainer = document.createElement("div");
                 const lightboxAttr = `pictureSet${num_posts}`;
-                num_posts++;
                 for (let k = 0; k < post.image.length; k++) {
                     const a = document.createElement("a");
                     a.setAttribute("href", "/" + post.image[k]);
@@ -188,6 +187,7 @@ function generatePost(post, user) {
                 }
                 postDiv.appendChild(pictureContainer);
             }
+            num_posts++;
 
             postDiv.appendChild(document.createElement("hr"));
 

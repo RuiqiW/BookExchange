@@ -1,5 +1,3 @@
-const thisUser = "will"; //TODO: get current user from cookie
-
 let num_posts = 0;
 
 const sortingOpt = document.querySelector("#sortingOption");
@@ -200,7 +198,7 @@ function generatePost(post, user) {
                 }
                 postDiv.appendChild(pictureContainer);
             }
-
+            num_posts++;
             postDiv.appendChild(document.createElement("hr"));
 
             const contactSeller = document.createElement("button");
@@ -243,14 +241,14 @@ function contactTheSeller(e) {
     }).then((json) => {
         const keyword = json.username;
 
-        if(keyword === thisUser){
+        if(keyword === user.username){
             window.alert("This is your item.");
             return;
         }
 
         // find if the user to chat exists
         const newChat = {
-            user1: thisUser,
+            user1: user.username,
             user2: keyword
         };
 
