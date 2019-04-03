@@ -159,7 +159,7 @@ function generateSearchResult(posts, user) {
  */
 function generatePost(post, user) {
     return new Promise((resolve, reject) => {
-        fetch("/api/getUser/" + post.seller).then((result) => {
+        fetch("/api/getUserUnsafe/" + post.seller).then((result) => {
             return result.json();
         }).then((json) => {
             const seller = json;
@@ -236,11 +236,13 @@ function generatePost(post, user) {
                 removeButton.addEventListener("click", addToCart);
                 postDiv.appendChild(removeButton);
             } else {
-                const addButton = document.createElement("button");
-                addButton.className = "removeFromCart";
-                addButton.appendChild(document.createTextNode("Remove from Cart"));
-                addButton.addEventListener("click", removeFromCart);
-                postDiv.appendChild(addButton);
+                if (!user.isAdmin) {
+                    const addButton = document.createElement("button");
+                    addButton.className = "removeFromCart";
+                    addButton.appendChild(document.createTextNode("Remove from Cart"));
+                    addButton.addEventListener("click", removeFromCart);
+                    postDiv.appendChild(addButton);
+                }
             }
 
             const contactSeller = document.createElement("button");
