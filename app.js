@@ -743,7 +743,6 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
 
 app.post("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
     const transactionId = req.body.transactionId;
-    const postId = req.body.postId;
     const approve = req.body.approve;
 
     if (approve) {
@@ -761,7 +760,7 @@ app.post("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
             if (!transaction) {
                 res.status(404).send();
             } else {
-                Post.findByIdAndUpdate(postId, {$set: {isSold: false}}).then((post) => {
+                Post.findByIdAndUpdate(transaction.postId, {$set: {isSold: false}}).then((post) => {
                     if (!post) {
                         res.status(606).send();
                     } else {
