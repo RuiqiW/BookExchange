@@ -161,7 +161,7 @@ body {
 
 .addToCart {
     margin-bottom: 5px;
-    margin-left: 10px;
+    margin-left: 40px;
     background-color: dodgerblue;
     font-weight: bold;
     color: white;
@@ -332,8 +332,8 @@ body {
 
 .deletePost {
     margin-bottom: 5px;
-    margin-left: 10px;
-    background-color: red;
+    margin-left: 40px;
+    background-color: dodgerblue;
     font-weight: bold;
     color: white;
     height: 26px;
