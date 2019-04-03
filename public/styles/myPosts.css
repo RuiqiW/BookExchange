@@ -284,3 +284,14 @@ body {
     border-radius: 50%;
     border-style: solid;
 }
+
+.dealBySystem {
+    margin-left: 40px;
+    margin-right: 40px;
+    font-weight: bold;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+    color: black;
+    background-color: lightgray;
+}

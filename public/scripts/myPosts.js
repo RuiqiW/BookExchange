@@ -43,7 +43,7 @@ function onSortingOptChange() {
             }
         });
     }
-    generateSearchResult(posts, users[0]);
+    generateSearchResult(posts, user);
 }
 
 function init() {
@@ -197,12 +197,25 @@ function generatePost(post, user) {
                 deleteItem.appendChild(document.createTextNode("Delete this Post"));
                 deleteItem.addEventListener("click", deleteAnItem);
                 postDiv.appendChild(deleteItem);
-
-                const soldItem = document.createElement("button");
-                soldItem.className = "soldItem";
-                soldItem.addEventListener("click", soldAnItem);
-                soldItem.appendChild(document.createTextNode("Mark as Sold"));
-                postDiv.appendChild(soldItem);
+                if (!post.byCreditCard) {
+                    const soldItem = document.createElement("button");
+                    soldItem.className = "soldItem";
+                    soldItem.addEventListener("click", soldAnItem);
+                    soldItem.appendChild(document.createTextNode("Mark as Sold"));
+                    postDiv.appendChild(soldItem);
+                } else {
+                    const dealBySystem = document.createElement("button");
+                    dealBySystem.disabled = true;
+                    dealBySystem.className = "dealBySystem";
+                    dealBySystem.appendChild(document.createTextNode("This post should be handle by system."));
+                    postDiv.appendChild(dealBySystem);
+                }
+            } else {
+                const soldButton = document.createElement("button");
+                soldButton.disabled = true;
+                soldButton.className = "dealBySystem";
+                soldButton.appendChild(document.createTextNode("This post has already sold."));
+                postDiv.appendChild(soldButton);
             }
             resolve(postDiv);
         }).catch((error) => {

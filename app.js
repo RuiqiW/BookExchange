@@ -105,7 +105,7 @@ app.post('/api/createAccount', (req, res) => {
             purchase: [],
             transaction: [],
             shortlist: [],
-            byCreditCard: true
+            byCreditCard: req.body.byCreditCard
         });
         newUser.save().then((result) => {
             res.send(result)
@@ -122,6 +122,7 @@ app.post('/api/createAccount', (req, res) => {
 app.post('/api/postAd', upload.array("image", 4), (req, res) => {
     if (!req.session.user) {
         res.status(401).send();
+        return;
     }
     const files = req.files;
     let price;
@@ -132,7 +133,7 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
     }
     let byCreditCard;
     User.findOne({username: req.session.user}).then((result) => {
-        byCreditCard = result.byCreditCard;
+        byCreditCard = (req.body.handleBySelf === 'on');
         const newPost = new Post({
             title: req.body.title,
             seller: req.session.user,
@@ -550,25 +551,6 @@ app.post("/api/updateBio/:newBio", (req, res) => {
             res.status(500).send();
         })
     });
-});
-
-app.post("/api/updatePayment/:newPayment", (req, res) => {
-    if (!req.session.user) {
-        res.status(401).send();
-    }
-    const newPayment = req.params.newPayment;
-    console.log(newPayment);
-    let byCreditCard = false;
-    if (newPayment === 'credit') {
-        byCreditCard = true;
-    } else {
-        byCreditCard = false;
-    }
-    User.findOne({username: req.session.user}).then((user) => {
-       user.byCreditCard = byCreditCard;
-       user.save().then((res.redirect("/pages/userProfile.html")));
-    });
-
 });
 
 app.post("/api/sendCode/:email", (req, res) => {

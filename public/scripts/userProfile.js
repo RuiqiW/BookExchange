@@ -7,25 +7,6 @@ const picSubmit = document.querySelector("#pic-submit");
 const picSelect = document.querySelector("#pic-select");
 const paymentSelection = document.querySelector("#paymentSelection");
 
-paymentSelection.addEventListener("change", (e) => {
-    console.log(e.target.value);
-    if (parseInt(e.target.value) === 1) {
-        const request = new Request("/api/updatePayment/" + "credit", {
-            method: "post"
-        });
-        fetch(request).catch((error) => {
-            console.log(error);
-        })
-    } else {
-        const request = new Request("/api/updatePayment/" + "myself", {
-            method: "post"
-        });
-        fetch(request).catch((error) => {
-            console.log(error);
-        })
-    }
-});
-
 picSelect.addEventListener("change", (e) => {
     console.log("dsjah");
     picSubmit.disabled = false;
@@ -189,17 +170,6 @@ function loadUserProfile(currUser) {
     spanElement2.before(email);
     spanEmail.removeChild(spanElement2);
 
-    const payment = document.getElementById("payment");
-    const select = payment.getElementsByTagName("select")[0];
-    const firstOption = select.getElementsByTagName("option")[0];
-    const secondOption = select.getElementsByTagName("option")[1];
-    if (currUser.byCreditCard) {
-        firstOption.innerText = "Handle Transaction by Credit Card";
-        secondOption.innerText = "Handle Transaction by Myself"
-    } else {
-        firstOption.innerText = "Handle Transaction by Myself";
-        secondOption.innerText = "Handle Transaction by Credit Card";
-    }
 }
 
 function init() {
