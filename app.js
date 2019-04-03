@@ -741,7 +741,7 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
     });
 });
 
-app.delete("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
+app.post("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
     const transactionId = req.body.transactionId;
     const postId = req.body.postId;
     const approve = req.body.approve;
