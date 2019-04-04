@@ -68,8 +68,8 @@ app.post('/api/search', (req, res) => {
     const option = parseInt(req.body.option);
     const all = req.body.all;
     if (all === "true") {
-        Post.find().then((posts) => {
-           const payload = {result: posts};
+        Post.find({isSold: false}).then((posts) => {
+            const payload = {result: posts};
             if (!req.session.user) {
                 payload.user = null;
                 res.send(payload);
@@ -239,7 +239,9 @@ app.post('/api/updateAd', upload.array("image", 4), (req, res) => {
             for (let i = 0; i < users.length; i++) {
                 users[i].shortlist.pull(req.body.postId);
                 users[i].shortlist.push(result);
-                users[i].save().catch((error) => {console.log(error)});
+                users[i].save().catch((error) => {
+                    console.log(error)
+                });
             }
         });
 
@@ -770,10 +772,12 @@ app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
             res.send(post);
         }
         User.find({"shortlist._id": post._id}).then((users) => {
-           for (let i = 0; i < users.length; i++) {
-               users[i].shortlist.pull(post._id);
-               users[i].save().catch((error) => {console.log(error)});
-           }
+            for (let i = 0; i < users.length; i++) {
+                users[i].shortlist.pull(post._id);
+                users[i].save().catch((error) => {
+                    console.log(error)
+                });
+            }
         });
     }).catch((error) => {
         res.status(500).send();
@@ -799,16 +803,18 @@ app.delete("/api/deletePost/:postId", (req, res) => {
             res.status(401).send();
         } else {
             Post.findByIdAndDelete(postId).then((post) => {
-               if (!post) {
-                   res.status(404).send();
-               } else {
-                   res.status(200).send();
-               }
+                if (!post) {
+                    res.status(404).send();
+                } else {
+                    res.status(200).send();
+                }
             });
             User.find({"shortlist._id": post._id}).then((users) => {
                 for (let i = 0; i < users.length; i++) {
                     users[i].shortlist.pull(post._id);
-                    users[i].save().catch((error) => {console.log(error)});
+                    users[i].save().catch((error) => {
+                        console.log(error)
+                    });
                 }
             });
         }
@@ -861,7 +867,13 @@ app.post("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
             if (!transaction) {
                 res.status(404).send();
             } else {
-                res.status(200).send();
+                Post.findByIdAndUpdate(transaction.postId, {$set: {isSold: true}}).then((post) => {
+                    if (!post) {
+                        res.status(606).send();
+                    } else {
+                        res.status(200).send();
+                    }
+                });
             }
         }).catch((error) => {
             res.status(500).send();
@@ -871,13 +883,7 @@ app.post("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
             if (!transaction) {
                 res.status(404).send();
             } else {
-                Post.findByIdAndUpdate(transaction.postId, {$set: {isSold: false}}).then((post) => {
-                    if (!post) {
-                        res.status(606).send();
-                    } else {
-                        res.status(200).send();
-                    }
-                });
+                res.status(200).send();
             }
         }).catch((error) => {
             res.status(500).send();
@@ -1101,44 +1107,44 @@ app.post("/api/checkout", (req, res) => {
 
 });
 
-app.post("/api/submitPayment", (req, res)=> {
-   if (!req.session.user) {
-       res.status(401).send();
-       return;
-   }
-   const checkoutItems = req.body.items;
-   const creditCardNumber = req.body.creditCardNumber;
-   //The index of items to be removed from user shorlist
-   const removeIndexes = [];
-   User.findOne({username: req.session.user}).then((user) => {
-       for (let i = 0; i < checkoutItems.length; i++) {
-           for (let k = 0; k < user.shortlist.length; k++) {
-               if (user.shortlist[k]._id.equals(checkoutItems[i]._id)) {
-                   removeIndexes.push(k);
-               }
-           }
-           Transaction.findOne({postId: checkoutItems[i]._id}).then((trans) => {
-               trans.isSubmitted = true;
-               trans.creditCardNumber = creditCardNumber;
-               trans.save().catch((error) => {
-                   console.log(error);
-               });
-               const postId = trans.postId;
-           }).catch((error) => {
-               console.log(error);
-           });
-       }
-       for (let k = 0; k < removeIndexes.length; k++) {
-           user.shortlist.splice(removeIndexes[k], 1);
-       }
-       user.save().catch((error) => {
-           console.log(error);
-       });
-       res.status(200).send();
-   }).catch((error) => {
-       console.log(error);
-       res.status(500).send();
-   });
+app.post("/api/submitPayment", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+        return;
+    }
+    const checkoutItems = req.body.items;
+    const creditCardNumber = req.body.creditCardNumber;
+    //The index of items to be removed from user shorlist
+    const removeIndexes = [];
+    User.findOne({username: req.session.user}).then((user) => {
+        for (let i = 0; i < checkoutItems.length; i++) {
+            for (let k = 0; k < user.shortlist.length; k++) {
+                if (user.shortlist[k]._id.equals(checkoutItems[i]._id)) {
+                    removeIndexes.push(k);
+                }
+            }
+            Transaction.findOne({postId: checkoutItems[i]._id}).then((trans) => {
+                trans.isSubmitted = true;
+                trans.creditCardNumber = creditCardNumber;
+                trans.save().catch((error) => {
+                    console.log(error);
+                });
+                const postId = trans.postId;
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+        for (let k = 0; k < removeIndexes.length; k++) {
+            user.shortlist.splice(removeIndexes[k], 1);
+        }
+        user.save().catch((error) => {
+            console.log(error);
+        });
+        res.status(200).send();
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
 
 });
 
