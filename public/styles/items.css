@@ -219,9 +219,11 @@ body {
 }
 
 .itemPicture {
+    margin-top: 10px;
+    display: inline-block;
+    margin-left: 75px;
     width: 100px;
     height: 100px;
-    margin-top: 10px;
 }
 
 .itemPicture:hover {

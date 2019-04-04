@@ -15,62 +15,10 @@
     />
   </head>
   <body>
-    <div id="chatRoom">
-      <div id="chatTitle">
-        <h5 id="chatName">user</h5>
-        <!--close button-->
-        <div id="chatHide">
-          <a href="#">&times;</a>
-        </div>
-      </div>
-
-      <!--messages-->
-      <div id="chat">
-        <!--A sample bubble-->
-        <div class="chatInBubble">
-          <p class="chatInText">Hello</p>
-        </div>
-      </div>
-
-      <!--write new message-->
-      <div id="message">
-        <form>
-          <textarea id="messageBox" placeholder="Message..."></textarea>
-          <button id="sendButton" class="submit">
-            <img id="sendIcon" src="../images/send.png" />
-          </button>
-        </form>
-      </div>
-    </div>
-
     <div id="topBar">
       <a href="../index.html"
         ><img id="topBarLogo" src="../images/logo.png" alt="logo"
       /></a>
-
-      <div id="chatShow" class="topBarImageContainer dropdown">
-        <img
-          class="topBarImage"
-          src="../images/admin/chat.png"
-          alt="chatPlaceholder"
-        />
-
-        <!--Dropdown List of Messages-->
-        <div class="dropdownContent">
-          <div class="profile">
-            <div class="profileIconContainer">
-              <img
-                src="../images/person.jpg"
-                alt="ProfilePic"
-                class="profileIcon"
-              />
-            </div>
-            <div class="profileContent">
-              <strong>user1</strong><br /><span class="grey">Hello</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div id="logOut">
         <a href="/api/logout">
