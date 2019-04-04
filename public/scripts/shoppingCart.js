@@ -55,6 +55,8 @@ function init() {
             endOfResults.appendChild(document.createTextNode("End of Results"));
             document.querySelector("#posts").appendChild(endOfResults);
         }
+        const selectAllCheck = document.querySelector('#selectAllCheck');
+        selectAllCheck.checked = false;
     });
 }
 
@@ -241,6 +243,34 @@ function contactTheSeller(e) {
 
 /*********************** Select Books for Checkout ************************/
 
+const selectAllCheck = document.querySelector('#selectAllCheck');
+selectAllCheck.addEventListener('click', selectAllItems);
+
+function selectAllItems(e) {
+
+    const postElements = document.querySelector('#posts');
+    console.log(posts);
+    if (e.target.checked === true) {
+        for (let i = 0; i < postElements.childElementCount - 1; i++) {
+            if (i % 2 === 0) {
+                if (posts[posts.length - i/2 - 1].byCreditCard) {
+                    postElements.children[i].firstElementChild.checked = true;
+                    updateOrderSummary(e);
+                } else {
+                    window.alert(`You have to contact seller to buy ${posts[posts.length - i/2 - 1].title}.`);
+                }
+            }
+        }
+    } else {
+        for (let i = 0; i < postElements.childElementCount - 1; i++) {
+            if (i % 2 === 0) {
+                // postElements.children[i].firstElementChild.dispatchEvent(new MouseEvent('click'));
+                postElements.children[i].firstElementChild.checked = false;
+            }
+        }
+    }
+}
+
 
 function updateOrderSummary(e) {
     selection = [];
@@ -341,7 +371,7 @@ function removeFromCart(e) {
             return newUser.json();
         }
     }).then((newUser) => {
-        window.reload();
+        location.reload();
     });
 }
 
