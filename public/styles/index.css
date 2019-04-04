@@ -171,3 +171,12 @@ a {
     height: 50px;
     width: 50px;
 }
+
+.logoutImage {
+    height: 50px;
+    width: 50px;
+}
+
+#logoutDiv {
+    display: inline-block;
+}

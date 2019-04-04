@@ -100,6 +100,28 @@ function init() {
             const myCart = document.querySelector("#myCart");
             myCart.style.display = "none";
         }
+
+        //Add log out button
+        const div = document.createElement("div");
+        div.id= "logoutDiv";
+        const a = document.createElement("a");
+        const profileSpan = document.createElement('span');
+        profileSpan.innerText = "Log Out";
+        profileSpan.className = "topBarText";
+        const brk = document.createElement('br');
+        a.setAttribute("href", "/api/logout");
+        const imageContainer = document.createElement("div");
+        imageContainer.className = "topBarImageContainer";
+        const image = document.createElement("img");
+        image.className = "logoutImage";
+        image.setAttribute("src", "/public/images/admin/logout.png");
+        imageContainer.appendChild(image);
+        a.appendChild(imageContainer);
+        a.appendChild(brk);
+        a.appendChild(profileSpan);
+        imageContainer.appendChild(image);
+        div.appendChild(a);
+        document.querySelector("#topBar").appendChild(div);
     }).catch((error) => {
         // console.log("User not logged in");
     })
