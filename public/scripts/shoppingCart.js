@@ -341,7 +341,7 @@ function removeFromCart(e) {
             return newUser.json();
         }
     }).then((newUser) => {
-        window.reload();
+        location.reload();
     });
 }
 
