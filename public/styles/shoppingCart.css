@@ -286,10 +286,6 @@ body {
     width: 40px;
 }
 
-.topBarImageContainer:hover{
-    background-color: lightskyblue;
-}
-
 .topBarText {
     font-weight: bold;
     display: inline-block;
@@ -444,14 +440,17 @@ span.total {
     box-shadow: 2px 5px 10px var(--color-smoke);
     margin-top: 50px;
 }
+
 .button:hover {
     transition: all 150ms linear;
     opacity: 0.85;
 }
+
 .button:active {
     transition: all 150ms linear;
     opacity: 0.75;
 }
+
 .button:focus {
     outline: 1px dotted #959595;
     outline-offset: -4px;
