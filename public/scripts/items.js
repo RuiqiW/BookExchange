@@ -115,7 +115,7 @@ function init() {
                     signInDiv.removeChild(signInDiv.lastElementChild);
 
                     const makePost = document.querySelector('#makePost');
-                    makePost.setAttribute('href', '/pages/post-ad.html');
+                    makePost.setAttribute('href', '/pages/postAd.html');
                     const a = document.createElement("a");
                     a.setAttribute("href", "/pages/userProfile.html");
                     const imageContainer = document.createElement("div");
@@ -425,7 +425,7 @@ function makePost(e) {
     //Here should be some code check whether user is logged in
     //If not logged in, should jump to login page
     //Here simply jump to make post page
-    document.location = "./post-ad.html";
+    document.location = "./postAd.html";
 }
 
 // const buyItemButtons = document.querySelectorAll(".buyItem");
