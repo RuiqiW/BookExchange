@@ -108,6 +108,15 @@ function init() {
 const searchButton = document.querySelector("#searchButton");
 searchButton.addEventListener("click", search);
 
+const showMeAllButton = document.querySelector("#showMeAllButton");
+showMeAllButton.addEventListener("click", showMeAll);
+
+function showMeAll(e) {
+    e.preventDefault();
+    sessionStorage.setItem("all", "true");
+    document.location = '/pages/items.html';
+}
+
 function search(e){
     e.preventDefault();
     const keyword = document.querySelector("#searchBox").value.trim();
@@ -118,6 +127,7 @@ function search(e){
     }
     sessionStorage.setItem("keyword", keyword);
     sessionStorage.setItem("option", "0");
+    sessionStorage.setItem("all", "false");
     document.location = "/pages/items.html";
 }
 init();

@@ -51,6 +51,7 @@ function onSortingOptChange() {
 function init() {
     const keyword = sessionStorage.getItem("keyword");
     let option = sessionStorage.getItem("option");
+    const all = sessionStorage.getItem("all");
     if (parseInt(option) === 0) {
         document.querySelector("#searchMethod").value = '0';
     } else {
@@ -59,7 +60,8 @@ function init() {
     if (keyword) {
         const payload = {
             keyword: keyword,
-            option: option
+            option: option,
+            all: all
         };
 
         const request = new Request("/api/search", {
@@ -70,10 +72,13 @@ function init() {
                 "Content-Type": "application/json"
             }
         });
-
-        document.querySelector("#result").innerText = keyword;
-        const searchBox = document.querySelector("#searchBox");
-        searchBox.value = keyword;
+        if (all === "true") {
+            document.querySelector("#searchResult").innerHTML = "Here is all the posts";
+        } else {
+            document.querySelector("#result").innerText = keyword;
+            const searchBox = document.querySelector("#searchBox");
+            searchBox.value = keyword;
+        }
 
         fetch(request).then((res) => {
             return res.json();
@@ -493,15 +498,36 @@ function contactTheSeller(e) {
 
 const searchButton = document.querySelector("#searchButton");
 searchButton.addEventListener("click", searching);
+const showAllButton = document.querySelector("#showAllButton");
+showAllButton.addEventListener("click", showAll);
 
-function searching(e) {
+function showAll(e) {
     e.preventDefault();
     sessionStorage.removeItem("keyword");
     sessionStorage.removeItem("option");
+    sessionStorage.removeItem("all");
     const keyword = document.querySelector("#searchBox").value.trim();
-    const option = parseInt(document.querySelector("#searchMethod").value);
+    const option = document.querySelector("#searchMethod").value;
     sessionStorage.setItem("keyword", keyword);
     sessionStorage.setItem("option", option);
+    sessionStorage.setItem("all", "true");
+    location.reload();
+}
+
+
+function searching(e) {
+    e.preventDefault();
+    if (document.querySelector("#searchBox").value.trim().length === 0) {
+        return;
+    }
+    sessionStorage.removeItem("keyword");
+    sessionStorage.removeItem("option");
+    sessionStorage.removeItem("all");
+    const keyword = document.querySelector("#searchBox").value.trim();
+    const option = document.querySelector("#searchMethod").value;
+    sessionStorage.setItem("keyword", keyword);
+    sessionStorage.setItem("option", option);
+    sessionStorage.setItem("all", "false");
     location.reload();
 }
 

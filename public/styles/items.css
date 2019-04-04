@@ -63,6 +63,28 @@ body {
     background-color: white;
 }
 
+#showAllButton {
+    height: 40px;
+    width: 80px;
+    margin-left: 30px;
+    margin-top: 20px;
+    position: relative;
+    left: 400px;
+    top: -13px;
+    border-radius: 10px;
+    padding: 0;
+    background-color: lightgrey;
+}
+
+#showAllButtonText {
+    font-size: 150%;
+    color: grey;
+}
+
+#showAllButton:hover {
+    background-color: white;
+}
+
 #logIn {
     position: relative;
     right: 20px;
