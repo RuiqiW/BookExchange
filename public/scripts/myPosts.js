@@ -47,42 +47,113 @@ function onSortingOptChange() {
 }
 
 function init() {
-
-    const request = new Request("/api/myPosts");
-
-    fetch(request).then((res) => {
-        if (res.status === 401) {
-            window.location = '/login';
-        }
-        return res.json();
+    const request = new Request("/api/getCurrentUser");
+    fetch(request).then((result) => {
+        return result.json();
     }).then((json) => {
-        user = json.user;
-        posts = json.posts;
-        posts.sort(function (a, b) {
-            if (a.postingDate <= b.postingDate) {
-                return 1;
-            } else {
-                return -1;
-            }
-        });
-        const cartNumber = user.shortlist.length;
-        updateShoppingCart(cartNumber);
-        const signInDiv = document.querySelector("#signIn");
-        signInDiv.removeChild(signInDiv.lastElementChild);
+        const curUser = json.user;
+        user = curUser;
+        if (!curUser.isAdmin) {
+            const request = new Request("/api/myPosts");
 
-        const a = document.createElement("a");
-        a.setAttribute("href", "/pages/userProfile.html");
-        const imageContainer = document.createElement("div");
-        imageContainer.className = "topBarImageContainer";
-        const image = document.createElement("img");
-        image.className = "profileImage";
-        image.setAttribute("src", user.avatar);
-        imageContainer.appendChild(image);
-        a.appendChild(imageContainer);
-        imageContainer.appendChild(image);
-        signInDiv.appendChild(a);
-        generateSearchResult(posts, user);
+            fetch(request).then((res) => {
+                if (res.status === 401) {
+                    window.location = '/login';
+                }
+                return res.json();
+            }).then((json) => {
+                user = json.user;
+                posts = json.posts;
+                posts.sort(function (a, b) {
+                    if (a.postingDate <= b.postingDate) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                });
+                const cartNumber = user.shortlist.length;
+                updateShoppingCart(cartNumber);
+                const signInDiv = document.querySelector("#signIn");
+                signInDiv.removeChild(signInDiv.lastElementChild);
+
+                const a = document.createElement("a");
+                a.setAttribute("href", "/pages/userProfile.html");
+                const imageContainer = document.createElement("div");
+                imageContainer.className = "topBarImageContainer";
+                const image = document.createElement("img");
+                image.className = "profileImage";
+                image.setAttribute("src", user.avatar);
+                imageContainer.appendChild(image);
+                a.appendChild(imageContainer);
+                imageContainer.appendChild(image);
+                signInDiv.appendChild(a);
+                if (posts.length === 0) {
+                    while (document.querySelector("#posts").lastElementChild) {
+                        document.querySelector("#posts").removeChild(document.querySelector("#posts").lastElementChild)
+                    }
+                    const endOfResults = document.createElement("div");
+                    endOfResults.id = "endOfResults";
+                    endOfResults.appendChild(document.createTextNode("You haven't post anything yet"));
+                    document.querySelector("#posts").appendChild(endOfResults);
+                } else {
+                    generateSearchResult(posts, user);
+                }
+            });
+        }else{
+            // console.log(sessionStorage.getItem("viewUserProfile"));
+            const request = new Request("/api/admin/userPosts/" +sessionStorage.getItem("viewUserProfile"));
+            fetch(request).then((result) => {
+                return result.json();
+            }).then((json) => {
+                posts = json.posts;
+                posts.sort(function (a, b) {
+                    if (a.postingDate <= b.postingDate) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                });
+
+                const signInDiv = document.querySelector("#signIn");
+                signInDiv.removeChild(signInDiv.lastElementChild);
+
+                const a = document.createElement("a");
+                a.setAttribute("href", "/pages/adminDashboard.html");
+                const imageContainer = document.createElement("div");
+                imageContainer.className = "topBarImageContainer";
+                const image = document.createElement("img");
+                image.className = "profileImage";
+                image.setAttribute("src", "/public/images/dashboard.svg");
+                image.setAttribute("style", "width: 40px; height: 40px;");
+                imageContainer.setAttribute("style", "width: 40px; height: 40px");
+                imageContainer.appendChild(image);
+                a.appendChild(imageContainer);
+                imageContainer.appendChild(image);
+                signInDiv.appendChild(a);
+
+                //document.querySelector("#chatShow").style.display = "none";
+                document.querySelector("#myCart").style.display = "none";
+                document.querySelector("#logOut").style.display = "none";
+                document.querySelector("#makePostButton").style.display = "none";
+                document.querySelector("#searchResult").innerText = "Following is the User's post";
+
+                if (posts.length === 0) {
+                    while (document.querySelector("#posts").lastElementChild) {
+                        document.querySelector("#posts").removeChild(document.querySelector("#posts").lastElementChild)
+                    }
+                    const endOfResults = document.createElement("div");
+                    endOfResults.id = "endOfResults";
+                    endOfResults.appendChild(document.createTextNode("The user hasn't post anything yet"));
+                    document.querySelector("#posts").appendChild(endOfResults);
+                } else {
+                    generateSearchResult(posts, user);
+                }
+            });
+
+        }
+
     });
+
 }
 
 function updateShoppingCart(newNumber) {
@@ -193,31 +264,39 @@ function generatePost(post, user) {
 
             postDiv.appendChild(document.createElement("hr"));
 
-            if (!post.isSold) {
+            if (!user.isAdmin) {
+                if (!post.isSold) {
+                    const deleteItem = document.createElement("button");
+                    deleteItem.className = "deleteItem";
+                    deleteItem.appendChild(document.createTextNode("Delete this Post"));
+                    deleteItem.addEventListener("click", deleteAnItem);
+                    postDiv.appendChild(deleteItem);
+                    if (!post.byCreditCard) {
+                        const soldItem = document.createElement("button");
+                        soldItem.className = "soldItem";
+                        soldItem.addEventListener("click", soldAnItem);
+                        soldItem.appendChild(document.createTextNode("Mark as Sold"));
+                        postDiv.appendChild(soldItem);
+                    } else {
+                        const dealBySystem = document.createElement("button");
+                        dealBySystem.disabled = true;
+                        dealBySystem.className = "dealBySystem";
+                        dealBySystem.appendChild(document.createTextNode("This post should be handle by system."));
+                        postDiv.appendChild(dealBySystem);
+                    }
+                } else {
+                    const soldButton = document.createElement("button");
+                    soldButton.disabled = true;
+                    soldButton.className = "dealBySystem";
+                    soldButton.appendChild(document.createTextNode("This post has already sold."));
+                    postDiv.appendChild(soldButton);
+                }
+            } else {
                 const deleteItem = document.createElement("button");
                 deleteItem.className = "deleteItem";
                 deleteItem.appendChild(document.createTextNode("Delete this Post"));
                 deleteItem.addEventListener("click", deleteAnItem);
                 postDiv.appendChild(deleteItem);
-                if (!post.byCreditCard) {
-                    const soldItem = document.createElement("button");
-                    soldItem.className = "soldItem";
-                    soldItem.addEventListener("click", soldAnItem);
-                    soldItem.appendChild(document.createTextNode("Mark as Sold"));
-                    postDiv.appendChild(soldItem);
-                } else {
-                    const dealBySystem = document.createElement("button");
-                    dealBySystem.disabled = true;
-                    dealBySystem.className = "dealBySystem";
-                    dealBySystem.appendChild(document.createTextNode("This post should be handle by system."));
-                    postDiv.appendChild(dealBySystem);
-                }
-            } else {
-                const soldButton = document.createElement("button");
-                soldButton.disabled = true;
-                soldButton.className = "dealBySystem";
-                soldButton.appendChild(document.createTextNode("This post has already sold."));
-                postDiv.appendChild(soldButton);
             }
             resolve(postDiv);
         }).catch((error) => {
@@ -240,22 +319,39 @@ function makePost(e) {
 }
 
 function deleteAnItem(e) {
-    const postId = e.target.parentElement.id;
-    const request = new Request("/api/deletePost/" + postId, {
-        method: "delete"
-    });
-    const sure = confirm("Are you sure you want to delete this post.");
-    if (!sure) {
-        return;
-    }
-    fetch(request).then((res) => {
-        if (res.status !== 200) {
-            window.location = '/login';
+    if (!user.isAdmin) {
+        const postId = e.target.parentElement.id;
+        const request = new Request("/api/deletePost/" + postId, {
+            method: "delete"
+        });
+        const sure = confirm("Are you sure you want to delete this post.");
+        if (!sure) {
+            return;
         }
-        location.reload();
-    }).catch((error) => {
-        console.log(error);
-    });
+        fetch(request).then((res) => {
+            if (res.status !== 200) {
+                window.location = '/login';
+            }
+            location.reload();
+        }).catch((error) => {
+            console.log(error);
+        });
+    } else {
+        const postId = e.target.parentElement.id;
+        const request = new Request("/api/dashboard/post/" + postId, {
+            method: "delete"
+        });
+        const sure = confirm("Are you sure you want to delete this post.");
+        if (!sure) {
+            return;
+        }
+        fetch(request).then((res) => {
+            if (res.status !== 200) {
+                window.location = '/login';
+            }
+            location.reload();
+        });
+    }
 }
 
 

@@ -140,6 +140,7 @@ function init() {
                 document.querySelector("#chatShow").style.display = "none";
                 document.querySelector("#myCart").style.display = "none";
                 document.querySelector("#logOut").style.display = "none";
+                document.querySelector("#searchResult").innerHTML = "Following is the user's purchases...";
 
                 if (posts.length === 0) {
                     while (document.querySelector("#posts").lastElementChild) {

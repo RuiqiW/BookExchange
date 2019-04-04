@@ -961,6 +961,15 @@ app.get("/api/myPosts", (req, res) => {
     });
 });
 
+app.get("/api/admin/userPosts/:username", adminAuthenticate, (req, res) => {
+    const username = req.params.username;
+    Post.find({seller: username}).then((posts) => {
+        User.findOne({username: username}).then((user) => {
+            res.send({posts: posts, user: user});
+        });
+    });
+});
+
 app.post("/api/sellItem", (req, res) => {
     if (!req.session.user) {
         res.status(401).send();
