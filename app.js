@@ -178,7 +178,8 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
     }
     let byCreditCard;
     User.findOne({username: req.session.user}).then((result) => {
-        byCreditCard = (req.body.handleBySelf === 'on');
+        console.log(req.body);
+        byCreditCard = (req.body.handleBySelf !== 'on');
         const newPost = new Post({
             title: req.body.title,
             seller: req.session.user,
@@ -196,7 +197,7 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
             newPost.image.push(files[i].path);
         }
         newPost.save().then((result) => {
-            res.status(200).send();
+            res.redirect("/pages/myPosts.html");
         }).catch((error) => {
             console.log(error);
             res.status(500).send();
