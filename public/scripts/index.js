@@ -87,6 +87,10 @@ function init() {
             signInDiv.appendChild(a);
         } else {
             const a = document.createElement("a");
+            const profileSpan = document.createElement('span');
+            profileSpan.innerText = "Dashboard";
+            profileSpan.className = "topBarText";
+            const brk = document.createElement('br');
             a.setAttribute("href", "/pages/adminDashboard.html");
             const imageContainer = document.createElement("div");
             imageContainer.className = "topBarImageContainer";
@@ -96,6 +100,8 @@ function init() {
             imageContainer.appendChild(image);
             a.appendChild(imageContainer);
             imageContainer.appendChild(image);
+            a.appendChild(brk);
+            a.appendChild(profileSpan);
             signInDiv.appendChild(a);
             const myCart = document.querySelector("#myCart");
             myCart.style.display = "none";
