@@ -236,7 +236,7 @@ function generatePost(post, user) {
 
             const categorySpan = document.createElement("span");
             categorySpan.className = "category";
-            categorySpan.appendChild(document.createTextNode("seller: " + seller.firstName + " " + seller.lastName));
+            categorySpan.appendChild(document.createTextNode("seller: " + seller.username));
             postDiv.appendChild(categorySpan);
 
             const conditionSpan = document.createElement("span");
