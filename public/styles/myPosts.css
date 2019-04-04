@@ -185,10 +185,6 @@ body {
     height: 40px;
 }
 
-.topBarImageContainer:hover{
-    background-color: lightskyblue;
-}
-
 .topBarText {
     font-weight: bold;
     display: inline-block;

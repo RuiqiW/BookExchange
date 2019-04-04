@@ -26,10 +26,6 @@ a {
     margin-left: 30px;
 }
 
-.topBarImageContainer:hover{
-    background-color: lightskyblue;
-}
-
 .topBarText {
     font-weight: bold;
     display: inline-block;
