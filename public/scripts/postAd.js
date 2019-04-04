@@ -5,7 +5,11 @@ const log = console.log;
 
 
 const postAdForm = document.querySelector('#postAdForm');
-postAdForm.addEventListener('submit', handlePostAd);
+document.querySelector("#submit").addEventListener('submit', handlePostAd);
+
+document.querySelector("#cancel").addEventListener("click", (e) => {
+    window.location = "/";
+});
 
 const price = document.querySelector('#price');
 price.addEventListener('input', handlePrice);
