@@ -107,6 +107,8 @@ function init() {
                     const signInDiv = document.querySelector("#signIn");
                     signInDiv.removeChild(signInDiv.lastElementChild);
 
+                    const makePost = document.querySelector('#makePost');
+                    makePost.setAttribute('href', '/pages/post-ad.html');
                     const a = document.createElement("a");
                     a.setAttribute("href", "/pages/userProfile.html");
                     const imageContainer = document.createElement("div");
@@ -208,7 +210,7 @@ function generatePost(post, user) {
             const sellerProfilePhoto = document.createElement("img");
             sellerProfilePhoto.className = "profilePhoto";
             sellerProfilePhoto.setAttribute("src", seller.avatar);
-            sellerProfilePhoto.setAttribute("alt", "sellerPhoto");
+            sellerProfilePhoto.setAttribute("alt", "avatar");
 
             // This is actually the title of the post now.
             const sellerNameSpan = document.createElement("span");
