@@ -123,7 +123,7 @@ function generatePost(post, user) {
             timeSpan.className = "timespan";
             const date = new Date(post.postingDate);
             timeSpan.appendChild(document.createTextNode("Posting Time: " +
-                +date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
+                +date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
             postDiv.appendChild(timeSpan);
 
             const priceDiv = document.createElement("div");
@@ -161,14 +161,14 @@ function generatePost(post, user) {
             contactSeller.appendChild(document.createTextNode("Contact Seller"));
 
             const removeButton = document.createElement("button");
-            removeButton.className="removeFromCart";
+            removeButton.className = "removeFromCart";
             removeButton.appendChild(document.createTextNode("Remove from Cart"));
             removeButton.addEventListener("click", removeFromCart);
             postDiv.appendChild(removeButton);
 
             if (!post.byCreditCard) {
                 const canNotProcess = document.createElement("button");
-                canNotProcess.className="canNotProcess";
+                canNotProcess.className = "canNotProcess";
                 canNotProcess.appendChild(document.createTextNode("You have to contact seller to buy this item."));
                 canNotProcess.disabled = true;
                 postDiv.appendChild(canNotProcess);
@@ -198,7 +198,7 @@ function contactTheSeller(e) {
     fetch(postRequest).then((res) => {
         if (res.status === 200) {
             return res.json();
-        }else if (res.status === 401) {
+        } else if (res.status === 401) {
             window.location = '/login';
         } else {
             window.alert("Seller not found.");
@@ -206,7 +206,7 @@ function contactTheSeller(e) {
     }).then((json) => {
         const keyword = json.username;
 
-        if(keyword === user.username){
+        if (keyword === user.username) {
             window.alert("This is your item.");
             return;
         }
@@ -249,18 +249,29 @@ selectAllCheck.addEventListener('click', selectAllItems);
 function selectAllItems(e) {
 
     const postElements = document.querySelector('#posts');
-    console.log(posts);
     if (e.target.checked === true) {
         for (let i = 0; i < postElements.childElementCount - 1; i++) {
             if (i % 2 === 0) {
-                if (posts[posts.length - i/2 - 1].byCreditCard) {
+                const postId = postElements.children[i + 1].id;
+                let postIndex = -1;
+                let byCard = 0;
+                for(let k = 0; k < posts.length; k++){
+                    if(posts[k]._id === postId){
+                        postIndex = k;
+                        if(posts[k].byCreditCard){
+                            byCard++;
+                        }
+                        break;
+                    }
+                }
+                if (byCard > 0) {
                     postElements.children[i].firstElementChild.checked = true;
-                    updateOrderSummary(e);
                 } else {
-                    window.alert(`You have to contact seller to buy ${posts[posts.length - i/2 - 1].title}.`);
+                    window.alert(`You have to contact seller to buy ${posts[postIndex].title}.`);
                 }
             }
         }
+        updateOrderSummary(e);
     } else {
         for (let i = 0; i < postElements.childElementCount - 1; i++) {
             if (i % 2 === 0) {
@@ -292,8 +303,10 @@ function updateOrderSummary(e) {
     let sum = 0;
     let curCount = 0;
     const bookDivs = Array.from(document.querySelectorAll(".post"));
-    const boosIdsInOrderOfDOM = bookDivs.map((post) => {return post.id});
-    for (let i = 0; i<posts.length;i++) {
+    const boosIdsInOrderOfDOM = bookDivs.map((post) => {
+        return post.id
+    });
+    for (let i = 0; i < posts.length; i++) {
         const checkboxes = document.getElementsByClassName("check");
         if (checkboxes[i].checked) {
             const book = document.createElement("p");
@@ -304,7 +317,7 @@ function updateOrderSummary(e) {
 
             const thisId = boosIdsInOrderOfDOM[i];
             let index = 0;
-            for (let i = 0 ; i < posts.length; i++) {
+            for (let i = 0; i < posts.length; i++) {
                 if (posts[i]._id === thisId) {
                     index = i;
                 }
@@ -315,7 +328,7 @@ function updateOrderSummary(e) {
             book.appendChild(document.createTextNode(`${posts[index].title}`));
             book.appendChild(spanElement);
             const hrElement = document.getElementsByTagName("hr");
-            hrElement[hrElement.length-1].before(book);
+            hrElement[hrElement.length - 1].before(book);
             sum += parseFloat(posts[index].price);
             curCount++;
         }

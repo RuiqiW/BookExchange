@@ -423,8 +423,8 @@ app.post('/api/createChat', authenticate, (req, res) => {
                     res.send({user: user1, chat: result});
                 }
             }).catch((error) => {
-                res.status(500).send(error)
-            })
+                res.status(500).send()
+            });
         }
     }).catch((error) => {
         res.status(500).send();
