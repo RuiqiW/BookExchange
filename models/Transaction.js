@@ -42,6 +42,10 @@ const TransactionSchema = new mongoose.Schema({
     creditCardNumber: {
         type: String,
         required: false
+    },
+    isFailure: {
+        type: Boolean,
+        required: true
     }
 });
 
