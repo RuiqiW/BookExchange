@@ -202,10 +202,26 @@ body {
     cursor: pointer;
 }
 
-.seller, .postId {
-    margin-left: 10px;
+.seller{
+    margin-left: 20px;
+    display: block;
 }
 
+.price{
+    margin-right: 40px;
+    display: inline-block;
+    float: right;
+    color: #E9522D;
+    font-weight: bold;
+}
+
+.ISBN{
+    margin-left: 20px;
+    margin-bottom: 10px;
+    display: block;
+    color: grey;
+    font-size: 14px;
+}
 
 /**************** User listing ****************/
 

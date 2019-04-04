@@ -250,11 +250,21 @@ function createPost(post) {
     seller.className = "seller";
     seller.innerText = `seller: ${post.seller}`;
 
+    const price = document.createElement("span");
+    price.className = "price";
+    price.innerText = `$${post.price}`;
+
+    const ISBN = document.createElement("span");
+    ISBN.className = "ISBN";
+    ISBN.innerText = `ISBN: ${post.ISBN}`;
+
     const postContainer = document.createElement('div');
     postContainer.className = "post";
     postContainer.appendChild(close);
     postContainer.appendChild(img);
     postContainer.appendChild(seller);
+    seller.appendChild(price);
+    postContainer.appendChild(ISBN);
 
     const container = document.createElement('div');
     container.classList.add("col-lg-2");
