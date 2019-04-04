@@ -732,6 +732,43 @@ app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
     });
 });
 
+// This is for user delete post
+app.delete("/api/deletePost/:postId", (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+        return;
+    }
+    if (!ObjectID.isValid(req.params.postId)) {
+        res.status(600).send();
+        return;
+    }
+    const postId = req.params.postId;
+    Post.findById(postId).then((post) => {
+        if (!post) {
+            res.status(404).send();
+        } else if (post.seller !== req.session.user) {
+            // This is not the user's post, operation denied
+            res.status(401).send();
+        } else {
+            Post.findByIdAndDelete(postId).then((post) => {
+               if (!post) {
+                   res.status(404).send();
+               } else {
+                   res.status(200).send();
+               }
+            });
+            User.find({"shortlist._id": post._id}).then((users) => {
+                for (let i = 0; i < users.length; i++) {
+                    users[i].shortlist.pull(post._id);
+                    users[i].save().catch((error) => {console.log(error)});
+                }
+            });
+        }
+    }).catch((error) => {
+        res.status(500).send();
+    });
+});
+
 app.get("/api/dashboard/users", adminAuthenticate, (req, res) => {
     User.find({isAdmin: false}).then((users) => {
         if (!users) {
