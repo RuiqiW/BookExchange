@@ -879,7 +879,8 @@ app.post("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
             res.status(500).send();
         })
     } else {
-        Transaction.findByIdAndRemove(transactionId).then((transaction) => {
+        //TODO: IS FALURE SET TO TRUE
+        Transaction.findByIdAndUpdate(transactionId, {$set: {isFailure: true}}).then((transaction) => {
             if (!transaction) {
                 res.status(404).send();
             } else {
@@ -1060,7 +1061,8 @@ app.post("/api/sellItem", (req, res) => {
                 seller: req.session.user,
                 buyer: buyer,
                 handleByUser: true,
-                isSubmitted: true
+                isSubmitted: true,
+                isFailure: false
             });
             transaction.save().then((trans) => {
                 post.save().then((newPost) => {
@@ -1094,7 +1096,8 @@ app.post("/api/checkout", (req, res) => {
             seller: checkoutItems[i].seller,
             buyer: req.session.user,
             handleByUser: false,
-            isSubmitted: false
+            isSubmitted: false,
+            isFailure: false
         });
         transactions.push(transaction);
     }

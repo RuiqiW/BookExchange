@@ -283,7 +283,11 @@ function generatePost(post, user) {
             if (thisTrans.isComplete) {
                 complete.appendChild(document.createTextNode("The transaction is complete"));
             } else {
-                complete.appendChild(document.createTextNode("The transaction is pending or rejected"));
+                if (thisTrans.isFailure) {
+                    complete.appendChild(document.createTextNode("The transaction is rejected"));
+                } else {
+                    complete.appendChild(document.createTextNode("The transaction is pending"));
+                }
             }
             complete.disabled = true;
             postDiv.appendChild(complete);
