@@ -15,33 +15,33 @@ function onSortingOptChange() {
     if (newOption === "timeNewToOld") {
         posts.sort(function (a, b) {
             if (a.postingDate <= b.postingDate) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         });
     } else if (newOption === "timeOldToNew") {
         posts.sort(function (a, b) {
             if (a.postingDate <= b.postingDate) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         });
     } else if (newOption === "priceLowToHigh") {
         posts.sort(function (a, b) {
             if (parseFloat(a.price) <= parseFloat(b.price)) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         });
     } else {//priceHighToLow
         posts.sort(function (a, b) {
             if (parseFloat(a.price) <= parseFloat(b.price)) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         });
     }
@@ -99,6 +99,13 @@ function init() {
                 isRealUser = true;
                 user = json.user;
                 posts = json.result;
+                posts.sort(function (a, b) {
+                    if (a.postingDate <= b.postingDate) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                });
             }
             if (isRealUser) {
                 if (!user.isAdmin) {
@@ -174,17 +181,18 @@ function updateShoppingCart(newNumber) {
  * @param posts the posts should appear on this page
  * @param user
  */
-function generateSearchResult(posts, user) {
+async function generateSearchResult(posts, user) {
     //clear the posts currently displayed on screen
     while (document.querySelector("#posts").lastElementChild) {
         document.querySelector("#posts").removeChild(document.querySelector("#posts").lastElementChild)
     }
     for (let i = 0; i < posts.length; i++) {
-        generatePost(posts[i], user).then((resultDiv) => {
-            document.querySelector("#posts").firstElementChild.before(resultDiv);
-        }).catch((error) => {
-            console.log(error);
-        });
+        // generatePost(posts[i], user).then((resultDiv) => {
+        //     document.querySelector("#posts").firstElementChild.before(resultDiv);
+        // }).catch((error) => {
+        //     console.log(error);
+        // });
+        document.querySelector("#posts").append(await generatePost(posts[i], user));
     }
     const endOfResults = document.createElement("div");
     endOfResults.id = "endOfResults";
