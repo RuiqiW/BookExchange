@@ -114,3 +114,7 @@ button:focus {
 .navbar {
   background: #F7F7F7;
 }
+
+.logo{
+  width: 250px;
+}
