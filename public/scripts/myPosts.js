@@ -323,7 +323,7 @@ function makePost(e) {
     //Here should be some code check whether user is logged in
     //If not logged in, should jump to login page
     //Here simply jump to make post page
-    document.location = "./post-ad.html";
+    document.location = "./postAd.html";
 }
 
 function deleteAnItem(e) {
@@ -410,5 +410,5 @@ function editAnItem(e) {
     console.log(posts);
     const post = posts.filter((thisPost) => {return thisPost._id === id})[0];
     sessionStorage.setItem("postToUpdate", JSON.stringify(post));
-    window.location = '/pages/update-ad.html';
+    window.location = '/pages/updateAd.html';
 }

@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
-    <link href="../styles/post-ad.css" rel="stylesheet" type="text/css"/>
+    <link href="../styles/postAd.css" rel="stylesheet" type="text/css"/>
 
     <title>Post-Ad</title>
 </head>
+
 <body>
 <picture>
     <source srcset="../images/logo.png" media="(min-width: 400px)"/>
@@ -15,12 +16,11 @@
     </a>
 </picture>
 
-<h1 id="h1Title">Post Ad</h1>
+<h2 id="h1Title">Post Ad</h2>
 <!-- action="/my-handling-form-page" to go in form -->
-<form id="postAdForm" action="/api/updateAd" method="post" enctype="multipart/form-data">
-    <input type="text" name="postId" id="postId" required>
+<form id="postAdForm" action="/api/postAd" method="post" enctype="multipart/form-data">
     <section>
-        <h2>Ad Details</h2>
+        <h3>Ad Details</h3>
         <hr/>
         <p>
             <label for="adTitle">
@@ -61,7 +61,7 @@
     </section>
 
     <section>
-        <h2>Photos</h2>
+        <h3>Photos</h3>
         <hr/>
         <div>
             <p>
@@ -87,7 +87,7 @@
     </section>
 
     <section>
-        <h2>Price</h2>
+        <h3>Price</h3>
         <hr/>
         <label for="adTitle">
             <span>Price: $</span>
@@ -100,7 +100,7 @@
             <label class="checkLabel" for="freeCheck">
                 <span>Free</span>
             </label>
-            <input type="checkbox" id="freeCheck" name="isFree" value="Free" checked/>
+            <input type="checkbox" id="freeCheck" name="isFree" value="Free"/>
         </div>
 
     </section>
@@ -117,13 +117,13 @@
         </div>
     </section>
     <section id="postAdButtonSection">
-        <input id="submit" class="button -sun center" type="submit" value="Update">
-        <input id="cancel" class="button -sun center" value="cancel">
+        <input id="submit" class="button -sun center" type="submit" value="PostAd">
+        <input id="cancel" class="button -sun center" type="submit" value="Cancel">
     </section>
 </form>
 
 <!--Javascript-->
-<script src="../scripts/updateAd.js" type="text/javascript"></script>
+<script src="../scripts/postAd.js" type="text/javascript"></script>
 
 </body>
 </html>
