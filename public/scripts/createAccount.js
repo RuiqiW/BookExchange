@@ -27,7 +27,7 @@ function handleCreateAccount(e) {
     }
 
     // Check that the other fields are correct. We can make these more precise later
-    let nameRegex = /^[a-zA-Z]+$/;
+    let nameRegex = /^[a-zA-Z]+[a-zA-Z0-9]*$/;
     let emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
     if (!nameRegex.test(firstName) || !nameRegex.test(lastName) || !nameRegex.test(username) || !emailRegex.test(email.toString())) {
         alert('Please correct fields and try again.');

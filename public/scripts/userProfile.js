@@ -187,7 +187,13 @@ function init() {
                 return result.json();
             }).then((user) => {
                 loadUserProfile(user);
+                document.querySelector("#myPosts").innerText = "Post He/She Had Made";
+                document.querySelector("#myPurchases").innerText = "Items He/She Had Bought";
             });
+            document.querySelector("#pic-form-text").style.display = "none";
+            document.querySelector("#pic-form").style.display = "none";
+            document.querySelector("#editBio").style.display = "none";
+            document.querySelector("#editPhoneNumber").style.display = "none";
             const rightNav = document.querySelector("#rightNav");
             rightNav.style.display = "none";
         }

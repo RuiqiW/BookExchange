@@ -89,7 +89,9 @@
             <img class="profile-pic" src="../images/profilePic.jpg" alt=""/>
             <br>
             <br>
+            <span id="pic-form-text">
             Change Profile Picture
+            </span>
             <form id="pic-form" action="/api/changeProfilePicture" method="post" enctype="multipart/form-data">
                 <input type="file" id="pic-select" class="file-upload" name="image" accept="image/*"/>
                 <button id="pic-submit" type="submit" disabled>
@@ -109,7 +111,7 @@
                     Sed faucibus dolor non orci sollicitudin, at vehicula mauris maximus.
                 </span>
                 <br>
-                <i class="fa fa-edit textArea"></i>
+                <i id="editBio" class="fa fa-edit textArea"></i>
             </div>
             <div id="userid">
                 <p>Username: <span>userid</span></p>
@@ -117,7 +119,7 @@
             <div id="phone">
                 <p>
                     Phone Number: <span>1234567890</span>
-                    <i class="fa fa-edit"></i>
+                    <i id="editPhoneNumber" class="fa fa-edit"></i>
                 </p>
             </div>
 <!--            <div id="email">-->
@@ -143,10 +145,11 @@
         <br>
     </div>
     <strong>My Posts:
-        <button id="postIMade"><p class="myPosts">Posts I've Made</p></button>
+        <button id="postIMade"><p id="myPosts" class="myPosts">Posts I've Made</p></button>
     </strong>
+        <br>
     <strong>My Purchases:
-        <button id="itemsIBought"><p class="myPurchases">Items I've Bought</p></button>
+        <button id="itemsIBought"><p id="myPurchases" class="myPurchases">Items I've Bought</p></button>
     </strong>
 </div>
 

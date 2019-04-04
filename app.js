@@ -931,6 +931,23 @@ app.get("/api/myPurchases", (req, res) => {
     });
 });
 
+app.get("/api/admin/userPurchases/:username", adminAuthenticate, (req, res) => {
+    const username = req.params.username;
+    Transaction.find({buyer: username}).then((transactions) => {
+        const transactionIds = transactions.map((trans) => {
+            return trans.postId;
+        });
+        Post.find({_id: {$in: transactionIds}}).then((posts) => {
+            User.findOne({username: username}).then((user) => {
+                res.send({posts: posts, user: user});
+            });
+        });
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
+});
+
 app.get("/api/myPosts", (req, res) => {
     if (!req.session.user) {
         res.status(401).send();
