@@ -31,16 +31,17 @@ body {
 
 #userInfo {
     display: inline-block;
-    position: relative;
-    left: 1320px;
+    position: absolute;
+    left: 89%;
+    margin-top: 10px;
 }
 
 #logOut {
     display: inline-block;
     margin-top: 20px;
-    position: relative;
     bottom: 10px;
-    left: 1350px;
+    position: absolute;
+    left: 94%;
     right: 30px;
 }
 
@@ -250,8 +251,8 @@ body {
 
 #chatShow {
     position: absolute;
-    left: 1470px;
-    right: 30px;
+    left: 85%;
+    margin-right: 30px;
     bottom: 20px;
     margin-top: 20px;
 }
@@ -275,6 +276,7 @@ body {
     height: 40px;
     width: 40px;
     display: inline-block;
+    margin-top: 10px;
 }
 
 .topBarImageContainer {
