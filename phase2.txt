@@ -1,7 +1,91 @@
 explaining in detail how to use the application, the roles of users and how the users would go
 about using all the features of your website.
 Using the main features of your project should be intuitive enough that any user with access to your URL should be able to discover all its features.
-Also, provide an overview of the routes in your Express server, and what they are used for in your app.
+=========================================================================================
+
+Overview of routes:
+
+app.js contains all the routes out application used, they can be divided into
+the following categories:
+
+Note: All the pages are sent to the browser and then the init() function in the
+javascript will fetch information from server to generate the page accordingly.
+
+1/ User Management & information Retrieve:
+    /api/createAccount: used to create an new User
+
+    /api/user/:username: used to retrieve the information of the user with
+    username
+
+    /api/changeProfilePicture: used to update the profile photo of an user
+
+    /api/getCurrentUser: used to retrieve the user that is currently logged in
+
+    /api/findSeller/:postId: used to retrieve the seller of a pst with postId
+
+    /api/updatePhoneNumber: used to update the phone number of an user
+
+    /api/updateBio/:newBio: used to update the bio of an user
+
+    /api/sendCode/:email: send an recovery code to the email, this will be used
+    to recovery password of an user in case users forget their password
+
+    /api/recover: input the recovery code to set a new password
+
+    /api/dashboard/users: retrieve non-admin users for dashboard
+
+    /api/dashboard/user/:user: delete user from database, only Admin can invoke
+    this operation
+
+    /api/userProfile: redirect to the userProfile page
+
+    /api/logout: destroy the session and logout the user
+
+    /api/isLogin: return whether the user is logged in, if so, send back the user
+
+    /api/myPurchases: retrive all the purchases of the user
+
+    /api/admin/userPurchases/:username: Retriece the purchases record of the user
+    with username, only Admin can invoke this function
+
+    /api/myposts: retrieve all the post this user has made
+
+    /api/admin/userPosts/:username: retrieve the posts of the user with username,
+    only Admin can invoke this operation
+
+2/ Post Management & Information Retrieve
+    /api/search: this route expect a keyword, option and all(whether to show all
+    the post on the website) in the request body. It send back the search result
+    with the current user logged in.
+
+    /api/postAd: post an new post
+
+    /api/updateAd: update an existing post
+
+    /api/addToCart/:postId: Add the post with postId to the shopping cart of the
+    user currently logged in
+
+    /api/removeFromCart/:postId: Remove the post with postId from the shopping
+    cart of the user currently logged in
+
+    /api/dashboard/posts: find all the posts for admin dashboard
+
+    /api/dashboard/post/:postId: delete the post with postId, only Admin can
+    invoke this operation
+
+    /api/dashboard/transaction: this route is for admin to approve or deny an
+    pending transaction
+
+    /api/sellItem: this route is the post which user choose to handle the transaction
+    by themselves. They route mark one post as sold and associate it with the buyer.
+
+    /api/checkout: this route is to checkout from shopping cart and create unsubmitted
+    transactions in the database.
+
+    /api/submitPayment: this route is to submit the payment to the server. The
+    transaction will pending for admin to approve or deny.
+
+=========================================================================================
 
 
 # Login Credentials (Default User):
