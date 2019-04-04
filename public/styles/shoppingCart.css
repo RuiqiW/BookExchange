@@ -88,6 +88,23 @@ body {
     color: white;
 }
 
+#selectAll{
+    margin-left: 200px;
+    margin-bottom: 30px;
+}
+
+.selectContainer{
+    min-width: 500px;
+    margin-left: 10px;
+    padding: 10px;
+}
+
+.select{
+    font-size: 120%;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
 #posts {
     margin-left: 200px;
     margin-top: 15px;
@@ -124,7 +141,7 @@ body {
     margin-top: 10px;
 
 }
-.userName {
+.userName{
     font-size: 130%;
     font-weight: bold;
     margin-left: 10px;

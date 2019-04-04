@@ -67,6 +67,28 @@ function loadTransaction() {
     })
 }
 
+function loadTransactionNum() {
+
+    const request = new Request("/api/dashboard/transactions", {
+        method: 'get',
+    });
+
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            return res.json()
+        } else if (res.status === 401) {
+            window.location = '/login';
+        } else {
+            document.querySelector('#transactionData').innerText = 0;
+        }
+    }).then((json) => {
+        const transactions = json.transactions;
+        document.querySelector('#transactionData').innerText = transactions.length;
+    }).catch((error) => {
+    })
+}
+
+
 function loadPost() {
     const request = new Request("/api/dashboard/posts", {
         method: 'get',
@@ -574,7 +596,7 @@ function checkTransaction(e) {
                     deleteTransactionEntry(e);
                     window.alert("You have approved this transaction.");
 
-                    loadTransaction();
+                    loadTransactionNum();
                     loadPost();
                 } else {
                     window.alert("Fail to approve this transaction.");
@@ -607,7 +629,7 @@ function checkTransaction(e) {
                     deleteTransactionEntry(e);
 
                     window.alert("You have denied this transaction.");
-                    loadTransaction();
+                    loadTransactionNum();
                     loadPost();
                 } else {
                     window.alert("Fail to deny this transaction.");
@@ -645,6 +667,10 @@ function createTransactionEntry(transaction) {
     const amount = document.createElement('td');
     amount.innerText = transaction.amount;
     row.appendChild(amount);
+
+    const creditCard = document.createElement('td');
+    creditCard.innerText = `********${transaction.creditCardNumber.toString().slice(11, 15)}`;
+    row.appendChild(creditCard);
 
     const date = document.createElement('td');
     const tranDate = new Date(transaction.date);

@@ -301,21 +301,19 @@ function contactTheSeller(e) {
     fetch(postRequest).then((res) => {
         if (res.status === 200) {
             return res.json();
-        }else {
+        }else if(res.status === 605){
+            window.alert("This is your item.");
+        }else if (res.status === 401) {
+            window.location = '/login';
+        }else{
             window.alert("Seller not found.");
         }
     }).then((json) => {
         const keyword = json.username;
 
-        if(keyword === user.username){
-            window.alert("This is your item.");
-            return;
-        }
-
         // find if the user to chat exists
         const newChat = {
-            user1: user.username,
-            user2: keyword
+            user1: keyword
         };
 
         const request = new Request("/api/createChat", {
@@ -340,5 +338,4 @@ function contactTheSeller(e) {
             chatRoom.style.display = "block";
         })
     })
-
 }

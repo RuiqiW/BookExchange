@@ -6,7 +6,6 @@ const log = console.log;
 
 const postAdForm = document.querySelector('#postAdForm');
 postAdForm.addEventListener('submit', handlePostAd);
-// log(postAdForm);
 
 const price = document.querySelector('#price');
 price.addEventListener('input', handlePrice);
@@ -46,8 +45,6 @@ function myselfCheck(event) {
 
 
 function handlePrice(event) {
-    // log(event.target.value);
-    // log(event);
 
     if (event.target.value !== '') {
         document.getElementById("freeCheck").checked = false;

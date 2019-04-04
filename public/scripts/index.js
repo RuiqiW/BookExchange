@@ -101,7 +101,7 @@ function init() {
             myCart.style.display = "none";
         }
     }).catch((error) => {
-        console.log("User not logged in");
+        // console.log("User not logged in");
     })
 }
 

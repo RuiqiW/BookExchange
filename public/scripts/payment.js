@@ -58,5 +58,5 @@ function handlePayment(e) {
     });
 
     // Redirect user to profile back
-    document.location = "../index.html";
+    // document.location = "../index.html";
 }
