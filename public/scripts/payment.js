@@ -35,6 +35,10 @@ function handlePayment(e) {
     const cardCVV = form[5].value;
     const cardExpDate = form[6].value;
 
+    if (cardNumber.length !== 16) {
+        alert("Invalid CreditCard Number");
+        return;
+    }
     // We are not really handle the payment information in this project
     // So only creditCard number is sent
     const payload = {
