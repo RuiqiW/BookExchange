@@ -493,3 +493,19 @@ body {
 a {
     text-decoration: none;
 }
+
+.addToCart:hover {
+    cursor: pointer;
+}
+
+.removeFromCart:hover {
+    cursor: pointer;
+}
+
+#makePostButton {
+    cursor: pointer;
+}
+
+#searchButton:hover, #showAllButton, .contactSeller {
+    cursor: pointer;
+}

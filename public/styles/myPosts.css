@@ -302,3 +302,20 @@ body {
 a {
     text-decoration: none;
 }
+
+.addToCart:hover {
+    cursor: pointer;
+}
+
+.removeFromCart:hover {
+    cursor: pointer;
+}
+
+#makePostButton:hover {
+    cursor: pointer;
+}
+
+#searchButton:hover, #showAllButton:hover, .contactSeller:hover, .deleteItem:hover {
+    cursor: pointer;
+}
+
