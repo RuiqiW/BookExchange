@@ -35,7 +35,7 @@ a {
     display: inline-block;
     right: 20px;
     margin-right: 1rem;
-    margin-left: 20px;
+    margin-left: 35px;
 }
 
 #myCart {
@@ -148,8 +148,8 @@ a {
     width: 20px;
     background-color: red;
     position: relative;
-    top: -19px;
-    right: 39px;
+    top: -21px;
+    right: 35px;
     border-radius: 50%;
     text-align: center;
 }

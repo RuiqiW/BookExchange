@@ -195,8 +195,11 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-#logo {
-  width: 200px;
+#topBarLogo {
+  display: inline-block;
+  height: 50px;
+  position: relative;
+  margin-top: 8px;
 }
 
 #postIMade {

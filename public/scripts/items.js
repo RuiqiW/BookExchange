@@ -73,7 +73,7 @@ function init() {
             }
         });
         if (all === "true") {
-            document.querySelector("#searchResult").innerHTML = "Here is all the posts";
+            document.querySelector("#searchResult").innerHTML = "Here is all the posts ...";
         } else {
             document.querySelector("#result").innerText = keyword;
             const searchBox = document.querySelector("#searchBox");
