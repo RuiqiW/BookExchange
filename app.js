@@ -721,6 +721,12 @@ app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
         } else {
             res.send(post);
         }
+        User.find({"shortlist._id": post._id}).then((users) => {
+           for (let i = 0; i < users.length; i++) {
+               users[i].shortlist.pull(post._id);
+               users[i].save().catch((error) => {console.log(error)});
+           }
+        });
     }).catch((error) => {
         res.status(500).send();
     });
