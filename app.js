@@ -176,7 +176,6 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
     }
     let byCreditCard;
     User.findOne({username: req.session.user}).then((result) => {
-        console.log(req.body);
         byCreditCard = (req.body.handleBySelf !== 'on');
         const newPost = new Post({
             title: req.body.title,

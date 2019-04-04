@@ -486,6 +486,6 @@ a {
     text-decoration: none;
 }
 
-.removeFromCart:hover {
+.removeFromCart:hover, .contactSeller:hover {
     cursor:pointer;
 }
