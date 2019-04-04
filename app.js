@@ -5,7 +5,6 @@ const port = process.env.PORT || 3000;
 const session = require('express-session');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.EMAIL_TOKEN);
-console.log(process.env.EMAIL_TOKEN);
 const fs = require('fs');
 const mongoose = require('./db/mongoose').mongoose;
 const multer = require("multer");
@@ -51,7 +50,6 @@ app.get('/404', (req, res, next) => {
 
 app.get('/login', (req, res) => {
     if (req.session.user) {
-        console.log("has logged in!");
         res.sendFile(__dirname + "/public/pages/userProfile.html");
     } else {
         res.sendFile(__dirname + '/public/pages/login.html');
@@ -1120,7 +1118,6 @@ app.post("/api/submitPayment", (req, res) => {
         return;
     }
     const checkoutItems = req.body.items;
-    console.log(checkoutItems);
     const creditCardNumber = req.body.creditCardNumber;
     //The index of items to be removed from user shorlist
     User.findOne({username: req.session.user}).then((user) => {
