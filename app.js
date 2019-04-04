@@ -291,6 +291,10 @@ app.post("/api/addToCart/:postId", (req, res) => {
                 if (!post) {
                     res.status(404).send();
                 }
+                if (post.seller === req.session.user) {
+                    res.status(610).send();
+                    return;
+                }
                 user.shortlist.push(post);
                 user.save().then((user) => {
                     res.send({user});

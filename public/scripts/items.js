@@ -299,11 +299,13 @@ function generatePost(post, user) {
             if (user.shortlist.filter((post) => {
                 return post._id === postDiv.id;
             }).length === 0) {
-                const removeButton = document.createElement("button");
-                removeButton.className = "addToCart";
-                removeButton.appendChild(document.createTextNode("Add to Cart"));
-                removeButton.addEventListener("click", addToCart);
-                postDiv.appendChild(removeButton);
+                if (!user.isAdmin) {
+                    const removeButton = document.createElement("button");
+                    removeButton.className = "addToCart";
+                    removeButton.appendChild(document.createTextNode("Add to Cart"));
+                    removeButton.addEventListener("click", addToCart);
+                    postDiv.appendChild(removeButton);
+                }
             } else {
                 if (!user.isAdmin) {
                     const addButton = document.createElement("button");
@@ -372,6 +374,9 @@ function addToCart(e) {
     fetch(request).then((newUser) => {
         if (newUser.status === 401) {
             window.location = '/login';
+        } else if (newUser.status === 610) {
+            alert("This is your item!");
+            return Promise.reject();
         } else {
             return newUser.json();
         }
@@ -385,6 +390,8 @@ function addToCart(e) {
         e.target.addEventListener("click", removeFromCart);
         user = newUser.user;
         updateShoppingCart(user.shortlist.length);
+    }).catch((error) => {
+        return;
     });
 }
 
