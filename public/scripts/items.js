@@ -3,6 +3,7 @@ let num_posts = 0;
 
 const sortingOpt = document.querySelector("#sortingOption");
 sortingOpt.addEventListener("change", onSortingOptChange);
+const searchOption = document.querySelector("#searchOption");
 
 let posts;
 let user;
@@ -29,7 +30,7 @@ function onSortingOptChange() {
         });
     } else if (newOption === "priceLowToHigh") {
         posts.sort(function (a, b) {
-            if (a.price <= b.price) {
+            if (parseFloat(a.price) <= parseFloat(b.price)) {
                 return 1;
             } else {
                 return -1;
@@ -37,7 +38,7 @@ function onSortingOptChange() {
         });
     } else {//priceHighToLow
         posts.sort(function (a, b) {
-            if (a.price <= b.price) {
+            if (parseFloat(a.price) <= parseFloat(b.price)) {
                 return -1;
             } else {
                 return 1;
@@ -48,12 +49,31 @@ function onSortingOptChange() {
 }
 
 function init() {
-    // Server call to request the search results to display and the current user
-    // Here we use the hard-coded posts in the class.js as an demonstration
-    //By default sorting by posting date from new to old
-    const keyword = localStorage.getItem("keyword");
+    const keyword = sessionStorage.getItem("keyword");
+    let option = sessionStorage.getItem("option");
+    if (parseInt(option) === 0) {
+        document.querySelector("#searchMethod").value = '0';
+    } else {
+        document.querySelector("#searchMethod").value = '1';
+    }
     if (keyword) {
-        const request = new Request("/api/search/keyword");
+        const payload = {
+            keyword: keyword,
+            option: option
+        };
+
+        const request = new Request("/api/search", {
+            method: "post",
+            body: JSON.stringify(payload),
+            headers: {
+                "Accept": "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }
+        });
+
+        document.querySelector("#result").innerText = keyword;
+        const searchBox = document.querySelector("#searchBox");
+        searchBox.value = keyword;
 
         fetch(request).then((res) => {
             return res.json();
@@ -118,7 +138,19 @@ function init() {
                 const logout = document.querySelector("#logOut");
                 logout.style.display = "none";
             }
-            generateSearchResult(posts, user);
+            if (posts.length !== 0) {
+                generateSearchResult(posts, user);
+            } else {
+                while (document.querySelector("#posts").lastElementChild) {
+                    document.querySelector("#posts").removeChild(document.querySelector("#posts").lastElementChild)
+                }
+                const emptyInfoDiv = document.createElement("div");
+                emptyInfoDiv.id = "emptyInformation";
+                const text = document.createTextNode("There is no post match your search!");
+
+                emptyInfoDiv.appendChild(text);
+                document.querySelector("#posts").appendChild(emptyInfoDiv);
+            }
         });
     }
 }
@@ -195,6 +227,11 @@ function generatePost(post, user) {
             conditionSpan.appendChild(document.createTextNode("Condition: " + post.condition));
             postDiv.appendChild(conditionSpan);
 
+            const editionSpan = document.createElement("span");
+            editionSpan.className = "condition";
+            editionSpan.appendChild(document.createTextNode("Edition: " + post.edition));
+            postDiv.appendChild(editionSpan);
+
             const timeSpan = document.createElement("span");
             timeSpan.className = "timespan";
             const date = new Date(post.postingDate);
@@ -202,9 +239,20 @@ function generatePost(post, user) {
                 +date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate() + ` ${date.getHours()}:${date.getMinutes()}`));
             postDiv.appendChild(timeSpan);
 
+            postDiv.appendChild(document.createElement("br"));
+
+            const ISBNSpan = document.createElement("span");
+            ISBNSpan.className = "condition";
+            ISBNSpan.appendChild(document.createTextNode("ISBN: " + post.ISBN));
+            postDiv.appendChild(ISBNSpan);
+
             const priceDiv = document.createElement("div");
             priceDiv.className = "price";
-            priceDiv.appendChild(document.createTextNode("CAD " + post.price));
+            if (parseFloat(post.price) === 0) {
+                priceDiv.appendChild(document.createTextNode("Free"));
+            } else {
+                priceDiv.appendChild(document.createTextNode("CAD " + post.price));
+            }
             postDiv.appendChild(priceDiv);
 
             const descriptionDiv = document.createElement("div");
@@ -305,8 +353,6 @@ function deletePost(e){
 
     }
 }
-
-init();
 
 function addToCart(e) {
     const postId = e.target.parentElement.id;
@@ -446,81 +492,14 @@ function contactTheSeller(e) {
 const searchButton = document.querySelector("#searchButton");
 searchButton.addEventListener("click", searching);
 
-//TODO: FIX THIS!!!
 function searching(e) {
     e.preventDefault();
-    //Server call to request search result, here just jump to the item.html;
-    document.location = "../pages/items.html";
+    sessionStorage.removeItem("keyword");
+    sessionStorage.removeItem("option");
+    const keyword = document.querySelector("#searchBox").value.trim();
+    const option = parseInt(document.querySelector("#searchMethod").value);
+    sessionStorage.setItem("keyword", keyword);
+    sessionStorage.setItem("option", option);
+    location.reload();
 }
-
-/*********************** Drop down select ************************/
-
-// the select drop down box with 3 search options
-const x = document.getElementsByClassName("custom-select");
-for (let i = 0; i < x.length; i++) {
-    const selElmnt = x[i].getElementsByTagName("select")[0];
-    // for each element, create a div DIV that will act as the selected item
-    const a = document.createElement("div");
-    a.setAttribute("class", "select-selected");
-    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-    x[i].appendChild(a);
-    // for each element, create a new div that will contain the option list
-    const b = document.createElement("div");
-    b.setAttribute("class", "select-items select-hide");
-    for (let j = 1; j < selElmnt.length; j++) {
-        // for each option in the original select element, create a new div that will act as an option item
-        const c = document.createElement("div");
-        c.innerHTML = selElmnt.options[j].innerHTML;
-        c.addEventListener("click", function (e) {
-            // when an item is clicked, update the original select box and the selected item
-            const s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-            const h = this.parentNode.previousSibling;
-            for (let l = 0; l < s.length; l++) {
-                if (s.options[l].innerHTML === this.innerHTML) {
-                    s.selectedIndex = l;
-                    h.innerHTML = this.innerHTML;
-                    const y = this.parentNode.getElementsByClassName("same-as-selected");
-                    for (let k = 0; k < y.length; k++) {
-                        y[k].removeAttribute("class");
-                    }
-                    this.setAttribute("class", "same-as-selected");
-                    break;
-                }
-            }
-            h.click();
-        });
-        b.appendChild(c);
-    }
-    x[i].appendChild(b);
-    a.addEventListener("click", function (e) {
-        // when the select box is clicked, close any other select boxes and open/close the current select box
-        e.stopPropagation();
-        closeAllSelect(this);
-        this.nextSibling.classList.toggle("select-hide");
-        this.classList.toggle("select-arrow-active");
-    });
-}
-
-// closes the select box
-function closeAllSelect(elmnt) {
-    /*a function that will close all select boxes in the document,
-    except the current select box:*/
-    const arrNo = [];
-    const x = document.getElementsByClassName("select-items");
-    const y = document.getElementsByClassName("select-selected");
-    for (let i = 0; i < y.length; i++) {
-        if (elmnt === y[i]) {
-            arrNo.push(i)
-        } else {
-            y[i].classList.remove("select-arrow-active");
-        }
-    }
-    for (let j = 0; j < x.length; j++) {
-        if (arrNo.indexOf(j)) {
-            x[j].classList.add("select-hide");
-        }
-    }
-}
-
-// Close all select boxes if the user clicks outside of the box
-document.addEventListener("click", closeAllSelect);
+init();

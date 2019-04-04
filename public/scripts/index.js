@@ -117,6 +117,7 @@ function search(e){
         return;
     }
     sessionStorage.setItem("keyword", keyword);
+    sessionStorage.setItem("option", "0");
     document.location = "/pages/items.html";
 }
 init();
