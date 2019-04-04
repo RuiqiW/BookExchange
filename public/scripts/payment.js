@@ -6,7 +6,7 @@ let total;
 const form = document.querySelector('#paymentForm');
 
 const payButton = document.querySelector("#payButton");
-payButton.addEventListener('submit', handlePayment);
+payButton.addEventListener('click', handlePayment);
 
 function init() {
     items = JSON.parse(sessionStorage.getItem("checkoutItems"));
