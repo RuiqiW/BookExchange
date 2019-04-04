@@ -271,6 +271,13 @@ function generatePost(post, user) {
                     deleteItem.appendChild(document.createTextNode("Delete this Post"));
                     deleteItem.addEventListener("click", deleteAnItem);
                     postDiv.appendChild(deleteItem);
+
+                    const editItem = document.createElement("button");
+                    editItem.className = "deleteItem";
+                    editItem.appendChild(document.createTextNode("Edit this Post"));
+                    editItem.addEventListener("click", editAnItem);
+                    postDiv.appendChild(editItem);
+
                     if (!post.byCreditCard) {
                         const soldItem = document.createElement("button");
                         soldItem.className = "soldItem";
@@ -395,4 +402,12 @@ function soldAnItem(e) {
         })
     }
 
+}
+
+function editAnItem(e) {
+    const id = e.target.parentElement.id;
+    console.log(posts);
+    const post = posts.filter((thisPost) => {return thisPost._id === id})[0];
+    sessionStorage.setItem("postToUpdate", JSON.stringify(post));
+    window.location = '/pages/update-ad.html';
 }

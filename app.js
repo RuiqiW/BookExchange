@@ -209,6 +209,53 @@ app.post('/api/postAd', upload.array("image", 4), (req, res) => {
 
 });
 
+app.post('/api/updateAd', upload.array("image", 4), (req, res) => {
+    if (!req.session.user) {
+        res.status(401).send();
+        return;
+    }
+    const files = req.files;
+    let price;
+    if (req.body.isFree) {
+        price = 0;
+    } else {
+        price = req.body.price;
+    }
+    let byCreditCard;
+    Post.findById(req.body.postId).then((result) => {
+        byCreditCard = (req.body.handleBySelf !== 'on');
+        result.title = req.body.title;
+        result.condition = req.body.condition;
+        result.ISBN = req.body.ISBN;
+        result.edition = req.body.edition;
+        result.description = req.body.description;
+        result.price = price;
+        result.byCreditCard = byCreditCard;
+        result.image = [];
+        for (let i = 0; i < files.length; i++) {
+            result.image.push(files[i].path);
+        }
+        User.find({"shortlist._id": req.body.postId}).then((users) => {
+            for (let i = 0; i < users.length; i++) {
+                users[i].shortlist.pull(req.body.postId);
+                users[i].shortlist.push(result);
+                users[i].save().catch((error) => {console.log(error)});
+            }
+        });
+
+        result.save().then((result) => {
+            res.redirect("/pages/myPosts.html");
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send();
+        });
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
+
+});
+
 app.post('/api/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
