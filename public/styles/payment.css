@@ -130,7 +130,7 @@ https://codepen.io/simonbusborg/pen/cyxad
 }
 
 .button {
-  display: flex;
+  /*display: flex;*/
   overflow: hidden;
   margin: 10px;
   padding: 12px 12px;
@@ -154,6 +154,7 @@ https://codepen.io/simonbusborg/pen/cyxad
   align-items: center;
   flex: 0 0 160px;
   box-shadow: 2px 5px 10px var(--color-smoke);
+  display: inline-block;
 }
 .button:hover {
   transition: all 150ms linear;

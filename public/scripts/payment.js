@@ -4,7 +4,9 @@ let total;
  * Module to collect and handle payment information
  */
 const form = document.querySelector('#paymentForm');
-form.addEventListener('submit', handlePayment);
+
+const payButton = document.querySelector("#payButton");
+payButton.addEventListener('submit', handlePayment);
 
 function init() {
     items = JSON.parse(sessionStorage.getItem("checkoutItems"));
@@ -60,3 +62,9 @@ function handlePayment(e) {
     // Redirect user to profile back
     // document.location = "../index.html";
 }
+
+const cancelButton = document.querySelector("#cancelButton");
+cancelButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location = "/pages/shoppingCart.html";
+});
