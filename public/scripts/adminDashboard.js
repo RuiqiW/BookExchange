@@ -238,7 +238,11 @@ function createPost(post) {
     close.appendChild(icon);
 
     const img = document.createElement('img');
-    img.src = post.image[0];
+    if (post.image[0] !== undefined) {
+        img.src = '/' + post.image[0];
+    } else {
+        img.src = '/public/images/defaultBook.png';
+    }
     img.alt = "textbook";
     img.className = "textbookImg";
 
