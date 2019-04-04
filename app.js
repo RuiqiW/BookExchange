@@ -657,10 +657,10 @@ const adminAuthenticate = (req, res, next) => {
                 }
             }
         }).catch((error) => {
-            res.redirect('/login')
+            res.status(401).send();
         })
     } else {
-        res.redirect('/login')
+        res.status(401).send();
     }
 };
 
@@ -687,43 +687,6 @@ app.get("/api/dashboard/transactions", adminAuthenticate, (req, res) => {
     }).catch((error) => {
         res.status(500).send();
     })
-});
-
-/****************************************************/
-
-app.post("/api/recover", (req, res) => {
-    if (!req.session.recoverEmail) {
-        res.status(401).send();
-    }
-    const code = req.body.code;
-    const email = req.session.recoverEmail;
-    const password = req.body.password;
-    Recovery.findOne({email: email}).then((entry) => {
-        if (!entry) {
-            res.status(401).send();
-        } else {
-            if (entry.code !== code) {
-                res.status(401).send();
-            } else {
-                User.findOne({email: email}).then((user) => {
-                    user.password = password;
-                    user.save().then((newUser) => {
-                        req.session.destroy((error) => {
-                            if (error) {
-                                res.status(500).send(error);
-                            } else {
-                                res.send(newUser);
-                            }
-                        });
-                    });
-                });
-            }
-        }
-    }).catch((error) => {
-        console.log(error);
-        res.status(500).send();
-    });
-
 });
 
 app.delete("/api/dashboard/post/:postId", adminAuthenticate, (req, res) => {
@@ -812,6 +775,43 @@ app.post("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
     }
 })
 
+
+/****************************************************/
+
+app.post("/api/recover", (req, res) => {
+    if (!req.session.recoverEmail) {
+        res.status(401).send();
+    }
+    const code = req.body.code;
+    const email = req.session.recoverEmail;
+    const password = req.body.password;
+    Recovery.findOne({email: email}).then((entry) => {
+        if (!entry) {
+            res.status(401).send();
+        } else {
+            if (entry.code !== code) {
+                res.status(401).send();
+            } else {
+                User.findOne({email: email}).then((user) => {
+                    user.password = password;
+                    user.save().then((newUser) => {
+                        req.session.destroy((error) => {
+                            if (error) {
+                                res.status(500).send(error);
+                            } else {
+                                res.send(newUser);
+                            }
+                        });
+                    });
+                });
+            }
+        }
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send();
+    });
+
+});
 
 app.get("/userProfile", (req, res) => {
     res.sendFile(__dirname + "/public/pages/userProfile.html");

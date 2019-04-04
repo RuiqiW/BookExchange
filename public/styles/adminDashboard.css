@@ -155,6 +155,11 @@ body {
     padding-left: 20px;
 }
 
+.viewAllItem:hover{
+    cursor: pointer;
+    color: #44aaee;
+}
+
 #viewAllContainer {
     height: 70px;
     width: 70px;

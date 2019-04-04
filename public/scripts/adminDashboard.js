@@ -1,11 +1,10 @@
-// load list of messages received, need server call in Phase2
-let postEdited = 0;
-let shownUserNum = 0;
+let postEdited = 0; // for edit mode
+let shownUserNum = 0; // for user display
 
 
-// load data on DOM loaded, will use database query instead in Phase 2
+// load data on DOM loaded
 document.addEventListener('DOMContentLoaded', function () {
-    loadMessageNum();
+    loadMessage();
     loadTransaction();
     loadPost();
     loadUserList();
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function loadMessageNum() {
+function loadMessage() {
     const request = new Request("/api/allChats", {
         method: 'get',
         headers: {
@@ -26,6 +25,8 @@ function loadMessageNum() {
     fetch(request).then((res) => {
         if (res.status === 200) {
             return res.json()
+        } else if (res.status === 401) {
+            window.location = '/login';
         } else {
             document.querySelector('#msgData').innerText = 0;
         }
@@ -51,6 +52,8 @@ function loadTransaction() {
     fetch(request).then((res) => {
         if (res.status === 200) {
             return res.json()
+        } else if (res.status === 401) {
+            window.location = '/login';
         } else {
             document.querySelector('#transactionData').innerText = 0;
         }
@@ -67,16 +70,13 @@ function loadTransaction() {
 function loadPost() {
     const request = new Request("/api/dashboard/posts", {
         method: 'get',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
     });
-
 
     fetch(request).then((res) => {
         if (res.status === 200) {
             return res.json()
+        } else if (res.status === 401) {
+            window.location = '/login';
         } else {
             document.querySelector('#postData').innerText = 0;
         }
@@ -109,17 +109,15 @@ function loadPost() {
 
 function loadUserList() {
     const request = new Request("/api/dashboard/users", {
-        method: 'get',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
+        method: 'get'
     });
 
 
     fetch(request).then((res) => {
         if (res.status === 200) {
             return res.json()
+        } else if (res.status === 401) {
+            window.location = '/login';
         } else {
             document.querySelector('#userData').innerText = 0;
         }
@@ -164,6 +162,9 @@ function closeSideNav(e) {
 const editPost = document.querySelector("#editPost");
 editPost.addEventListener('click', changeEditMode);
 
+const viewAllBtn = document.querySelector('#viewAll');
+viewAllBtn.addEventListener('click', viewAllPosts);
+
 function changeEditMode(e) {
     e.preventDefault();
 
@@ -203,7 +204,9 @@ function deleteItem(e) {
 
 
         fetch(request).then((res) => {
-            if (res.status === 200) {
+            if (res.status === 401) {
+                window.location = '/login';
+            } else if (res.status === 200) {
                 // remove post in DOM
                 removePost(e);
                 window.alert("You have deleted this post.");
@@ -256,8 +259,23 @@ function createPost(post) {
 
     container.id = post._id;
 
-    const viewAll = document.querySelector("#viewAll");
-    viewAll.before(container);
+    viewAllBtn.before(container);
+}
+
+
+function viewAllPosts(e) {
+    e.preventDefault();
+
+    const request = new Request("/api/getCurrentUser", {method: "get"});
+
+    fetch(request).then((res) => {
+        if(res.status === 401){
+            window.location = '/login'
+        }else if(res.status === 200){
+            window.open("../pages/items.html");
+        }
+    }).catch((error) => {
+    })
 }
 
 
@@ -266,13 +284,11 @@ function createPost(post) {
 const userList = document.querySelector("#userList");
 const userTable = document.querySelector("#userTable");
 const listEnd = document.querySelector("#userListEnd");
-// const sampleViewUser = document.querySelector("#sampleViewUser");
 
 const showLessButton = document.querySelector("#showLessUser");
 const showMoreButton = document.querySelector('#showMoreUser');
 const userSearchButton = document.querySelector('#userSearchButton');
 
-// sampleViewUser.addEventListener('click', viewUserDetail);
 showLessButton.addEventListener('click', showLess);
 showMoreButton.addEventListener('click', showMore);
 userSearchButton.addEventListener('click', searchUser);
@@ -326,6 +342,8 @@ function searchUser(e) {
                 return res.json();
             } else if (res.status === 404) {
                 return null;
+            } else if (res.status === 401) {
+                window.location = '/login';
             }
         }).then((user) => {
             if (!user) {
@@ -414,7 +432,9 @@ function deleteUserEntry(e) {
 
 
         fetch(request).then((res) => {
-            if (res.status === 200) {
+            if (res.status === 401) {
+                window.location = '/login';
+            } else if (res.status === 200) {
                 return res.json();
             } else if (res.status === 605) {
                 window.alert("You cannot delete yourself.");
@@ -533,10 +553,12 @@ function checkTransaction(e) {
             });
 
             fetch(request).then((res) => {
-                if (res.status === 200) {
+                if (res.status === 401) {
+                    window.location = '/login';
+                } else if (res.status === 200) {
                     deleteTransactionEntry(e);
                     window.alert("You have approved this transaction.");
-                    
+
                     loadTransaction();
                     loadPost();
                 } else {
@@ -564,7 +586,9 @@ function checkTransaction(e) {
             });
 
             fetch(request).then((res) => {
-                if (res.status === 200) {
+                if (res.status === 401) {
+                    window.location = '/login';
+                } else if (res.status === 200) {
                     deleteTransactionEntry(e);
 
                     window.alert("You have denied this transaction.");
