@@ -52,7 +52,7 @@ a {
 #indexLogo {
     height: 100px;
     position: relative;
-    left: 100px;
+    margin-left: 325px;
 }
 
 #searchBox {
