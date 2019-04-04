@@ -1124,11 +1124,15 @@ app.post("/api/submitPayment", (req, res) => {
             Transaction.findOne({postId: checkoutItems[i]._id}).then((trans) => {
                 trans.isSubmitted = true;
                 trans.creditCardNumber = creditCardNumber;
-                trans.save().catch((error) => {
+                trans.save().then((newTrans) => {
+                    const postId = trans.postId;
+                    Post.findByIdAndUpdate(postId, {$set: {isSold: true}}).then((post) => {
+                        return;
+                    });
+                }).catch((error) => {
                     console.log(error);
                 });
-                const postId = trans.postId;
-                Post.findByIdAndUpdate(postId, {$set: {isSold: true}});
+
             }).catch((error) => {
                 console.log(error);
             });
