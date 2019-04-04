@@ -868,24 +868,23 @@ app.post("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
             if (!transaction) {
                 res.status(404).send();
             } else {
-                Post.findByIdAndUpdate(transaction.postId, {$set: {isSold: true}}).then((post) => {
+                res.status(200).send();
+            }
+        }).catch((error) => {
+            res.status(500).send();
+        })
+    } else {
+        Transaction.findByIdAndUpdate(transactionId, {$set: {isFailure: true}}).then((transaction) => {
+            if (!transaction) {
+                res.status(404).send();
+            }  else {
+                Post.findByIdAndUpdate(transaction.postId, {$set: {isSold: false}}).then((post) => {
                     if (!post) {
                         res.status(606).send();
                     } else {
                         res.status(200).send();
                     }
                 });
-            }
-        }).catch((error) => {
-            res.status(500).send();
-        })
-    } else {
-        //TODO: IS FALURE SET TO TRUE
-        Transaction.findByIdAndUpdate(transactionId, {$set: {isFailure: true}}).then((transaction) => {
-            if (!transaction) {
-                res.status(404).send();
-            } else {
-                res.status(200).send();
             }
         }).catch((error) => {
             res.status(500).send();
@@ -1129,6 +1128,7 @@ app.post("/api/submitPayment", (req, res) => {
                     console.log(error);
                 });
                 const postId = trans.postId;
+                Post.findByIdAndUpdate(postId, {$set: {isSold: true}});
             }).catch((error) => {
                 console.log(error);
             });
