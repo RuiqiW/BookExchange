@@ -16,6 +16,7 @@ body {
     display: inline-block;
     height: 50px;
     position: relative;
+    margin-top: 8px;
 }
 
 #userInfo {
@@ -157,25 +158,31 @@ body {
 }
 
 #sortingOption {
-    position: relative;
-    left: 10px;
+    width: 250px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 11px;
+    margin-left: 30px;
 }
 
 #signIn {
     display: inline-block;
-    margin-right: 10px;
-    position: relative;
-    bottom: 10px;
+    position:relative;
+    right: 30px;
+    bottom: 20px;
+    margin-top: 15px;
 }
+
 .topBarImage {
-    height: 30px;
+    height: 40px;
+    width: 40px;
     display: inline-block;
 }
 
 .topBarImageContainer {
     display: inline-block;
     border-radius: 50%;
-    height: 30px;
+    height: 40px;
 }
 
 .topBarImageContainer:hover{
@@ -191,9 +198,9 @@ body {
 
 #myCart {
     display: inline-block;
-    margin: 10px;
     position: relative;
-    bottom: 10px;
+    bottom: 20px;
+    right: 20px;
 }
 
 #shoppingCartNumber {
@@ -202,8 +209,8 @@ body {
     width: 15px;
     background-color: red;
     position: relative;
-    top: -10px;
-    right: 25px;
+    top: -15px;
+    right: 30px;
     border-radius: 50%;
     text-align: center;
 }
@@ -216,7 +223,7 @@ body {
 
 #logOut {
     display: inline-block;
-    margin: 10px;
+    right: 20px;
     position: relative;
     bottom: 20px;
 }
@@ -227,6 +234,7 @@ body {
     top: 15px;
     right: 10px;
 }
+
 .removeFromCart {
     margin-bottom: 5px;
     margin-left: 10px;
@@ -249,12 +257,11 @@ body {
     height: 30px;
     position: relative;
     bottom: 30px;
-    right: 30px;
+    right: 40px;
     font-size: 120%;
     background-color: #44aaee;
     color: white;
     border-radius: 10px;
-
 }
 
 #backToPostButton {
@@ -294,4 +301,8 @@ body {
     border-radius: 5px;
     color: black;
     background-color: lightgray;
+}
+
+a {
+    text-decoration: none;
 }

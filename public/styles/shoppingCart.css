@@ -11,12 +11,14 @@ body {
     background-color: white;
     border-bottom: 1px solid grey;
     height: 70px;
+    position: relative;
 }
 
 #topBarLogo {
     display: inline-block;
     height: 50px;
     position: relative;
+    margin-top: 5px;
 }
 
 #searchForm {
@@ -31,15 +33,15 @@ body {
     display: inline-block;
     position: relative;
     left: 1220px;
-    bottom: -5px;
 }
 
 #logOut {
     display: inline-block;
-    margin: 10px;
+    margin-top: 20px;
     position: relative;
     bottom: 10px;
     left: 1350px;
+    right: 30px;
 }
 
 #searchBox {
@@ -237,7 +239,6 @@ body {
     right: 20px;
     border-style: solid;
     border-color: grey;
-
 }
 
 .timespan {
@@ -245,30 +246,42 @@ body {
     margin-left: 10px;
     font-size: 70%;
     color: grey;
-
 }
 
 #chatShow {
-    position: relative;
-    left: 1250px;
-    bottom: 10px;
+    position: absolute;
+    left: 1405px;
+    right: 30px;
+    bottom: 20px;
+    margin-top: 20px;
 }
+
+.chatShowButton {
+    display: inline-block;
+    position: relative;
+    bottom: 10px;
+    left: 1350px;
+    margin-top: 20px;
+}
+
 .profileImage {
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
     border-style: solid;
 }
 
 .topBarImage {
-    height: 30px;
+    height: 40px;
+    width: 40px;
     display: inline-block;
 }
 
 .topBarImageContainer {
     display: inline-block;
     border-radius: 50%;
-    height: 30px;
+    height: 40px;
+    width: 40px;
 }
 
 .topBarImageContainer:hover{
@@ -465,4 +478,9 @@ span.total {
     background-color: white;
     border-radius: 10px;
     margin-left: 40px;
+}
+
+
+a {
+    text-decoration: none;
 }

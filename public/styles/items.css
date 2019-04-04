@@ -16,13 +16,14 @@ body {
     display: inline-block;
     height: 50px;
     position: relative;
+    margin-top: 8px;
 }
 
 #searchForm {
     display: inline-block;
     text-align: center;
     position: relative;
-    left: 210px;
+    left: 160px;
     top: 0;
 }
 
@@ -37,8 +38,9 @@ body {
     outline: none;
     box-shadow: 0px 1px 1px 1px grey;
     position: absolute;
-    top: 13px;
+    margin-top: 9px;
     border-radius: 20px;
+    bottom: 15px;
 }
 
 #searchButton {
@@ -48,8 +50,7 @@ body {
     margin-top: 20px;
     position: relative;
     left: 400px;
-    bottom: 6px;
-    /* top: -4px; */
+    bottom: 15px;
     border-radius: 10px;
     padding: 0;
     background-color: lightgrey;
@@ -71,8 +72,7 @@ body {
     margin-top: 20px;
     position: relative;
     left: 400px;
-    bottom: 6px;
-    /* top: -2px; */
+    bottom: 15px;
     border-radius: 10px;
     padding: 0;
     background-color: lightgrey;
@@ -249,19 +249,22 @@ body {
 
 #signIn {
     display: inline-block;
-    margin-right: 10px;
-    position: relative;
-    bottom: 10px;
+    position:relative;
+    right: 30px;
+    bottom: 20px;
+    margin-top: 15px;
 }
+
 .topBarImage {
-    height: 30px;
+    height: 40px;
+    width: 40px;
     display: inline-block;
 }
 
 .topBarImageContainer {
     display: inline-block;
     border-radius: 50%;
-    height: 30px;
+    height: 40px;
 }
 
 .topBarImageContainer:hover{
@@ -277,9 +280,9 @@ body {
 
 #myCart {
     display: inline-block;
-    margin: 10px;
     position: relative;
-    bottom: 10px;
+    bottom: 20px;
+    right: 20px;
 }
 
 #shoppingCartNumber {
@@ -288,8 +291,8 @@ body {
     width: 15px;
     background-color: red;
     position: relative;
-    top: -10px;
-    right: 25px;
+    top: -15px;
+    right: 30px;
     border-radius: 50%;
     text-align: center;
 }
@@ -302,12 +305,9 @@ body {
 
 #logOut {
     display: inline-block;
-    margin: 10px;
+    right: 20px;
     position: relative;
     bottom: 20px;
-
-
-
 }
 
 #topBarIcons {
@@ -316,6 +316,7 @@ body {
     top: 15px;
     right: 10px;
 }
+
 .removeFromCart {
     margin-bottom: 5px;
     margin-left: 10px;
@@ -339,12 +340,11 @@ body {
     height: 30px;
     position: relative;
     bottom: 30px;
-    right: 30px;
+    right: 40px;
     font-size: 120%;
     background-color: #44aaee;
     color: white;
     border-radius: 10px;
-
 }
 
 #backToPostButton {
@@ -371,9 +371,10 @@ body {
 
 #chatShow {
     position:relative;
-    right: 20px;
+    right: 30px;
     bottom: 20px;
 }
+
 .profileImage {
     height: 50px;
     width: 50px;
@@ -388,7 +389,21 @@ body {
     width: 400px;
     position: absolute;
     top: 13px;
-    font-size: 110%;
+}
+
+#searchMethod {
+    width: 150px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+#sortingOption {
+    width: 250px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 11px;
+    margin-left: 30px;
 }
 
 /*.custom-select {*/
@@ -477,4 +492,8 @@ body {
     border-radius: 5px;
     color: black;
     background-color: lightgray;
+}
+
+a {
+    text-decoration: none;
 }
