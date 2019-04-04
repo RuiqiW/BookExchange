@@ -81,6 +81,9 @@ function generatePost(post, user) {
             input.checked = false;
             if (!post.byCreditCard) {
                 input.disabled = true;
+                label.addEventListener("click", (e) => {
+                    alert("You have to contact seller to buy this item.");
+                })
             }
 
             const seller = json;

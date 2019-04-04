@@ -50,23 +50,20 @@
         <img id="topBarLogo" src="../images/logo.png" alt="logo" />
       </a>
 
-      <!-Drop down box for select option->
-      <div id="searchOption">
-        <div class="custom-select">
-          <select>
-            <option value="0">Select</option>
-            <option value="1">ISBN</option>
-            <option value="2">Title</option>
-            <option value="3">Author</option>
-          </select>
-        </div>
-      </div>
-
+    <div id="searchOption">
+        <select id="searchMethod">
+            <option value="0">Search By Title and Description</option>
+            <option value="1">Search By ISBN</option>
+        </select>
+    </div>
       <form id="searchForm">
         <input id="searchBox" type="text" placeholder="Search here..." />
         <button id="searchButton" type="submit">
           <span id="searchButtonText">Search</span>
         </button>
+          <button id="showAllButton" type="submit">
+              <span id="showAllButtonText">Show Me All</span>
+          </button>
       </form>
 
       <div id="topBarIcons">

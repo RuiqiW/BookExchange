@@ -64,7 +64,7 @@ a {
 
 #searchButton {
     height: 30px;
-    width: 300px;
+    width: 150px;
     margin-left: 30px;
     margin-top: 20px;
     position: relative;
@@ -76,6 +76,26 @@ a {
 #searchButtonText {
     font-size: 150%;
     color: grey;
+}
+
+#showMeAllButton {
+    height: 30px;
+    width: 160px;
+    margin-left: 30px;
+    margin-top: 20px;
+    position: relative;
+    right: 20px;
+
+    background-color: lightgrey;
+}
+
+#showMeAll {
+    font-size: 150%;
+    color: grey;
+}
+
+#showMeAllButton:hover {
+    background-color: white;
 }
 
 #searchButton:hover {

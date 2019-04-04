@@ -273,6 +273,7 @@ function viewAllPosts(e) {
             window.location = '/login'
         }else if(res.status === 200){
             window.open("/pages/items.html");
+            sessionStorage.setItem("all", "true");
         }
     }).catch((error) => {
     })

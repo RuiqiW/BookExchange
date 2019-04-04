@@ -58,21 +58,67 @@ app.get('/login', (req, res) => {
     }
 });
 
-app.get('/api/search/:keyword', (req, res) => {
-    const keyword = req.params.keyword;
-    //TODO: currently just find anything in the database, need to be fixed once have a dataset
-    Post.find().then((result) => {
-        const payload = {result: result};
-        if (!req.session.user) {
-            payload.user = null;
-            res.send(payload);
-        } else {
-            User.findOne({username: req.session.user}).then((result) => {
-                payload.user = result;
+/*
+ * Except two parameters in request body, keyword and option and all
+ * option 0: find by title and description
+ * option 1: find by ISBN
+ **/
+app.post('/api/search', (req, res) => {
+    const keyword = req.body.keyword;
+    const option = parseInt(req.body.option);
+    const all = req.body.all;
+    if (all === "true") {
+        Post.find().then((posts) => {
+           const payload = {result: posts};
+            if (!req.session.user) {
+                payload.user = null;
                 res.send(payload);
+            } else {
+                User.findOne({username: req.session.user}).then((result) => {
+                    payload.user = result;
+                    res.send(payload);
+                });
+            }
+        });
+    } else {
+        const keywordRegex = new RegExp(keyword);
+        if (option === 0) {
+            Post.find({
+                isSold: false,
+                $or: [{title: {$regex: keywordRegex}}, {description: {$regex: keywordRegex}}]
+            }).then((result) => {
+                const payload = {result: result};
+                if (!req.session.user) {
+                    payload.user = null;
+                    res.send(payload);
+                } else {
+                    User.findOne({username: req.session.user}).then((result) => {
+                        payload.user = result;
+                        res.send(payload);
+                    });
+                }
+            }).catch((error) => {
+                console.log(error);
+                res.status(500).send();
             });
+        } else {
+            Post.find({isSold: false, ISBN: keyword.trim()}).then((result) => {
+                const payload = {result: result};
+                if (!req.session.user) {
+                    payload.user = null;
+                    res.send(payload);
+                } else {
+                    User.findOne({username: req.session.user}).then((result) => {
+                        payload.user = result;
+                        res.send(payload);
+                    });
+                }
+            }).catch((error) => {
+                console.log(error);
+                res.status(500).send();
+            })
         }
-    });
+    }
 });
 
 app.post('/api/createAccount', (req, res) => {
@@ -746,7 +792,7 @@ app.post("/api/dashboard/transaction", adminAuthenticate, (req, res) => {
             res.status(500).send();
         })
     }
-})
+});
 
 
 /****************************************************/
