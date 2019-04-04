@@ -239,20 +239,23 @@ function makePost(e) {
     document.location = "./post-ad.html";
 }
 
-// TODO: implement func
 function deleteAnItem(e) {
-    //Server call to update the shopping cart of user
-    // Here just use user0
-    const postId = parseInt(e.target.parentElement.querySelector(".postIdNumber").innerHTML);
-    //Should make a server call to fetch the post, here just use the hardcoded posts array
-    const post = posts.filter(x => x.postId === postId)[0];
-    if (!post.byCreditCard) {
-        alert("The seller want you to pay him/her directly, please contact the seller!");
-    } else {
-        // jump to the credit card page
-        document.location = "./payment.html";
-        //Make a server call to submit the credit card Number and the postId!
+    const postId = e.target.parentElement.id;
+    const request = new Request("/api/deletePost/" + postId, {
+        method: "delete"
+    });
+    const sure = confirm("Are you sure you want to delete this post.");
+    if (!sure) {
+        return;
     }
+    fetch(request).then((res) => {
+        if (res.status !== 200) {
+            window.location = '/login';
+        }
+        location.reload();
+    }).catch((error) => {
+        console.log(error);
+    });
 }
 
 
