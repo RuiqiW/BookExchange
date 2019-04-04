@@ -467,3 +467,14 @@ body {
     background-color: #e6ecf0;
     margin-top: 10px;
 }
+
+.complete {
+    margin-left: 40px;
+    margin-right: 40px;
+    font-weight: bold;
+    height: 26px;
+    font-size: 90%;
+    border-radius: 5px;
+    color: black;
+    background-color: lightgray;
+}

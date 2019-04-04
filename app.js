@@ -970,13 +970,13 @@ app.get("/api/myPurchases", (req, res) => {
         return;
     }
     const username = req.session.user;
-    Transaction.find({buyer: username}).then((transactions) => {
+    Transaction.find({buyer: username, isSubmitted: true}).then((transactions) => {
         const transactionIds = transactions.map((trans) => {
             return trans.postId
         });
         Post.find({_id: {$in: transactionIds}}).then((posts) => {
             User.findOne({username: username}).then((user) => {
-                res.send({posts: posts, user: user});
+                res.send({posts: posts, user: user, transactions: transactions});
             });
         });
     }).catch((error) => {
@@ -993,7 +993,7 @@ app.get("/api/admin/userPurchases/:username", adminAuthenticate, (req, res) => {
         });
         Post.find({_id: {$in: transactionIds}}).then((posts) => {
             User.findOne({username: username}).then((user) => {
-                res.send({posts: posts, user: user});
+                res.send({posts: posts, user: user, transactions: transactions});
             });
         });
     }).catch((error) => {
@@ -1113,16 +1113,12 @@ app.post("/api/submitPayment", (req, res) => {
         return;
     }
     const checkoutItems = req.body.items;
+    console.log(checkoutItems);
     const creditCardNumber = req.body.creditCardNumber;
     //The index of items to be removed from user shorlist
-    const removeIndexes = [];
     User.findOne({username: req.session.user}).then((user) => {
         for (let i = 0; i < checkoutItems.length; i++) {
-            for (let k = 0; k < user.shortlist.length; k++) {
-                if (user.shortlist[k]._id.equals(checkoutItems[i]._id)) {
-                    removeIndexes.push(k);
-                }
-            }
+            user.shortlist.pull(checkoutItems[i]);
             Transaction.findOne({postId: checkoutItems[i]._id}).then((trans) => {
                 trans.isSubmitted = true;
                 trans.creditCardNumber = creditCardNumber;
@@ -1133,9 +1129,6 @@ app.post("/api/submitPayment", (req, res) => {
             }).catch((error) => {
                 console.log(error);
             });
-        }
-        for (let k = 0; k < removeIndexes.length; k++) {
-            user.shortlist.splice(removeIndexes[k], 1);
         }
         user.save().catch((error) => {
             console.log(error);

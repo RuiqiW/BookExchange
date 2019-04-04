@@ -6,6 +6,7 @@ sortingOpt.addEventListener("change", onSortingOptChange);
 let posts;
 let user;
 let isRealUser;
+let transactions;
 
 
 function onSortingOptChange() {
@@ -75,6 +76,7 @@ function init() {
                 });
                 isRealUser = true;
                 user = json.user;
+                transactions = json.transactions;
                 const cartNumber = user.shortlist.length;
                 updateShoppingCart(cartNumber);
                 const signInDiv = document.querySelector("#signIn");
@@ -112,6 +114,7 @@ function init() {
                 return result.json();
             }).then((json) => {
                 posts = json.posts;
+                transactions = json.transactions;
                 posts.sort(function (a, b) {
                     if (a.postingDate <= b.postingDate) {
                         return 1;
@@ -221,6 +224,7 @@ function generatePost(post, user) {
             postDiv.appendChild(document.createElement("br"));
 
             postDiv.id = post._id;
+            const thisTrans = transactions.filter((tran) => {return tran.postId === post._id})[0];
 
             const categorySpan = document.createElement("span");
             categorySpan.className = "category";
@@ -273,6 +277,18 @@ function generatePost(post, user) {
                 contactSeller.appendChild(document.createTextNode("Contact Seller"));
                 postDiv.appendChild(contactSeller);
             }
+
+            const complete = document.createElement("button");
+            complete.className = "complete";
+            if (thisTrans.isComplete) {
+                complete.appendChild(document.createTextNode("The transaction is complete"));
+            } else {
+                complete.appendChild(document.createTextNode("The transaction is pending or rejected"));
+            }
+            complete.disabled = true;
+            postDiv.appendChild(complete);
+
+
             resolve(postDiv);
         }).catch((error) => {
             console.log(error);
