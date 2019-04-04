@@ -7,6 +7,7 @@
 
     <title>Post-Ad</title>
 </head>
+
 <body>
 <picture>
     <source srcset="../images/logo.png" media="(min-width: 400px)"/>
@@ -15,13 +16,13 @@
     </a>
 </picture>
 
-<h1 id="h1Title">Post Ad</h1>
+<h2 id="h1Title">Post Ad</h2>
 <!-- action="/my-handling-form-page" to go in form -->
 <form id="postAdForm" action="/api/updateAd" method="post" enctype="multipart/form-data">
     <input type="text" name="postId" id="postId" required>
     <section>
-        <h2>Ad Details</h2>
-        <hr/>
+        <h3>Ad Details</h3>
+        <hr>
         <p>
             <label for="adTitle">
                 <span>Ad Title: </span>
@@ -61,7 +62,7 @@
     </section>
 
     <section>
-        <h2>Photos</h2>
+        <h3>Photos</h3>
         <hr>
         <div>
             <p>
@@ -87,7 +88,7 @@
     </section>
 
     <section>
-        <h2>Price</h2>
+        <h3>Price</h3>
         <hr>
         <label for="adTitle">
             <span>Price: $</span>
@@ -104,21 +105,25 @@
         </div>
 
     </section>
+
     <section>
         <div>
-            <label class="handleViaSystem" for="handleViaSystem">
-                <span>Handle Payment Via Our system</span>
-            </label>
+            Handle Payment:
             <input type="checkbox" id="handleViaSystem" name="handleViaSystem" checked/>
-            <label class="handleBySelf" for="handleBySelf">
-                <span>Handle Payment By myself</span>
+            <label class="handleViaSystem" for="handleViaSystem">
+                <span>via the System</span>
             </label>
+            <br>
             <input type="checkbox" id="handleBySelf" name="handleBySelf"/>
+            <label class="handleBySelf" for="handleBySelf">
+                <span>by Myself</span>
+            </label>
         </div>
     </section>
+
     <section id="postAdButtonSection">
         <input id="submit" class="button -sun center" type="submit" value="Update">
-        <input id="cancel" class="button -sun center" value="cancel">
+        <input id="cancel" class="button -sun center" type="submit" value="cancel">
     </section>
 </form>
 

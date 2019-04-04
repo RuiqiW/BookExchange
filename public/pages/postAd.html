@@ -21,7 +21,7 @@
 <form id="postAdForm" action="/api/postAd" method="post" enctype="multipart/form-data">
     <section>
         <h3>Ad Details</h3>
-        <hr/>
+        <hr>
         <p>
             <label for="adTitle">
                 <span>Ad Title: </span>
@@ -62,7 +62,7 @@
 
     <section>
         <h3>Photos</h3>
-        <hr/>
+        <hr>
         <div>
             <p>
                 Upload images to help sell your ad!
@@ -104,20 +104,24 @@
         </div>
 
     </section>
+
     <section>
         <div>
-            <label class="handleViaSystem" for="handleViaSystem">
-                <span>Handle Payment Via Our system</span>
-            </label>
+            Handle Payment:
             <input type="checkbox" id="handleViaSystem" name="handleViaSystem" checked/>
-            <label class="handleBySelf" for="handleBySelf">
-                <span>Handle Payment By myself</span>
+            <label class="handleViaSystem" for="handleViaSystem">
+                <span>via the System</span>
             </label>
+            <br>
             <input type="checkbox" id="handleBySelf" name="handleBySelf"/>
+            <label class="handleBySelf" for="handleBySelf">
+                <span>by Myself</span>
+            </label>
         </div>
     </section>
+
     <section id="postAdButtonSection">
-        <input id="submit" class="button -sun center" type="submit" value="PostAd">
+        <input id="submit" class="button -sun center" type="submit" value="Post Ad">
         <input id="cancel" class="button -sun center" type="submit" value="Cancel">
     </section>
 </form>
