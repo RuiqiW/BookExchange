@@ -49,7 +49,6 @@ function onSortingOptChange() {
 }
 
 function init() {
-    debugger;
     const keyword = sessionStorage.getItem("keyword");
     let option = sessionStorage.getItem("option");
     const all = sessionStorage.getItem("all");
