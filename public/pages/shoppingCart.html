@@ -9,25 +9,59 @@
     <link href="../lightbox/css/lightbox.css" rel="stylesheet" />
     <!--jquery for lightbox-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
   </head>
   <body>
+  <!--Chat Box-->
+  <div id="chatRoom">
+    <div id="chatTitle">
+      <h5 id="chatName">user</h5>
+      <!--close button-->
+      <div id="chatHide">
+        <a href="#">&times;</a>
+      </div>
+    </div>
+
+    <!--messages-->
+    <div id="chat">
+      <!--A sample bubble-->
+      <!--<div class="chatInBubble">-->
+      <!--<p class="chatInText">Hello</p>-->
+      <!--</div>-->
+    </div>
+
+    <!--write new message-->
+    <div id="message">
+      <form>
+        <textarea id="messageBox" placeholder="Message..."></textarea>
+        <button id="sendButton" class="submit"><i class="fa fa-send blue submit"></i></button>
+      </form>
+    </div>
+  </div>
+
+
     <div id="topBar">
-      <a href="../index.html"
-        ><img id="topBarLogo" src="../images/logo.png" alt="logo"
-      /></a>
+      <a href="../index.html"><img id="topBarLogo" src="../images/logo.png" alt="logo"/></a>
+
+      <div id="chatShow" class="topBarImageContainer dropdown">
+        <img class="topBarImage" id="chatShowButton" src="../images/admin/chat.png" alt="chatPlaceholder">
+
+        <!--Dropdown List of Messages-->
+        <div class="dropdownContent" id="chatRecords">
+          <div class="profile">
+            <form>
+              <input id="userToChat" type="text" placeholder="New chat...">
+              <button id="chatCreateButton"><i class="fa fa-plus"></i></button>
+            </form>
+          </div>
+
+        </div>
+      </div>
 
       <div id="logOut">
         <a href="/api/logout">
           <div class="topBarImageContainer">
-            <img
-              class="topBarImage"
-              src="../images/admin/logout.png"
-              alt="logOutPlaceholder"
-            />
+            <img class="topBarImage" src="../images/admin/logout.png" alt="logOutPlaceholder"/>
           </div>
         </a>
       </div>
@@ -52,11 +86,7 @@
             <span class="checkmark"></span>
           </label>
           <div class="post">
-            <img
-              class="profilePhoto"
-              src="../images/items/seller1.jpg"
-              alt="sellerPhoto"
-            />
+            <img class="profilePhoto" src="../images/items/seller1.jpg" alt="sellerPhoto"/>
             <span class="userName"> Donald Trump </span>
             <br />
             <span class="category"> Category: Books </span>
@@ -77,11 +107,7 @@
             <span class="checkmark"></span>
           </label>
           <div class="post">
-            <img
-              class="profilePhoto"
-              src="../images/items/seller2.jpeg"
-              alt="sellerPhoto"
-            />
+            <img class="profilePhoto" src="../images/items/seller2.jpeg" alt="sellerPhoto"/>
             <span class="userName"> Mike Penth </span>
             <br />
             <span class="category"> Category: Books </span>
@@ -94,15 +120,8 @@
               want more information!
             </div>
             <div class="pictureContainer">
-              <a
-                href="../images/items/sampleBook1.jpg"
-                data-lightbox="sampleBook1"
-              >
-                <img
-                  class="itemPicture"
-                  src="../images/items/sampleBook1.jpg"
-                  alt="picture"
-                />
+              <a href="../images/items/sampleBook1.jpg" data-lightbox="sampleBook1">
+                <img class="itemPicture" src="../images/items/sampleBook1.jpg" alt="picture"/>
               </a>
             </div>
             <hr />
@@ -125,11 +144,7 @@
             </p>
             <section>
               <p>
-                <button
-                  id="payButton"
-                  class="button -flower center"
-                  type="submit"
-                >
+                <button id="payButton" class="button -flower center" type="submit">
                   Place Order
                 </button>
               </p>
@@ -141,7 +156,7 @@
 
     <!--Script for lightbox-->
     <script src="../lightbox/js/lightbox.js"></script>
-    <script type="text/javascript" src="../scripts/classes.js"></script>
     <script type="text/javascript" src="../scripts/shoppingCart.js"></script>
+    <script type="text/javascript" src="../scripts/chatbox.js"></script>
   </body>
 </html>
