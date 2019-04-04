@@ -668,6 +668,10 @@ function createTransactionEntry(transaction) {
     amount.innerText = transaction.amount;
     row.appendChild(amount);
 
+    const creditCard = document.createElement('td');
+    creditCard.innerText = `********${transaction.creditCardNumber.toString().slice(11, 15)}`;
+    row.appendChild(creditCard);
+
     const date = document.createElement('td');
     const tranDate = new Date(transaction.date);
     date.innerText = `${tranDate.toDateString()}   ${tranDate.getHours()}: ${tranDate.getMinutes()}: ${tranDate.getSeconds()}`;
