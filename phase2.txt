@@ -1,0 +1,124 @@
+explaining in detail how to use the application, the roles of users and how the users would go
+about using all the features of your website.
+Using the main features of your project should be intuitive enough that any user with access to your URL should be able to discover all its features.
+Also, provide an overview of the routes in your Express server, and what they are used for in your app.
+
+
+# Login Credentials (Default User):
+        (1) Standard user: username user, password: user
+		    - A standard user has access to all of the pages, except the admin dashboard page.
+	    (2) Admin user: username: admin, password: admin
+
+
+# Standard User Features:
+    index page:
+           1. Search
+              when click on "Search", the page will jump to a page showing related posts of items (note: there is
+              no action if there is no input in the "Search item" input box)
+              when click on "Show All", the new page will showing all posts
+
+           2. Log In / Profile
+              The page will jump to login page if the user has not logged in, or jump to user profile page if
+              the user has not logged in
+
+           3. My cart
+              If user did not log in, the page will jump to login page.
+              Otherwise, the page will jump to the user's shopping cart.
+
+
+    login page:
+            1. Normal login and sign up process
+            2. When click on "UofTExchange" logo, the page will jump back to the index page
+
+
+    user profile page:
+
+            The user is always able to jump to the index page by clicking on "UofTExchange" logo.
+
+            1. Profile:
+               The user is able to change profile picture, bio and phone number
+
+            2. Purchases:
+                The user is able to view his/her past transactions, the transaction is marked as complete,
+                pending (if the transaction is still under review by Admin) or rejected (if the transaction
+                is denied by Admin)
+
+            3. Posts:
+                a. The user is able to view the posts they made by clicking on "Posts I've made".
+
+                In post page:
+                b. The user is able to edit or remove his/her posts if the post has not been proceeded to transaction.
+                c. The user is also able to make post by clicking on the Make Post button.
+
+            4. Chat:
+                The user is able to view his/her chat records by clicking on the chat button,
+                and continue past chats by clicking on the corresponding user.
+                S/he is also able to create a new chat by typing in a username and clicking on "+" button.
+
+            5. Shopping Cart:
+                The user is able to view his/her shopping cart by clicking on the shopping cart button at top-right.
+
+
+    shopping cart page:
+            1. The user can select the items s/he wants to check out by clicking on the checkbox to the right of
+               each post or select all the items by clicking on the select all checkbox.
+
+               Note: the user is not able to select the posts whose seller doesn't allow credit card payment.
+               In this case, the user has to contact the seller and figure out the payment themselves.
+
+            2. The page will jump to the payment method page when the user click on "place order".
+
+            3. Remove from Cart
+               When the user clicks "Remove from Cart" in a certain item in the cart, that item will be removed
+               from the cart.
+
+             4. Contact the Seller
+                When click on "Contact the Seller" for each post, the system will either create a new chat if the user
+                hasn't chat with the seller before or show the past chat histories in the chat box. The user can then
+                chat with the seller.
+
+
+    browse item page:
+            1. Sorting items (View by price/type/post date)
+               User can select how to view the postings among sorting by
+               	a. Posting time(New to Old), b. Posting time(Old to New), c. price(High to Low) and d. price(Low to High).
+
+            2. 	Add to Cart/Remove from Cart
+               	When the user clicks "Add to Cart" for a certain post, that item will be added to the user's shopping cart.
+               	If the user choose to "Remove from Cart" of an item, the shopping cart will also remove the item.
+               	The number of items shown on "My cart" button is updated correspondingly.
+
+            3. Contact the Seller
+               Similar to the one in shopping cart.
+
+
+#Admin User Features:
+
+    dashboard page:
+            1. The dashboard will show new message num since last login, number of transactions to be handled,
+               number of total posts not yet sold and number of total standard users.
+
+            2. Manage Posts
+               When click on 'edit', the post section will change to edit mode, and the admin will be able to
+               delete a post by clicking on the "close" icon. After edit post, the admin should click on "save",
+               then the post section will be reloaded with posts still exist.
+
+               The admin can also click "View All" and manage posts in browse item page.
+
+            3. Manage Users
+               When click on "show more / show less", more or less users will be displayed.
+               Admin will be able to delete a user when click on the corresponding delete button, or view a
+               user's profile in detail when click on "View Detail".
+
+
+            4. Manage Transactions
+               The transactions which have not been processed by the admin yet will show up in this section.
+               When click on the green check icon, the admin will approve the transaction and
+               when click on the red cross icon, the admin will deny the transaction.
+
+            5. Chat
+               The admin can chat with other users. This function is implemented the same for admin as for
+               standard users.
+
+
+

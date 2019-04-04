@@ -48,7 +48,7 @@ a {
 #indexLogo {
     height: 100px;
     position: relative;
-    margin-left: 325px;
+    margin-left: 20%;
 }
 
 #searchBox {
@@ -65,7 +65,6 @@ a {
     margin-top: 20px;
     position: relative;
     right: 20px;
-
     background-color: lightgrey;
 }
 

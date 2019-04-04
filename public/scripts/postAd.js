@@ -8,7 +8,7 @@ const postAdForm = document.querySelector('#postAdForm');
 document.querySelector("#submit").addEventListener('submit', handlePostAd);
 
 document.querySelector("#cancel").addEventListener("click", (e) => {
-    window.location = "/";
+    window.location = "/pages/myPosts.html";
 });
 
 const price = document.querySelector('#price');
