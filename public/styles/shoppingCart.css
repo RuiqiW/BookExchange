@@ -188,8 +188,8 @@ body {
 }
 
 .contactSeller {
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 20px;
+    margin-right: 0;
     font-weight: bold;
     color: white;
     background-color: dodgerblue;
@@ -485,4 +485,8 @@ span.total {
 
 a {
     text-decoration: none;
+}
+
+.removeFromCart:hover {
+    cursor:pointer;
 }

@@ -233,3 +233,8 @@
   pointer: cursor;
   font-size: 14px;
 }
+
+
+#myPurchases:hover, #myPosts:hover {
+  cursor: pointer;
+}

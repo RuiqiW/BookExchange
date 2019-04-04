@@ -159,6 +159,7 @@ function generatePost(post, user) {
             contactSeller.className = "contactSeller";
             contactSeller.addEventListener("click", contactTheSeller);
             contactSeller.appendChild(document.createTextNode("Contact Seller"));
+            postDiv.appendChild(contactSeller);
 
             const removeButton = document.createElement("button");
             removeButton.className = "removeFromCart";
