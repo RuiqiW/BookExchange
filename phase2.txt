@@ -1,7 +1,5 @@
-explaining in detail how to use the application, the roles of users and how the users would go
-about using all the features of your website.
-Using the main features of your project should be intuitive enough that any user with access to your URL should be able to discover all its features.
 
+Application usage:
 
 # Login Credentials (Default User):
         (1) Standard user: username user, password: user
@@ -77,10 +75,10 @@ Using the main features of your project should be intuitive enough that any user
                When the user clicks "Remove from Cart" in a certain item in the cart, that item will be removed
                from the cart.
 
-             4. Contact the Seller
-                When click on "Contact the Seller" for each post, the system will either create a new chat if the user
-                hasn't chat with the seller before or show the past chat histories in the chat box. The user can then
-                chat with the seller.
+            4. Contact the Seller
+               When click on "Contact the Seller" for each post, the system will either create a new chat if the user
+               hasn't chat with the seller before or show the past chat histories in the chat box. The user can then
+               chat with the seller.
 
 
     browse item page:
@@ -131,7 +129,7 @@ Using the main features of your project should be intuitive enough that any user
 
 Overview of routes:
 
-app.js contains all the routes out application used, they can be divided into the following categories:
+app.js contains all the routes our application used, they can be divided into the following categories:
 
 Note: All the pages are sent to the browser and then the init() function in the javascript will fetch
       information from server to generate the page accordingly.
@@ -139,85 +137,125 @@ Note: All the pages are sent to the browser and then the init() function in the 
 
 
 1. User Management & information Retrieval:
-    /api/createAccount: used to create an new User
 
-    /api/sendCode/:email: send an recovery code to the email, this will be used
+    1.0 user creation and general methods
+        /api/createAccount: used to create an new User
+
+        /api/sendCode/:email: send an recovery code to the email, this will be used
         to recovery password of an user in case users forget their password
 
-    /api/recover: input the recovery code to set a new password
+        /api/recover: input the recovery code to set a new password
 
-    /api/userProfile: redirect to the userProfile page
+        /api/isLogin: return whether the user is logged in, if so, send back the user
 
-    /api/logout: destroy the session and logout the user
+        /api/logout: destroy the session and logout the user
 
-    /api/isLogin: return whether the user is logged in, if so, send back the user
-
-
-retrieve info from User collection:
-    /api/user/:username: used to retrieve the information of the user with username
-
-    /api/getCurrentUser: used to retrieve the user that is currently logged in
-
-    /api/findSeller/:postId: used to retrieve the seller of a post with postId
-
-    /api/dashboard/users: retrieve non-admin users for admin dashboard
-
-    /api/myPurchases: retrieve all the purchases of the user
-
-    /api/admin/userPurchases/:username: Retrieve the purchases record of the user with username,
-                                        only Admin can invoke this function
-
-    /api/myposts: retrieve all the post this user has made
-
-    /api/admin/userPosts/:username: retrieve the posts of the user with username, only Admin can invoke this operation
+        /api/userProfile: redirect to the userProfile page
 
 
-update info of User collection:
-    /api/changeProfilePicture: used to update the profile photo of an user
+    1.1 retrieve info from User collection:
+        /api/user/:username: used to retrieve the information of the user with username
 
-    /api/updatePhoneNumber: used to update the phone number of an user
+        /api/getCurrentUser: used to retrieve the user that is currently logged in
 
-    /api/updateBio/:newBio: used to update the bio of an user
+        /api/findSeller/:postId: used to retrieve the seller of a post with postId
 
+        /api/myPurchases: retrieve all the purchases of the user
 
-delete info of User collection:
-    /api/dashboard/user/:user: delete user from database, only Admin can invoke this operation
-
-
+        /api/myposts: retrieve all the post this user has made
 
 
-2/ Post Management & Information Retrieve
-    /api/search: this route expect a keyword, option and all(whether to show all
-    the post on the website) in the request body. It send back the search result
-    with the current user logged in.
+        Admin only methods:
+            /api/admin/userPurchases/:username: Retrieve the purchases record of the user with username
 
-    /api/postAd: post an new post
+            /api/admin/userPosts/:username: retrieve the posts of the user with username
 
-    /api/updateAd: update an existing post
+            /api/dashboard/users: retrieve non-admin users for admin dashboard
 
-    /api/addToCart/:postId: Add the post with postId to the shopping cart of the
-    user currently logged in
 
-    /api/removeFromCart/:postId: Remove the post with postId from the shopping
-    cart of the user currently logged in
+    1.2 update info of User collection:
+        /api/changeProfilePicture: update the profile photo of an user
 
-    /api/dashboard/posts: find all the posts for admin dashboard
+        /api/updatePhoneNumber: update the phone number of an user
 
-    /api/dashboard/post/:postId: delete the post with postId, only Admin can
-    invoke this operation
+        /api/updateBio/:newBio: update the bio of an user
 
-    /api/dashboard/transaction: this route is for admin to approve or deny an
-    pending transaction
+        /api/addToCart/:postId: update the shopping cart of the user current logged in by adding post with postId
 
-    /api/sellItem: this route is the post which user choose to handle the transaction
-    by themselves. They route mark one post as sold and associate it with the buyer.
+        /api/removeFromCart/:postId: remove the post with postId from the shopping cart of the user currently logged in
 
-    /api/checkout: this route is to checkout from shopping cart and create unsubmitted
-    transactions in the database.
 
-    /api/submitPayment: this route is to submit the payment to the server. The
-    transaction will pending for admin to approve or deny.
+    1.3 delete info of User collection:
+        /api/dashboard/user/:user: delete user from database, only Admin can invoke this operation
 
-=========================================================================================
+
+
+
+2) Post Management & Information Retrieval
+
+    2.0 post creation:
+        /api/postAd: post a new post
+
+    2.1 post information retrieval:
+
+        /api/search: This route is for browsing item. It expects "keyword", "option" (title/description or ISBN)
+                      and "all" element (whether to show all the post on the website) in the request body,
+                      and sends back the search result for "keyword" and the current user logged in.
+
+        /api/dashboard/posts: find all the posts for admin dashboard
+
+    2.2 post update:
+        /api/updateAd: update the info of an existing post
+
+
+    2.3 post deletion:
+        /api/dashboard/post/:postId: delete the post with postId, only Admin can invoke this operation
+
+
+
+3) Transaction Management & Information Retrieval
+
+    3.0 transaction creation:
+        /api/checkout: to checkout from shopping cart and create unsubmitted transactions.
+
+        /api/sellItem: to create transactions in db for transactions handled by users themselves,
+                        when a post is associated with a buyer and marked as sold.
+
+
+    3.1 transaction status update:
+        /api/submitPayment: this route is to submit the payment to the server, and set payment info and the isSubmitted
+                            field for transaction
+
+        /api/dashboard/transaction: this route is for admin to approve or deny a pending transaction, and set the
+                                    the transaction as isCompleted
+
+
+    3.2 transaction info retrieval:
+        /api/myPurchases: to get the transactions whose buyer is a user
+
+        /api/dashboard/transactions: to get all submitted but incomplete transactions for the transaction section
+                                     of the admin dashboard
+
+        /api/admin/userPurchases/:username: to get the purchases of a user when the user's profile is viewed by admin
+
+
+
+4) Chat Management & Information:
+
+    4.0 chat creation:
+        /api/createChat: create a new chat between the user currently logged in and the user specified in request
+
+    4.1 chat information retrieval:
+        /api/startChat/:user: find the chat between the user currently logged in and the user specified in request
+
+        /api/allChats: find all chat histories of the currently logged in
+
+        /api/chat/:chatId: get a chat by id
+
+    4.2 chat update:
+        /api/chat/:chatId: add a new message in req.body to the chat with id being chatId
+        /api/loadChat/:chatId: set the unread message array to empty array after messages has been loaded
+
+
 
 
