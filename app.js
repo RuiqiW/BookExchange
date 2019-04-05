@@ -628,7 +628,6 @@ app.get("/api/findSeller/:postId", (req, res) => {
 
 app.post("/api/updatePhoneNumber/:newNumber", (req, res) => {
     const newNumber = req.params.newNumber;
-    console.log(newNumber);
     if (!req.session.user) {
         res.status(401).send();
         return;
