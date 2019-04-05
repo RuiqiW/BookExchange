@@ -84,7 +84,7 @@ app.post('/api/search', (req, res) => {
         if (option === 0) {
             Post.find({
                 isSold: false,
-                $or: [{title: {$regex: keywordRegex}}, {description: {$regex: keywordRegex}}]
+                $or: [{title: {$regex: keywordRegex, $options: 'i'}}, {description: {$regex: keywordRegex, $options: 'i'}}]
             }).then((result) => {
                 const payload = {result: result};
                 if (!req.session.user) {
