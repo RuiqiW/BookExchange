@@ -630,9 +630,11 @@ app.post("/api/updatePhoneNumber/:newNumber", (req, res) => {
     console.log(newNumber);
     if (!req.session.user) {
         res.status(401).send();
+        return;
     }
     if (isNaN(parseInt(newNumber)) || newNumber.trim().length !== 10) {
         res.status(600).send();
+        return;
     }
     User.findOne({username: req.session.user}).then((user) => {
         user.phone = newNumber;
