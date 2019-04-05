@@ -128,6 +128,10 @@ function init() {
         imageContainer.appendChild(image);
         div.appendChild(a);
         document.querySelector("#topBar").appendChild(div);
+
+        // Fix logo position
+        const logo = document.querySelector('#indexLogo');
+        logo.setAttribute('style', "margin-left: 20%;");
     }).catch((error) => {
         // console.log("User not logged in");
     })
