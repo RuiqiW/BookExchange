@@ -851,6 +851,20 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
                     if (!users) {
                         res.status(404).send();
                     } else {
+                        Post.deleteMany({seller: username}).then((result) => {
+                            User.find({"shortlist.seller": username}).then((users) => {
+                                for (let i = 0; i < users.length; i++) {
+                                    console.log(users);
+                                    users[i].shortlist = users[i].shortlist.filter((post) => {return post.seller !== username});
+                                    users[i].save().then((newUser) => {
+                                        return;
+                                    }).catch((error) => {
+                                        console.log(error)
+                                    });
+                                }
+                            });
+                            res.status(200).send();
+                        });
                         res.send({userNum: users.length});
                     }
                 })
