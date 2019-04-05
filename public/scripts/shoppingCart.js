@@ -41,6 +41,8 @@ function init() {
 
             emptyInfoDiv.appendChild(text);
             document.querySelector("#posts").appendChild(emptyInfoDiv);
+            document.querySelector("#selectAll").style.display = "none";
+            document.querySelector("#selectAllContainer").style.display = "none";
         } else {
             for (let i = 0; i < posts.length; i++) {
                 generatePost(posts[i], user).then((resultDiv) => {
