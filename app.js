@@ -23,6 +23,7 @@ app.use(express.urlencoded({extended: false}));
 
 // Static directories
 app.use("/", express.static(__dirname + '/public'));
+app.use("/lightbox", express.static(__dirname + '/public/lightbox'));
 app.use("/pages", express.static(__dirname + '/public/pages'));
 app.use("/styles", express.static(__dirname + '/public/styles'));
 app.use("/scripts", express.static(__dirname + '/public/scripts'));
