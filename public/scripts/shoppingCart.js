@@ -278,10 +278,10 @@ function selectAllItems(e) {
     } else {
         for (let i = 0; i < postElements.childElementCount - 1; i++) {
             if (i % 2 === 0) {
-                // postElements.children[i].firstElementChild.dispatchEvent(new MouseEvent('click'));
                 postElements.children[i].firstElementChild.checked = false;
             }
         }
+        updateOrderSummary(e);
     }
 }
 
