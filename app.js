@@ -918,7 +918,9 @@ app.post("/api/recover", (req, res) => {
                             if (error) {
                                 res.status(500).send(error);
                             } else {
-                                res.send(newUser);
+                                Recovery.findByIdAndDelete(entry._id).then((deleteEntry) => {
+                                    res.send(newUser);
+                                });
                             }
                         });
                     });
