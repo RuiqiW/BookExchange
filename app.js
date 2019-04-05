@@ -854,7 +854,6 @@ app.delete("/api/dashboard/user/:user", adminAuthenticate, (req, res) => {
                         Post.deleteMany({seller: username}).then((result) => {
                             User.find({"shortlist.seller": username}).then((users) => {
                                 for (let i = 0; i < users.length; i++) {
-                                    console.log(users);
                                     users[i].shortlist = users[i].shortlist.filter((post) => {return post.seller !== username});
                                     users[i].save().then((newUser) => {
                                         return;
