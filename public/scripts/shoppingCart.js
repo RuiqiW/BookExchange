@@ -41,6 +41,8 @@ function init() {
 
             emptyInfoDiv.appendChild(text);
             document.querySelector("#posts").appendChild(emptyInfoDiv);
+            document.querySelector("#selectAll").style.display = "none";
+            document.querySelector("#selectAllContainer").style.display = "none";
         } else {
             for (let i = 0; i < posts.length; i++) {
                 generatePost(posts[i], user).then((resultDiv) => {
@@ -276,10 +278,10 @@ function selectAllItems(e) {
     } else {
         for (let i = 0; i < postElements.childElementCount - 1; i++) {
             if (i % 2 === 0) {
-                // postElements.children[i].firstElementChild.dispatchEvent(new MouseEvent('click'));
                 postElements.children[i].firstElementChild.checked = false;
             }
         }
+        updateOrderSummary(e);
     }
 }
 
