@@ -4,6 +4,12 @@ properly. Please disable ad filters before visit our app.
 
 Link to a deployed instance: team25.herokuapp.com
 
+The app depend on two environmental variables, EMAIL_TOKEN and DATABASE_TOKEN.
+Here are examples of those environmental variables:
+
+export EMAIL_TOKEN="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"
+export DATABASE_TOKEN="mongodb+srv://server:server@cluster0-pyppi.mongodb.net/test?retryWrites=true"
+
 Application usage:
 
 # Login Credentials (Default User):
