@@ -1068,6 +1068,16 @@ app.post("/api/sellItem", (req, res) => {
             });
             transaction.save().then((trans) => {
                 post.save().then((newPost) => {
+                    User.find({"shortlist._id": post._id}).then((users) => {
+                        for (let i = 0; i < users.length; i++) {
+                            users[i].shortlist.pull(post._id);
+                            users[i].save().then((newUser) => {
+                                return;
+                            }).catch((error) => {
+                                console.log(error)
+                            });
+                        }
+                    });
                     res.status(200).send();
                 });
             });
@@ -1129,7 +1139,16 @@ app.post("/api/submitPayment", (req, res) => {
                 trans.save().then((newTrans) => {
                     const postId = trans.postId;
                     Post.findByIdAndUpdate(postId, {$set: {isSold: true}}).then((post) => {
-                        return;
+                        User.find({"shortlist._id": post._id}).then((users) => {
+                            for (let i = 0; i < users.length; i++) {
+                                users[i].shortlist.pull(post._id);
+                                users[i].save().then((newUser) => {
+                                    return;
+                                }).catch((error) => {
+                                    console.log(error)
+                                });
+                            }
+                        });
                     });
                 }).catch((error) => {
                     console.log(error);
