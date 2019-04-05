@@ -84,7 +84,7 @@ app.post('/api/search', (req, res) => {
         if (option === 0) {
             Post.find({
                 isSold: false,
-                $or: [{title: {$regex: keywordRegex}}, {description: {$regex: keywordRegex}}]
+                $or: [{title: {$regex: keywordRegex, $options: 'i'}}, {description: {$regex: keywordRegex, $options: 'i'}}]
             }).then((result) => {
                 const payload = {result: result};
                 if (!req.session.user) {
@@ -628,7 +628,6 @@ app.get("/api/findSeller/:postId", (req, res) => {
 
 app.post("/api/updatePhoneNumber/:newNumber", (req, res) => {
     const newNumber = req.params.newNumber;
-    console.log(newNumber);
     if (!req.session.user) {
         res.status(401).send();
         return;
